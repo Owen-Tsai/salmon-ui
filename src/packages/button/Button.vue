@@ -15,7 +15,7 @@
     @click="handleClick"
   >
     <s-icon :name="icon" v-if="icon && iconPlacement === 'left' && !loading"></s-icon>
-    <s-icon class="loader" name="loader" v-if="loading"></s-icon>
+    <s-icon class="rotating" name="loader" v-if="loading"></s-icon>
     <span v-if="$slots.default"><slot></slot></span>
     <s-icon class="is-right" :name="icon" v-if="icon && iconPlacement === 'right' && !loading"></s-icon>
   </button>

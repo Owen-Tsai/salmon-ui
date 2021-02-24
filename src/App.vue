@@ -64,7 +64,9 @@
           <br>
 
           <s-button class="demo-m-a" disabled>禁用</s-button>
+          <s-button class="demo-m-a" type="text" disabled>禁用</s-button>
           <s-button class="demo-m-a" loading>载入中</s-button>
+          <s-button class="demo-m-a" type="primary" shape="round" loading>载入中</s-button>
         </div>
       </div>
 
@@ -123,8 +125,9 @@
           font-weight 700
           line-height 1.5
           margin-top 0
-          margin-bottom 24px
+          margin-bottom 16px
         }
+        margin-bottom 16px
       }
     }
   }

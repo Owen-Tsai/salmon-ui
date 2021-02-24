@@ -38,30 +38,31 @@
 
   make-button(color--primary)
 
-  // types
-  ^[0]&--primary {
-    make-primary-button(color--primary)
-  }
-
-  ^[0]&--outlined {
-    make-outlined-button(color--primary)
-  }
-
-  ^[0]&--text {
-    make-text-button(color--primary)
-  }
-
-  // danger
   &.is-danger {
     make-button(color--error)
+  }
 
-    &^[0]--primary {
+  // types
+  &--primary {
+    make-primary-button(color--primary)
+
+    &.is-danger {
       make-primary-button(color--error)
     }
-    &^[0]--outlined {
+  }
+
+  &--outlined {
+    make-outlined-button(color--primary)
+
+    &.is-danger {
       make-outlined-button(color--error)
     }
-    &^[0]--text {
+  }
+
+  &--text {
+    make-text-button(color--primary)
+
+    &.is-danger {
       make-text-button(color--error)
     }
   }
@@ -98,18 +99,22 @@
   // disabled
   &.is-disabled {
     background-color color--bg.normal
+    border-color color--border
     color color--placeholder
     cursor not-allowed
   }
 
   // loading
-  &.is-loading::before {
-    position absolute
-    top -1px
-    bottom -1px
-    left -1px
-    right -1px
-    background-color rgba(#ffffff, 0.5)
+  &.is-loading {
     cursor default
+    &::before {
+      position absolute
+      content ''
+      top -1px
+      bottom -1px
+      left -1px
+      right -1px
+      background-color rgba(#ffffff, 0.6)
+    }
   }
 }
