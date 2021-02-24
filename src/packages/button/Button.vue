@@ -15,15 +15,15 @@
     @click="handleClick"
   >
     <s-icon :name="icon" v-if="icon && iconPlacement === 'left' && !loading"></s-icon>
-    <s-icon name="loader" v-if="loading"></s-icon>
+    <s-icon class="loader" name="loader" v-if="loading"></s-icon>
     <span v-if="$slots.default"><slot></slot></span>
-    <s-icon :name="icon" v-if="icon && iconPlacement === 'right' && !loading"></s-icon>
+    <s-icon class="is-right" :name="icon" v-if="icon && iconPlacement === 'right' && !loading"></s-icon>
   </button>
 </template>
 
 <script>
   import SIcon from '../icon/Icon'
-  import { computed } from 'vue'
+  import { computed, defineComponent, inject } from 'vue'
 
   const _types = [
     'default', 'primary', 'outlined', 'text'
@@ -32,7 +32,7 @@
   const _sizes = [ '', 'large', 'small' ]
   const _shapes = [ '', 'round', 'circle' ]
 
-  export default {
+  export default defineComponent({
     name: 'SButton',
     components: {SIcon},
     props: {
@@ -67,7 +67,7 @@
         type: String,
         default: 'left',
         validator: (v) => {
-          ['left', 'right'].includes(v)
+          return ['left', 'right'].includes(v)
         }
       },
       disabled: Boolean,
@@ -77,10 +77,12 @@
     },
     emits: ['click'],
     setup(props, ctx) {
+      // injected
+      const buttonGroupSize = inject('buttonGroupSize', '')
+
       // computed
-      // TODO: provide button-group and form context for these 2 computed properties
       const computedSize = computed(() => {
-        return props.size
+        return buttonGroupSize.value || props.size
       })
       const computedDisabled = computed(() => {
         return props.disabled
@@ -97,5 +99,5 @@
         handleClick
       }
     }
-  }
+  })
 </script>

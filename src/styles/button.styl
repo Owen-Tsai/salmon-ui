@@ -3,6 +3,7 @@
 
 .sui-button {
   display inline-block
+  position relative
   line-height 1
   white-space nowrap
   cursor pointer
@@ -26,8 +27,13 @@
 
   .sui-icon {
     font-size 16px
-    margin-top -1px
+    margin-top -2px
     margin-right 4px
+
+    &.is-right {
+      margin-left 4px
+      margin-right 0
+    }
   }
 
   make-button(color--primary)
@@ -87,5 +93,23 @@
     &^[0]--circle {
       padding 9px
     }
+  }
+
+  // disabled
+  &.is-disabled {
+    background-color color--bg.normal
+    color color--placeholder
+    cursor not-allowed
+  }
+
+  // loading
+  &.is-loading::before {
+    position absolute
+    top -1px
+    bottom -1px
+    left -1px
+    right -1px
+    background-color rgba(#ffffff, 0.5)
+    cursor default
   }
 }

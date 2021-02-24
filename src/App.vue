@@ -45,6 +45,10 @@
           <s-button class="demo-m-a" danger type="text">危险文字</s-button>
 
           <s-button class="demo-m-a" type="primary" shape="round">圆角按钮</s-button>
+          <s-button class="demo-m-a" type="primary" shape="round">
+            <s-icon name="heart"></s-icon>
+            圆角按钮
+          </s-button>
           <s-button class="demo-m-a" type="primary" shape="circle" icon="star"></s-button>
 
           <br>
@@ -56,6 +60,34 @@
           <s-button class="demo-m-a" size="large" shape="circle" icon="star"></s-button>
           <s-button class="demo-m-a" shape="circle" icon="star"></s-button>
           <s-button class="demo-m-a" size="small" shape="circle" icon="star"></s-button>
+
+          <br>
+
+          <s-button class="demo-m-a" disabled>禁用</s-button>
+          <s-button class="demo-m-a" loading>载入中</s-button>
+        </div>
+      </div>
+
+      <div class="demo-block">
+        <h2>Button Groups</h2>
+        <div class="demo-content">
+          <s-button-group class="demo-m-y" size="small">
+            <s-button type="primary">主要按钮</s-button>
+            <s-button type="primary">主要按钮</s-button>
+            <s-button type="primary">主要按钮</s-button>
+          </s-button-group>
+
+          <s-button-group class="demo-m-y">
+            <s-button type="outlined">outlined</s-button>
+            <s-button type="outlined">outlined</s-button>
+            <s-button type="outlined">outlined</s-button>
+          </s-button-group>
+
+          <s-button-group class="demo-m-y" size="large">
+            <s-button>主要按钮</s-button>
+            <s-button>主要按钮</s-button>
+            <s-button>主要按钮</s-button>
+          </s-button-group>
         </div>
       </div>
     </section>
@@ -65,11 +97,12 @@
 <script>
   import SIcon from './packages/icon'
   import SAlert from './packages/alert'
-  import SButton from "./packages/button/Button";
+  import SButton from "./packages/button"
+  import SButtonGroup from './packages/button-group'
 
   export default {
     components: {
-      SButton,
+      SButton, SButtonGroup,
       SIcon, SAlert
     }
   }
