@@ -19,14 +19,14 @@
       <div class="demo-block">
         <h2>Alerts</h2>
         <div class="demo-content">
-          <s-alert class="demo-m" icon="smile" title="Greetings!">你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m" icon="smile" outlined>你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m" type="error" icon="wifi-off" :dismissible="false">
+          <s-alert class="demo-m-y" icon="smile" title="Greetings!">你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" icon="smile" outlined>你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" type="error" icon="wifi-off" :dismissible="false">
             <template v-slot:title>错误</template>
             <span>检测不到可用的网络连接<a style="margin-left: 8px; color: #fff" href="#">重试</a></span>
           </s-alert>
-          <s-alert class="demo-m" type="success" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m" type="warning" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" type="success" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" type="warning" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
         </div>
       </div>
     </section>
@@ -34,7 +34,28 @@
       <div class="demo-block">
         <h2>Buttons</h2>
         <div class="demo-content">
+          <s-button class="demo-m-a" type="primary">主要按钮</s-button>
+          <s-button class="demo-m-a" icon="heart">爱你</s-button>
+          <s-button class="demo-m-a" type="outlined">outlined 按钮</s-button>
+          <s-button class="demo-m-a" type="text">文字按钮</s-button>
 
+          <s-button class="demo-m-a" danger type="primary">危险按钮</s-button>
+          <s-button class="demo-m-a" danger icon="heart">爱你</s-button>
+          <s-button class="demo-m-a" danger type="outlined">outlined 危险</s-button>
+          <s-button class="demo-m-a" danger type="text">危险文字</s-button>
+
+          <s-button class="demo-m-a" type="primary" shape="round">圆角按钮</s-button>
+          <s-button class="demo-m-a" type="primary" shape="circle" icon="star"></s-button>
+
+          <br>
+
+          <s-button class="demo-m-a" shape="round" size="large">Large</s-button>
+          <s-button class="demo-m-a" shape="round">Default</s-button>
+          <s-button class="demo-m-a" shape="round" size="small">Small</s-button>
+
+          <s-button class="demo-m-a" size="large" shape="circle" icon="star"></s-button>
+          <s-button class="demo-m-a" shape="circle" icon="star"></s-button>
+          <s-button class="demo-m-a" size="small" shape="circle" icon="star"></s-button>
         </div>
       </div>
     </section>
@@ -44,9 +65,11 @@
 <script>
   import SIcon from './packages/icon'
   import SAlert from './packages/alert'
+  import SButton from "./packages/button/button";
 
   export default {
     components: {
+      SButton,
       SIcon, SAlert
     }
   }
@@ -86,8 +109,11 @@
     }
   }
 
-  .demo-m {
+  .demo-m-y {
     margin 16px 0
+  }
+  .demo-m-a {
+    margin 8px
   }
 </style>
 

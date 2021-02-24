@@ -1,0 +1,77 @@
+
+make-button(color) {
+  &:hover {
+    border 1px solid color.normal
+    color color.normal
+  }
+  &:focus {
+    border 1px solid color.normal
+    color color.normal
+    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+  }
+  &:active {
+    border 1px solid color.dark
+    color color.dark
+  }
+}
+
+make-primary-button(color) {
+  background-color color.normal
+  color #ffffff
+  border: 1px solid color.normal
+
+  &:hover {
+    color #ffffff
+    background-color color.light
+    border: 1px solid color.light
+  }
+  &:focus {
+    border: 1px solid color.light
+    background-color color.light
+    color #ffffff
+    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+  }
+  &:active {
+    border: 1px solid color.dark
+    background-color color.dark
+    color #ffffff
+  }
+}
+
+make-outlined-button(color) {
+  background-color: color.x-light
+  border: 1px solid color.normal
+  color: color.normal
+
+  &:hover {
+    color #ffffff !important
+    background-color color.light
+    border: 1px solid color.light
+  }
+  &:focus {
+    border: 1px solid color.light
+    color color.light
+    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+  }
+  &:active {
+    border: 1px solid color.dark
+    background-color color.dark
+    color #ffffff
+  }
+}
+
+make-text-button(color) {
+  border 0 !important
+  background-color transparent !important
+  color: color.normal
+
+  &:hover {
+    color color.light
+  }
+  &:focus {
+    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+  }
+  &:active {
+    color color.dark
+  }
+}
