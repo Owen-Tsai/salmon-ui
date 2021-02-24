@@ -65,7 +65,7 @@
 <script>
   import SIcon from './packages/icon'
   import SAlert from './packages/alert'
-  import SButton from "./packages/button/button";
+  import SButton from "./packages/button/Button";
 
   export default {
     components: {
