@@ -14,6 +14,25 @@
           <div><s-icon name="github"></s-icon></div>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Avatars</h2>
+        <div class="demo-content">
+          <s-avatar :src="avatar2" size="large" class="demo-m-a"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a"></s-avatar>
+          <s-avatar :src="avatar2" size="small" class="demo-m-a"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" size="large" shape="square"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" shape="square"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" size="small" shape="square"></s-avatar>
+
+          <br>
+
+          <s-avatar class="demo-m-a" :size="64">三文咸鱼</s-avatar>
+          <s-avatar class="demo-m-a" :size="64">Lucy</s-avatar>
+          <s-avatar class="demo-m-a" :size="64">张三</s-avatar>
+          <s-avatar class="demo-m-a" icon="user"></s-avatar>
+        </div>
+      </div>
     </section>
     <section class="dev-demo-col">
       <div class="demo-block">
@@ -101,11 +120,21 @@
   import SAlert from './packages/alert'
   import SButton from "./packages/button"
   import SButtonGroup from './packages/button-group'
+  import SAvatar from './packages/avatar'
+
+  import avatar1 from './assets/avatar.jpg'
+  import avatar2 from './assets/avatar2.jpg'
 
   export default {
     components: {
       SButton, SButtonGroup,
-      SIcon, SAlert
+      SIcon, SAlert, SAvatar
+    },
+    data: () => ({
+      avatar1, avatar2
+    }),
+    methods: {
+
     }
   }
 </script>

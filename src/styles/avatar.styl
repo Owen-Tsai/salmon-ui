@@ -1,0 +1,39 @@
+@import "common/var.styl"
+
+.sui-avatar {
+  display inline-block
+  box-sizing border-box
+  overflow hidden
+  color color--text.normal
+  font-size font-size--text.medium
+  text-align center
+  width 48px
+  height 48px
+  line-height @width
+  border-radius: border-radius--normal
+
+  background-color: color--bg.dark
+
+  img {
+    display block
+    height 100%
+    vertical-align middle
+  }
+
+  &--circle {
+    border-radius 50%
+  }
+  &--large {
+    height 56px
+    width 56px
+    line-height @width
+  }
+  &--small {
+    height 36px
+    width 36px
+    line-height @width
+  }
+  &--icon {
+    font-size 24px
+  }
+}

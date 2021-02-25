@@ -1,0 +1,101 @@
+<template>
+  <span class="sui-avatar" :class="cls" :style="sizeStyle">
+    <img
+      v-if="(src || srcSet) && !hasLoadError"
+      :src="src"
+      :alt="alt"
+      :srcset="srcSet"
+      :style="fitStyle"
+      @error="handleError"
+    />
+    <s-icon :name="icon" v-else-if="icon"></s-icon>
+    <slot v-else></slot>
+  </span>
+</template>
+
+<script>
+  import SIcon from '../icon/Icon'
+  import { defineComponent, ref, computed } from 'vue'
+
+  const _sizes = [ 'large', 'small', '' ]
+
+  export default defineComponent({
+    name: 'SAvatar',
+    components: {
+      SIcon
+    },
+    props: {
+      src: String,
+      srcSet: String,
+      icon: String,
+      alt: String,
+      size: {
+        type: [String, Number],
+        default: '',
+        validator: (v) => {
+          if(typeof v === 'string') {
+            return _sizes.includes(v)
+          }
+
+          return typeof v === 'number'
+        }
+      },
+      shape: {
+        type: String,
+        default: 'circle',
+        validator: (v) => {
+          return ['circle', 'square'].includes(v)
+        }
+      },
+      fit: {
+        type: String,
+        default: 'cover'
+      }
+    },
+    emits: ['error'],
+    setup(props, ctx) {
+      // state
+      const hasLoadError = ref(false)
+
+      // classes
+      const cls = computed(() => {
+        const arr = []
+        const prefix = 'sui-avatar--'
+        if(typeof props.size === 'string' && props.size !== '') {
+          arr.push(`${prefix}${props.size}`)
+        }
+        if(props.icon) {
+          arr.push(`${prefix}icon`)
+        }
+        if(props.shape) {
+          arr.push(`${prefix}${props.shape}`)
+        }
+
+        return arr
+      })
+
+      // styles
+      const sizeStyle = computed(() => {
+        return typeof props.size === 'number' ? {
+          height: `${props.size}px`,
+          width: `${props.size}px`,
+          lineHeight: `${props.size}px`
+        } : {}
+      })
+      const fitStyle = computed(() => ({
+        objectFit: props.fit
+      }))
+
+      // methods
+      const handleError = (evt) => {
+        hasLoadError.value = true
+        ctx.emit('error', evt)
+      }
+
+      return {
+        hasLoadError,
+        cls, sizeStyle, fitStyle, handleError
+      }
+    }
+  })
+</script>
