@@ -1,3 +1,3 @@
-import SButtonGroup from '../button/ButtonGroup'
+import SButtonGroup from './ButtonGroup'
 
 export default SButtonGroup

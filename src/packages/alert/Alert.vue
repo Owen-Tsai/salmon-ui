@@ -35,12 +35,12 @@
 </template>
 
 <script>
-  import { computed, ref } from 'vue'
+  import { computed, ref, defineComponent } from 'vue'
   import SIcon from '../icon'
 
   const _types = ['success', 'warning', 'error', 'default']
 
-  export default {
+  export default defineComponent({
     name: 'SAlert',
     components: {
       SIcon
@@ -86,5 +86,5 @@
         visible, largeIcon, close
       }
     }
-  }
+  })
 </script>
