@@ -33,6 +33,34 @@
           <s-avatar class="demo-m-a" icon="user"></s-avatar>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Badges</h2>
+        <div class="demo-content">
+          <s-badge :value="badgeValue" :max="9" class="demo-m-a">
+            <s-button>示例按钮</s-button>
+          </s-badge>
+          <s-badge type="success" dot class="demo-m-a">
+            <s-button>示例按钮</s-button>
+          </s-badge>
+          <s-badge type="error" :value="badgeValue" :max="9" class="demo-m-a">
+            <s-avatar :src="avatar2" size="large"></s-avatar>
+          </s-badge>
+          <s-badge type="warning" dot :top="4" :right="4" class="demo-m-a">
+            <s-avatar :src="avatar2" size="large"></s-avatar>
+          </s-badge>
+          <s-badge value="hot" type="error" class="demo-m-a">
+            <s-button>某功能</s-button>
+          </s-badge>
+
+          <br>
+
+          <s-button-group class="demo-m-a">
+            <s-button icon="plus" @click="changeBadgeValue(1)"></s-button>
+            <s-button icon="minus" @click="changeBadgeValue(-1)"></s-button>
+          </s-button-group>
+        </div>
+      </div>
     </section>
     <section class="dev-demo-col">
       <div class="demo-block">
@@ -121,6 +149,7 @@
   import SButton from "./packages/button"
   import SButtonGroup from './packages/button-group'
   import SAvatar from './packages/avatar'
+  import SBadge from './packages/badge'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -128,13 +157,20 @@
   export default {
     components: {
       SButton, SButtonGroup,
-      SIcon, SAlert, SAvatar
+      SIcon, SAlert, SAvatar, SBadge
     },
     data: () => ({
-      avatar1, avatar2
+      avatar1, avatar2,
+      badgeValue: 3
     }),
     methods: {
+      changeBadgeValue(value) {
+        this.badgeValue += value
 
+        if(this.badgeValue <= 0) {
+          this.badgeValue = 0
+        }
+      }
     }
   }
 </script>
