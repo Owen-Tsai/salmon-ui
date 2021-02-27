@@ -1,0 +1,62 @@
+.sui-tag {
+  display inline-flex
+  align-items center
+  font-size font-size--text.medium
+  min-height 32px
+  padding 0 8px
+  border-radius border-radius--normal
+
+  for type, color in typesMap {
+    &--{type} {
+      border: 1px solid color.normal
+      background-color: color.normal
+      color: color--text.vert
+
+      & ^[0]__close-token:hover {
+        background-color #ffffff
+        color color.normal
+      }
+    }
+  }
+
+  &--warning {
+    color: color--text.dark
+
+    & ^[0]__close-token:hover {
+      color color--text.dark
+    }
+  }
+
+  &__close-token {
+    margin-left 8px
+    border-radius 50%
+    cursor pointer
+    transition all .3s
+  }
+
+  // outlined
+  &.is-outlined {
+    for type, color in typesMap {
+      &^[0]--{type} {
+        border: 1px solid color.normal
+        background-color: color.x-light
+        color: color.normal
+
+        & ^[0]__close-token:hover {
+          background-color color.normal
+          color color--text.vert
+        }
+      }
+    }
+  }
+
+  // sizes
+  &--large {
+    min-height 40px
+  }
+  &--small {
+    min-height 24px
+    font-size font-size--text.small
+    padding 0 4px
+  }
+}

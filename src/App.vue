@@ -96,6 +96,20 @@
             <s-breadcrumb-item>订单详情</s-breadcrumb-item>
           </s-breadcrumb>
         </div>
+
+        <div class="demo-block">
+          <h2>Tags</h2>
+          <div class="demo-content">
+            <s-tag class="demo-m-a" dismissible>Vue.js</s-tag>
+            <s-tag class="demo-m-a" outlined dismissible>Vue.js</s-tag>
+            <s-tag class="demo-m-a" size="large">Web 前端</s-tag>
+            <s-tag class="demo-m-a" size="small" dismissible type="warning">Django</s-tag>
+            <s-tag class="demo-m-a" size="small">小号</s-tag>
+            <s-tag class="demo-m-a" type="error" dismissible>hot</s-tag>
+            <s-tag class="demo-m-a" type="error" dismissible outlined>hot</s-tag>
+            <s-tag class="demo-m-a" type="success">兼容</s-tag>
+          </div>
+        </div>
       </div>
     </section>
     <section class="dev-demo-col">
@@ -173,6 +187,7 @@
   import SBadge from './packages/badge'
   import SBreadcrumb from './packages/breadcrumb'
   import SBreadcrumbItem from './packages/breadcrumb-item'
+  import STag from './packages/tag'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -181,7 +196,8 @@
     components: {
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
-      SBreadcrumb, SBreadcrumbItem
+      SBreadcrumb, SBreadcrumbItem,
+      STag
     },
     data: () => ({
       avatar1, avatar2,
