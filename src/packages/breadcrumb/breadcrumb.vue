@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { defineComponent } from 'vue'
+  import { defineComponent, provide, ref, onMounted } from 'vue'
 
   export default defineComponent({
     name: 'SBreadcrumb',
@@ -21,8 +21,21 @@
       },
       separateIcon: String
     },
-    setup(props, ctx) {
+    setup(props) {
+      const breadcrumb = ref(null)
 
+      provide('props', props)
+
+      onMounted(() => {
+        const items = breadcrumb.value.querySelectorAll('.sui-breadcrumb-item')
+        if(items.length) {
+          items[items.length - 1].setAttribute('aria-current', 'page')
+        }
+      })
+
+      return {
+        breadcrumb
+      }
     }
   })
 </script>

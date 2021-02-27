@@ -76,6 +76,27 @@
           <s-alert class="demo-m-y" type="warning" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Breadcrumb</h2>
+        <div class="demo-content">
+          <s-breadcrumb>
+            <s-breadcrumb-item to="/">首页</s-breadcrumb-item>
+            <s-breadcrumb-item class="demo-m-y">
+              <a href="">订单管理</a>
+            </s-breadcrumb-item>
+            <s-breadcrumb-item>订单列表</s-breadcrumb-item>
+            <s-breadcrumb-item>订单详情</s-breadcrumb-item>
+          </s-breadcrumb>
+
+          <s-breadcrumb separate-icon="chevron-right" class="demo-m-y">
+            <s-breadcrumb-item to="/">首页</s-breadcrumb-item>
+            <s-breadcrumb-item>订单管理</s-breadcrumb-item>
+            <s-breadcrumb-item>订单列表</s-breadcrumb-item>
+            <s-breadcrumb-item>订单详情</s-breadcrumb-item>
+          </s-breadcrumb>
+        </div>
+      </div>
     </section>
     <section class="dev-demo-col">
       <div class="demo-block">
@@ -150,6 +171,8 @@
   import SButtonGroup from './packages/button-group'
   import SAvatar from './packages/avatar'
   import SBadge from './packages/badge'
+  import SBreadcrumb from './packages/breadcrumb'
+  import SBreadcrumbItem from './packages/breadcrumb-item'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -157,7 +180,8 @@
   export default {
     components: {
       SButton, SButtonGroup,
-      SIcon, SAlert, SAvatar, SBadge
+      SIcon, SAlert, SAvatar, SBadge,
+      SBreadcrumb, SBreadcrumbItem
     },
     data: () => ({
       avatar1, avatar2,
