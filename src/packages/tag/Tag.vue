@@ -3,7 +3,7 @@
     :class="[
       'sui-tag',
       `sui-tag--${type}`,
-      `sui-tag--${size}`,
+      size ? `sui-tag--${size}`: '',
       outlined ? 'is-outlined' : ''
     ]"
     @click="handleClick"

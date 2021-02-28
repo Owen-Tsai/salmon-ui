@@ -174,6 +174,20 @@
           </s-button-group>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Radios & Radio Groups</h2>
+        <div class="demo-content">
+          <s-radio v-model="radio1" label="mao" disabled>毛毛</s-radio>
+          <s-radio v-model="radio2" label="cai">蔡蔡</s-radio>
+          <p>radio1: {{ radio1 }}, radio2: {{ radio2 }}</p>
+          <s-radio-group v-model="radio3">
+            <s-radio label="mao">毛毛</s-radio>
+            <s-radio label="cai">蔡蔡</s-radio>
+          </s-radio-group>
+          <p>radio group: {{ radio3 }}</p>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -188,6 +202,8 @@
   import SBreadcrumb from './packages/breadcrumb'
   import SBreadcrumbItem from './packages/breadcrumb-item'
   import STag from './packages/tag'
+  import SRadio from './packages/radio'
+  import SRadioGroup from './packages/radio-group'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -197,11 +213,14 @@
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
-      STag
+      STag, SRadio, SRadioGroup
     },
     data: () => ({
       avatar1, avatar2,
-      badgeValue: 3
+      badgeValue: 3,
+      radio1: 'mao',
+      radio2: '',
+      radio3: ''
     }),
     methods: {
       changeBadgeValue(value) {
