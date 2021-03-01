@@ -104,7 +104,7 @@
             <s-tag class="demo-m-a" outlined dismissible>Vue.js</s-tag>
             <s-tag class="demo-m-a" size="large">Web 前端</s-tag>
             <s-tag class="demo-m-a" size="small" dismissible type="warning">Django</s-tag>
-            <s-tag class="demo-m-a" size="small">小号</s-tag>
+            <s-tag class="demo-m-a" size="small" type="error">不兼容</s-tag>
             <s-tag class="demo-m-a" type="error" dismissible>hot</s-tag>
             <s-tag class="demo-m-a" type="error" dismissible outlined>hot</s-tag>
             <s-tag class="demo-m-a" type="success">兼容</s-tag>

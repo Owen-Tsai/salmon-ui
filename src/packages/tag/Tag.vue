@@ -3,7 +3,6 @@
     :class="[
       'sui-tag',
       `sui-tag--${type}`,
-      size ? `sui-tag--${size}`: '',
       outlined ? 'is-outlined' : ''
     ]"
     @click="handleClick"
@@ -20,31 +19,21 @@
 
 <script>
   import { defineComponent } from 'vue'
-  import SIcon from "../icon/Icon";
+  import SIcon from '../icon/Icon'
 
   const _types = [
     'default', 'success', 'warning', 'error'
   ]
-  const _sizes = [
-    '', 'large', 'small'
-  ]
 
   export default defineComponent({
     name: 'STag',
-    components: {SIcon},
+    components: { SIcon },
     props: {
       type: {
         type: String,
         default: 'default',
         validator: (v) => {
           return _types.includes(v)
-        }
-      },
-      size: {
-        type: String,
-        default: '',
-        validator: (v) => {
-          return _sizes.includes(v)
         }
       },
       outlined: Boolean,
