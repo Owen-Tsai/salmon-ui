@@ -9,13 +9,7 @@
     :aria-disabled="computedDisabled"
   >
     <span class="sui-radio__input">
-      <span
-        class="sui-radio__inner"
-        :class="{
-          'is-checked': model === label,
-          'is-disabled': computedDisabled
-        }"
-      ></span>
+      <span class="sui-radio__inner"></span>
       <input
         type="radio"
         ref="radioRef"
@@ -53,7 +47,6 @@
       name: String,
     },
     setup(props, ctx) {
-      const radioRef = ref()
       const focus = ref(false)
       // injected
       const radioGroup = inject('radioGroup', null)
@@ -79,9 +72,6 @@
           } else {
             ctx.emit('update:modelValue', val)
           }
-
-          console.log(radioRef)
-          radioRef.value.checked = props.modelValue === props.label
         }
       })
 

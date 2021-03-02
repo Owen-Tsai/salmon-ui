@@ -1,0 +1,98 @@
+.sui-checkbox {
+  box-sizing border-box
+  font-size font-size--text.medium
+  color color--text.normal
+  line-height 1.5
+  cursor pointer
+  display inline-flex
+  align-items center
+  transition all .2s
+
+  &__input {
+    outline none
+    line-height 1
+    padding-right 8px
+    position relative
+
+    input[type="checkbox"] {
+      opacity 0
+      position absolute
+      top 0
+      left 0
+      z-index -1
+    }
+
+    ^[0]__inner {
+      width 16px
+      height 16px
+      display inline-block
+      border-radius border-radius--normal
+      border 1px solid color--border
+      vertical-align baseline
+      position relative
+      transition all .2s
+
+      &::before {
+        content ""
+        position absolute
+        width 8px
+        height 4px
+        top 20%
+        left 18%
+        border 2px solid #ffffff
+        border-top 0
+        border-right 0
+        transform rotate(-45deg) scale(0)
+        opacity 0
+        transition all .2s
+      }
+    }
+  }
+
+  &__label {
+    padding-right 12px
+  }
+
+  // states
+  &.is-checked {
+    & ^[0]__input ^[0]__inner {
+      border-color: color--primary.normal
+      background-color: color--primary.normal
+
+      &::before {
+        transform rotate(-45deg) scale(1)
+        opacity 1
+      }
+    }
+  }
+  &.is-disabled {
+    cursor not-allowed
+    & ^[0]__input ^[0]__inner {
+      background-color: color--bg.normal !important
+      border-color: color--border !important
+    }
+    & ^[0]__label {
+      color color--text.light
+    }
+
+    &.is-checked {
+      & ^[0]__input ^[0]__inner {
+        background-color: color--placeholder !important
+      }
+    }
+  }
+
+  &:hover {
+    color: color--primary.normal
+
+    & ^[0]__input ^[0]__inner {
+      border-color color--primary.normal
+    }
+  }
+
+  &.is-focus {
+    & ^[0]__input ^[0]__inner {
+      box-shadow: 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+    }
+  }
+}

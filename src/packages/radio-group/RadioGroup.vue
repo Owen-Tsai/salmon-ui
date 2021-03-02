@@ -12,8 +12,7 @@
   import {
     defineComponent,
     provide,
-    ref, toRefs, reactive,
-    onMounted,
+    toRefs, reactive,
     nextTick
   } from 'vue'
 
@@ -26,9 +25,6 @@
     },
     emits: ['change', 'update:modelValue'],
     setup(props, ctx) {
-      // states
-      const radioGroup = ref(null)
-
       // methods
       const changeEvent = val => {
         ctx.emit('update:modelValue', val)
@@ -42,17 +38,6 @@
         changeEvent,
       }))
 
-      onMounted(() => {
-        const radios = radioGroup.value.querySelectorAll('[type=radio]')
-        const firstEl = radios[0]
-        if (!Array.from(radios).some((radio) => radio.checked) && firstEl) {
-          firstEl.tabIndex = 0
-        }
-      })
-
-      return {
-        radioGroup
-      }
     }
   })
 </script>

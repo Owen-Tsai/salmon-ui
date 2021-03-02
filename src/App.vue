@@ -188,6 +188,28 @@
           <p>radio group: {{ radio3 }}</p>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Checkboxes & Checkbox Groups</h2>
+        <div class="demo-content">
+          <s-checkbox v-model="checkbox1" label="mao">毛毛</s-checkbox>
+          <s-checkbox v-model="checkbox2" label="cai">蔡蔡</s-checkbox>
+          <p>checkbox1: {{ checkbox1 }}, checkbox2: {{ checkbox2 }}</p>
+          <s-checkbox-group v-model="checkbox3">
+            <s-checkbox label="mao">毛毛</s-checkbox>
+            <s-checkbox label="cai">蔡蔡</s-checkbox>
+            <s-checkbox label="da-mao">大毛毛</s-checkbox>
+            <s-checkbox label="da-cai">大蔡蔡</s-checkbox>
+          </s-checkbox-group>
+          <p>checkbox3: {{ checkbox3 }}</p>
+          <s-checkbox-group v-model="checkbox3" :min="1" :max="3">
+            <s-checkbox label="mao">毛毛</s-checkbox>
+            <s-checkbox label="cai">蔡蔡</s-checkbox>
+            <s-checkbox label="da-mao">大毛毛</s-checkbox>
+            <s-checkbox label="da-cai">大蔡蔡</s-checkbox>
+          </s-checkbox-group>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -204,6 +226,8 @@
   import STag from './packages/tag'
   import SRadio from './packages/radio'
   import SRadioGroup from './packages/radio-group'
+  import SCheckbox from './packages/checkbox'
+  import SCheckboxGroup from './packages/checkbox-group'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -213,14 +237,17 @@
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
-      STag, SRadio, SRadioGroup
+      STag, SRadio, SRadioGroup,
+      SCheckbox, SCheckboxGroup
     },
     data: () => ({
       avatar1, avatar2,
       badgeValue: 3,
       radio1: 'mao',
       radio2: '',
-      radio3: ''
+      radio3: '',
+      checkbox1: false, checkbox2: false,
+      checkbox3: []
     }),
     methods: {
       changeBadgeValue(value) {
