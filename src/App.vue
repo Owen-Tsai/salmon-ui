@@ -67,7 +67,7 @@
         <h2>Alerts</h2>
         <div class="demo-content">
           <s-alert class="demo-m-y" icon="smile" title="Greetings!">你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m-y" icon="smile" outlined>你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" icon="smile" outlined>Salmon UI 是一个用于快速开发用户界面的组件库</s-alert>
           <s-alert class="demo-m-y" type="error" icon="wifi-off" :dismissible="false">
             <template v-slot:title>错误</template>
             <span>检测不到可用的网络连接<a style="margin-left: 8px; color: #fff" href="#">重试</a></span>
