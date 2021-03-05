@@ -34,7 +34,7 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
   import { computed, ref, defineComponent } from 'vue'
   import SIcon from '../icon'
 
@@ -50,7 +50,7 @@
       type: {
         type: String,
         default: 'default',
-        validator: (v) => {
+        validator: (v: string) => {
           return _types.includes(v)
         }
       },
