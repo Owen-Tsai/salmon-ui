@@ -180,12 +180,12 @@
         <div class="demo-content">
           <s-radio v-model="radio1" label="mao" disabled>毛毛</s-radio>
           <s-radio v-model="radio2" label="cai">蔡蔡</s-radio>
-          <p>radio1: {{ radio1 }}, radio2: {{ radio2 }}</p>
+          <p>测试：左值为{{ radio1 }}, 右值为{{ radio2 || '未选中' }}</p>
           <s-radio-group v-model="radio3">
             <s-radio label="mao">毛毛</s-radio>
             <s-radio label="cai">蔡蔡</s-radio>
           </s-radio-group>
-          <p>radio group: {{ radio3 }}</p>
+          <p>测试：选中值为{{ radio3 }}</p>
         </div>
       </div>
 
@@ -194,14 +194,14 @@
         <div class="demo-content">
           <s-checkbox v-model="checkbox1" label="mao">毛毛</s-checkbox>
           <s-checkbox v-model="checkbox2" label="cai">蔡蔡</s-checkbox>
-          <p>checkbox1: {{ checkbox1 }}, checkbox2: {{ checkbox2 }}</p>
+          <p>测试：毛毛被选中 {{ checkbox1 }}, 蔡蔡被选中 {{ checkbox2 }}</p>
           <s-checkbox-group v-model="checkbox3">
             <s-checkbox label="mao">毛毛</s-checkbox>
             <s-checkbox label="cai">蔡蔡</s-checkbox>
             <s-checkbox label="da-mao">大毛毛</s-checkbox>
             <s-checkbox label="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
-          <p>checkbox3: {{ checkbox3 }}</p>
+          <p>测试：选中的值包含{{ checkbox3 }}</p>
           <s-checkbox-group v-model="checkbox3" :min="1" :max="3">
             <s-checkbox label="mao">毛毛</s-checkbox>
             <s-checkbox label="cai">蔡蔡</s-checkbox>
