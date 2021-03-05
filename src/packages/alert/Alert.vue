@@ -1,12 +1,14 @@
 <template>
-  <transition name="slide-up-fade">
+  <transition name="slide-up">
     <div
       class="sui-alert"
       :class="[
         `sui-alert--${type}`,
-        outlined ? 'is-outlined' : ''
+        outlined ? 'is-outlined' : '',
+        closing ? 'is-closing' : ''
       ]"
       v-show="visible"
+      ref="alertNode"
     >
       <div class="sui-alert__wrapper">
         <s-icon
@@ -70,6 +72,8 @@
     setup(props, ctx) {
       // state
       const visible = ref(true)
+      const alertNode = ref()
+      const closing = ref(false)
 
       // computed properties
       const largeIcon = computed(() => {
@@ -78,12 +82,19 @@
 
       // methods
       const close = evt => {
+        evt.preventDefault()
+        const dom = alertNode.value
+        console.log(dom)
+        dom.style.height = `${dom.offsetHeight}px`
+        dom.style.height = `${dom.offsetHeight}px`
+        closing.value = true
         visible.value = false
         ctx.emit('close', evt)
       }
 
       return {
-        visible, largeIcon, close
+        visible, largeIcon, close, closing,
+        alertNode
       }
     }
   })

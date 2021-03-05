@@ -60,4 +60,18 @@
       }
     }
   }
+
+  &.is-closing {
+    height: 0 !important
+    margin: 0
+    padding-top: 0
+    padding-bottom: 0
+    transform-origin: 50% 0
+    transition: all 0.3s ease-in-out
+
+    * {
+      opacity 0
+      transition opacity .3s ease-in-out
+    }
+  }
 }
