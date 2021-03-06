@@ -16,6 +16,14 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   },
   overrides: [
+    // Fix no-used-vars when importing ts types in .vue files
+    {
+      files: ["*.vue"],
+      rules: {
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'error'
+      }
+    },
     {
       files: [
         '**/__tests__/*.{j,t}s?(x)',
@@ -24,6 +32,6 @@ module.exports = {
       env: {
         jest: true
       }
-    }
+    },
   ]
 }
