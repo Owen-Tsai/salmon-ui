@@ -61,6 +61,59 @@
           </s-button-group>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Tooltips</h2>
+        <div class="demo-content" id="tooltip-demo">
+          <div></div>
+          <div>
+            <s-tooltip content="top-left" placement="top-start" trigger="click"><s-button>上左</s-button></s-tooltip>
+          </div>
+          <div>
+            <s-tooltip content="top" placement="top" trigger="focus"><s-button>上方</s-button></s-tooltip>
+          </div>
+          <div>
+            <s-tooltip content="top-end" placement="top-end"><s-button>上右</s-button></s-tooltip>
+          </div>
+          <div></div>
+
+          <div>
+            <s-tooltip content="left-start" placement="left-start" theme="light"><s-button>左上</s-button></s-tooltip>
+          </div>
+          <div></div> <div></div> <div></div>
+          <div>
+            <s-tooltip content="right-start" placement="right-start"><s-button>右上</s-button></s-tooltip>
+          </div>
+
+          <div>
+            <s-tooltip content="left" placement="left"><s-button>左侧</s-button></s-tooltip>
+          </div>
+          <div></div> <div></div> <div></div>
+          <div>
+            <s-tooltip content="right" placement="right"><s-button>右侧</s-button></s-tooltip>
+          </div>
+
+          <div>
+            <s-tooltip content="left-end" placement="left-end"><s-button>左下</s-button></s-tooltip>
+          </div>
+          <div></div> <div></div> <div></div>
+          <div>
+            <s-tooltip content="right-end" placement="right-end"><s-button>右下</s-button></s-tooltip>
+          </div>
+
+          <div></div>
+          <div>
+            <s-tooltip content="bottom-start" placement="bottom-start"><s-button>下左</s-button></s-tooltip>
+          </div>
+          <div>
+            <s-tooltip content="bottom" placement="bottom-start"><s-button>下方</s-button></s-tooltip>
+          </div>
+          <div>
+            <s-tooltip content="bottom-end" placement="bottom-start"><s-button>下右</s-button></s-tooltip>
+          </div>
+          <div></div>
+        </div>
+      </div>
     </section>
     <section class="dev-demo-col">
       <div class="demo-block">
@@ -228,6 +281,7 @@
   import SRadioGroup from './packages/radio-group'
   import SCheckbox from './packages/checkbox'
   import SCheckboxGroup from './packages/checkbox-group'
+  import STooltip from './packages/tooltip'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -238,7 +292,8 @@
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
       STag, SRadio, SRadioGroup,
-      SCheckbox, SCheckboxGroup
+      SCheckbox, SCheckboxGroup,
+      STooltip
     },
     data: () => ({
       avatar1, avatar2,
@@ -293,6 +348,19 @@
       align-items center
       justify-content center
       margin 16px
+    }
+  }
+
+  #tooltip-demo {
+    padding 32px 48px
+    display grid
+    grid-template-columns repeat(5, 1fr)
+    grid-gap 8px 0
+
+    div {
+      display flex
+      align-items center
+      justify-content center
     }
   }
 
