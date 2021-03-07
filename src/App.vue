@@ -163,6 +163,28 @@
             <s-tag class="demo-m-a" type="success">兼容</s-tag>
           </div>
         </div>
+
+        <div class="demo-block">
+          <h2>Popovers</h2>
+          <div class="demo-content">
+            <s-popover trigger="click">
+              <template #reference>
+                <s-button type="primary">示例按钮</s-button>
+              </template>
+              <template #default v-if="popoverSwitch">
+                <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
+                <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
+                <div style="text-align: right">
+                  <s-button size="small" type="text" data-popper-close>否</s-button>
+                  <s-button type="primary" size="small" data-popper-close>是</s-button>
+                </div>
+              </template>
+              <template #default v-else>different <b>content</b> is rendered</template>
+            </s-popover>
+
+            <s-button @click="popoverSwitch = !popoverSwitch" style="margin-left: 8px">改变渲染内容</s-button>
+          </div>
+        </div>
       </div>
     </section>
     <section class="dev-demo-col">
@@ -282,6 +304,7 @@
   import SCheckbox from './packages/checkbox'
   import SCheckboxGroup from './packages/checkbox-group'
   import STooltip from './packages/tooltip'
+  import SPopover from './packages/popover'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -293,7 +316,7 @@
       SBreadcrumb, SBreadcrumbItem,
       STag, SRadio, SRadioGroup,
       SCheckbox, SCheckboxGroup,
-      STooltip
+      STooltip, SPopover
     },
     data: () => ({
       avatar1, avatar2,
@@ -302,7 +325,8 @@
       radio2: '',
       radio3: '',
       checkbox1: false, checkbox2: false,
-      checkbox3: []
+      checkbox3: [],
+      popoverSwitch: true
     }),
     methods: {
       changeBadgeValue(value) {
@@ -311,7 +335,7 @@
         if(this.badgeValue <= 0) {
           this.badgeValue = 0
         }
-      }
+      },
     }
   }
 </script>

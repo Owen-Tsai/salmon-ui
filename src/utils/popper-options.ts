@@ -1,8 +1,7 @@
-const basePopperConfig = {
+export const basePopperConfig = {
   animation: 'scale-subtle',
   inertia: true,
   appendTo: () => document.body,
-
 }
 
 export const triggerType = (trigger: string) => {
@@ -16,4 +15,9 @@ export const triggerType = (trigger: string) => {
   }
 }
 
-export default basePopperConfig
+export const hidePopper = (id: number) => {
+  const ref = document.querySelector(`#popper-${id}`)
+  // @ts-ignore
+  const instance = ref._tippy
+  instance.hide()
+}

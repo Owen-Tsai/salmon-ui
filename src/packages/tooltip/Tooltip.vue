@@ -13,7 +13,7 @@
   } from 'vue'
   import tippy from 'tippy.js'
   import { Placement } from '@popperjs/core'
-  import basePopperConfig, { triggerType } from '@/utils/popper-options'
+  import { basePopperConfig, triggerType } from '@/utils/popper-options'
 
   export default defineComponent({
     name: 'STooltip',
