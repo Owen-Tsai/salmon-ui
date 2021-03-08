@@ -115,6 +115,7 @@
         </div>
       </div>
     </section>
+
     <section class="dev-demo-col">
       <div class="demo-block">
         <h2>Alerts</h2>
@@ -171,7 +172,7 @@
               <template #reference>
                 <s-button type="primary">示例按钮</s-button>
               </template>
-              <template #default v-if="popoverSwitch">
+              <template #default>
                 <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
                 <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
                 <div style="text-align: right; padding-bottom: 8px">
@@ -179,7 +180,6 @@
                   <s-button type="primary" size="small" data-popper-close>是</s-button>
                 </div>
               </template>
-              <template #default v-else>different <b>content</b> is rendered</template>
             </s-popover>
 
             <s-popover
@@ -187,15 +187,49 @@
               :content="popperContent"
               trigger="click"
               :placement="placement"
+              style="margin-left: 8px"
             >
               <template #reference>
-                <s-button style="margin-left: 8px">Button</s-button>
+                <s-button>Button</s-button>
               </template>
             </s-popover>
 
             <s-button @click="changePopperContent" style="margin-left: 8px">改变渲染内容</s-button>
             <s-button @click="placement = 'left'" style="margin-left: 8px">改变位置</s-button>
           </div>
+        </div>
+      </div>
+
+      <div class="demo-block">
+        <h2>Cards</h2>
+        <div class="demo-content">
+          <s-card hoverable class="demo-card">
+            <template #header>
+              <div class="demo-card-header">
+                <h3>穿搭指南</h3>
+                <a href="#">More</a>
+              </div>
+            </template>
+
+            <p>纯色的T恤或衬衫</p>
+            <p>卡其色、牛仔蓝、军绿、黑色的裤子，合身宽松</p>
+            <p>避免全黑或全白</p>
+            <p>层次感！夏天也不可以穿太薄</p>
+
+            <template #footer>
+              <div class="demo-card-footer">
+                <s-button type="primary">记下了</s-button>
+              </div>
+            </template>
+          </s-card>
+
+          <s-card class="demo-card-2" :body-style="{padding: 0}">
+            <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="cover">
+            <div>
+              <h4>European Street Beat</h4>
+              <span>https://pdpcy.club/salmon-ui</span>
+            </div>
+          </s-card>
         </div>
       </div>
     </section>
@@ -317,6 +351,7 @@
   import SCheckboxGroup from './packages/checkbox-group'
   import STooltip from './packages/tooltip'
   import SPopover from './packages/popover'
+  import SCard from './packages/card'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -328,7 +363,8 @@
       SBreadcrumb, SBreadcrumbItem,
       STag, SRadio, SRadioGroup,
       SCheckbox, SCheckboxGroup,
-      STooltip, SPopover
+      STooltip, SPopover,
+      SCard
     },
     data: () => ({
       avatar1, avatar2,
@@ -338,7 +374,6 @@
       radio3: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
-      popoverSwitch: true,
       placement: 'bottom',
       popperContent: 'something real good is gonna happen'
     }),
@@ -351,7 +386,6 @@
         }
       },
       changePopperContent() {
-        this.popoverSwitch = !this.popoverSwitch
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
       }
@@ -360,6 +394,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "styles/common/var.styl"
   .dev-demo-container {
     display grid
     grid-template-columns repeat(3, 1fr)
@@ -412,6 +447,46 @@
   }
   .demo-m-a {
     margin 8px
+  }
+
+  .demo-card {
+    p {
+      margin-top 8px
+      margin-bottom 8px
+    }
+    .demo-card-header {
+      display flex
+      align-items center
+      justify-content space-between
+      padding 0 24px
+    }
+    .demo-card-footer {
+      padding 8px 24px
+      text-align right
+    }
+  }
+
+  .demo-card-2 {
+    margin 0 auto
+    margin-top 16px
+    width 60%
+
+    img {
+      width 100%
+      object-fit contain
+    }
+    h4 {
+      margin 0
+      line-height 1.6
+    }
+    span {
+      color: color--text.light
+      font-size: font-size--text.small
+      line-height 2
+    }
+    div {
+      padding 8px 24px
+    }
   }
 </style>
 

@@ -1,0 +1,20 @@
+.sui-card {
+  border: 1px solid color--border
+  background-color: color--bg.light
+  border-radius: border-radius--normal
+  transition all .3s
+
+  .sui-card__header {
+    border-bottom 1px solid color--border
+  }
+  .sui-card__footer {
+    border-top 1px solid color--border
+  }
+
+  &.is-borderless {
+    border: none
+  }
+  &.is-hoverable:hover {
+    box-shadow: box-shadow--normal
+  }
+}

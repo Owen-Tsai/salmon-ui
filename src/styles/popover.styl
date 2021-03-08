@@ -4,6 +4,18 @@
   display inline-block
 }
 
+// color overrides
+.tippy-box {
+  background-color: color--text.normal
+  .tippy-arrow {
+    color: color--text.normal
+  }
+
+  &[data-theme='light-border'] {
+    color: color--text.normal !important
+  }
+}
+
 // popover
 .sui-popover__popper {
   .sui-popover__title {
