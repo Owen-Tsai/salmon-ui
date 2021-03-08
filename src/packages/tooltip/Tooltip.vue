@@ -63,8 +63,24 @@
         }
       })
 
-      watch(() => props.content, (val) => {
-        tippyInstance.setContent(val)
+      watch([
+        () => props.content,
+        () => props.placement,
+        () => props.useHTML,
+        () => props.hideOnClick,
+        () => props.trigger,
+        () => props.offset,
+        () => props.theme
+      ], (val) => {
+        tippyInstance.setProps({
+          content: val[0],
+          placement: val[1],
+          allowHTML: val[2],
+          hideOnClick: val[3],
+          trigger: triggerType(val[4]),
+          offset: val[5],
+          theme: val[6]
+        })
       })
 
       return {

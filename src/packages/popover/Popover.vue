@@ -5,14 +5,17 @@
     </div>
     <div class="sui-popover__popper" ref="popperEl">
       <div class="sui-popover__title" v-if="title">{{ title }}</div>
-      <slot>{{ content }}</slot>
+      <div class="sui-popover__content">
+        <slot>{{ content }}</slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
   import {
-    defineComponent, onMounted, PropType, ref
+    defineComponent, onMounted, PropType, ref,
+    watch
   } from 'vue'
   import { Placement } from '@popperjs/core'
   import {basePopperConfig, triggerType} from '@/utils/popper-options'
@@ -36,32 +39,50 @@
         default: 'hover'
       },
       offset: Object as PropType<[number, number]>,
+      maxWidth: [Number, String]
     },
     setup(props, ctx) {
       let tippyInstance: any = null
       const referenceEl: any = ref<null | HTMLElement>(null)
       const popperEl: any = ref<null | HTMLElement>(null)
 
-      onMounted(() => {
-        const options = {
-          content: popperEl.value,
-          placement: props.placement,
-          hideOnClick: props.hideOnClick,
-          trigger: triggerType(props.trigger),
-          offset: props.offset,
-          theme: 'light-border',
-          interactive: true,
-          onHide: (instance) => { ctx.emit('before-hide', instance) },
-          onShow: (instance) => { ctx.emit('before-show', instance) },
-          onHidden: (instance) => { ctx.emit('after-hide', instance) },
-          onShown: (instance) => { ctx.emit('after-hide', instance) }
-        }
+      const options = {
+        placement: props.placement,
+        hideOnClick: props.hideOnClick,
+        trigger: triggerType(props.trigger),
+        offset: props.offset,
+        theme: 'light-border',
+        interactive: true,
+        onHide: (instance) => { ctx.emit('before-hide', instance) },
+        onShow: (instance) => { ctx.emit('before-show', instance) },
+        onHidden: (instance) => { ctx.emit('after-hide', instance) },
+        onShown: (instance) => { ctx.emit('after-hide', instance) }
+      }
 
+      onMounted(() => {
         tippyInstance = tippy(referenceEl.value, {
-          ...basePopperConfig, ...options
+          ...basePopperConfig, ...options, ...{
+            content: popperEl.value,
+          }
         })
 
         registerCloseHandler()
+      })
+
+      watch([
+        () => props.placement,
+        () => props.maxWidth,
+        () => props.trigger,
+        () => props.offset,
+        () => props.hideOnClick
+      ], (val) => {
+        tippyInstance.setProps({
+          placement: val[0],
+          maxWidth: val[1],
+          trigger: val[2],
+          offset: val[3],
+          hideOnClick: val[4]
+        })
       })
 
       const registerCloseHandler = () => {

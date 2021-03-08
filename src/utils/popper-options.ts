@@ -4,7 +4,7 @@ export const basePopperConfig = {
   appendTo: () => document.body,
 }
 
-export const triggerType = (trigger: string) => {
+export const triggerType = (trigger: any) => {
   switch (trigger) {
     case 'hover':
       return 'mouseenter'
@@ -12,6 +12,8 @@ export const triggerType = (trigger: string) => {
       return 'click'
     case 'focus':
       return 'focusin'
+    default:
+      return 'mouseenter'
   }
 }
 

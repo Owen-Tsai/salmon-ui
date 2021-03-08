@@ -24,6 +24,15 @@
   }
 }
 
+@keyframes rotate {
+  from {
+    transform rotate(0)
+  }
+  to {
+    transform rotate(360deg)
+  }
+}
+
 .slide-up-leave {
   animation: slideUpOut 0.3s ease-in-out
   animation-fill-mode: both
@@ -37,16 +46,8 @@
 
 .zoom-in-center-enter-active,
 .zoom-in-center-leave-active {
-  transition all .3s ease-in-out
-}
-
-@keyframes rotate {
-  from {
-    transform rotate(0)
-  }
-  to {
-    transform rotate(360deg)
-  }
+  transition all .3s ease-out
+  transition-timing-function cubic-bezier(.54,1.5,.38,1.11)
 }
 
 .rotating {

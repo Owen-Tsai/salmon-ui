@@ -174,7 +174,7 @@
               <template #default v-if="popoverSwitch">
                 <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
                 <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
-                <div style="text-align: right">
+                <div style="text-align: right; padding-bottom: 8px">
                   <s-button size="small" type="text" data-popper-close>否</s-button>
                   <s-button type="primary" size="small" data-popper-close>是</s-button>
                 </div>
@@ -182,7 +182,19 @@
               <template #default v-else>different <b>content</b> is rendered</template>
             </s-popover>
 
-            <s-button @click="popoverSwitch = !popoverSwitch" style="margin-left: 8px">改变渲染内容</s-button>
+            <s-popover
+              title="标题"
+              :content="popperContent"
+              trigger="click"
+              :placement="placement"
+            >
+              <template #reference>
+                <s-button style="margin-left: 8px">Button</s-button>
+              </template>
+            </s-popover>
+
+            <s-button @click="changePopperContent" style="margin-left: 8px">改变渲染内容</s-button>
+            <s-button @click="placement = 'left'" style="margin-left: 8px">改变位置</s-button>
           </div>
         </div>
       </div>
@@ -326,7 +338,9 @@
       radio3: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
-      popoverSwitch: true
+      popoverSwitch: true,
+      placement: 'bottom',
+      popperContent: 'something real good is gonna happen'
     }),
     methods: {
       changeBadgeValue(value) {
@@ -336,6 +350,11 @@
           this.badgeValue = 0
         }
       },
+      changePopperContent() {
+        this.popoverSwitch = !this.popoverSwitch
+        this.popperContent =
+          this.popperContent === '970212' ? '961127' : '970212'
+      }
     }
   }
 </script>
