@@ -4,6 +4,11 @@ export const basePopperConfig = {
   appendTo: () => document.body,
 }
 
+export const dropdownPopperConfig = {
+  animation: 'shift-away',
+  appendTo: () => document.body
+}
+
 export const triggerType = (trigger: any) => {
   switch (trigger) {
     case 'hover':
@@ -15,11 +20,4 @@ export const triggerType = (trigger: any) => {
     default:
       return 'mouseenter'
   }
-}
-
-export const hidePopper = (id: number) => {
-  const ref = document.querySelector(`#popper-${id}`)
-  // @ts-ignore
-  const instance = ref._tippy
-  instance.hide()
 }

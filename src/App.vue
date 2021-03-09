@@ -114,6 +114,22 @@
           <div></div>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Dropdowns</h2>
+        <div class="demo-content">
+          <s-dropdown>
+            <template #reference>
+              <s-button>Test</s-button>
+            </template>
+            <s-dropdown-menu>
+              <s-dropdown-item>number 1 option</s-dropdown-item>
+              <s-dropdown-item>number 2 option</s-dropdown-item>
+              <s-dropdown-item>number 3 option</s-dropdown-item>
+            </s-dropdown-menu>
+          </s-dropdown>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -150,8 +166,9 @@
             <s-breadcrumb-item>订单详情</s-breadcrumb-item>
           </s-breadcrumb>
         </div>
+      </div>
 
-        <div class="demo-block">
+      <div class="demo-block">
           <h2>Tags</h2>
           <div class="demo-content">
             <s-tag class="demo-m-a" dismissible>Vue.js</s-tag>
@@ -165,38 +182,37 @@
           </div>
         </div>
 
-        <div class="demo-block">
-          <h2>Popovers</h2>
-          <div class="demo-content">
-            <s-popover trigger="click">
-              <template #reference>
-                <s-button type="primary">示例按钮</s-button>
-              </template>
-              <template #default>
-                <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
-                <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
-                <div style="text-align: right; padding-bottom: 8px">
-                  <s-button size="small" type="text" data-popper-close>否</s-button>
-                  <s-button type="primary" size="small" data-popper-close>是</s-button>
-                </div>
-              </template>
-            </s-popover>
+      <div class="demo-block">
+        <h2>Popovers</h2>
+        <div class="demo-content">
+          <s-popover trigger="click">
+            <template #reference>
+              <s-button type="primary">示例按钮</s-button>
+            </template>
+            <template #default>
+              <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
+              <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
+              <div style="text-align: right; padding-bottom: 8px">
+                <s-button size="small" type="text" data-popper-close>否</s-button>
+                <s-button type="primary" size="small" data-popper-close>是</s-button>
+              </div>
+            </template>
+          </s-popover>
 
-            <s-popover
-              title="标题"
-              :content="popperContent"
-              trigger="click"
-              :placement="placement"
-              style="margin-left: 8px"
-            >
-              <template #reference>
-                <s-button>Button</s-button>
-              </template>
-            </s-popover>
+          <s-popover
+            title="标题"
+            :content="popperContent"
+            trigger="click"
+            style="margin-left: 8px"
+            :disabled="popoverDisabled"
+          >
+            <template #reference>
+              <s-button :disabled="popoverDisabled">Button</s-button>
+            </template>
+          </s-popover>
 
-            <s-button @click="changePopperContent" style="margin-left: 8px">改变渲染内容</s-button>
-            <s-button @click="placement = 'left'" style="margin-left: 8px">改变位置</s-button>
-          </div>
+          <s-button @click="changePopperContent" style="margin-left: 8px">改变渲染内容</s-button>
+          <s-button @click="popoverDisabled = !popoverDisabled" style="margin-left: 8px">改变可见性</s-button>
         </div>
       </div>
 
@@ -352,6 +368,9 @@
   import STooltip from './packages/tooltip'
   import SPopover from './packages/popover'
   import SCard from './packages/card'
+  import SDropdownItem from './packages/dropdown-menu-item'
+  import SDropdownMenu from './packages/dropdown-menu'
+  import SDropdown from './packages/dropdown'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -364,7 +383,8 @@
       STag, SRadio, SRadioGroup,
       SCheckbox, SCheckboxGroup,
       STooltip, SPopover,
-      SCard
+      SCard,
+      SDropdown, SDropdownItem, SDropdownMenu
     },
     data: () => ({
       avatar1, avatar2,
@@ -374,7 +394,7 @@
       radio3: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
-      placement: 'bottom',
+      popoverDisabled: false,
       popperContent: 'something real good is gonna happen'
     }),
     methods: {

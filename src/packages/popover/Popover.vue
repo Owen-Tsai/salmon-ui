@@ -18,7 +18,7 @@
     watch
   } from 'vue'
   import { Placement } from '@popperjs/core'
-  import {basePopperConfig, triggerType} from '@/utils/popper-options'
+  import { basePopperConfig, triggerType } from '@/utils/popper-options'
   import tippy from 'tippy.js'
 
   export default defineComponent({
@@ -39,12 +39,13 @@
         default: 'hover'
       },
       offset: Object as PropType<[number, number]>,
-      maxWidth: [Number, String]
+      maxWidth: [Number, String],
+      disabled: Boolean
     },
     setup(props, ctx) {
       let tippyInstance: any = null
-      const referenceEl: any = ref<null | HTMLElement>(null)
-      const popperEl: any = ref<null | HTMLElement>(null)
+      const referenceEl: any = ref<null | Element>(null)
+      const popperEl: any = ref<null | Element>(null)
 
       const options = {
         placement: props.placement,
@@ -67,6 +68,10 @@
         })
 
         registerCloseHandler()
+
+        if(props.disabled) {
+          tippyInstance.disable()
+        }
       })
 
       watch([
@@ -83,6 +88,14 @@
           offset: val[3],
           hideOnClick: val[4]
         })
+      })
+
+      watch(() => props.disabled, (val) => {
+        if(val) {
+          tippyInstance.disable()
+        } else {
+          tippyInstance.enable()
+        }
       })
 
       const registerCloseHandler = () => {
