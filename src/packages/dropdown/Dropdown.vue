@@ -3,7 +3,11 @@
     <div class="sui-dropdown__reference" ref="referenceEl">
       <slot name="reference"></slot>
     </div>
-    <div class="sui-dropdown__popper" ref="popperEl">
+    <div
+      class="sui-dropdown__popper"
+      ref="popperEl"
+      :style="computedStyle"
+    >
       <slot></slot>
     </div>
   </div>
@@ -22,7 +26,7 @@
   } from 'vue'
   import tippy from 'tippy.js'
   import { Placement } from 'tippy.js'
-  import { dropdownPopperConfig, triggerType } from '@/utils/popper-options'
+  import {dropdownPopperConfig, themeType, triggerType} from '@/utils/popper-options'
 
   const _placements = [
     'top', 'top-start', 'top-end',
@@ -49,11 +53,8 @@
         type: Boolean,
         default: true
       },
-      theme: {
-        type: String,
-        default: 'light-border'
-      },
-      disabled: Boolean
+      disabled: Boolean,
+      maxHeight: Number
     },
     setup(props, ctx) {
       let tippyInstance: any = null
@@ -65,15 +66,20 @@
         placement: props.placement,
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
-        theme: 'light-border',
+        theme: themeType('light'),
         interactive: true,
         onHide: (instance) => { ctx.emit('before-hide', instance) },
-        onShow: (instance) => {
-          ctx.emit('before-show', instance)
-        },
+        onShow: (instance) => {ctx.emit('before-show', instance)},
         onHidden: (instance) => { ctx.emit('after-hide', instance) },
         onShown: (instance) => { ctx.emit('after-hide', instance) }
       }
+
+      const computedStyle = computed(() => {
+        return props.maxHeight ?
+          {
+            maxHeight: `${props.maxHeight}px`
+          } : {}
+      })
 
       onMounted(() => {
         if(referenceEl.value) {
@@ -127,7 +133,8 @@
 
       return {
         referenceEl, popperEl,
-        commandHandler, handleClick
+        commandHandler, handleClick,
+        computedStyle
       }
     }
   })

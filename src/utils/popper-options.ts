@@ -1,12 +1,10 @@
 export const basePopperConfig = {
   animation: 'scale-subtle',
   inertia: true,
-  appendTo: () => document.body,
 }
 
 export const dropdownPopperConfig = {
   animation: 'shift-away',
-  appendTo: () => document.body
 }
 
 export const triggerType = (trigger: any) => {
@@ -19,5 +17,11 @@ export const triggerType = (trigger: any) => {
       return 'focusin'
     default:
       return 'mouseenter'
+  }
+}
+
+export const themeType = (theme: string) => {
+  if(theme === 'light') {
+    return 'light-border'
   }
 }

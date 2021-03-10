@@ -1,19 +1,64 @@
 .sui-dropdown {
   display inline-block
+  box-sizing border-box
 
   &-menu {
     list-style none
     margin 0
     padding 0
+    box-sizing border-box
 
     &__item {
+      position relative
+      box-sizing border-box
       color: color--text.normal
       font-size: font-size--text.medium
-      padding 8px 0
+      padding 8px 12px
+      cursor: pointer
+      transition all .3s
+      outline none
+      display flex
+      align-items center
+      user-select none
 
-      &:hover {
-        background-color: color--primary.x-light
+      &__icon {
+        font-size 18px
+        margin-right 8px
       }
+
+      // states
+      &:not(.is-disabled) {
+        &:hover {
+          background-color: color--primary.x-light
+        }
+        &:focus {
+          box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+        }
+      }
+      &.is-disabled {
+        color color--placeholder
+        cursor: not-allowed
+      }
+      &.is-divided {
+        margin-top 8px
+        &:before {
+          content ""
+          position absolute
+          box-sizing border-box
+          top -4px
+          left 0
+          width 100%
+          border-top 1px solid color--border
+        }
+      }
+    }
+  }
+
+  .tippy-content {
+    padding 0
+
+    ^[0]-menu {
+      padding 4px 0
     }
   }
 }

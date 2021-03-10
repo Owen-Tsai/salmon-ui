@@ -40,6 +40,7 @@
       const instance = getCurrentInstance()
 
       const handleClick = (evt) => {
+        if(props.disabled) return
         if(dropdownInstance.hideOnClick?.value) {
           dropdownInstance.handleClick()
         }

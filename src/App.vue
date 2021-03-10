@@ -118,14 +118,28 @@
       <div class="demo-block">
         <h2>Dropdowns</h2>
         <div class="demo-content">
-          <s-dropdown>
+          <s-dropdown class="demo-m-a" trigger="hover" @command="log">
             <template #reference>
-              <s-button>Test</s-button>
+              <s-button>Hover 触发</s-button>
             </template>
             <s-dropdown-menu>
-              <s-dropdown-item>number 1 option</s-dropdown-item>
-              <s-dropdown-item>number 2 option</s-dropdown-item>
-              <s-dropdown-item>number 3 option</s-dropdown-item>
+              <s-dropdown-item @click="log('clicked 1st')">number 1 option</s-dropdown-item>
+              <s-dropdown-item command="2nd">number 2 option</s-dropdown-item>
+              <s-dropdown-item command="3rd">number 3 option</s-dropdown-item>
+            </s-dropdown-menu>
+          </s-dropdown>
+
+          <s-dropdown class="demo-m-a">
+            <template #reference>
+              <s-button type="primary">Click 触发</s-button>
+            </template>
+            <s-dropdown-menu>
+              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
+              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
+              <s-dropdown-item icon="umbrella">雨伞图标</s-dropdown-item>
+              <s-dropdown-item icon="lock" :disabled="popoverDisabled">禁用选项</s-dropdown-item>
+              <s-dropdown-item icon="lock" divided>分割选项</s-dropdown-item>
+              <s-dropdown-item>没有图标的选项</s-dropdown-item>
             </s-dropdown-menu>
           </s-dropdown>
         </div>
@@ -408,6 +422,9 @@
       changePopperContent() {
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
+      },
+      log(e) {
+        console.log(e)
       }
     }
   }
