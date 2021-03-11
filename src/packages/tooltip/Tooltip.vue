@@ -13,7 +13,11 @@
   } from 'vue'
   import tippy from 'tippy.js'
   import { Placement } from '@popperjs/core'
-  import { basePopperConfig, triggerType } from '@/utils/popper-options'
+  import {
+    basePopperConfig,
+    themeType,
+    triggerType
+  } from '@/utils/popper-options'
 
   export default defineComponent({
     name: 'STooltip',
@@ -52,7 +56,7 @@
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
         offset: props.offset,
-        theme: props.theme === 'light' ? 'light-border' : ''
+        theme: themeType(props.theme)
       }
 
       onMounted(() => {

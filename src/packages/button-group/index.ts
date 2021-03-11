@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import SButtonGroup from './ButtonGroup.vue'
+import ButtonGroup from './ButtonGroup.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-SButtonGroup.install = (app: App) => {
-  app.component(SButtonGroup.name, SButtonGroup)
-}
-
-export default SButtonGroup
+export default SFCWithInstall(ButtonGroup)

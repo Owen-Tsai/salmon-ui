@@ -1,8 +1,4 @@
-import { App } from 'vue'
 import Alert from './Alert.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-Alert.install = (app: App): void => {
-  app.component(Alert.name, Alert)
-}
-
-export default Alert
+export default SFCWithInstall(Alert)

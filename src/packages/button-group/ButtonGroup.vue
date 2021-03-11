@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { defineComponent, provide, ref } from 'vue'
 
   const _sizes = ['', 'large', 'small']
@@ -14,7 +14,7 @@
     props: {
       size: {
         type: String,
-        validator: (v) => {
+        validator: (v: string) => {
           return _sizes.includes(v)
         }
       }

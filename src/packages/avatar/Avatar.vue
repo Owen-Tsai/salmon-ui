@@ -13,8 +13,8 @@
   </span>
 </template>
 
-<script>
-  import SIcon from '../icon/Icon'
+<script lang="ts">
+  import SIcon from '../icon'
   import { defineComponent, ref, computed } from 'vue'
 
   const _sizes = [ 'large', 'small', '' ]
@@ -32,18 +32,18 @@
       size: {
         type: [String, Number],
         default: '',
-        validator: (v) => {
+        validator: (v: string | number) => {
           if(typeof v === 'string') {
             return _sizes.includes(v)
           }
 
-          return typeof v === 'number'
+          return true
         }
       },
       shape: {
         type: String,
         default: 'circle',
-        validator: (v) => {
+        validator: (v: string) => {
           return ['circle', 'square'].includes(v)
         }
       },
@@ -57,9 +57,11 @@
       // state
       const hasLoadError = ref(false)
 
+      console.log(props)
+
       // classes
       const cls = computed(() => {
-        const arr = []
+        const arr: string[] = []
         const prefix = 'sui-avatar--'
         if(typeof props.size === 'string' && props.size !== '') {
           arr.push(`${prefix}${props.size}`)

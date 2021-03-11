@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import SAvatar from './Avatar.vue'
+import Avatar from './Avatar.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-SAvatar.install = (app: App) => {
-  app.component(SAvatar.name, SAvatar)
-}
-
-export default SAvatar
+export default SFCWithInstall(Avatar)

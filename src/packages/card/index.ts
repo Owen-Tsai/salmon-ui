@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import SCard from './Card.vue'
+import Card from './Card.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-SCard.install = (app: App) => {
-  app.component(SCard.name, SCard)
-}
-
-export default SCard
+export default SFCWithInstall(Card)

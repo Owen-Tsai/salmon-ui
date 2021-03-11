@@ -1,8 +1,4 @@
-import { App } from 'vue'
 import Tooltip from './Tooltip.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-Tooltip.install = (app: App) => {
-  app.component(Tooltip.name, Tooltip)
-}
-
-export default Tooltip
+export default SFCWithInstall(Tooltip)

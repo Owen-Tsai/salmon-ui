@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import SBadge from './Badge.vue'
+import Badge from './Badge.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-SBadge.install = (app: App) => {
-  app.component(SBadge.name, SBadge)
-}
-
-export default SBadge
+export default SFCWithInstall(Badge)

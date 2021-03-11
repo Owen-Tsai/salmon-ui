@@ -1194,6 +1194,11 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/feather-icons@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.npm.taobao.org/@types/feather-icons/download/@types/feather-icons-4.7.0.tgz#ec66bc046bcd1513835f87541ecef54b50c57ec9"
+  integrity sha1-7Ga8BGvNFRODX4dUHs71S1DFfsk=
+
 "@types/glob@^7.1.1":
   version "7.1.3"
   resolved "https://registry.npm.taobao.org/@types/glob/download/@types/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"

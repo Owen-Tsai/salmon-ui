@@ -17,9 +17,9 @@
   </span>
 </template>
 
-<script>
+<script lang="ts">
   import { defineComponent } from 'vue'
-  import SIcon from '../icon/Icon'
+  import SIcon from '../icon'
 
   const _types = [
     'default', 'success', 'warning', 'error'
@@ -32,7 +32,7 @@
       type: {
         type: String,
         default: 'default',
-        validator: (v) => {
+        validator: (v: string) => {
           return _types.includes(v)
         }
       },

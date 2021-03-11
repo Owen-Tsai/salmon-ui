@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import STag from './Tag.vue'
+import Tag from './Tag.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-STag.install = (app: App) => {
-  app.component(STag.name, STag)
-}
-
-export default STag
+export default SFCWithInstall(Tag)

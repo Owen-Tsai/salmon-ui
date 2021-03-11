@@ -2,10 +2,11 @@
   <span class="sui-icon" v-html="renderedIcon" aria-hidden="true"></span>
 </template>
 
-<script>
+<script lang="ts">
+  import { defineComponent } from 'vue'
   import feather from 'feather-icons'
 
-  export default {
+  export default defineComponent({
     name: 'SIcon',
     props: {
       name: {
@@ -20,12 +21,12 @@
       }
     },
     computed: {
-      renderedIcon() {
-        const fill = this.duoToneColor ? this.duoToneColor : 'none'
-        const stroke = this.color ? this.color : 'currentColor'
+      renderedIcon(): any {
+        const fill: string = this.duoToneColor ? this.duoToneColor : 'none'
+        const stroke: string = this.color ? this.color : 'currentColor'
 
         return feather.icons[this.name].toSvg({
-          'stroke-width': this.strokeWidth,
+          'stroke-width': this.strokeWidth as string | number,
           'width': '1em',
           'height': '1em',
           'fill': fill,
@@ -33,7 +34,7 @@
         })
       }
     }
-  }
+  })
 </script>
 
 <style lang="stylus" scoped>

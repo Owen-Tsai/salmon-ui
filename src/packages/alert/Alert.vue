@@ -5,7 +5,7 @@
       :class="[
         `sui-alert--${type}`,
         outlined ? 'is-outlined' : '',
-        closing ? 'is-closing' : ''
+        visible ? '' : 'is-closing'
       ]"
       v-show="visible"
       ref="alertNode"
@@ -73,7 +73,6 @@
       // state
       const visible = ref(true)
       const alertNode = ref()
-      const closing = ref(false)
 
       // computed properties
       const largeIcon = computed(() => {
@@ -84,16 +83,14 @@
       const close = evt => {
         evt.preventDefault()
         const dom = alertNode.value
-        console.log(dom)
         dom.style.height = `${dom.offsetHeight}px`
         dom.style.height = `${dom.offsetHeight}px`
-        closing.value = true
         visible.value = false
         ctx.emit('close', evt)
       }
 
       return {
-        visible, largeIcon, close, closing,
+        visible, largeIcon, close,
         alertNode
       }
     }

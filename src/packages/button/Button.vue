@@ -22,9 +22,9 @@
   </button>
 </template>
 
-<script>
-  import SIcon from '../icon/Icon'
-  import { computed, defineComponent, inject } from 'vue'
+<script lang="ts">
+  import SIcon from '../icon'
+  import { computed, defineComponent, inject, Ref } from 'vue'
 
   const _types = [
     'default', 'primary', 'outlined', 'text'
@@ -40,26 +40,26 @@
       type: {
         type: String,
         default: 'default',
-        validator: (v) => {
+        validator: (v: string) => {
           return _types.includes(v)
         }
       },
       nativeType: {
         type: String,
         default: 'button',
-        validator: (v) => {
+        validator: (v: string) => {
           return _nativeTypes.includes(v)
         }
       },
       size: {
         type: String,
-        validator: (v) => {
+        validator: (v: string) => {
           return _sizes.includes(v)
         }
       },
       shape: {
         type: String,
-        validator: (v) => {
+        validator: (v: string) => {
           return _shapes.includes(v)
         }
       },
@@ -67,7 +67,7 @@
       iconPlacement: {
         type: String,
         default: 'left',
-        validator: (v) => {
+        validator: (v: string) => {
           return ['left', 'right'].includes(v)
         }
       },
@@ -79,11 +79,11 @@
     emits: ['click'],
     setup(props, ctx) {
       // injected
-      const buttonGroupSize = inject('buttonGroupSize', '')
+      const buttonGroupSize: Ref<string> | undefined = inject('buttonGroupSize')
 
       // computed
       const computedSize = computed(() => {
-        return buttonGroupSize.value || props.size
+        return buttonGroupSize?.value || props.size
       })
       const computedDisabled = computed(() => {
         return props.disabled

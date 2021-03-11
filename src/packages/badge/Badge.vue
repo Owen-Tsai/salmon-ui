@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { defineComponent, computed } from 'vue'
 
   const _types = ['default', 'success', 'warning', 'error']
@@ -25,7 +25,7 @@
       type: {
         type: String,
         default: 'default',
-        validator: (v) => {
+        validator: (v: string) => {
           return _types.includes(v)
         }
       },
@@ -52,7 +52,7 @@
       })
 
       const posStyle = computed(() => {
-        const style = {}
+        const style: Partial<CSSStyleDeclaration> = {}
 
         if(props.top) {
           style.top = `${props.top}px`

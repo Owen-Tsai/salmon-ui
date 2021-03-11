@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { defineComponent, provide, ref, onMounted } from 'vue'
 
   export default defineComponent({
@@ -22,7 +22,7 @@
       separateIcon: String
     },
     setup(props) {
-      const breadcrumb = ref(null)
+      const breadcrumb = ref()
 
       provide('props', props)
 

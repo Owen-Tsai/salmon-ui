@@ -1,8 +1,4 @@
-import { App } from 'vue'
-import SBreadcrumb from './breadcrumb.vue'
+import Breadcrumb from './breadcrumb.vue'
+import { SFCWithInstall } from '@/utils/types'
 
-SBreadcrumb.install = (app: App) => {
-  app.component(SBreadcrumb.name, SBreadcrumb)
-}
-
-export default SBreadcrumb
+export default SFCWithInstall(Breadcrumb)
