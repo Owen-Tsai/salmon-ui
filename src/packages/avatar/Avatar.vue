@@ -57,8 +57,6 @@
       // state
       const hasLoadError = ref(false)
 
-      console.log(props)
-
       // classes
       const cls = computed(() => {
         const arr: string[] = []

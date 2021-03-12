@@ -1,0 +1,47 @@
+.sui-switch {
+  position relative
+  display inline-block
+  box-sizing border-box
+  height 24px
+  border 1px solid color--border
+  background-color color--placeholder
+  border-radius @height
+  outline none
+  cursor: pointer
+  transition all .2s ease-in-out
+
+  &::after {
+    content ""
+    position absolute
+    height 18px
+    width 18px
+    border-radius 50%
+    left 2px
+    top 2px
+    background-color #ffffff
+    transition transform .3s cubic-bezier(.78,.14,.15,.86)
+  }
+
+  &.is-checked {
+    border-color: color--primary.normal
+    background-color: color--primary.normal
+
+    &::after {
+      transform translateX(calc(100% + 9px - 3px))
+    }
+  }
+
+  &.is-disabled {
+    opacity 0.4
+    cursor not-allowed
+  }
+
+  &:not(.is-disabled):focus {
+    box-shadow: 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+  }
+
+  &__input {
+    opacity 0
+    display none
+  }
+}

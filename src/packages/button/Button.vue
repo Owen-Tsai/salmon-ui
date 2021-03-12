@@ -24,7 +24,7 @@
 
 <script lang="ts">
   import SIcon from '../icon'
-  import { computed, defineComponent, inject, Ref } from 'vue'
+  import { computed, defineComponent, inject } from 'vue'
 
   const _types = [
     'default', 'primary', 'outlined', 'text'
@@ -79,7 +79,7 @@
     emits: ['click'],
     setup(props, ctx) {
       // injected
-      const buttonGroupSize: Ref<string> | undefined = inject('buttonGroupSize')
+      const buttonGroupSize: any = inject('buttonGroupSize', {})
 
       // computed
       const computedSize = computed(() => {

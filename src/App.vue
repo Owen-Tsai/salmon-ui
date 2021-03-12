@@ -144,6 +144,14 @@
           </s-dropdown>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Switches</h2>
+        <div class="demo-content">
+          <s-switch v-model="switchVal" class="demo-m-a"></s-switch>
+          <s-switch v-model="switchVal" disabled class="demo-m-a"></s-switch>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -385,6 +393,7 @@
   import SDropdownItem from './packages/dropdown-menu-item'
   import SDropdownMenu from './packages/dropdown-menu'
   import SDropdown from './packages/dropdown'
+  import SSwitch from './packages/switch'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -398,7 +407,8 @@
       SCheckbox, SCheckboxGroup,
       STooltip, SPopover,
       SCard,
-      SDropdown, SDropdownItem, SDropdownMenu
+      SDropdown, SDropdownItem, SDropdownMenu,
+      SSwitch
     },
     data: () => ({
       avatar1, avatar2,
@@ -409,7 +419,8 @@
       checkbox1: false, checkbox2: false,
       checkbox3: [],
       popoverDisabled: false,
-      popperContent: 'something real good is gonna happen'
+      popperContent: 'something real good is gonna happen',
+      switchVal: false
     }),
     methods: {
       changeBadgeValue(value) {
