@@ -150,6 +150,28 @@
         <div class="demo-content">
           <s-switch v-model="switchVal" class="demo-m-a"></s-switch>
           <s-switch v-model="switchVal" disabled class="demo-m-a"></s-switch>
+          <s-switch
+            v-model="switchVal"
+            class="demo-m-a"
+            activeText="开" inactiveText="关"
+          ></s-switch>
+          <s-switch
+            v-model="switchVal"
+            class="demo-m-a"
+            activeText="开开" inactiveText="关关"
+            :min-width="64"
+          ></s-switch>
+          <s-switch
+            v-model="switchVal"
+            class="demo-m-a"
+            activeIcon="check" inactiveIcon="x"
+          ></s-switch>
+          <s-switch
+            v-model="switchVal"
+            activeColor="#28a745"
+            inactiveColor="#d13e32"
+            class="demo-m-a"
+          ></s-switch>
         </div>
       </div>
     </section>
@@ -271,6 +293,7 @@
         </div>
       </div>
     </section>
+
     <section class="dev-demo-col">
       <div class="demo-block">
         <h2>Buttons</h2>

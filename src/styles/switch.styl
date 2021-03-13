@@ -3,31 +3,61 @@
   display inline-block
   box-sizing border-box
   height 24px
-  border 1px solid color--border
+  border 1px solid transparent
   background-color color--placeholder
   border-radius @height
   outline none
   cursor: pointer
   transition all .2s ease-in-out
+  vertical-align middle
 
   &::after {
     content ""
     position absolute
     height 18px
     width 18px
-    border-radius 50%
+    border-radius 18px
     left 2px
     top 2px
     background-color #ffffff
-    transition transform .3s cubic-bezier(.78,.14,.15,.86)
+    transition all .3s cubic-bezier(.78,.14,.15,.86)
+  }
+
+  &__label {
+    position absolute
+    line-height 24px
+    top 0
+    color #ffffff
+
+    &--active {
+      left 8px
+
+      & .sui-icon {
+        margin-left -2px
+      }
+    }
+    &--inactive {
+      right 8px
+
+      & .sui-icon {
+        margin-right -2px
+      }
+    }
+
+    .sui-icon {
+      font-size 16px
+      height 100%
+      width 100%
+    }
   }
 
   &.is-checked {
-    border-color: color--primary.normal
     background-color: color--primary.normal
 
     &::after {
-      transform translateX(calc(100% + 9px - 3px))
+      left 100%
+      transform translateX(-100%)
+      margin-left -2px
     }
   }
 
@@ -38,6 +68,11 @@
 
   &:not(.is-disabled):focus {
     box-shadow: 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+  }
+  &:not(.is-disabled):active {
+    &::after {
+      width 22px
+    }
   }
 
   &__input {

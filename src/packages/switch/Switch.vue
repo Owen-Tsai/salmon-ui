@@ -1,6 +1,7 @@
 <template>
   <button
     class="sui-switch"
+    ref="buttonEl"
     :class="{
       'is-disabled': computedDisabled,
       'is-checked': checked
@@ -13,11 +14,11 @@
     @click.prevent="switchValue"
   >
     <span
-      v-if="activeText || activeIcon"
+      v-if="activeText || activeIcon" v-show="checked"
       class="sui-switch__label sui-switch__label--active"
     >
       <template v-if="activeText">{{ activeText }}</template>
-      <s-icon :name="activeIcon"></s-icon>
+      <s-icon :name="activeIcon" v-if="activeIcon"></s-icon>
     </span>
 
     <input
@@ -30,24 +31,17 @@
     >
 
     <span
-      v-if="inactiveText || inactiveIcon"
+      v-if="inactiveText || inactiveIcon" v-show="!checked"
       class="sui-switch__label sui-switch__label--inactive"
     >
       <template v-if="inactiveText">{{ inactiveText }}</template>
-      <s-icon :name="inactiveIcon"></s-icon>
+      <s-icon :name="inactiveIcon" v-if="inactiveIcon"></s-icon>
     </span>
   </button>
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    ref,
-    computed,
-    watch,
-    nextTick,
-    onMounted
-  } from 'vue'
+  import {computed, defineComponent, nextTick, onMounted, ref, watch} from 'vue'
   import SIcon from '../icon'
 
   export default defineComponent({
@@ -82,7 +76,7 @@
     setup(props, ctx) {
       // refs
       const inputEl = ref()
-      const panelEl = ref()
+      const buttonEl = ref()
 
       // states
       const checked = computed(() => {
@@ -119,10 +113,7 @@
         handleChange()
       }
       const setBackgroundColor = () => {
-        const color = checked.value ? props.activeColor : props.inactiveColor
-        panelEl.value.style.borderColor = color
-        panelEl.value.style.backgroundColor = color
-        // panelEl.value.children[0].style.color = color
+        buttonEl.value.style.backgroundColor = checked.value ? props.activeColor : props.inactiveColor
       }
 
       onMounted(() => {
@@ -133,7 +124,7 @@
       })
 
       return {
-        inputEl, panelEl,
+        inputEl, buttonEl,
         computedDisabled,
         checked,
         handleChange,

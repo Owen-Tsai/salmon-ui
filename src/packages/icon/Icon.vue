@@ -25,7 +25,7 @@
         const fill: string = this.duoToneColor ? this.duoToneColor : 'none'
         const stroke: string = this.color ? this.color : 'currentColor'
 
-        return feather.icons[this.name].toSvg({
+        return feather.icons[this.name]?.toSvg({
           'stroke-width': this.strokeWidth as string | number,
           'width': '1em',
           'height': '1em',
