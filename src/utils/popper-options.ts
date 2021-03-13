@@ -15,6 +15,8 @@ export const triggerType = (trigger: any) => {
       return 'click'
     case 'focus':
       return 'focusin'
+    case 'manual':
+      return 'manual'
     default:
       return 'mouseenter'
   }

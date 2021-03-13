@@ -18,6 +18,7 @@
     themeType,
     triggerType
   } from '@/utils/popper-options'
+  import throwError from '@/utils/class.error'
 
   export default defineComponent({
     name: 'STooltip',
@@ -43,9 +44,18 @@
         type: String,
         default: 'hover'
       },
+      modelValue: {
+        type: Boolean,
+        default: undefined
+      },
       offset: Object as PropType<[number, number]>,
     },
     setup(props) {
+      // handle error
+      if(props.trigger === 'manual' && props.modelValue === undefined) {
+        throwError('sui-tooltip', 'v-model is required when `trigger` is set to `manual`')
+      }
+
       let tippyInstance: any = null
       const reference = ref<null | HTMLElement>(null)
 
@@ -56,7 +66,7 @@
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
         offset: props.offset,
-        theme: themeType(props.theme)
+        theme: themeType(props.theme),
       }
 
       onMounted(() => {
@@ -86,6 +96,16 @@
           theme: val[6]
         })
       })
+
+      if(props.trigger === 'manual') {
+        watch(() => props.modelValue, (val) => {
+          if(val) {
+            tippyInstance.show()
+          } else {
+            tippyInstance.hide()
+          }
+        })
+      }
 
       return {
         reference

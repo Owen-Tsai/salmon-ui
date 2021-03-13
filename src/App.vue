@@ -73,7 +73,15 @@
             <s-tooltip content="top" placement="top" trigger="focus"><s-button>上方</s-button></s-tooltip>
           </div>
           <div>
-            <s-tooltip content="top-end" placement="top-end"><s-button>上右</s-button></s-tooltip>
+            <s-tooltip
+              content="top-end"
+              placement="top-end"
+              trigger="manual"
+              v-model="switchVal"
+              :hide-on-click="false"
+            >
+              <s-button>上右</s-button>
+            </s-tooltip>
           </div>
           <div></div>
 
