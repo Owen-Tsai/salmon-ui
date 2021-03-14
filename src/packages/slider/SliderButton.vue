@@ -21,7 +21,8 @@
 
 <script lang="ts">
   import {
-    defineComponent
+    defineComponent,
+    reactive
   } from 'vue'
 
   import STooltip from '../tooltip'
@@ -32,7 +33,30 @@
       STooltip
     },
     props: {
+      modelValue: {
+        type: Number,
+        default: 0
+      }
+    },
+    emits: ['update:modelValue'],
+    setup(props, ctx) {
+      const initData = reactive({
+        hovering: false,
+        dragging: false,
+        isClick: false,
+        startX: 0,
+        currentX: 0,
+        startY: 0,
+        currentY: 0,
+        startPosition: 0,
+        newPosition: 0,
+        oldValue: props.modelValue
+      })
 
+      const {
+        tooltipEl,
+
+      }
     }
   })
 </script>
