@@ -22,10 +22,12 @@
 <script lang="ts">
   import {
     defineComponent,
-    reactive
+    reactive,
+    toRefs
   } from 'vue'
 
   import STooltip from '../tooltip'
+  import useSliderButton from './useSliderButton'
 
   export default defineComponent({
     name: 'SSlider',
@@ -36,10 +38,14 @@
       modelValue: {
         type: Number,
         default: 0
+      },
+      vertical: {
+        type: Boolean,
+        default: false
       }
     },
     emits: ['update:modelValue'],
-    setup(props, ctx) {
+    setup(props, { emit }) {
       const initData = reactive({
         hovering: false,
         dragging: false,
@@ -55,7 +61,33 @@
 
       const {
         tooltipEl,
+        showTooltip,
+        tooltipVisible,
+        buttonWrapperStyle,
+        formattedValue,
+        handleMouseEnter,
+        handleMouseLeave,
+        onButtonDown,
+        onLeftKeyDown, onRightKeyDown,
+        setPosition
+      } = useSliderButton(props, initData, emit)
 
+      const { hovering, dragging } = toRefs(initData)
+
+      return {
+        tooltipEl,
+        tooltipVisible,
+        showTooltip,
+        buttonWrapperStyle,
+        formattedValue,
+        handleMouseEnter,
+        handleMouseLeave,
+        onButtonDown,
+        onLeftKeyDown,
+        onRightKeyDown,
+        setPosition,
+        hovering,
+        dragging
       }
     }
   })
