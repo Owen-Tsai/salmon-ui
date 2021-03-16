@@ -75,6 +75,14 @@
             ...options, ...basePopperConfig
           })
         }
+
+        if(props.trigger === 'manual') {
+          if(props.modelValue) {
+            tippyInstance.show()
+          } else {
+            tippyInstance.hide()
+          }
+        }
       })
 
       watch([
@@ -98,6 +106,7 @@
       })
 
       if(props.trigger === 'manual') {
+
         watch(() => props.modelValue, (val) => {
           if(val) {
             tippyInstance.show()

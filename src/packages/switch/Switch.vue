@@ -93,7 +93,7 @@
         }
       })
 
-      if ([props.activeValue, props.inactiveValue].includes(props.modelValue)) {
+      if (!~[props.activeValue, props.inactiveValue].indexOf(props.modelValue)) {
         ctx.emit('update:modelValue', props.inactiveValue)
         ctx.emit('change', props.inactiveValue)
       }
@@ -105,7 +105,7 @@
         ctx.emit('change', val)
 
         nextTick(() => {
-          inputEl.value.checked = val
+          inputEl.value.checked = checked.value
         })
       }
       const switchValue = () => {

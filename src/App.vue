@@ -400,6 +400,19 @@
           </s-checkbox-group>
         </div>
       </div>
+
+      <div>
+        <s-tooltip
+          content="hello world"
+          trigger="manual"
+          :hide-on-click="false"
+          v-model="modelVal"
+          :style="{ left: `${leftVal}%` }"
+        >
+          <s-button>test</s-button>
+        </s-tooltip>
+      </div>
+      <s-button @click="leftVal += 10">改变位置</s-button>
     </section>
   </main>
 </template>
@@ -451,7 +464,9 @@
       checkbox3: [],
       popoverDisabled: false,
       popperContent: 'something real good is gonna happen',
-      switchVal: false
+      switchVal: true,
+      leftVal: 30,
+      modelVal: true
     }),
     methods: {
       changeBadgeValue(value) {
