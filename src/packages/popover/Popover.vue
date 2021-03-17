@@ -23,12 +23,17 @@
   import { Placement } from '@popperjs/core'
   import { basePopperConfig, triggerType } from '@/utils/popper-options'
   import tippy from 'tippy.js'
+  import throwError from "@/utils/class.error";
 
   export default defineComponent({
     name: 'SPopover',
     props: {
       title: String,
       content: String,
+      modelValue: {
+        type: Boolean,
+        default: undefined
+      },
       placement: {
         type: String as PropType<Placement>,
         default: 'bottom'
@@ -46,6 +51,11 @@
       disabled: Boolean
     },
     setup(props, ctx) {
+      // handle error
+      if(props.trigger === 'manual' && props.modelValue === undefined) {
+        throwError('sui-popover', 'v-model is required when `trigger` is set to `manual`')
+      }
+
       let tippyInstance: any = null
       const referenceEl: any = ref<null | Element>(null)
       const popperEl: any = ref<null | Element>(null)
@@ -70,10 +80,15 @@
           }
         })
 
-        registerCloseHandler()
-
         if(props.disabled) {
           tippyInstance.disable()
+        }
+        if(props.trigger === 'manual') {
+          if(props.modelValue) {
+            tippyInstance.show()
+          } else {
+            tippyInstance.hide()
+          }
         }
       })
 
@@ -101,15 +116,14 @@
         }
       })
 
-      const registerCloseHandler = () => {
-        const closeEls = popperEl.value.querySelectorAll('[data-popper-close]')
-        if(closeEls.length > 0) {
-          closeEls.forEach(el => {
-            el.addEventListener('click', () => {
-              tippyInstance.hide()
-            })
-          })
-        }
+      if(props.trigger === 'manual') {
+        watch(() => props.modelValue, (val) => {
+          if(val) {
+            tippyInstance.show()
+          } else {
+            tippyInstance.hide()
+          }
+        })
       }
 
       return {

@@ -239,16 +239,16 @@
       <div class="demo-block">
         <h2>Popovers</h2>
         <div class="demo-content">
-          <s-popover trigger="click">
+          <s-popover trigger="manual" v-model="popoverVisible" :hide-on-click="false">
             <template #reference>
-              <s-button type="primary">示例按钮</s-button>
+              <s-button type="primary" @click="popoverVisible = true">示例按钮</s-button>
             </template>
             <template #default>
               <p style="font-size: 14px; margin-bottom: 0"><b>标题</b></p>
               <p style="font-size: 14px; margin-top: 8px">你确认要删除此条记录吗？</p>
               <div style="text-align: right; padding-bottom: 8px">
-                <s-button size="small" type="text" data-popper-close>否</s-button>
-                <s-button type="primary" size="small" data-popper-close>是</s-button>
+                <s-button size="small" type="text" @click="popoverVisible = false">否</s-button>
+                <s-button type="primary" size="small" @click="popoverVisible = false">是</s-button>
               </div>
             </template>
           </s-popover>
@@ -465,6 +465,7 @@
       checkbox1: false, checkbox2: false,
       checkbox3: [],
       popoverDisabled: false,
+      popoverVisible: false,
       popperContent: 'something real good is gonna happen',
       switchVal: true,
       leftVal: 30,
