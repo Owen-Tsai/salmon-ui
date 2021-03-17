@@ -180,6 +180,8 @@
             inactiveColor="#d13e32"
             class="demo-m-a"
           ></s-switch>
+          <s-switch class="demo-m-a" loading></s-switch>
+          <s-switch class="demo-m-a" v-model="switchVal" loading></s-switch>
         </div>
       </div>
     </section>

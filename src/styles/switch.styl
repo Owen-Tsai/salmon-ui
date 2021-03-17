@@ -79,4 +79,24 @@
     opacity 0
     display none
   }
+
+  &__loader {
+    position absolute
+    font-size 14px
+    top 4px
+    left 4px
+    z-index 1
+    color color--text.normal
+    transition all .3s cubic-bezier(.78,.14,.15,.86)
+  }
+  &.is-checked &__loader {
+    position absolute
+    font-size 14px
+    top 4px
+    left 100%
+    margin-left -18px
+    z-index 1
+    color color--text.normal
+    transition all .3s cubic-bezier(.78,.14,.15,.86)
+  }
 }
