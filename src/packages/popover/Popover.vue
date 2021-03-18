@@ -70,7 +70,7 @@
         onHide: (instance) => { ctx.emit('before-hide', instance) },
         onShow: (instance) => { ctx.emit('before-show', instance) },
         onHidden: (instance) => { ctx.emit('after-hide', instance) },
-        onShown: (instance) => { ctx.emit('after-hide', instance) }
+        onShown: (instance) => { ctx.emit('after-show', instance) }
       }
 
       onMounted(() => {
@@ -89,6 +89,17 @@
           } else {
             tippyInstance.hide()
           }
+
+          tippyInstance.setProps({
+            onShown: (instance) => {
+              ctx.emit('update:modelValue', true)
+              ctx.emit('after-show', instance)
+            },
+            onHidden: (instance) => {
+              ctx.emit('update:modelValue', false)
+              ctx.emit('after-hide', instance)
+            },
+          })
         }
       })
 

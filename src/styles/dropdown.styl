@@ -18,6 +18,7 @@
       transition all .3s
       outline none
       display flex
+      flex-wrap nowrap
       align-items center
       user-select none
 
@@ -53,11 +54,13 @@
       }
     }
   }
+}
 
+.sui-popper--dropdown {
   .tippy-content {
     padding 0
 
-    ^[0]-menu {
+    .sui-dropdown-menu {
       padding 4px 0
     }
   }

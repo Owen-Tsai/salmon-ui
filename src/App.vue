@@ -150,6 +150,27 @@
               <s-dropdown-item>没有图标的选项</s-dropdown-item>
             </s-dropdown-menu>
           </s-dropdown>
+
+          <s-dropdown class="demo-m-a">
+            <template #reference>
+              <s-button shape="round" type="primary">多级菜单</s-button>
+            </template>
+            <s-dropdown-menu>
+              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
+              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
+              <s-dropdown placement="right-start">
+                <template #reference>
+                  <s-dropdown-item icon="star">星星图标</s-dropdown-item>
+                </template>
+                <s-dropdown-menu>
+                  <s-dropdown-item icon="star">星星星星图标</s-dropdown-item>
+                  <s-dropdown-item icon="user">用星星户中心</s-dropdown-item>
+                </s-dropdown-menu>
+              </s-dropdown>
+              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
+              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
+            </s-dropdown-menu>
+          </s-dropdown>
         </div>
       </div>
 
@@ -239,7 +260,7 @@
       <div class="demo-block">
         <h2>Popovers</h2>
         <div class="demo-content">
-          <s-popover trigger="manual" v-model="popoverVisible" :hide-on-click="false">
+          <s-popover trigger="manual" v-model="popoverVisible">
             <template #reference>
               <s-button type="primary" @click="popoverVisible = true">示例按钮</s-button>
             </template>
@@ -402,19 +423,6 @@
           </s-checkbox-group>
         </div>
       </div>
-
-      <div>
-        <s-tooltip
-          content="hello world"
-          trigger="manual"
-          :hide-on-click="false"
-          v-model="modelVal"
-          :style="{ left: `${leftVal}%` }"
-        >
-          <s-button>test</s-button>
-        </s-tooltip>
-      </div>
-      <s-button @click="leftVal += 10">改变位置</s-button>
     </section>
   </main>
 </template>
@@ -468,8 +476,9 @@
       popoverVisible: false,
       popperContent: 'something real good is gonna happen',
       switchVal: true,
-      leftVal: 30,
-      modelVal: true
+      leftVal: 10,
+      modelVal: true,
+      tippyInstance: null
     }),
     methods: {
       changeBadgeValue(value) {
@@ -483,9 +492,18 @@
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
       },
+      updateModelValue() {
+        this.leftVal += 10
+        this.tippyInstance?.hide()
+        this.tippyInstance?.show()
+      },
       log(e) {
         console.log(e)
       }
+    },
+    mounted() {
+      this.tippyInstance = document.querySelector('#btn')._tippy
+      console.log(this.tippyInstance)
     }
   }
 </script>
@@ -548,14 +566,17 @@
 
   .demo-card {
     p {
-      margin-top 8px
-      margin-bottom 8px
+      margin-top 4px
+      margin-bottom 4px
+      font-size 14px
+      color color--text.normal
     }
     .demo-card-header {
       display flex
       align-items center
       justify-content space-between
       padding 0 24px
+      color color--text.dark
     }
     .demo-card-footer {
       padding 8px 24px
@@ -579,7 +600,8 @@
     span {
       color: color--text.light
       font-size: font-size--text.small
-      line-height 2
+      display block
+      margin-bottom 8px
     }
     div {
       padding 8px 24px

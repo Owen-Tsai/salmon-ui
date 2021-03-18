@@ -30,7 +30,8 @@
 
   const _placements = [
     'top', 'top-start', 'top-end',
-    'bottom', 'bottom-start', 'bottom-end'
+    'bottom', 'bottom-start', 'bottom-end',
+    'right-start'
   ]
 
   export default defineComponent({
@@ -68,6 +69,7 @@
         trigger: triggerType(props.trigger),
         theme: themeType('light'),
         interactive: true,
+        classes: ['sui-popper--dropdown'],
         onHide: (instance) => { ctx.emit('before-hide', instance) },
         onShow: (instance) => {ctx.emit('before-show', instance)},
         onHidden: (instance) => { ctx.emit('after-hide', instance) },

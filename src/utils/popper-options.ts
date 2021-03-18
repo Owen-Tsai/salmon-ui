@@ -1,10 +1,16 @@
+import classNamePlugin from '@/utils/className.tippy'
+
 export const basePopperConfig = {
   animation: 'scale-subtle',
   inertia: true,
+  plugins: [ classNamePlugin ],
+  appendTo: document.body
 }
 
 export const dropdownPopperConfig = {
   animation: 'shift-away',
+  plugins: [ classNamePlugin ],
+  appendTo: document.body
 }
 
 export const triggerType = (trigger: any) => {
