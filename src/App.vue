@@ -381,9 +381,9 @@
           </s-button-group>
 
           <s-button-group class="demo-m-y" size="large">
-            <s-button>主要按钮</s-button>
-            <s-button>主要按钮</s-button>
-            <s-button>主要按钮</s-button>
+            <s-button>大号按钮</s-button>
+            <s-button>大号按钮</s-button>
+            <s-button>大号按钮</s-button>
           </s-button-group>
         </div>
       </div>
@@ -476,9 +476,7 @@
       popoverVisible: false,
       popperContent: 'something real good is gonna happen',
       switchVal: true,
-      leftVal: 10,
       modelVal: true,
-      tippyInstance: null
     }),
     methods: {
       changeBadgeValue(value) {
@@ -492,19 +490,10 @@
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
       },
-      updateModelValue() {
-        this.leftVal += 10
-        this.tippyInstance?.hide()
-        this.tippyInstance?.show()
-      },
       log(e) {
         console.log(e)
       }
     },
-    mounted() {
-      this.tippyInstance = document.querySelector('#btn')._tippy
-      console.log(this.tippyInstance)
-    }
   }
 </script>
 

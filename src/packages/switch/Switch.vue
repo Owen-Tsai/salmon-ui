@@ -21,14 +21,6 @@
       <s-icon :name="activeIcon" v-if="activeIcon"></s-icon>
     </span>
 
-    <span
-      v-if="inactiveText || inactiveIcon" v-show="!checked"
-      class="sui-switch__label sui-switch__label--inactive"
-    >
-      <template v-if="inactiveText">{{ inactiveText }}</template>
-      <s-icon :name="inactiveIcon" v-if="inactiveIcon"></s-icon>
-    </span>
-
     <input
       class="sui-switch__input"
       ref="inputEl"
@@ -38,6 +30,14 @@
       @change="handleChange"
     >
 
+    <span
+      v-if="inactiveText || inactiveIcon" v-show="!checked"
+      class="sui-switch__label sui-switch__label--inactive"
+    >
+      <template v-if="inactiveText">{{ inactiveText }}</template>
+      <s-icon :name="inactiveIcon" v-if="inactiveIcon"></s-icon>
+    </span>
+
     <s-icon
       v-if="loading" name="loader"
       class="sui-switch__loader rotating"
@@ -46,7 +46,14 @@
 </template>
 
 <script lang="ts">
-  import {computed, defineComponent, nextTick, onMounted, ref, watch} from 'vue'
+  import {
+    computed,
+    defineComponent,
+    nextTick,
+    onMounted,
+    ref,
+    watch
+  } from 'vue'
   import SIcon from '../icon'
 
   export default defineComponent({
