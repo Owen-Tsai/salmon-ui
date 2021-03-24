@@ -96,6 +96,35 @@
             :name="validateIcon"
           ></s-icon>
         </span>
+      </span> <!-- end of suffix -->
+
+      <div v-if="$slots.append" class="sui-input-input__append">
+        <slot name="append"></slot>
+      </div>
+    </template> <!-- end of non-textarea input -->
+
+    <template v-else>
+      <textarea
+        ref="textareaEl"
+        class="sui-textarea__original"
+        v-bind="attrs"
+        :tabindex="tabindex"
+        :disabled="computedDisabled"
+        :readonly="readonly"
+        :autocomplete="autocomplete"
+        :style="textareaStyle"
+        :aria-label="label"
+        :placeholder="placeholder"
+        @compositionstart="handleCompositionStart"
+        @compositionupdate="handleCompositionUpdate"
+        @compositionend="handleCompositionEnd"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      ></textarea>
+      <span v-if="wordLimitVisible && type === 'textarea'" class="sui-input__count">
+        {{ textLength }}/{{ wordLimit }}
       </span>
     </template>
   </div>
@@ -107,17 +136,25 @@
     getCurrentInstance,
     computed,
     ref,
-
+    PropType
   } from 'vue'
   import SIcon from '../icon'
 
   const _sizes = ['large', '', 'small']
+  const _resizeOptions = ['horizontal', 'vertical', 'both', 'none']
+
+  // autosize prop can either be an object or a boolean value
+  type autosizeProp = {
+    minRows?: number,
+    maxRows?: number
+  } | boolean
 
   export default defineComponent({
     name: 'SInput',
     components: {
       SIcon
     },
+    inheritAttrs: false,
     props: {
       modelValue: {
         type: [String, Number],
@@ -133,8 +170,12 @@
           return _sizes.includes(v)
         },
       },
-      passwordToggleable: Boolean,
+      disabled: Boolean,
       readonly: Boolean,
+      passwordToggleable: Boolean,
+      showPasswordToggleIcon: Boolean,
+      clearable: Boolean,
+      showWordLimit: Boolean,
       autocomplete: {
         type: String,
         default: 'off',
@@ -144,7 +185,19 @@
       label: String,
       placeholder: String,
       prefixIcon: String,
-      suffixIcon: String
+      suffixIcon: String,
+      resize: {
+        type: String,
+        default: undefined,
+        validator: (v: string) => {
+          return _sizes.includes(v)
+        }
+      },
+      autosize: {
+        type: [Boolean, String] as PropType<autosizeProp>,
+        default: false
+      },
+      validateEvent: Boolean
     },
     emits: [
       'update:modelValue', 'input', 'change', 'focus', 'blue',
@@ -152,7 +205,7 @@
     ],
     setup(props, ctx) {
       const instance = getCurrentInstance()
-
+      const attrs =
     }
   })
 </script>
