@@ -4,7 +4,7 @@
       type === 'textarea' ? 'sui-textarea' : 'sui-input',
       size ? `sui-input--${size}` : '',
       {
-        'is-disabled': computedDisabled,
+        'is-disabled': disabled,
         'is-exceeded': computedExceeded,
       },
       {
@@ -90,11 +90,7 @@
             </span>
           </span>
           <!-- validate state icon -->
-          <s-icon
-            v-if="validateState"
-            class="sui-input__icon"
-            :name="validateIcon"
-          ></s-icon>
+          <!-- TODO: implement after form-item component -->
         </span>
       </span> <!-- end of suffix -->
 
@@ -136,9 +132,13 @@
     getCurrentInstance,
     computed,
     ref,
-    PropType
+    PropType,
+    shallowRef
   } from 'vue'
   import SIcon from '../icon'
+  import useAttrs from '@/utils/use-attrs'
+  import { isObject } from '@vue/shared'
+  import computeTextareaHeight from './computeTextareaHeight'
 
   const _sizes = ['large', '', 'small']
   const _resizeOptions = ['horizontal', 'vertical', 'both', 'none']
@@ -205,7 +205,80 @@
     ],
     setup(props, ctx) {
       const instance = getCurrentInstance()
-      const attrs =
+      const attrs = useAttrs()
+
+      const inputEl = ref()
+      const textareaEl = ref()
+      const isFocused = ref(false)
+      const isHhovering = ref(false)
+      const isComposing = ref(false)
+      const passwordVisible = ref(false)
+      const textareaComputedStyles = shallowRef({})
+
+      const renderedInputEl = computed(() =>
+        inputEl.value || textareaEl.value
+      )
+      const textareaStyle = computed(() => ({
+        ...textareaComputedStyles,
+        resize: props.resize
+      }))
+      const nativeInputValue = computed(() => (
+        (props.modelValue === null || props.modelValue === undefined) ? '' : String(props.modelValue)
+      ))
+      const wordLimit = computed(() => ctx.attrs.maxlength)
+      // only show clear icon when user is hovering or focusing on an
+      // clearable input component without disabled and readonly attr
+      const showClearIcon = computed(() => {
+        return (props.clearable && !props.disabled && !props.readonly) &&
+          (isFocused.value || isHhovering.value)
+      })
+      // only show password visibility toggle icon when user is focused on an
+      // input component without disabled and readonly attr
+      const showPasswordToggleIcon = computed(() => {
+        return (props.passwordToggleable && !props.disabled && !props.readonly) &&
+          (!!nativeInputValue.value || isFocused.value)
+      })
+      // only show word counter when input element is normal text field or textarea
+      const wordLimitVisible = computed(() => {
+        return props.showWordLimit && ctx.attrs.maxlength &&
+          (props.type === 'text' || props.type === 'textarea') &&
+          !props.disabled && !props.readonly && !props.passwordToggleable
+      })
+      const textLength = computed(() => {
+        return typeof props.modelValue === 'number' ?
+          String(props.modelValue).length : (props.modelValue.length || 0)
+      })
+      const computedExceeded = computed(() => {
+        return wordLimitVisible.value &&
+          (textLength.value > Number(wordLimit.value))
+      })
+      const resizeTextarea = () => {
+        const { type, autosize } = props
+        if(type !== 'textarea') return
+
+        if(autosize) {
+          const minRows = isObject(autosize) ? autosize.minRows : 0
+          const maxRows = isObject(autosize) ? autosize.maxRows : 0
+
+          textareaComputedStyles.value = computeTextareaHeight(textareaEl.value, minRows, maxRows)
+        } else {
+          textareaComputedStyles.value = {
+            minHeight: computeTextareaHeight(textareaEl).minHeight
+          }
+        }
+      }
+
+      const setNativeinputValue = () => {
+        const el = renderedInputEl.value
+        if(!el || el.value === nativeInputValue.value) return
+        el.value = nativeInputValue.value
+      }
+
+      // if an input component needs to display more than one icon at the same time
+      // a small amount of offset is required
+      const setIconOffset = palce => {
+        
+      }
     }
   })
 </script>
