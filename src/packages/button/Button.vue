@@ -10,7 +10,7 @@
       danger ? 'is-danger' : '',
       icon ? 'has-icon' : ''
     ]"
-    :disabled="computedDisabled || loading"
+    :disabled="disabled || loading"
     :autofocus="autofocus"
 
     @click="handleClick"
@@ -85,9 +85,6 @@
       const computedSize = computed(() => {
         return buttonGroupSize?.value || props.size
       })
-      const computedDisabled = computed(() => {
-        return props.disabled
-      })
 
       // methods
       const handleClick = (evt) => {
@@ -96,7 +93,6 @@
 
       return {
         computedSize,
-        computedDisabled,
         handleClick
       }
     }
