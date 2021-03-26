@@ -22,6 +22,7 @@
     getCurrentInstance,
     onMounted,
     watch,
+    watchEffect,
     computed
   } from 'vue'
   import tippy from 'tippy.js'
@@ -97,15 +98,12 @@
         }
       })
 
-      watch([
-        () => props.placement,
-        () => props.trigger,
-        () => props.hideOnClick
-      ], (val) => {
+      watchEffect(() => {
+        if(!tippyInstance) return
         tippyInstance.setProps({
-          placement: val[0],
-          trigger: val[1],
-          hideOnClick: val[2]
+          placement: props.placement,
+          trigger: props.trigger,
+          hideOnClick: props.hideOnClick
         })
       })
 

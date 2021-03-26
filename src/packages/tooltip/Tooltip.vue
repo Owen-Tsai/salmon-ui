@@ -8,7 +8,9 @@
   import {
     defineComponent,
     onMounted,
-    watch, ref,
+    watch,
+    watchEffect,
+    ref,
     PropType
   } from 'vue'
   import tippy from 'tippy.js'
@@ -85,23 +87,16 @@
         }
       })
 
-      watch([
-        () => props.content,
-        () => props.placement,
-        () => props.useHTML,
-        () => props.hideOnClick,
-        () => props.trigger,
-        () => props.offset,
-        () => props.theme
-      ], (val) => {
+      watchEffect(() => {
+        if(!tippyInstance) return
         tippyInstance.setProps({
-          content: val[0],
-          placement: val[1],
-          allowHTML: val[2],
-          hideOnClick: val[3],
-          trigger: triggerType(val[4]),
-          offset: val[5],
-          theme: val[6]
+          content: props.content,
+          placement: props.placement,
+          allowHTML: props.useHTML,
+          hideOnClick: props.hideOnClick,
+          trigger: props.trigger,
+          offset: props.offset,
+          theme: props.theme
         })
       })
 

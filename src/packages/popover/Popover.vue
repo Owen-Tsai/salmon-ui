@@ -18,7 +18,8 @@
     onMounted,
     PropType,
     ref,
-    watch
+    watch,
+    watchEffect
   } from 'vue'
   import { Placement } from '@popperjs/core'
   import { basePopperConfig, triggerType } from '@/utils/popper-options'
@@ -103,19 +104,14 @@
         }
       })
 
-      watch([
-        () => props.placement,
-        () => props.maxWidth,
-        () => props.trigger,
-        () => props.offset,
-        () => props.hideOnClick
-      ], (val) => {
+      watchEffect(() => {
+        if(!tippyInstance) return
         tippyInstance.setProps({
-          placement: val[0],
-          maxWidth: val[1],
-          trigger: val[2],
-          offset: val[3],
-          hideOnClick: val[4]
+          placement: props.placement,
+          maxWidth: props.maxWidth,
+          trigger: props.trigger,
+          offset: props.offset,
+          hideOnClick: props.hideOnClick
         })
       })
 
