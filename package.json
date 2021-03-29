@@ -15,7 +15,7 @@
     "lodash": "^4.17.21",
     "mitt": "^2.1.0",
     "tippy.js": "^6.3.1",
-    "vue": "^3.0.0"
+    "vue": "^3.0.9"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.7.0",
