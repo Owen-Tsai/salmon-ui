@@ -1,10 +1,48 @@
 <template>
   <div
     class="sui-input"
-    :class="{
-
-    }"
+    :class="[...{
+      'is-disabled': disabled,
+      'is-readonly': isReadonly,
+      'is-exceeded': isExceeded,
+    }, {
+      'has-prefix': prefixIcon || $slots.prefix,
+      'has-suffix': suffixIcon || $slots.suffix,
+      'has-prepend': $slots.prepend,
+      'has-append': $slots.append,
+      'sui-input--group': $slots.prepend || $slots.append
+    }]"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
+    <!-- prepend slot -->
+    <div v-if="$slots.prepend" class="sui-input__prepend">
+      <slot name="prepend"></slot>
+    </div>
+    <!-- original input -->
+    <input
+      class="sui-input__input"
+      ref="inputEl"
+      v-bind="attrs"
+      :type="passwordTogglable ? (passwordVisible ? 'text' : 'password') : type"
+      :readonly="readonly"
+      :disabled="disabled"
+      :aria-label="label"
+      :placeholder="placeholder"
+      :autocomplete="autocomplete"
+      @compositionstart="handleCompositionStart"
+      @compositionend="handleCompositionEnd"
+      @input="handleInput"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @change="handleChange"
+      @keydown="handleKeydown"
+    >
+
+    <!-- prefix -->
+    <span v-if="prefixIcon" class="sui-input__prefix">
+
+    </span>
 
   </div>
 </template>
