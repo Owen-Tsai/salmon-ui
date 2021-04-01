@@ -1,0 +1,73 @@
+.sui-input {
+  position relative
+  font-size font-size--text.medium
+  display inline-block
+  width 100%
+  line-height 40px
+  vertical-align middle
+
+  &__input {
+    color color--text.normal
+    background-color #ffffff
+    border 1px solid color--border
+    border-radius border-radius--normal
+    height 40px
+    box-sizing border-box
+    padding 0 16px
+    outline none
+    transition all .3s
+    vertical-align middle
+    width 100%
+
+    &:focus {
+      box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+      border-color color--primary.normal
+    }
+    &:hover {
+      border-color color--primary.normal
+    }
+  }
+
+  &__prefix {
+    height 100%
+    position absolute
+    left 6px
+    top 0
+    text-align center
+    color color--placeholder
+  }
+
+  &__suffix {
+    height 100%
+    position absolute
+    right 6px
+    top 0
+    text-align center
+    color color--placeholder
+
+    ^[0]__icon:not(last-child) {
+      margin-right 4px
+    }
+
+    ^[0]__icon.toggle-password,
+    ^[0]__icon.clear-input {
+      cursor pointer
+      transition color .3s
+
+      &:hover {
+        color color--text.normal
+      }
+    }
+  }
+
+  &.has-prefix > &__input {
+    padding-left 24px
+  }
+  &.has-suffix > &__input {
+    padding-right 28px
+  }
+}
+
+::placeholder {
+  color color--placeholder
+}

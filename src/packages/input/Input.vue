@@ -1,17 +1,18 @@
 <template>
   <div
     class="sui-input"
-    :class="[...{
+    :class="[{
       'is-disabled': disabled,
-      'is-readonly': isReadonly,
+      'is-readonly': readonly,
       'is-exceeded': isExceeded,
     }, {
       'has-prefix': prefixIcon || $slots.prefix,
-      'has-suffix': suffixIcon || $slots.suffix,
+      'has-suffix': suffixIcon || $slots.suffix || clearable || showPasswordToggle,
+      'has-word-count': showWordCount,
       'has-prepend': $slots.prepend,
       'has-append': $slots.append,
       'sui-input--group': $slots.prepend || $slots.append
-    }]"
+    }, $attrs.class]"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
@@ -24,7 +25,7 @@
       class="sui-input__input"
       ref="inputEl"
       v-bind="attrs"
-      :type="passwordTogglable ? (passwordVisible ? 'text' : 'password') : type"
+      :type="showPasswordToggle ? (passwordVisible ? 'text' : 'password') : type"
       :readonly="readonly"
       :disabled="disabled"
       :aria-label="label"
@@ -40,27 +41,78 @@
     >
 
     <!-- prefix -->
-    <span v-if="prefixIcon" class="sui-input__prefix">
-
+    <span v-if="prefixIcon || $slots.prefix" class="sui-input__prefix">
+      <slot name="prefix"></slot>
+      <s-icon v-if="prefixIcon" :name="prefixIcon"></s-icon>
     </span>
+    <!-- suffix -->
+    <span
+      v-if="showSuffixIcon"
+      class="sui-input__suffix"
+    >
+      <span class="sui-input__suffix-inner">
+        <!-- custom suffix -->
+        <template
+          v-if="!showSuffixClear || !showSuffixPasswordToggle || !showSuffixWordCount"
+        >
+          <slot name="suffix"></slot>
+          <s-icon
+            v-if="suffixIcon"
+            class="sui-input__icon"
+            :name="suffixIcon"
+          ></s-icon>
+        </template>
+        <!-- password toggle -->
+        <s-icon
+          v-if="showSuffixPasswordToggle"
+          class="sui-input__icon toggle-password"
+          :name="passwordVisible ? 'eye-off' : 'eye'"
+          @click="handlePasswordToggle"
+        ></s-icon>
+        <!-- clear -->
+        <s-icon
+          v-if="showSuffixClear"
+          class="sui-input__icon clear-input"
+          name="x"
+          @click="clearInput"
+        ></s-icon>
+        <!-- word count -->
+        <span v-if="showSuffixWordCount" class="sui-input__count">
+          <span class="sui-input__count-inner">
+            {{ textLength }}/{{ maxLength }}
+          </span>
+        </span>
+      </span>
+    </span> <!-- end of suffix -->
 
+    <!-- append slot -->
+    <div v-if="$slots.append" class="sui-input__append">
+      <slot name="append"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
   import {
-    defineComponent
+    defineComponent,
+    ref,
+    computed, watch, nextTick
   } from 'vue'
+  import useAttrs from '@/utils/use-attrs'
+  import SIcon from '../icon'
 
   const _sizes = ['small', '', 'large']
 
   export default defineComponent({
     name: 'SInput',
     inheritAttrs: false,
+    components: {
+      SIcon
+    },
     props: {
       modelValue: {
         type: [String, Number],
-        default: ''
+        default: undefined
       },
       type: {
         type: String,
@@ -89,9 +141,136 @@
       prefixIcon: String,
       suffixIcon: String,
     },
-    emits: ['update:modelValue', 'change', 'focus', 'blur'],
+    emits: [
+      'update:modelValue', 'change', 'focus', 'blur', 'input',
+      'keydown', 'clear'
+    ],
     setup(props, ctx) {
+      const inputEl = ref()
+      const attrs = useAttrs()
+      const isFocused = ref(false)
+      const isHovering = ref(false)
+      const isComposing = ref(false)
+      const passwordVisible = ref(false)
 
+      const maxLength = computed(() => ctx.attrs.maxLength)
+      const textLength = computed(() => {
+        if(typeof props.modelValue === 'number') {
+          return String(props.modelValue).length
+        }
+
+        return props.modelValue.length || 0
+      })
+      const showSuffixWordCount = computed(() =>
+        ctx.attrs.maxLength && props.showWordCount &&
+        (!props.disabled && !props.readonly && !props.showPasswordToggle)
+      )
+      const isExceeded = computed(() =>
+        showSuffixWordCount.value &&
+        (textLength.value > Number(maxLength.value))
+      )
+      const showSuffixIcon = computed(() =>
+        (isFocused.value || isHovering.value) &&
+        ctx.slots.suffix ||
+        props.suffixIcon ||
+        props.showPasswordToggle ||
+        props.showWordCount ||
+        props.clearable
+      )
+      const showSuffixClear = computed(() =>
+        props.clearable &&
+        (isHovering.value || isFocused.value) &&
+        textLength.value > 0
+      )
+      const showSuffixPasswordToggle = computed(() =>
+        props.showPasswordToggle && textLength.value > 0
+      )
+      const nativeInputValue = computed(() =>
+        (props.modelValue === null || props.modelValue === undefined) ?
+          '' : String(props.modelValue)
+      )
+
+      const handlePasswordToggle = () => {
+        passwordVisible.value = !passwordVisible.value
+      }
+      const clearInput = () => {
+        ctx.emit('update:modelValue', '')
+        ctx.emit('change', '')
+        ctx.emit('clear')
+      }
+      const setNativeInputValue = () => {
+        if(inputEl.value === nativeInputValue.value) return
+        inputEl.value.value = nativeInputValue.value
+      }
+
+      const handleInput = (event) => {
+        ctx.emit('update:modelValue', event.target.value)
+        ctx.emit('input', event.target.value)
+
+        nextTick(setNativeInputValue)
+      }
+      const handleChange = (event) => {
+        ctx.emit('change', event.target.value)
+      }
+      const handleCompositionStart = () => {
+        isComposing.value = true
+      }
+      const handleCompositionEnd = () => {
+        isComposing.value = false
+      }
+      const handleMouseEnter = () => {
+        isHovering.value = true
+      }
+      const handleMouseLeave = () => {
+        isHovering.value = false
+      }
+      const handleFocus = (e) => {
+        isFocused.value = true
+        ctx.emit('focus', e)
+      }
+      const handleBlur = (e) => {
+        isFocused.value = false
+        ctx.emit('blur', e)
+      }
+      const handleKeydown = (e) => {
+        ctx.emit('keydown', e)
+      }
+
+      watch(nativeInputValue, () => {
+        setNativeInputValue()
+      })
+      watch(() => props.type, () => {
+        nextTick(() => {
+          setNativeInputValue()
+        })
+      })
+
+      return {
+        inputEl,
+        attrs,
+        passwordVisible,
+
+        showSuffixIcon,
+        showSuffixClear,
+        showSuffixPasswordToggle,
+        showSuffixWordCount,
+
+        isExceeded,
+
+        handlePasswordToggle,
+        clearInput,
+
+        handleMouseEnter,
+        handleMouseLeave,
+
+        handleInput,
+        handleChange,
+        handleCompositionStart,
+        handleCompositionEnd,
+        handleFocus,
+        handleBlur,
+        handleKeydown
+      }
     }
   })
 </script>

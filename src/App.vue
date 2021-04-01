@@ -425,7 +425,38 @@
       </div>
 
       <div class="demo-block">
-
+        <h2>Input Fields</h2>
+        <div class="demo-content">
+          <s-input
+            class="demo-m-a"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+            prefix-icon="smile"
+          ></s-input>
+          <s-input
+            class="demo-m-a"
+            clearable v-model="inputModel1"
+            placeholder="请输入关键字"
+          ></s-input>
+          <s-input
+            class="demo-m-a"
+            show-password-toggle
+            v-model="inputModel2"
+            placeholder="请输入关键字"
+          ></s-input>
+          <s-input
+            class="demo-m-a"
+            show-password-toggle
+            suffix-icon="lock"
+            v-model="inputModel2"
+            placeholder="请输入关键字"
+          ></s-input>
+          <s-input
+            class="demo-m-a"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+          ></s-input>
+        </div>
       </div>
     </section>
   </main>
@@ -452,6 +483,7 @@
   import SDropdownMenu from './packages/dropdown-menu'
   import SDropdown from './packages/dropdown'
   import SSwitch from './packages/switch'
+  import SInput from './packages/input'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -466,7 +498,8 @@
       STooltip, SPopover,
       SCard,
       SDropdown, SDropdownItem, SDropdownMenu,
-      SSwitch
+      SSwitch,
+      SInput
     },
     data: () => ({
       avatar1, avatar2,
@@ -481,6 +514,8 @@
       popperContent: 'something real good is gonna happen',
       switchVal: true,
       modelVal: true,
+      inputModel1: '',
+      inputModel2: ''
     }),
     methods: {
       changeBadgeValue(value) {
