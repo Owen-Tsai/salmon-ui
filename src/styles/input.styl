@@ -1,3 +1,5 @@
+@import "common/mixins/mixin.common.styl"
+
 .sui-input {
   position relative
   font-size font-size--text.medium
@@ -18,6 +20,7 @@
     transition all .3s
     vertical-align middle
     width 100%
+    z-index 1
 
     &:focus {
       box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
@@ -31,22 +34,26 @@
   &__prefix {
     height 100%
     position absolute
-    left 6px
+    left 12px
     top 0
     text-align center
     color color--placeholder
+    z-index 1
+    center-el()
   }
 
   &__suffix {
     height 100%
     position absolute
-    right 6px
+    right 12px
     top 0
     text-align center
     color color--placeholder
+    z-index 1
+    center-el()
 
-    ^[0]__icon:not(last-child) {
-      margin-right 4px
+    ^[0]__icon:not(:last-child) {
+      margin-right 6px
     }
 
     ^[0]__icon.toggle-password,
@@ -58,10 +65,15 @@
         color color--text.normal
       }
     }
+
+    ^[0]__count {
+      background-color #ffffff
+      padding-left 4px
+    }
   }
 
   &.has-prefix > &__input {
-    padding-left 24px
+    padding-left 32px
   }
   &.has-suffix > &__input {
     padding-right 28px
@@ -70,4 +82,52 @@
 
 ::placeholder {
   color color--placeholder
+}
+
+.sui-input--group {
+  display flex
+  height 40px
+
+  .sui-input__prepend, .sui-input__append {
+    background-color color--bg.dark
+    padding 0 12px
+    border 1px solid color--border
+    color color--text.normal
+    box-sizing border-box
+    center-el()
+
+    // buttons
+    .sui-button,
+    .sui-button:hover, .sui-button:active, .sui-button:focus {
+      background-color transparent
+      border 0
+      border-radius 0
+      color color--text.normal
+      margin 0 -10px
+      box-shadow none
+    }
+  }
+
+  &.has-prepend  {
+    .sui-input__prepend {
+      border-right 0
+      border-top-left-radius border-radius--normal
+      border-bottom-left-radius border-radius--normal
+    }
+    .sui-input__input {
+      border-top-left-radius 0
+      border-bottom-left-radius 0
+    }
+  }
+  &.has-append  {
+    .sui-input__append {
+      border-left 0
+      border-top-right-radius border-radius--normal
+      border-bottom-right-radius border-radius--normal
+    }
+    .sui-input__input {
+      border-top-right-radius 0
+      border-bottom-right-radius 0
+    }
+  }
 }

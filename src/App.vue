@@ -453,8 +453,36 @@
           ></s-input>
           <s-input
             class="demo-m-a"
+            show-password-toggle
+            clearable
+            suffix-icon="lock"
+            v-model="inputModel2"
+            placeholder="请输入关键字"
+          ></s-input>
+          <s-input
+            class="demo-m-a"
             v-model="inputModel1"
             placeholder="请输入关键字"
+          >
+            <template #prepend>https://</template>
+            <template #append>.com</template>
+          </s-input>
+          <s-input
+            class="demo-m-a"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+            prefix-icon="search"
+          >
+            <template #append>
+              <s-button>搜索</s-button>
+            </template>
+          </s-input>
+          <s-input
+            class="demo-m-a"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+            maxlength="10"
+            show-word-count
           ></s-input>
         </div>
       </div>

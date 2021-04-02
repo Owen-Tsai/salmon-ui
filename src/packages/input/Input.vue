@@ -8,7 +8,6 @@
     }, {
       'has-prefix': prefixIcon || $slots.prefix,
       'has-suffix': suffixIcon || $slots.suffix || clearable || showPasswordToggle,
-      'has-word-count': showWordCount,
       'has-prepend': $slots.prepend,
       'has-append': $slots.append,
       'sui-input--group': $slots.prepend || $slots.append
@@ -31,6 +30,7 @@
       :aria-label="label"
       :placeholder="placeholder"
       :autocomplete="autocomplete"
+      :style="inputStyle"
       @compositionstart="handleCompositionStart"
       @compositionend="handleCompositionEnd"
       @input="handleInput"
@@ -50,7 +50,7 @@
       v-if="showSuffixIcon"
       class="sui-input__suffix"
     >
-      <span class="sui-input__suffix-inner">
+      <span class="sui-input__suffix-inner" ref="suffixWrapperEl">
         <!-- custom suffix -->
         <template
           v-if="!showSuffixClear || !showSuffixPasswordToggle || !showSuffixWordCount"
@@ -96,7 +96,10 @@
   import {
     defineComponent,
     ref,
-    computed, watch, nextTick
+    computed,
+    watch,
+    nextTick,
+    PropType
   } from 'vue'
   import useAttrs from '@/utils/use-attrs'
   import SIcon from '../icon'
@@ -140,6 +143,9 @@
       placeholder: String,
       prefixIcon: String,
       suffixIcon: String,
+      inputStyle: {
+        type: Object as PropType<CSSStyleRule>,
+      }
     },
     emits: [
       'update:modelValue', 'change', 'focus', 'blur', 'input',
@@ -152,8 +158,9 @@
       const isHovering = ref(false)
       const isComposing = ref(false)
       const passwordVisible = ref(false)
+      const suffixWrapperEl = ref()
 
-      const maxLength = computed(() => ctx.attrs.maxLength)
+      const maxLength = computed(() => ctx.attrs.maxlength)
       const textLength = computed(() => {
         if(typeof props.modelValue === 'number') {
           return String(props.modelValue).length
@@ -162,7 +169,7 @@
         return props.modelValue.length || 0
       })
       const showSuffixWordCount = computed(() =>
-        ctx.attrs.maxLength && props.showWordCount &&
+        ctx.attrs.maxlength && props.showWordCount &&
         (!props.disabled && !props.readonly && !props.showPasswordToggle)
       )
       const isExceeded = computed(() =>
@@ -213,9 +220,11 @@
         ctx.emit('change', event.target.value)
       }
       const handleCompositionStart = () => {
+        console.log(`composing`)
         isComposing.value = true
       }
       const handleCompositionEnd = () => {
+        console.log(`composing-end`)
         isComposing.value = false
       }
       const handleMouseEnter = () => {
@@ -247,8 +256,11 @@
 
       return {
         inputEl,
+        suffixWrapperEl,
         attrs,
         passwordVisible,
+        maxLength,
+        textLength,
 
         showSuffixIcon,
         showSuffixClear,
