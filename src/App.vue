@@ -428,39 +428,50 @@
         <h2>Input Fields</h2>
         <div class="demo-content">
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             v-model="inputModel1"
             placeholder="请输入关键字"
             prefix-icon="smile"
           ></s-input>
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+            prefix-icon="search"
+          >
+            <template #append>
+              <s-button type="primary">搜索</s-button>
+            </template>
+          </s-input>
+          <s-input
+            class="demo-m-sy"
             clearable v-model="inputModel1"
             placeholder="请输入关键字"
           ></s-input>
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             show-password-toggle
             v-model="inputModel2"
             placeholder="请输入关键字"
           ></s-input>
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             show-password-toggle
             suffix-icon="lock"
             v-model="inputModel2"
             placeholder="请输入关键字"
           ></s-input>
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             show-password-toggle
             clearable
             suffix-icon="lock"
             v-model="inputModel2"
             placeholder="请输入关键字"
+            disabled
           ></s-input>
           <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             v-model="inputModel1"
             placeholder="请输入关键字"
           >
@@ -468,17 +479,7 @@
             <template #append>.com</template>
           </s-input>
           <s-input
-            class="demo-m-a"
-            v-model="inputModel1"
-            placeholder="请输入关键字"
-            prefix-icon="search"
-          >
-            <template #append>
-              <s-button>搜索</s-button>
-            </template>
-          </s-input>
-          <s-input
-            class="demo-m-a"
+            class="demo-m-sy"
             v-model="inputModel1"
             placeholder="请输入关键字"
             maxlength="10"
@@ -572,7 +573,6 @@
 
     .dev-demo-col {
       margin 16px
-      padding 16px
 
       .demo-block {
         h2 {
@@ -583,6 +583,11 @@
           margin-bottom 16px
         }
         margin-bottom 16px
+        overflow hidden
+
+        .demo-content {
+          padding 16px
+        }
       }
     }
   }
@@ -618,6 +623,9 @@
   }
   .demo-m-a {
     margin 8px
+  }
+  .demo-m-sy {
+    margin 8px 0
   }
 
   .demo-card {
