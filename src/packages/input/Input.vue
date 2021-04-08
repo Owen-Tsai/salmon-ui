@@ -71,7 +71,7 @@
         ></s-icon>
         <!-- clear -->
         <s-icon
-          v-if="showSuffixClear"
+          v-if="showSuffixClear && !disabled && !readonly"
           class="sui-input__icon clear-input"
           name="x"
           @click="clearInput"
