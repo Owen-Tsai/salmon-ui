@@ -438,6 +438,7 @@
             v-model="inputModel1"
             placeholder="请输入关键字"
             prefix-icon="search"
+            suffix-icon="search"
           >
             <template #append>
               <s-button type="primary">搜索</s-button>
@@ -449,7 +450,7 @@
             placeholder="请输入关键字"
             prefix-icon="search"
           >
-            <template #append>
+            <template #prepend>
               <s-button>搜索</s-button>
             </template>
           </s-input>
@@ -467,10 +468,13 @@
           <s-input
             class="demo-m-sy"
             show-password-toggle
-            suffix-icon="lock"
             v-model="inputModel2"
             placeholder="请输入关键字"
-          ></s-input>
+          >
+            <template #suffix>
+              <s-icon name="lock"></s-icon>
+            </template>
+          </s-input>
           <s-input
             class="demo-m-sy"
             show-password-toggle
@@ -553,7 +557,7 @@
       popperContent: 'something real good is gonna happen',
       switchVal: true,
       modelVal: true,
-      inputModel1: '',
+      inputModel1: '123123123',
       inputModel2: ''
     }),
     methods: {

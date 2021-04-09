@@ -59,12 +59,16 @@
     z-index 3
     center-el()
 
-    ^[0]__icon:not(:last-child) {
+    .sui-icon {
+      vertical-align baseline
+    }
+
+    .sui-icon:not(:last-child) {
       margin-right 6px
     }
 
-    ^[0]__icon.toggle-password,
-    ^[0]__icon.clear-input {
+    .sui-icon.toggle-password,
+    .sui-icon.clear-input {
       cursor pointer
       transition color .3s
 
@@ -109,15 +113,26 @@
     // buttons
     .sui-button,
     .sui-button:hover, .sui-button:active, .sui-button:focus {
-      margin 0 -12px
+      margin 0 -13px 0 -12px
     }
   }
 
   &.has-prepend  {
+    &.hovering-input {
+      .sui-button {
+        border-right-color color--primary.normal
+      }
+    }
     .sui-input__prepend {
-      border-right 0
+      border-left 0
       border-top-left-radius border-radius--normal
       border-bottom-left-radius border-radius--normal
+
+      .sui-button {
+        border-top-right-radius 0
+        border-bottom-right-radius 0
+        margin-right -14px
+      }
     }
     .sui-input__input {
       border-top-left-radius 0
@@ -125,6 +140,11 @@
     }
   }
   &.has-append  {
+    &.hovering-input {
+      .sui-button {
+        border-left-color color--primary.normal
+      }
+    }
     .sui-input__append {
       border-left 0
       border-top-right-radius border-radius--normal

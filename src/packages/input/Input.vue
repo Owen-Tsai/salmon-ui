@@ -6,6 +6,8 @@
       'is-readonly': readonly,
       'is-exceeded': isExceeded,
     }, {
+      'hovering-input': hoveringInput && ($slots.prepend || $slots.append),
+    }, {
       'has-prefix': prefixIcon || $slots.prefix,
       'has-suffix': suffixIcon || $slots.suffix || clearable || showPasswordToggle,
       'has-prepend': $slots.prepend,
@@ -38,6 +40,8 @@
       @blur="handleBlur"
       @change="handleChange"
       @keydown="handleKeydown"
+      @mouseenter="handleMouseEnterInput"
+      @mouseleave="handleMouseLeaveInput"
     >
 
     <!-- prefix -->
@@ -99,12 +103,20 @@
     computed,
     watch,
     nextTick,
-    PropType
+    PropType,
+    getCurrentInstance,
+    onMounted,
+    onUpdated
   } from 'vue'
   import useAttrs from '@/utils/use-attrs'
   import SIcon from '../icon'
 
   const _sizes = ['small', '', 'large']
+  const _pendantMap = {
+    suffix: 'append',
+    prefix: 'prepend',
+  }
+
 
   export default defineComponent({
     name: 'SInput',
@@ -159,6 +171,8 @@
       const isComposing = ref(false)
       const passwordVisible = ref(false)
       const suffixWrapperEl = ref()
+      const hoveringInput = ref(false)
+      const instance = getCurrentInstance()
 
       const maxLength = computed(() => ctx.attrs.maxlength)
       const textLength = computed(() => {
@@ -206,8 +220,31 @@
         ctx.emit('clear')
       }
       const setNativeInputValue = () => {
-        if(inputEl.value === nativeInputValue.value) return
+        if(inputEl.value.value === nativeInputValue.value) return
         inputEl.value.value = nativeInputValue.value
+      }
+      const getIconOffset = (place) => {
+        const { el }: any = instance?.vnode
+        if(!el) return
+
+        const elList: HTMLSpanElement[] = Array.from(el.querySelectorAll(`.sui-input__${place}`))
+        const target = elList.find(item => item.parentNode === el)
+        if(!target) return
+
+        const pendant = _pendantMap[place]
+        if(ctx.slots[pendant]) {
+          console.log(pendant, place, target)
+          target.style.transform = `
+            translateX(${place === 'suffix' ? '-' : ''}${el.querySelector(`.sui-input__${pendant}`).offsetWidth}px)
+          `
+        } else {
+          target.removeAttribute('style')
+        }
+      }
+
+      const updateIconOffset = () => {
+        getIconOffset('prefix')
+        getIconOffset('suffix')
       }
 
       const handleInput = (event) => {
@@ -233,6 +270,12 @@
       const handleMouseLeave = () => {
         isHovering.value = false
       }
+      const handleMouseEnterInput = () => {
+        hoveringInput.value = true
+      }
+      const handleMouseLeaveInput = () => {
+        hoveringInput.value = false
+      }
       const handleFocus = (e) => {
         isFocused.value = true
         ctx.emit('focus', e)
@@ -251,7 +294,15 @@
       watch(() => props.type, () => {
         nextTick(() => {
           setNativeInputValue()
+          updateIconOffset()
         })
+      })
+      onMounted(() => {
+        setNativeInputValue()
+        updateIconOffset()
+      })
+      onUpdated(() => {
+        nextTick(updateIconOffset)
       })
 
       return {
@@ -268,12 +319,15 @@
         showSuffixWordCount,
 
         isExceeded,
+        hoveringInput,
 
         handlePasswordToggle,
         clearInput,
 
         handleMouseEnter,
         handleMouseLeave,
+        handleMouseEnterInput,
+        handleMouseLeaveInput,
 
         handleInput,
         handleChange,
