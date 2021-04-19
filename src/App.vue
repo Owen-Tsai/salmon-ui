@@ -205,6 +205,17 @@
           <s-switch class="demo-m-a" v-model="switchVal" loading></s-switch>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Selects</h2>
+        <div class="demo-content">
+          <s-select>
+            <p>12</p>
+            <p>34</p>
+            <p>56</p>
+          </s-select>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -527,6 +538,7 @@
   import SDropdown from './packages/dropdown'
   import SSwitch from './packages/switch'
   import SInput from './packages/input'
+  import SSelect from './packages/select'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -542,7 +554,8 @@
       SCard,
       SDropdown, SDropdownItem, SDropdownMenu,
       SSwitch,
-      SInput
+      SInput,
+      SSelect
     },
     data: () => ({
       avatar1, avatar2,

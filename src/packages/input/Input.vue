@@ -191,7 +191,6 @@
         (textLength.value > Number(maxLength.value))
       )
       const showSuffixIcon = computed(() =>
-        (isFocused.value || isHovering.value) &&
         ctx.slots.suffix ||
         props.suffixIcon ||
         props.showPasswordToggle ||
@@ -233,7 +232,6 @@
 
         const pendant = _pendantMap[place]
         if(ctx.slots[pendant]) {
-          console.log(pendant, place, target)
           target.style.transform = `
             translateX(${place === 'suffix' ? '-' : ''}${el.querySelector(`.sui-input__${pendant}`).offsetWidth}px)
           `
