@@ -210,9 +210,10 @@
         <h2>Selects</h2>
         <div class="demo-content">
           <s-select>
-            <p>12</p>
-            <p>34</p>
-            <p>56</p>
+            <s-option value="mao">毛毛</s-option>
+            <s-option value="cai">蔡蔡</s-option>
+            <s-option value="da-mao">大毛毛</s-option>
+            <s-option value="da-cai">大蔡蔡</s-option>
           </s-select>
         </div>
       </div>
@@ -416,21 +417,21 @@
       <div class="demo-block">
         <h2>Checkboxes & Checkbox Groups</h2>
         <div class="demo-content">
-          <s-checkbox v-model="checkbox1" label="mao">毛毛</s-checkbox>
-          <s-checkbox v-model="checkbox2" label="cai">蔡蔡</s-checkbox>
+          <s-checkbox v-model="checkbox1" value="mao">毛毛</s-checkbox>
+          <s-checkbox v-model="checkbox2" value="cai">蔡蔡</s-checkbox>
           <p>测试：毛毛被选中 {{ checkbox1 }}, 蔡蔡被选中 {{ checkbox2 }}</p>
           <s-checkbox-group v-model="checkbox3">
-            <s-checkbox label="mao">毛毛</s-checkbox>
-            <s-checkbox label="cai">蔡蔡</s-checkbox>
-            <s-checkbox label="da-mao">大毛毛</s-checkbox>
-            <s-checkbox label="da-cai">大蔡蔡</s-checkbox>
+            <s-checkbox value="mao">毛毛</s-checkbox>
+            <s-checkbox value="cai">蔡蔡</s-checkbox>
+            <s-checkbox value="da-mao">大毛毛</s-checkbox>
+            <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
           <p>测试：选中的值包含{{ checkbox3 }}</p>
           <s-checkbox-group v-model="checkbox3" :min="1" :max="3">
-            <s-checkbox label="mao">毛毛</s-checkbox>
-            <s-checkbox label="cai">蔡蔡</s-checkbox>
-            <s-checkbox label="da-mao">大毛毛</s-checkbox>
-            <s-checkbox label="da-cai">大蔡蔡</s-checkbox>
+            <s-checkbox value="mao">毛毛</s-checkbox>
+            <s-checkbox value="cai">蔡蔡</s-checkbox>
+            <s-checkbox value="da-mao">大毛毛</s-checkbox>
+            <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
         </div>
       </div>
@@ -539,6 +540,7 @@
   import SSwitch from './packages/switch'
   import SInput from './packages/input'
   import SSelect from './packages/select'
+  import SOption from './packages/select-option'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -555,7 +557,7 @@
       SDropdown, SDropdownItem, SDropdownMenu,
       SSwitch,
       SInput,
-      SSelect
+      SSelect, SOption
     },
     data: () => ({
       avatar1, avatar2,
