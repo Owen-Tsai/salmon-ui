@@ -69,18 +69,19 @@
       },
       limit: {
         type: Number,
-        default: 3
+        default: 1
       },
     },
-    setup(props) {
+    setup(props, ctx) {
       // refs
       const referenceEl = ref()
       const popperEl = ref()
       const suffixEl = ref()
-      const selected = ref(null)
-      let tippyInstance: any = null
 
+      const selectedItems = ref([])
       const selectedLabel = ref('')
+
+      let tippyInstance: any = null
 
       const menuWidth = computed(() => {
         if(referenceEl.value) {
@@ -93,14 +94,18 @@
       const handleHide = () => {
         suffixEl.value.$el.classList.remove('select-suffix-rotate')
       }
-
       const handleShow = () => {
         suffixEl.value.$el.classList.add('select-suffix-rotate')
       }
 
       const handleOptionClick = (option) => {
-        console.log(`option clicked`, option)
-        selectedLabel.value = option.label
+        if(props.limit === 1) {
+          selectedLabel.value = option.label
+          ctx.emit('update:modelValue', option.value)
+          tippyInstance.hide()
+        } else {
+          const index = selectedItems.value.indexOf(option.value)
+        }
       }
 
       const options = {
@@ -153,7 +158,7 @@
         selectedLabel,
         menuWidth,
         referenceEl, popperEl, suffixEl,
-        handleOptionClick
+        handleOptionClick,
       }
     }
   })

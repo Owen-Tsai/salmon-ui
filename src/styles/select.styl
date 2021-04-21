@@ -1,5 +1,44 @@
 .sui-select {
   width 240px
+  cursor pointer
+
+  input {
+    cursor pointer
+  }
+
+  .sui-icon {
+    transform rotate(0)
+    transition transform .3s
+
+    &.select-suffix-rotate {
+      transform rotate(-180deg)
+    }
+  }
+}
+.sui-select__menu {
+  margin-top 0
+  margin-bottom 0
+  padding 4px 0
+
+  .sui-select__option {
+    list-style-type none
+    position relative
+    font-size font-size--text.medium
+    color color--text.normal
+    padding 8px 12px
+    cursor pointer
+    outline none
+    transition all .3s
+
+    &:not(.is-disabled) {
+      &:hover {
+        background-color: color--primary.x-light
+      }
+      &:focus {
+        box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+      }
+    }
+  }
 
 }
 

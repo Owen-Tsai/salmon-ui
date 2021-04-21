@@ -28,13 +28,8 @@
       }
 
       // states
-      &:not(.is-disabled) {
-        &:hover {
-          background-color: color--primary.x-light
-        }
-        &:focus {
-          box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
-        }
+      &:not(.is-disabled):hover {
+        background-color: color--primary.x-light
       }
       &.is-disabled {
         color color--placeholder

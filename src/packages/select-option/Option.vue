@@ -1,7 +1,7 @@
 <template>
   <li
     :class="[
-      's-select__option',
+      'sui-select__option',
       disabled ? 'is-disabled' : '',
       divided ? 'is-divided': '',
       itemSelected ? 'is-selected' : ''
@@ -51,6 +51,8 @@
           'label': renderedLabel.value,
           'value': props.value
         })
+
+        ctx.emit('click')
       }
 
       return {

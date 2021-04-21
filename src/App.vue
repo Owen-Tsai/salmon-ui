@@ -209,7 +209,15 @@
       <div class="demo-block">
         <h2>Selects</h2>
         <div class="demo-content">
-          <s-select>
+          <p>测试：选中的值是{{ selectModel }}</p>
+          <s-select v-model="selectModel">
+            <s-option value="mao">毛毛</s-option>
+            <s-option value="cai">蔡蔡</s-option>
+            <s-option value="da-mao">大毛毛</s-option>
+            <s-option value="da-cai">大蔡蔡</s-option>
+          </s-select>
+          <p>测试多选：选中的值是{{ selectModel2 }}</p>
+          <s-select v-model="selectModel2" :limit="3">
             <s-option value="mao">毛毛</s-option>
             <s-option value="cai">蔡蔡</s-option>
             <s-option value="da-mao">大毛毛</s-option>
@@ -573,7 +581,9 @@
       switchVal: true,
       modelVal: true,
       inputModel1: '123123123',
-      inputModel2: ''
+      inputModel2: '',
+      selectModel: 'da-mao',
+      selectModel2: []
     }),
     methods: {
       changeBadgeValue(value) {
