@@ -4,7 +4,7 @@
     <s-input
       ref="referenceEl"
       class="sui-select__input"
-      v-model="selectedLabel"
+      v-model="renderedLabel"
       :placeholder="placeholder"
       readonly
       :disabled="disabled"
@@ -50,6 +50,11 @@
   import SInput from '../input'
   import SIcon from '../icon'
 
+  interface IOption {
+    label?: string,
+    value: any
+  }
+
   export default defineComponent({
     components: {
       SInput,
@@ -78,8 +83,9 @@
       const popperEl = ref()
       const suffixEl = ref()
 
-      const selectedItems = ref([])
-      const selectedLabel = ref('')
+      const selected = props.limit > 1 ? ref<IOption[]>([]) : ref<IOption>()
+      const selectedValues = ref<any[]>([])
+      const renderedLabel = ref<string>('')
 
       let tippyInstance: any = null
 
@@ -97,14 +103,60 @@
       const handleShow = () => {
         suffixEl.value.$el.classList.add('select-suffix-rotate')
       }
+      const processSelectedValues = () => {
+        if(!Array.isArray(selected.value)) return
+
+        selectedValues.value = []
+        selected.value.forEach((option) => {
+          selectedValues.value.push(option.value)
+        })
+      }
+      const getSelectedIndex = (option: IOption): number => {
+        if(Array.isArray(selected.value)) {
+          return selected.value.findIndex(el =>
+            el.value === option.value
+          )
+        }
+
+        return -1
+      }
+      const setSelectLabel = () => {
+        if(props.limit > 1 && Array.isArray(selected.value)) {
+          let str = ''
+          for(let i = 0; i < selected.value.length; i++) {
+            str += String(selected.value[i].label)
+            str += i === selected.value.length - 1 ? '' : ', '
+          }
+
+          renderedLabel.value = str
+        } else if(!Array.isArray(selected.value)) {
+          renderedLabel.value = selected.value?.label || selected.value?.value
+        }
+      }
 
       const handleOptionClick = (option) => {
         if(props.limit === 1) {
-          selectedLabel.value = option.label
+          if(selected.value === option) return
+
+          selected.value = option
+
           ctx.emit('update:modelValue', option.value)
-          tippyInstance.hide()
+          tippyInstance?.hide()
         } else {
-          const index = selectedItems.value.indexOf(option.value)
+          const index = getSelectedIndex(option)
+
+          if(!Array.isArray(selected.value)) return
+
+          if(index !== -1) {
+            selected.value?.splice(index, 1)
+          } else {
+            if(selected.value.length >= props.limit) return
+            selected.value?.push(option)
+          }
+
+          processSelectedValues()
+
+          ctx.emit('update:modelValue', selectedValues.value)
         }
       }
 
@@ -131,6 +183,8 @@
         if(props.disabled) {
           tippyInstance.disable()
         }
+
+        setSelectLabel()
       })
 
       watchEffect(() => {
@@ -148,14 +202,19 @@
         }
       })
 
+      watch(() => props.modelValue, () => {
+        setSelectLabel()
+      })
+
       provide('select', reactive({
         props,
-        selected,
+        selected, selectedValues,
         handleOptionClick
       }))
 
       return {
-        selectedLabel,
+        selected,
+        renderedLabel,
         menuWidth,
         referenceEl, popperEl, suffixEl,
         handleOptionClick,

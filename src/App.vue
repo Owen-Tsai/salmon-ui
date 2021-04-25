@@ -583,7 +583,7 @@
       inputModel1: '123123123',
       inputModel2: '',
       selectModel: 'da-mao',
-      selectModel2: []
+      selectModel2: ['mao', 'da-mao', 'cai']
     }),
     methods: {
       changeBadgeValue(value) {

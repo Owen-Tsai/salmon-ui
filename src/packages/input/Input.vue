@@ -180,7 +180,7 @@
           return String(props.modelValue).length
         }
 
-        return props.modelValue.length || 0
+        return props.modelValue?.length || 0
       })
       const showSuffixWordCount = computed(() =>
         ctx.attrs.maxlength && props.showWordCount &&

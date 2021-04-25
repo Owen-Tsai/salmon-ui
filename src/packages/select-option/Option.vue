@@ -19,7 +19,9 @@
     defineComponent,
     computed,
     inject,
-    ref
+    ref,
+    watchEffect,
+    onMounted
   } from 'vue'
 
   export default defineComponent({
@@ -44,7 +46,7 @@
       // injected
       const selectComponent:any = inject('select')
 
-      const itemSelected = computed(() => false)
+      let itemSelected = ref(false)
 
       const handleClick = () => {
         selectComponent.handleOptionClick({
@@ -54,6 +56,28 @@
 
         ctx.emit('click')
       }
+
+      const isOptionSelected = (): boolean => {
+        if(
+          selectComponent.props.limit > 1 &&
+          Array.isArray(selectComponent.props.modelValue)
+        ) {
+          return selectComponent.props.modelValue.includes(props.value)
+        } else {
+          return selectComponent.props.modelValue === props.value
+        }
+      }
+
+      onMounted(() => {
+        if(selectComponent.props.modelValue && isOptionSelected()) {
+          handleClick()
+          itemSelected.value = true
+        }
+      })
+
+      watchEffect(() => {
+        itemSelected.value = isOptionSelected()
+      })
 
       return {
         labelSpanEl,
