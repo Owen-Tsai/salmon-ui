@@ -216,11 +216,24 @@
             <s-option value="da-mao">大毛毛</s-option>
             <s-option value="da-cai">大蔡蔡</s-option>
           </s-select>
-          <p>测试多选：选中的值是{{ selectModel2 }}</p>
-          <s-select v-model="selectModel2" :limit="3">
+          <p>测试：选中的值是{{ selectModel3 }}</p>
+          <s-select
+            v-model="selectModel3"
+            prefix-icon="user"
+            multiple
+            style="width: 300px"
+            :disabled="popoverDisabled"
+          >
             <s-option value="mao">毛毛</s-option>
             <s-option value="cai">蔡蔡</s-option>
-            <s-option value="da-mao">大毛毛</s-option>
+            <s-option value="da-mao" divided>大毛毛</s-option>
+            <s-option value="da-cai">大蔡蔡</s-option>
+          </s-select>
+          <p>测试多选：选中的值是{{ selectModel2 }}</p>
+          <s-select v-model="selectModel2" multiple :limit="3">
+            <s-option value="mao">毛毛</s-option>
+            <s-option value="cai">蔡蔡</s-option>
+            <s-option value="da-mao"></s-option>
             <s-option value="da-cai">大蔡蔡</s-option>
           </s-select>
         </div>
@@ -583,7 +596,8 @@
       inputModel1: '123123123',
       inputModel2: '',
       selectModel: 'da-mao',
-      selectModel2: ['mao', 'da-mao', 'cai']
+      selectModel2: ['mao', 'da-mao', 'cai'],
+      selectModel3: ''
     }),
     methods: {
       changeBadgeValue(value) {

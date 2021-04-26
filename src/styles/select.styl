@@ -29,6 +29,10 @@
     cursor pointer
     outline none
     transition all .3s
+    display flex
+    align-items center
+    justify-content space-between
+    user-select none
 
     &:not(.is-disabled) {
       &:hover {
@@ -38,8 +42,31 @@
         box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
       }
       &.is-selected {
-        font-weight 500
-        color color--primary.normal
+        font-weight: 500
+        color: color--primary.normal
+        position: relative
+
+        .sui-option__check-icon > svg {
+          stroke-width 2
+        }
+      }
+    }
+
+    &.is-disabled {
+      background-color color--bg.normal
+      color color--placeholder
+      cursor not-allowed
+    }
+    &.is-divided {
+      margin-top 8px
+      &:before {
+        content ""
+        position absolute
+        box-sizing border-box
+        top -4px
+        left 0
+        width 100%
+        border-top 1px solid color--border
       }
     }
   }

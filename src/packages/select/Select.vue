@@ -72,9 +72,10 @@
           return ['bottom', 'top'].includes(v)
         }
       },
+      multiple: Boolean,
       limit: {
         type: Number,
-        default: 1
+        default: 0
       },
     },
     setup(props, ctx) {
@@ -83,7 +84,7 @@
       const popperEl = ref()
       const suffixEl = ref()
 
-      const selected = props.limit > 1 ? ref<IOption[]>([]) : ref<IOption>()
+      const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
       const selectedValues = ref<any[]>([])
       const renderedLabel = ref<string>('')
 
@@ -105,7 +106,6 @@
       }
       const processSelectedValues = () => {
         if(!Array.isArray(selected.value)) return
-
         selectedValues.value = []
         selected.value.forEach((option) => {
           selectedValues.value.push(option.value)
@@ -121,7 +121,7 @@
         return -1
       }
       const setSelectLabel = () => {
-        if(props.limit > 1 && Array.isArray(selected.value)) {
+        if(props.multiple && Array.isArray(selected.value)) {
           let str = ''
           for(let i = 0; i < selected.value.length; i++) {
             str += String(selected.value[i].label)
@@ -135,7 +135,7 @@
       }
 
       const handleOptionClick = (option) => {
-        if(props.limit === 1) {
+        if(!props.multiple) {
           if(selected.value === option) return
 
           selected.value = option
@@ -150,7 +150,7 @@
           if(index !== -1) {
             selected.value?.splice(index, 1)
           } else {
-            if(selected.value.length >= props.limit) return
+            if(props.limit > 0 && selected.value.length >= props.limit) return
             selected.value?.push(option)
           }
 

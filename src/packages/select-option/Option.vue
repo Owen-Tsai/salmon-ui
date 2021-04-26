@@ -2,7 +2,7 @@
   <li
     :class="[
       'sui-select__option',
-      disabled ? 'is-disabled' : '',
+      optionDisabled ? 'is-disabled' : '',
       divided ? 'is-divided': '',
       itemSelected ? 'is-selected' : ''
     ]"
@@ -11,6 +11,12 @@
     <span ref="labelSpanEl">
       <slot>{{ renderedLabel }}</slot>
     </span>
+    <s-icon
+      v-if="isMultipleSelect"
+      v-show="itemSelected"
+      name="check"
+      class="sui-option__check-icon"
+    ></s-icon>
   </li>
 </template>
 
@@ -24,8 +30,13 @@
     onMounted
   } from 'vue'
 
+  import SIcon from '../icon'
+
   export default defineComponent({
     name: 'SOption',
+    components: {
+      SIcon
+    },
     props: {
       disabled: Boolean,
       divided: Boolean,
@@ -42,6 +53,22 @@
           return labelSpanEl.value?.innerText
         }
       })
+      const isMultipleSelect = computed(() => {
+        return selectComponent.props.multiple
+      })
+      const optionDisabled = computed(() => {
+        if(
+          Array.isArray(selectComponent.selected) &&
+          selectComponent.selected.length >= selectComponent.props.limit &&
+          selectComponent.props.limit > 0 &&
+          selectComponent.props.multiple &&
+          !itemSelected.value
+        ) {
+          return true
+        }
+
+        return !!props.disabled;
+      })
 
       // injected
       const selectComponent:any = inject('select')
@@ -49,6 +76,8 @@
       let itemSelected = ref(false)
 
       const handleClick = () => {
+        if(optionDisabled.value) return
+
         selectComponent.handleOptionClick({
           'label': renderedLabel.value,
           'value': props.value
@@ -58,10 +87,7 @@
       }
 
       const isOptionSelected = (): boolean => {
-        if(
-          selectComponent.props.limit > 1 &&
-          Array.isArray(selectComponent.props.modelValue)
-        ) {
+        if(isMultipleSelect.value) {
           return selectComponent.props.modelValue.includes(props.value)
         } else {
           return selectComponent.props.modelValue === props.value
@@ -83,6 +109,8 @@
         labelSpanEl,
         renderedLabel,
         itemSelected,
+        optionDisabled,
+        isMultipleSelect,
         handleClick
       }
     }
