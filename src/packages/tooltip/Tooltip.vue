@@ -50,6 +50,7 @@
         type: Boolean,
         default: undefined
       },
+      instant: Boolean,
       offset: Object as PropType<[number, number]>,
     },
     setup(props) {
@@ -74,7 +75,9 @@
       onMounted(() => {
         if(reference.value !== null) {
           tippyInstance = tippy(reference.value, {
-            ...options, ...basePopperConfig
+            ...options, ...basePopperConfig, ...{
+              animation: props.instant ? 'none' : basePopperConfig.animation
+            }
           })
         }
 

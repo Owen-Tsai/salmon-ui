@@ -221,6 +221,7 @@
             v-model="selectModel3"
             prefix-icon="user"
             multiple
+            :limit="selectLimit"
             style="width: 300px"
             :disabled="popoverDisabled"
           >
@@ -236,6 +237,7 @@
             <s-option value="da-mao"></s-option>
             <s-option value="da-cai">大蔡蔡</s-option>
           </s-select>
+          <s-button class="demo-m-a" @click="selectLimit = selectLimit === 2 ? 3 : 2">切换 limit</s-button>
         </div>
       </div>
     </section>
@@ -354,6 +356,26 @@
               <span>https://pdpcy.club/salmon-ui</span>
             </div>
           </s-card>
+        </div>
+      </div>
+
+      <div class="demo-block">
+        <h2>Sliders</h2>
+        <div class="demo-content" style="margin-bottom: 80px" >
+          <div style="position: relative; width: 100%">
+            <s-tooltip
+              :content="sliderValue"
+              trigger="click"
+              :hide-on-click="false"
+              :style="{ left: `${left}%` }"
+              id="slide"
+              instant
+            >
+              <div style="height: 18px; width: 18px; background-color: coral;"></div>
+            </s-tooltip>
+          </div>
+          <br>
+          <s-button @click="move"> > </s-button>
         </div>
       </div>
     </section>
@@ -597,7 +619,10 @@
       inputModel2: '',
       selectModel: 'da-mao',
       selectModel2: ['mao', 'da-mao', 'cai'],
-      selectModel3: ''
+      selectModel3: '',
+      selectLimit: 2,
+      sliderValue: 0,
+      left: 0
     }),
     methods: {
       changeBadgeValue(value) {
@@ -610,6 +635,13 @@
       changePopperContent() {
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
+      },
+      move() {
+        this.left += 1
+        let el = document.querySelector('#slide')
+        let tippy = el._tippy
+        tippy.hide()
+        tippy.show()
       },
       log(e) {
         console.log(e)
