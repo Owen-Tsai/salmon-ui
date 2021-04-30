@@ -4,7 +4,16 @@ import {
   ref
 } from 'vue'
 
-const useSlider = (props, initData, emit) => {
+import {
+  ISliderProps,
+  ISliderData
+} from './slider.type'
+
+export const useSlider = (
+  props: ISliderProps,
+  initData: ISliderData,
+  emit
+) => {
   const sliderEl = ref()
   const firstHandleEl = ref()
   const secondHandleEl = ref()
