@@ -19,7 +19,7 @@
       ]"
       ref="sliderEl"
       :style="trackStyle"
-      @click="handleTrackClick"
+      @click="handleSliderClick"
     >
       <div class="sui-slider__bar" :style="barStyle"></div>
 
@@ -46,7 +46,7 @@
           :style="getStopStyle(item)"
         ></div>
       </div>
-      <template v-if="markList.length > 0">
+      <template v-if="markerList.length > 0">
         <div>
           <div
             class="sui-slider__stop sui-slider__marker-stop"
@@ -75,7 +75,11 @@
     PropType,
     reactive,
     watch,
-    computed
+    computed,
+    toRefs,
+    onMounted,
+    onBeforeUnmount,
+    nextTick
   } from 'vue'
 
   import SSliderHandle from './Handle.vue'
@@ -84,6 +88,7 @@
   import { useSlider } from './useSlider'
   import { useMarkers, useStops } from './useMarkers'
   import throwError from '@/utils/class.error'
+  import {ISliderData} from "@/packages/slider/slider.type";
 
   export default defineComponent({
     name: 'SSlider',
@@ -141,7 +146,7 @@
     emits: ['update:modelValue', 'change', 'input'],
     setup(props, { emit }) {
       // data
-      const initData = reactive({
+      const initData: ISliderData = reactive({
         firstValue: 0,
         secondValue: 0,
         oldValue: 0,
@@ -229,6 +234,14 @@
         }
       } // end setValues()
 
+      const {
+        firstValue,
+        secondValue,
+        oldValue,
+        isDragging,
+        sliderSize,
+      } = toRefs(initData)
+
       // watchers
       watch(() => initData.isDragging, val => {
         if(!val) {
@@ -260,6 +273,63 @@
       watch(() => [props.min, props.max], () => {
         setValues()
       })
+
+      // lifecycle hooks
+      onMounted(async () => {
+        let valueText: string
+        if(props.range) {
+          if(Array.isArray(props.modelValue)) {
+            initData.firstValue = Math.max(props.min, props.modelValue[0])
+            initData.secondValue = Math.min(props.max, props.modelValue[1])
+          } else {
+            initData.firstValue = props.min
+            initData.secondValue = props.max
+          }
+
+          initData.oldValue = [initData.firstValue, initData.secondValue]
+          valueText = `${initData.firstValue} - ${initData.secondValue}`
+        } else {
+          if(typeof props.modelValue !== 'number' || isNaN(props.modelValue)) {
+            initData.firstValue = props.min
+          } else {
+            initData.firstValue = Math.min(props.max, Math.max(props.min, props.modelValue))
+          }
+
+          initData.oldValue = initData.firstValue
+          valueText = String(initData.firstValue)
+        }
+
+        sliderEl.value.setAttribute('aria-valuetext', valueText)
+        const label = `slider: ${props.min} - ${props.max}`
+        sliderEl.value.setAttribute('aria-label', props.label ? props.label : label)
+
+        window.addEventListener('resize', resetSize)
+        await nextTick()
+        resetSize()
+      })
+
+      onBeforeUnmount(() => {
+        window.removeEventListener('resize', resetSize)
+      })
+
+      return {
+        sliderEl, firstHandleEl, secondHandleEl,
+        trackStyle, barStyle,
+        resetSize,
+        setPosition,
+        emitChange,
+        handleSliderClick,
+        stops,
+        getStopStyle,
+        markerList,
+        precision,
+
+        firstValue,
+        secondValue,
+        oldValue,
+        isDragging,
+        sliderSize,
+      }
     }
   })
 </script>

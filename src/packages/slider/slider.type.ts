@@ -29,7 +29,14 @@ export interface ISliderData {
 export interface ISliderProvider {
   disabled: ComputedRef<boolean>,
   min: ComputedRef<number>,
-  max: ComputedRef<number>
+  max: ComputedRef<number>,
+  step: ComputedRef<number>,
+  showTooltip: ComputedRef<boolean>,
+  precision: ComputedRef<number>,
+  sliderSize: ComputedRef<number>,
+  formatTooltip: ComputedRef<(value: number) => string | number> | undefined,
+  emitChange: () => void,
+  resetSize: () => void
 }
 
 export type Marker = {

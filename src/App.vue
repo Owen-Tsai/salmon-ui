@@ -362,20 +362,8 @@
       <div class="demo-block">
         <h2>Sliders</h2>
         <div class="demo-content" style="margin-bottom: 80px" >
-          <div style="position: relative; width: 100%">
-            <s-tooltip
-              :content="sliderValue"
-              trigger="click"
-              :hide-on-click="false"
-              :style="{ left: `${left}%` }"
-              id="slide"
-              instant
-            >
-              <div style="height: 18px; width: 18px; background-color: coral;"></div>
-            </s-tooltip>
-          </div>
-          <br>
-          <s-button @click="move"> > </s-button>
+          <s-slider v-model="sliderValue"></s-slider>
+          <p>slider value is {{ sliderValue }}</p>
         </div>
       </div>
     </section>
@@ -584,6 +572,7 @@
   import SInput from './packages/input'
   import SSelect from './packages/select'
   import SOption from './packages/select-option'
+  import SSlider from './packages/slider/Slider'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -600,7 +589,8 @@
       SDropdown, SDropdownItem, SDropdownMenu,
       SSwitch,
       SInput,
-      SSelect, SOption
+      SSelect, SOption,
+      SSlider
     },
     data: () => ({
       avatar1, avatar2,
