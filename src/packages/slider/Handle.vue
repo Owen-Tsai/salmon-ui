@@ -24,7 +24,8 @@
       <div :class="[
         'sui-slider__handle',
         ...{
-          'is-hovering':
+          'is-hovering': isHovering,
+          'is-dragging': isDragging
         }
       ]"></div>
     </s-tooltip>
@@ -39,7 +40,9 @@
     ComputedRef,
     toRefs,
     ref,
-    reactive
+    watch,
+    reactive,
+    nextTick
   } from 'vue'
 
   import {
@@ -67,7 +70,7 @@
       }
     },
     emits: ['update:modelValue'],
-    setup(props) {
+    setup(props, { emit }) {
       // injected
       const slider: ISliderProvider = inject('sliderComponent', {} as ISliderProvider)
 
@@ -128,6 +131,7 @@
       const hideTooltip = debounce(() => {
         showTooltip.value && (tooltipVisible.value = false)
       })
+
       const handleMouseEnter = () => {
         isHovering.value = true
         displayTooltip()
@@ -136,6 +140,7 @@
         isHovering.value = false
         hideTooltip()
       }
+
       const getClientXY = (event: MouseEvent | TouchEvent) => {
         let clientX: number
         let clientY: number
@@ -152,12 +157,20 @@
           clientX, clientY
         }
       }
+
       const handleButtonDown = (event: MouseEvent | TouchEvent) => {
         if(disabled) return
 
         event.preventDefault()
+        onDragStart(event)
 
+        window.addEventListener('mousemove', onDragging)
+        window.addEventListener('touchmove', onDragging)
+        window.addEventListener('mouseup', onDragEnd)
+        window.addEventListener('touchend', onDragEnd)
+        window.addEventListener('contextmenu', onDragEnd)
       }
+
       const onDragStart = (event: MouseEvent | TouchEvent) => {
         isDragging.value = true
         isClick.value = true
@@ -175,6 +188,7 @@
         handlerData.startPosition = parseFloat(currentPosition.value)
         handlerData.newPosition = handlerData.startPosition
       }
+
       const onDragging = (event: MouseEvent | TouchEvent) => {
         if(!isDragging.value) return
 
@@ -197,10 +211,70 @@
         setPosition(handlerData.newPosition)
       }
 
-      const setPosition = () => {
+      const onDragEnd = () => {
+        if (isDragging.value) {
+          setTimeout(() => {
+            isDragging.value = false
+            hideTooltip()
 
+            if (!isClick.value) {
+              setPosition(handlerData.newPosition)
+              emitChange.value()
+            }
+          }, 0)
+
+          window.removeEventListener('mousemove', onDragging)
+          window.removeEventListener('touchmove', onDragging)
+          window.removeEventListener('mouseup', onDragEnd)
+          window.removeEventListener('touchend', onDragEnd)
+          window.removeEventListener('contextmenu', onDragEnd)
+        }
       }
 
+      const setPosition = async (newPosition: number) => {
+        if(isNaN(newPosition) || !newPosition) return
+
+        if (newPosition < 0) {
+          newPosition = 0
+        } else if (newPosition > 100) {
+          newPosition = 100
+        }
+
+        const lengthPerStep = 100 / ((max.value - min.value) / step.value)
+        const stepCount = Math.round(newPosition / lengthPerStep)
+        let value = stepCount * lengthPerStep * (max.value - min.value) * 0.01 + min.value
+        value = parseFloat(value.toFixed(precision.value))
+        emit('update:modelValue', value)
+
+        if (!isDragging.value && props.modelValue !== handlerData.oldValue) {
+          handlerData.oldValue = props.modelValue
+        }
+
+        await nextTick()
+        isDragging.value && displayTooltip()
+        updateTooltip()
+      }
+
+      const updateTooltip = () => {
+        if (!tooltipEl.value) return
+        const instance = tooltipEl.value?._tippy
+
+        if (!instance) return
+        instance.setProps({
+          animation: false
+        })
+        instance.hide()
+        instance.show()
+        instance.setProps({
+          animation: true
+        })
+      }
+
+      // watchers
+      watch(() => isDragging.value, (val) => {
+        // TODO: call injected method `updateDragging`
+        // to inform parent component to update state
+      })
 
       return {
         tooltipEl,
@@ -209,8 +283,10 @@
         isDragging,
         wrapperStyle,
         formattedValue,
+
         handleMouseEnter,
-        handleMouseLeave
+        handleMouseLeave,
+        handleButtonDown,
       }
 
     }

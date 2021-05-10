@@ -1,4 +1,4 @@
-import { ComputedRef } from 'vue'
+import { ComputedRef, Ref } from 'vue'
 
 export interface ISliderProps {
   modelValue: number | number[],
@@ -21,8 +21,7 @@ export interface ISliderProps {
 export interface ISliderData {
   firstValue: number,
   secondValue: number,
-  oldValue: number,
-  isDragging: boolean,
+  oldValue: number | number[],
   sliderSize: number
 }
 
@@ -44,5 +43,7 @@ export type Marker = {
   position: number,
   marker: {[s: string]: any;}
 }
+
+// TODO: add type declarations for sliderHandle, sliderHandleProps, sliderHandleRefs
 
 export type Markers = ComputedRef<Marker>

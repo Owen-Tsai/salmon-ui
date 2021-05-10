@@ -1,4 +1,4 @@
-// plugin for adding custom plugin to tippy instance
+// plugin for adding custom class name to tippy instance
 
 const updateClassNames = (
   boxEl: Element,

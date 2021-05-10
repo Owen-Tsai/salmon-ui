@@ -73,10 +73,10 @@
   import {
     defineComponent,
     PropType,
+    ref,
     reactive,
     watch,
     computed,
-    toRefs,
     onMounted,
     onBeforeUnmount,
     nextTick
@@ -85,10 +85,11 @@
   import SSliderHandle from './Handle.vue'
   import SSliderMarker from './Marker.vue'
 
-  import { useSlider } from './useSlider'
-  import { useMarkers, useStops } from './useMarkers'
   import throwError from '@/utils/class.error'
-  import {ISliderData} from "@/packages/slider/slider.type";
+  import {
+    ISliderData,
+    Marker
+  } from './slider.type'
 
   export default defineComponent({
     name: 'SSlider',
@@ -111,7 +112,10 @@
       },
       step: {
         type: Number,
-        default: 1
+        default: 1,
+        validator: (v: number) => {
+          return v > 0
+        }
       },
       showStops: Boolean,
       vertical: Boolean,
@@ -145,65 +149,120 @@
     },
     emits: ['update:modelValue', 'change', 'input'],
     setup(props, { emit }) {
+      if (props.min > props.max) {
+        throwError('sui-slider', 'prop `min` should not be greater than `max`')
+      }
+
       // data
-      const initData: ISliderData = reactive({
+      const isDragging = ref(false)
+      const sliderEl = ref()
+      const firstHandleEl = ref()
+      const secondHandleEl = ref()
+
+      const sliderData: ISliderData = reactive({
         firstValue: 0,
         secondValue: 0,
         oldValue: 0,
-        isDragging: false,
         sliderSize: 1
       })
 
-      const {
-        sliderEl,
+      const handleRefs = {
         firstHandleEl,
-        secondHandleEl,
-        minValue,
-        maxValue,
-        trackStyle,
-        barStyle,
-        resetSize,
-        setPosition,
-        emitChange,
-        handleSliderClick
-      } = useSlider(props, initData, emit)
+        secondHandleEl
+      }
 
-      const {
-        stops,
-        getStopStyle
-      } = useStops(props, initData, minValue, maxValue)
-
-      const markerList = useMarkers(props)
-
+      // computed
+      const minValue = computed(() =>
+        Math.min(sliderData.firstValue, sliderData.secondValue)
+      )
+      const maxValue = computed(() =>
+        Math.max(sliderData.firstValue, sliderData.secondValue)
+      )
       const precision = computed(() => {
-        let precisions =
-          [props.max, props.min, props.step].map(item => {
-            let decimal = String(item).split('.')[1]
-            return decimal ? decimal.length : 0
-          })
-
-        return Math.max.apply(null, precisions)
+        let precisions = [props.min, props.max, props.step].map(item => {
+          let decimal = ('' + item).split('.')[1];
+          return decimal ? decimal.length : 0;
+        });
+        return Math.max.apply(null, precisions);
       })
 
+      const stops = computed(() => {
+        if (!props.showStops) return []
+
+        const stopCount = (props.max - props.min) / props.step
+        const lengthPerStep = 100 / ((props.max - props.min) / props.step)
+        let result: number[] = []
+        for (let i = 0; i < stopCount; i++) {
+          result.push(i * lengthPerStep)
+        }
+
+        if (props.range) {
+          return result.filter(step =>
+            step < 100 * (minValue.value - props.min) / (props.max - props.min) ||
+            step > 100 * (maxValue.value - props.max) / (props.max - props.min)
+          )
+        } else {
+          return result.filter(step =>
+            step > 100 * (sliderData.firstValue - props.min) / (props.max - props.min)
+          )
+        }
+      })
+
+      const markerList = computed(() => {
+        if (!props.markers) return []
+
+        const markerKeys = Object.keys(props.markers)
+        return markerKeys.map(parseFloat)
+          .sort((a, b) => a - b)
+          .filter(point => point >= props.min && point <= props.max)
+          .map((point): Marker => ({
+            point,
+            position: (point - props.min) * 100 / (props.max - props.min),
+            marker: props.markers?.[point]
+          }))
+      })
+
+      const barSize = computed(() =>
+        props.range
+          ? `${ 100 * (maxValue.value - minValue.value) / (props.max - props.min) }%`
+          : `${ 100 * (sliderData.firstValue - props.min) / (props.max - props.min) }%`
+      )
+      const barStart = computed(() =>
+        props.range
+          ? `${ 100 * (minValue.value - props.min) / (props.max - props.min) }%`
+          : '0%'
+      )
+      const barStyle = computed(() => {
+        return props.vertical ? {
+          height: barSize.value,
+          bottom: barStart.value
+        } : {
+          width: barSize.value,
+          left: barStart.value
+        } as CSSStyleDeclaration
+      })
+
+      const trackStyle = computed(() =>
+        (props.vertical ? { height: props.height } : {}) as CSSStyleDeclaration
+      )
+
+      const isValueChanged = () => {
+        if(props.range) {
+          return ![minValue.value, maxValue.value].every((item, index) =>
+            item === sliderData.oldValue[index]
+          )
+        } else {
+          return props.modelValue === sliderData.oldValue
+        }
+      }
+
+      // methods
       const emitEvents = (val: number[] | number) => {
         emit('update:modelValue', val)
         emit('input', val)
       }
-      const isValueChanged = () => {
-        if(props.range) {
-          return ![minValue, maxValue].every((item, index) =>
-            item === initData.oldValue[index]
-          )
-        } else {
-          return props.modelValue === initData.oldValue
-        }
-      }
-      const setValues = () => {
-        if(props.min > props.max) {
-          throwError('[s-slider]', 'prop `min` cannot be greater than `max`')
-          return
-        }
 
+      const setValues = () => {
         const val = props.modelValue
         if(props.range && Array.isArray(val)) {
           if(val[1] < props.min) {
@@ -216,10 +275,10 @@
             emitEvents([val[0], props.max])
           } else {
             // normal situation
-            initData.firstValue = val[0]
-            initData.secondValue = val[1]
+            sliderData.firstValue = val[0]
+            sliderData.secondValue = val[1]
             if(isValueChanged()) {
-              initData.oldValue = val.slice()
+              sliderData.oldValue = val.slice()
             }
           }
         } else if(!props.range && typeof val === 'number' && !isNaN(val)) {
@@ -229,40 +288,56 @@
             emitEvents(props.max)
           } else {
             // normal situation
-            initData.firstValue = val
+            sliderData.firstValue = val
           }
         }
       } // end setValues()
 
-      const {
-        firstValue,
-        secondValue,
-        oldValue,
-        isDragging,
-        sliderSize,
-      } = toRefs(initData)
+      const resetSize = () => {
+        if (sliderEl.value) {
+          sliderData.sliderSize = sliderEl.value[`client${ props.vertical ? 'Height' : 'Width' }`];
+        }
+      }
+
+      const setPosition = (percentage: number) => {
+        const targetValue = props.min + percentage * (props.max - props.min) / 100
+        if (!props.range) {
+          firstHandleEl.value.setPosition(percentage)
+          return
+        }
+
+        let handleRefString: string
+        if (Math.abs(minValue.value - targetValue) < Math.abs(maxValue.value - targetValue)) {
+          handleRefString =
+            sliderData.firstValue < sliderData.secondValue ? 'firstHandleEl' : 'secondHandleEl'
+        } else {
+          handleRefString =
+            sliderData.firstValue > sliderData.secondValue ? 'firstHandleEl' : 'secondHandleEl'
+        }
+        handleRefs[handleRefString].value.setPosition(percentage)
+      }
 
       // watchers
-      watch(() => initData.isDragging, val => {
+      watch(() => isDragging.value, val => {
         if(!val) {
           setValues()
         }
       })
-      watch(() => initData.firstValue, val => {
+      watch(() => sliderData.firstValue, val => {
         if(props.range) {
           emitEvents([minValue.value, maxValue.value])
         } else {
           emitEvents(val)
         }
       })
-      watch(() => initData.secondValue, () => {
+      watch(() => sliderData.secondValue, () => {
         if(props.range) {
           emitEvents([minValue.value, maxValue.value])
         }
       })
       watch(() => props.modelValue, (val, oldVal) => {
         if(
-          initData.isDragging
+          isDragging.value
           || Array.isArray(val)
           && Array.isArray(oldVal)
           && val.every((item, i) => item === oldVal[i])
@@ -279,24 +354,24 @@
         let valueText: string
         if(props.range) {
           if(Array.isArray(props.modelValue)) {
-            initData.firstValue = Math.max(props.min, props.modelValue[0])
-            initData.secondValue = Math.min(props.max, props.modelValue[1])
+            sliderData.firstValue = Math.max(props.min, props.modelValue[0])
+            sliderData.secondValue = Math.min(props.max, props.modelValue[1])
           } else {
-            initData.firstValue = props.min
-            initData.secondValue = props.max
+            sliderData.firstValue = props.min
+            sliderData.secondValue = props.max
           }
 
-          initData.oldValue = [initData.firstValue, initData.secondValue]
-          valueText = `${initData.firstValue} - ${initData.secondValue}`
+          sliderData.oldValue = [sliderData.firstValue, sliderData.secondValue]
+          valueText = `${sliderData.firstValue} - ${sliderData.secondValue}`
         } else {
           if(typeof props.modelValue !== 'number' || isNaN(props.modelValue)) {
-            initData.firstValue = props.min
+            sliderData.firstValue = props.min
           } else {
-            initData.firstValue = Math.min(props.max, Math.max(props.min, props.modelValue))
+            sliderData.firstValue = Math.min(props.max, Math.max(props.min, props.modelValue))
           }
 
-          initData.oldValue = initData.firstValue
-          valueText = String(initData.firstValue)
+          sliderData.oldValue = sliderData.firstValue
+          valueText = String(sliderData.firstValue)
         }
 
         sliderEl.value.setAttribute('aria-valuetext', valueText)
