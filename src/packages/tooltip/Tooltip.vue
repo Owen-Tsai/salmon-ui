@@ -76,7 +76,7 @@
         if(reference.value !== null) {
           tippyInstance = tippy(reference.value, {
             ...options, ...basePopperConfig, ...{
-              animation: props.instant ? 'none' : basePopperConfig.animation
+              animation: props.instant ? false : basePopperConfig.animation
             }
           })
         }
