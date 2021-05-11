@@ -364,6 +364,16 @@
         <div class="demo-content" style="margin-bottom: 80px" >
           <s-slider v-model="sliderValue"></s-slider>
           <p>slider value is {{ sliderValue }}</p>
+          <s-slider disabled v-model="sliderValue"></s-slider>
+          <br>
+          <s-slider range v-model="sliderRange"></s-slider>
+          <p>slider range is between {{ sliderRange }}</p>
+          <s-slider range disabled v-model="sliderRange"></s-slider>
+          <br>
+          <s-slider height="200px" vertical v-model="sliderValue"></s-slider>
+          <s-slider height="200px" range vertical v-model="sliderRange"></s-slider>
+          <s-slider disabled height="200px" vertical v-model="sliderValue"></s-slider>
+          <s-slider disabled height="200px" range vertical v-model="sliderRange"></s-slider>
         </div>
       </div>
     </section>
@@ -611,8 +621,8 @@
       selectModel2: ['mao', 'da-mao', 'cai'],
       selectModel3: '',
       selectLimit: 2,
-      sliderValue: 0,
-      left: 0
+      sliderValue: 10,
+      sliderRange: [0, 20]
     }),
     methods: {
       changeBadgeValue(value) {

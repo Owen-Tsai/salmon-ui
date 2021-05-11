@@ -3,3 +3,9 @@ export const entries = (obj) => {
     [key, obj[key]]
   )
 }
+
+export const processSizeType = (
+  propVal: string | number
+): string => {
+  return typeof propVal === 'string' ? propVal : `${propVal}px`
+}

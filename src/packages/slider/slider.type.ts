@@ -15,7 +15,7 @@ export interface ISliderProps {
   debounce: number,
   label: string,
   tooltipClass: string,
-  markers?: Record<number, any>
+  markers?: Record<number, any>,
 }
 
 export interface ISliderData {
@@ -35,7 +35,8 @@ export interface ISliderProvider {
   sliderSize: ComputedRef<number>,
   formatTooltip: ComputedRef<(value: number) => string | number> | undefined,
   emitChange: () => void,
-  resetSize: () => void
+  resetSize: () => void,
+  updateDragging: (isDragging: boolean) => void
 }
 
 export type Marker = {
@@ -44,6 +45,37 @@ export type Marker = {
   marker: {[s: string]: any;}
 }
 
-// TODO: add type declarations for sliderHandle, sliderHandleProps, sliderHandleRefs
+export interface ISliderHandle {
+  tooltip: Ref<HTMLElement>,
+  showTooltip: Ref<boolean>,
+  wrapperStyle: ComputedRef<CSSStyleDeclaration>,
+  formattedValue: ComputedRef<string | number>,
+  handleMouseEnter: () => void,
+  handleMouseLeave: () => void,
+  handleButtonDown: (event: MouseEvent | TouchEvent) => void,
+  onLeftKeyDown: () => void,
+  onRightKeyDown: () => void,
+  setPosition: (newPosition: number) => void
+}
+
+export interface ISliderHandlerData {
+  startX: number,
+  currentX: number,
+  startY: number,
+  currentY: number,
+  startPosition: number,
+  newPosition: number,
+  oldValue: number,
+}
+
+export interface ISliderHandlerProps {
+  modelValue: number,
+  vertical: boolean,
+  tooltipClass: string
+}
+
+export type SliderHandleRefs = {
+  [s in 'firstHandleEl' | 'secondHandleEl']: Ref<ISliderHandle>
+}
 
 export type Markers = ComputedRef<Marker>

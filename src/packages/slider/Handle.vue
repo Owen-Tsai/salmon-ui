@@ -1,8 +1,6 @@
 <template>
   <div
-    :class="[
-      'sui-slider__handle-wrapper',
-    ]"
+    class="sui-slider__handle-wrapper"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @mousedown="handleButtonDown"
@@ -18,15 +16,13 @@
       placement="top"
       ref="tooltipEl"
       :content="formattedValue"
-      trigger="manual"
-      v-model="tooltipVisible"
+      trigger="hover"
+      :hide-on-click="false"
     >
       <div :class="[
         'sui-slider__handle',
-        ...{
-          'is-hovering': isHovering,
-          'is-dragging': isDragging
-        }
+        isDragging ? 'is-dragging' : null,
+        isHovering ? 'is-hovering' : null
       ]"></div>
     </s-tooltip>
   </div>
@@ -37,19 +33,16 @@
     defineComponent,
     inject,
     computed,
-    ComputedRef,
-    toRefs,
     ref,
     watch,
-    reactive,
-    nextTick
+    reactive
   } from 'vue'
 
   import {
-    ISliderProvider
+    ISliderProvider,
+    ISliderHandlerData
   } from './slider.type'
 
-  import debounce from 'lodash/debounce'
   import STooltip from '../tooltip'
 
   export default defineComponent({
@@ -72,24 +65,21 @@
     emits: ['update:modelValue'],
     setup(props, { emit }) {
       // injected
-      const slider: ISliderProvider = inject('sliderComponent', {} as ISliderProvider)
-
       const {
         min,
         max,
         step,
         disabled,
         precision,
-        showTooltip,
         formatTooltip,
         sliderSize,
         resetSize,
         emitChange,
-      } = toRefs(slider)
+        updateDragging
+      } = inject('sliderComponent', {} as ISliderProvider)
 
       // data
       const tooltipEl = ref()
-      const tooltipVisible = ref(false)
       const isDragging = ref(false)
       const isHovering = ref(false)
       const isClick = ref(false)
@@ -102,21 +92,21 @@
         startPosition: 0,
         newPosition: 0,
         oldValue: props.modelValue
-      })
+      } as ISliderHandlerData)
 
       // computed
       const currentPosition = computed(() =>
         `${(props.modelValue - min.value) / (max.value - min.value) * 100}%`
       )
       const enableFormat = computed(() =>
-        formatTooltip.value instanceof Function
+        formatTooltip?.value !== undefined
       )
       const formattedValue = computed(() => {
         if(enableFormat.value) {
-          return (formatTooltip as ComputedRef).value(props.modelValue)
+          return formatTooltip?.value(props.modelValue)
         }
 
-        return props.modelValue
+        return String(props.modelValue)
       })
       const wrapperStyle = computed((): Partial<CSSStyleDeclaration> =>
         props.vertical
@@ -125,20 +115,11 @@
       )
 
       // methods
-      const displayTooltip = debounce(() => {
-        showTooltip.value && (tooltipVisible.value = true)
-      }, 50)
-      const hideTooltip = debounce(() => {
-        showTooltip.value && (tooltipVisible.value = false)
-      })
-
       const handleMouseEnter = () => {
         isHovering.value = true
-        displayTooltip()
       }
       const handleMouseLeave = () => {
         isHovering.value = false
-        hideTooltip()
       }
 
       const getClientXY = (event: MouseEvent | TouchEvent) => {
@@ -193,8 +174,8 @@
         if(!isDragging.value) return
 
         isClick.value = false
-        displayTooltip()
-        resetSize.value()
+
+        resetSize()
         let diff: number
 
         const {
@@ -215,11 +196,10 @@
         if (isDragging.value) {
           setTimeout(() => {
             isDragging.value = false
-            hideTooltip()
 
             if (!isClick.value) {
               setPosition(handlerData.newPosition)
-              emitChange.value()
+              emitChange()
             }
           }, 0)
 
@@ -231,7 +211,7 @@
         }
       }
 
-      const setPosition = async (newPosition: number) => {
+      const setPosition = (newPosition: number) => {
         if(isNaN(newPosition) || !newPosition) return
 
         if (newPosition < 0) {
@@ -249,36 +229,15 @@
         if (!isDragging.value && props.modelValue !== handlerData.oldValue) {
           handlerData.oldValue = props.modelValue
         }
-
-        await nextTick()
-        isDragging.value && displayTooltip()
-        updateTooltip()
-      }
-
-      const updateTooltip = () => {
-        if (!tooltipEl.value) return
-        const instance = tooltipEl.value?._tippy
-
-        if (!instance) return
-        instance.setProps({
-          animation: false
-        })
-        instance.hide()
-        instance.show()
-        instance.setProps({
-          animation: true
-        })
       }
 
       // watchers
       watch(() => isDragging.value, (val) => {
-        // TODO: call injected method `updateDragging`
-        // to inform parent component to update state
+        updateDragging(val)
       })
 
       return {
         tooltipEl,
-        tooltipVisible,
         isHovering,
         isDragging,
         wrapperStyle,
@@ -287,6 +246,7 @@
         handleMouseEnter,
         handleMouseLeave,
         handleButtonDown,
+        setPosition
       }
 
     }

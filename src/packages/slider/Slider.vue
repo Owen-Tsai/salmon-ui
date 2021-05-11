@@ -1,9 +1,9 @@
 <template>
   <div
     :class="[
-      'sui-slider', ...{
-        'is-vertical': vertical
-      }
+      'sui-slider',
+      vertical ? 'is-vertical' : null,
+      disabled ? 'is-disabled' : null
     ]"
     role="slider"
     :aria-valuemin="min"
@@ -13,9 +13,8 @@
   >
     <div
       :class="[
-        'sui-slider__track', ...{
-          'is-disabled': disabled
-        }
+        'sui-slider__track',
+        disabled ? 'is-disabled' : null
       ]"
       ref="sliderEl"
       :style="trackStyle"
@@ -74,21 +73,27 @@
     defineComponent,
     PropType,
     ref,
+    toRefs,
     reactive,
     watch,
     computed,
     onMounted,
     onBeforeUnmount,
-    nextTick
+    nextTick,
+    provide
   } from 'vue'
 
   import SSliderHandle from './Handle.vue'
   import SSliderMarker from './Marker.vue'
 
   import throwError from '@/utils/class.error'
+  import { processSizeType } from '@/utils/utils'
+
   import {
     ISliderData,
-    Marker
+    ISliderHandle,
+    Marker,
+    SliderHandleRefs
   } from './slider.type'
 
   export default defineComponent({
@@ -130,7 +135,7 @@
       disabled: Boolean,
       range: Boolean,
       height: {
-        type: String,
+        type: [String, Number],
         default: ''
       },
       debounce: {
@@ -166,7 +171,7 @@
         sliderSize: 1
       })
 
-      const handleRefs = {
+      const handleRefs: SliderHandleRefs = {
         firstHandleEl,
         secondHandleEl
       }
@@ -242,8 +247,9 @@
         } as CSSStyleDeclaration
       })
 
-      const trackStyle = computed(() =>
-        (props.vertical ? { height: props.height } : {}) as CSSStyleDeclaration
+      const trackStyle = computed(() => (
+          props.vertical ? { height: processSizeType(props.height) } : {}
+        ) as CSSStyleDeclaration
       )
 
       const isValueChanged = () => {
@@ -314,7 +320,43 @@
           handleRefString =
             sliderData.firstValue > sliderData.secondValue ? 'firstHandleEl' : 'secondHandleEl'
         }
-        handleRefs[handleRefString].value.setPosition(percentage)
+
+        const handleComp = handleRefs[handleRefString].value as ISliderHandle
+        handleComp.setPosition(percentage)
+      }
+
+      const handleSliderClick = (event: MouseEvent) => {
+        if (props.disabled || isDragging.value) return
+
+        resetSize()
+        if (props.vertical) {
+          const sliderOffsetBottom = sliderEl.value.getBoundingClientRect().bottom
+          setPosition(
+            (sliderOffsetBottom - event.clientY) / sliderData.sliderSize * 100
+          )
+        } else {
+          const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
+          setPosition(
+            (event.clientX - sliderOffsetLeft) / sliderData.sliderSize * 100
+          )
+        }
+
+        emitChange()
+      }
+
+      const emitChange = async () => {
+        await nextTick()
+        emit('change', props.range ? [minValue.value, maxValue.value] : props.modelValue)
+      }
+
+      const getStopStyle = (position: number) => {
+        return props.vertical
+          ? { bottom: `${position}%` }
+          : { left: `${position}%` } as CSSStyleDeclaration
+      }
+
+      const updateDragging = (val: boolean) => {
+        isDragging.value = val
       }
 
       // watchers
@@ -387,23 +429,34 @@
         window.removeEventListener('resize', resetSize)
       })
 
+      const {
+        firstValue,
+        secondValue,
+        sliderSize
+      } = toRefs(sliderData)
+
+      // provide
+      provide('sliderComponent', {
+        ...toRefs(props),
+        sliderSize: sliderSize,
+        disabled: props.disabled,
+        precision: precision,
+        emitChange: emitChange,
+        resetSize: resetSize,
+        updateDragging: updateDragging,
+      })
+
       return {
         sliderEl, firstHandleEl, secondHandleEl,
         trackStyle, barStyle,
-        resetSize,
-        setPosition,
-        emitChange,
-        handleSliderClick,
-        stops,
-        getStopStyle,
-        markerList,
-        precision,
-
         firstValue,
         secondValue,
-        oldValue,
-        isDragging,
-        sliderSize,
+
+        stops,
+        markerList,
+
+        handleSliderClick,
+        getStopStyle,
       }
     }
   })
