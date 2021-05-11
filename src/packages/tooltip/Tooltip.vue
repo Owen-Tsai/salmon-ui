@@ -14,7 +14,7 @@
     PropType
   } from 'vue'
   import tippy from 'tippy.js'
-  import { Placement } from '@popperjs/core'
+  import { Placement, sticky } from 'tippy.js'
   import {
     basePopperConfig,
     themeType,
@@ -69,6 +69,7 @@
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
         offset: props.offset,
+        sticky: true,
         theme: themeType(props.theme),
       }
 
@@ -76,7 +77,8 @@
         if(reference.value !== null) {
           tippyInstance = tippy(reference.value, {
             ...options, ...basePopperConfig, ...{
-              animation: props.instant ? false : basePopperConfig.animation
+              animation: props.instant ? false : basePopperConfig.animation,
+              plugins: [sticky]
             }
           })
         }
@@ -93,7 +95,6 @@
       watchEffect(() => {
         if(!tippyInstance) return
         tippyInstance.setProps({
-          content: props.content,
           placement: props.placement,
           allowHTML: props.useHTML,
           hideOnClick: props.hideOnClick,
@@ -101,6 +102,10 @@
           offset: props.offset,
           theme: props.theme
         })
+      })
+
+      watch(() => props.content, (val) => {
+        tippyInstance?.setContent(val)
       })
 
       if(props.trigger === 'manual') {
