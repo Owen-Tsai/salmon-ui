@@ -56,7 +56,6 @@
         default: 0
       },
       vertical: Boolean,
-      tooltipClass: String,
       showTooltip: {
         type: Boolean,
         default: true

@@ -1,7 +1,7 @@
 <template>
   <div
     class="sui-slider__marker-text"
-    :style="mark.style"
+    :style="marker.style"
   >{{ label }}</div>
 </template>
 
@@ -9,20 +9,20 @@
   import {
     defineComponent,
     PropType,
-    ref
+    computed
   } from 'vue'
 
   export default defineComponent({
     name: 'SSliderMarker',
     props: {
-      mark: {
+      marker: {
         type: [String, Object] as PropType<string | Record<string, unknown>>,
         default: ''
       }
     },
     setup(props) {
-      const label = ref(
-        typeof props.mark === 'string' ? props.mark : props.mark.label
+      const label = computed(() =>
+        typeof props.marker === 'string' ? props.marker : props.marker.label
       )
 
       return {

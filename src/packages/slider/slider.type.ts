@@ -14,7 +14,6 @@ export interface ISliderProps {
   height: string,
   debounce: number,
   label: string,
-  tooltipClass: string,
   markers?: Record<number, any>,
 }
 
@@ -71,7 +70,6 @@ export interface ISliderHandlerData {
 export interface ISliderHandlerProps {
   modelValue: number,
   vertical: boolean,
-  tooltipClass: string
 }
 
 export type SliderHandleRefs = {

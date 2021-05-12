@@ -362,11 +362,11 @@
       <div class="demo-block">
         <h2>Sliders</h2>
         <div class="demo-content" style="margin-bottom: 80px" >
-          <s-slider v-model="sliderValue"></s-slider>
+          <s-slider :step="10" show-stops v-model="sliderValue"></s-slider>
           <p>slider value is {{ sliderValue }}</p>
           <s-slider disabled v-model="sliderValue"></s-slider>
           <br>
-          <s-slider range v-model="sliderRange"></s-slider>
+          <s-slider style="margin-bottom: 32px" :markers="sliderMarkers" range v-model="sliderRange"></s-slider>
           <p>slider range is between {{ sliderRange }}</p>
           <s-slider range disabled v-model="sliderRange"></s-slider>
           <br>
@@ -622,7 +622,19 @@
       selectModel3: '',
       selectLimit: 2,
       sliderValue: 10,
-      sliderRange: [0, 20]
+      sliderRange: [0, 20],
+      sliderMarkers: {
+        0: '0℃',
+        20: '20℃',
+        32: {
+          style: {
+            color: '#f25f51',
+          },
+          label: '高温'
+        },
+        60: '60℃',
+        100: 'MAX'
+      }
     }),
     methods: {
       changeBadgeValue(value) {

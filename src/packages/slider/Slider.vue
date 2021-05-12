@@ -26,14 +26,12 @@
         ref="firstHandleEl"
         v-model="firstValue"
         :vertical="vertical"
-        :tooltip-class="tooltipClass"
       ></s-slider-handle>
       <s-slider-handle
         v-if="range"
         ref="secondHandleEl"
         v-model="secondValue"
         :vertical="vertical"
-        :tooltip-class="tooltipClass"
       ></s-slider-handle>
 
       <!-- stops -->
@@ -59,7 +57,7 @@
           <s-slider-marker
             v-for="(item, key) in markerList"
             :key="key"
-            :mark="item.mark"
+            :marker="item.marker"
             :style="getStopStyle(item.position)"
           ></s-slider-marker>
         </div>
@@ -145,10 +143,6 @@
       label: {
         type: String,
         default: undefined
-      },
-      tooltipClass: {
-        type: String,
-        default: ''
       },
       markers: Object
     },
