@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import Card from './Card.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(Card)
+Card.install = (app: App) => {
+  app.component(Card.name, Card)
+}
+
+export default Card

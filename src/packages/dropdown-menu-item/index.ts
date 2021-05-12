@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import DropdownMenuItem from './DropdownMenuItem.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(DropdownMenuItem)
+DropdownMenuItem.install = (app: App) => {
+  app.component(DropdownMenuItem.name, DropdownMenuItem)
+}
+
+export default DropdownMenuItem

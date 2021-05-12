@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import CheckboxGroup from './CheckboxGroup.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(CheckboxGroup)
+CheckboxGroup.install = (app: App) => {
+  app.component(CheckboxGroup.name, CheckboxGroup)
+}
+
+export default CheckboxGroup

@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import Switch from './Switch.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(Switch)
+Switch.install = (app: App) => {
+  app.component(Switch.name, Switch)
+}
+
+export default Switch

@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import Input from './Input.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(Input)
+Input.install = (app: App) => {
+  app.component(Input.name, Input)
+}
+
+export default Input

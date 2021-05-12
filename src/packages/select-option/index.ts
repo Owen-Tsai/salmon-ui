@@ -1,4 +1,8 @@
-import SOption from './Option.vue'
-import { SFCWithInstall } from '@/utils/types'
+import { App } from 'vue'
+import Option from './Option.vue'
 
-export default SFCWithInstall(SOption)
+Option.install = (app: App) => {
+  app.component(Option.name, Option)
+}
+
+export default Option

@@ -1,4 +1,8 @@
-import { SFCWithInstall } from '@/utils/types'
-import SSelect from './Select.vue'
+import { App } from 'vue'
+import Select from './Select.vue'
 
-export default SFCWithInstall(SSelect)
+Select.install = (app: App) => {
+  app.component(Select.name, Select)
+}
+
+export default Select

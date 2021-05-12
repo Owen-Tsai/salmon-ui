@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import Icon from './Icon.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(Icon)
+Icon.install = (app: App) => {
+  app.component(Icon.name, Icon)
+}
+
+export default Icon

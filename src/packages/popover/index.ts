@@ -1,4 +1,8 @@
+import { App } from 'vue'
 import Popover from './Popover.vue'
-import { SFCWithInstall } from '@/utils/types'
 
-export default SFCWithInstall(Popover)
+Popover.install = (app: App) => {
+  app.component(Popover.name, Popover)
+}
+
+export default Popover
