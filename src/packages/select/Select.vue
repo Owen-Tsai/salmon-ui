@@ -163,6 +163,7 @@
       const options = {
         placement: props.placement,
         hideOnClick: true,
+        // plugins: ['sticky'],
         trigger: triggerType('click'),
         theme: themeType('light'),
         interactive: true,

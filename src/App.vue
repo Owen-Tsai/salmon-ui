@@ -554,6 +554,33 @@
           ></s-input>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Messages</h2>
+        <div class="demo-content">
+          <div class="demo-message-form">
+            <div class="row">
+              <s-select v-model="msg.type" style="width: 100%" placeholder="类型">
+                <s-option value="default"></s-option>
+                <s-option value="success"></s-option>
+                <s-option value="warning"></s-option>
+                <s-option value="error"></s-option>
+              </s-select>
+              <s-input type="number" v-model="msg.duration" placeholder="持续时间"></s-input>
+            </div>
+            <div class="row">
+              <s-input v-model="msg.icon" placeholder="图标(留空则由其类型决定)"></s-input>
+              <s-input v-model="msg.content" placeholder="内容"></s-input>
+            </div>
+          </div>
+
+
+          <s-button class="demo-m-a" @click="showMessage()" type="primary">
+            显示 Message
+          </s-button>
+          <br>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -634,6 +661,12 @@
         },
         60: '60℃',
         100: 'MAX'
+      },
+      msg: {
+        type: 'default',
+        content: '你好，欢迎使用 Salmon UI！',
+        duration: 3000,
+        icon: undefined
       }
     }),
     methods: {
@@ -657,6 +690,14 @@
       },
       log(e) {
         console.log(e)
+      },
+      showMessage() {
+        this.$message({
+          type: this.msg.type || 'default',
+          message: this.msg.content || '你好，欢迎使用 Salmon UI',
+          icon: this.msg.icon || undefined,
+          duration: this.msg.duration || undefined
+        })
       }
     },
   }
@@ -766,6 +807,17 @@
     }
     div {
       padding 8px 24px
+    }
+  }
+
+  .demo-message-form {
+    .row {
+      display flex
+      align-items center
+
+      * {
+        padding 4px
+      }
     }
   }
 </style>

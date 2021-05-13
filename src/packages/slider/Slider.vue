@@ -136,10 +136,6 @@
         type: [String, Number],
         default: ''
       },
-      debounce: {
-        type: Number,
-        default: 300
-      },
       label: {
         type: String,
         default: undefined
