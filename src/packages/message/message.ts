@@ -1,5 +1,6 @@
 import { createVNode, render } from 'vue'
 import MessageConstructor from './Message.vue'
+import OverlayManager from '@/utils/overlay-manager'
 
 import type {
   ComponentPublicInstance,
@@ -49,7 +50,7 @@ const Message = function(
       close(id, userCallbackOnClose)
     },
     offset: verticalOffset,
-    zIndex: 2000 // TODO: implement a overlay manager
+    zIndex: OverlayManager.nextZIndex()
   }
 
   const container = document.createElement('div')
