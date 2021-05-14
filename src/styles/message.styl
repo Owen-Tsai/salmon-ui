@@ -1,31 +1,26 @@
 .sui-message {
-  display block
-  text-align center
+  display flex
+  align-items center
   position fixed
-  width 100%
+  background-color #ffffff
+  box-shadow box-shadow--elevation
+  border-radius border-radius--normal
+  padding 8px 16px
+  border 1px solid color--border
+  left 50%
+  transform translateX(-50%)
   transition all .3s ease-in-out
 
-  & &__content {
-    display inline-flex
-    align-items center
-    margin 0 auto
-    background-color #ffffff
-    box-shadow box-shadow--elevation
-    border-radius border-radius--normal
-    padding 8px 16px
-    border 1px solid color--border
+  p {
+    margin 0
+    font-size font-size--text.medium
+    color color--text.normal
+  }
 
-    p {
-      margin 0
-      font-size font-size--text.medium
-      color color--text.normal
-    }
-
-    & ^[0]__icon {
-      margin-right 8px
-      color color--primary.normal
-      font-size 18px
-    }
+  & ^[0]__icon {
+    margin-right 8px
+    color color--primary.normal
+    font-size 18px
   }
 
   &^[0]--success {

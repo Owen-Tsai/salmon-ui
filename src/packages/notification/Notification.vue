@@ -20,9 +20,10 @@
         class="sui-notification__icon"
       ></s-icon>
 
-      <div class="sui-notification__content">
+      <div class="sui-notification__text">
         <div class="sui-notification__title">{{ title }}</div>
-        <p></p>
+        <p v-if="!useHTML">{{ content }}</p>
+        <template v-else v-html="content"></template>
       </div>
     </div>
   </transition>

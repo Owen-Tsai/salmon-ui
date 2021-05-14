@@ -16,17 +16,15 @@
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
-      <div class="sui-message__content">
-        <s-icon
-          v-if="showIcon"
-          class="sui-message__icon"
-          :name="iconName"
-          stroke-width="2"
-        ></s-icon>
+      <s-icon
+        v-if="showIcon"
+        class="sui-message__icon"
+        :name="iconName"
+        stroke-width="2"
+      ></s-icon>
 
-        <p v-if="useHTML" v-html="message"></p>
-        <p v-else>{{ message }}</p>
-      </div>
+      <p v-if="useHTML" v-html="message"></p>
+      <p v-else>{{ message }}</p>
     </div>
   </transition>
 </template>
@@ -45,6 +43,8 @@
   import {
     MessageType,
   } from './message.type'
+
+  import useTimer from '@/utils/use-overlay-timer'
 
   const _iconTypeMap = {
     success: 'check-circle',
@@ -93,7 +93,7 @@
     setup(props, { emit }) {
       // data
       const visible = ref(false)
-      let timer: number | null
+      let timer: number | null = null
 
       // computed
       const customStyle = computed(() => ({
@@ -108,27 +108,11 @@
       })
 
       // methods
-      const startTimer = () => {
-        if (props.duration > 0) {
-          timer = setTimeout(() => {
-            console.log('time to close')
-            if (visible.value) {
-              close()
-            }
-          }, props.duration)
-        }
-      }
-
-      const clearTimer = () => {
-        if (timer) {
-          clearTimeout(timer)
-          timer = null
-        }
-      }
-
-      const close = () => {
-        visible.value = false
-      }
+      const {
+        startTimer,
+        clearTimer,
+        close
+      } = useTimer(props, timer, visible)
 
       const onDestroy = () => {
         emit('destroy')
