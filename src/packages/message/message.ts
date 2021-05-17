@@ -72,7 +72,7 @@ const Message = function(
 
   instances.push({ vm: instanceVm })
 
-  document.body.appendChild(container)
+  document.body.appendChild(container.firstElementChild as Element)
 
   return {
     close: () => (
