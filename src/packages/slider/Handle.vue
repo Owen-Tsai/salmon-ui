@@ -16,7 +16,8 @@
       placement="top"
       ref="tooltipEl"
       :content="formattedValue"
-      trigger="hover"
+      trigger="manual"
+      v-model="tooltipVisible"
       :hide-on-click="false"
     >
       <div :class="[
@@ -83,6 +84,8 @@
       const isHovering = ref(false)
       const isClick = ref(false)
 
+      const tooltipVisible = ref(false)
+
       const handlerData = reactive({
         startX: 0,
         startY: 0,
@@ -116,9 +119,14 @@
       // methods
       const handleMouseEnter = () => {
         isHovering.value = true
+        tooltipVisible.value = true
       }
       const handleMouseLeave = () => {
         isHovering.value = false
+
+        if (!isDragging.value) {
+          tooltipVisible.value = false
+        }
       }
 
       const getClientXY = (event: MouseEvent | TouchEvent) => {
@@ -233,12 +241,15 @@
       // watchers
       watch(() => isDragging.value, (val) => {
         updateDragging(val)
+
+        tooltipVisible.value = val
       })
 
       return {
         tooltipEl,
         isHovering,
         isDragging,
+        tooltipVisible,
         wrapperStyle,
         formattedValue,
 
