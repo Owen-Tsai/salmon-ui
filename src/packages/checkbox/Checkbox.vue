@@ -10,7 +10,7 @@
     <span class="sui-checkbox__input">
       <span class="sui-checkbox__inner"></span>
       <input
-        v-if="checkedLabel || uncheckedLabel"
+        v-if="checkedValue || uncheckedValue"
         class="sui-checkbox__original"
         type="checkbox"
         ref="checkboxRef"
@@ -18,8 +18,8 @@
         :checked="computedChecked"
         :name="name"
         :disabled="computedDisabled"
-        :true-value="checkedLabel"
-        :false-value="uncheckedLabel"
+        :true-value="checkedValue"
+        :false-value="uncheckedValue"
         @change="handleChange"
         @focus="focus = true"
         @blur="focus = false"
@@ -31,7 +31,7 @@
         ref="checkboxRef"
         v-model="model"
         :name="name"
-        :value="label"
+        :value="value"
         :disabled="computedDisabled"
         @change="handleChange"
         @focus="focus = true"
@@ -40,7 +40,7 @@
     </span>
 
     <span class="sui-checkbox__label">
-      <slot>{{ label }}</slot>
+      <slot>{{ value }}</slot>
     </span>
   </label>
 </template>
@@ -52,9 +52,9 @@
     name: 'SCheckbox',
     props: {
       modelValue: [ Boolean, Number, String ],
-      label: [ Boolean, Number, String ],
-      checkedLabel: [ String, Number ],
-      uncheckedLabel: [ String, Number ],
+      value: [ Boolean, Number, String ],
+      checkedValue: [ String, Number ],
+      uncheckedValue: [ String, Number ],
       indeterminate: Boolean,
       disabled: Boolean,
       checked: Boolean,
@@ -117,9 +117,9 @@
         if (typeof value === 'boolean') {
           return value
         } else if (Array.isArray(value)) {
-          return value.includes(props.label)
+          return value.includes(props.value)
         } else if (value !== null && value !== undefined) {
-          return value === props.checkedLabel
+          return value === props.checkedValue
         }
 
         return false
@@ -129,7 +129,7 @@
       const handleChange = evt => {
         if(exceedLimit.value) return
         const target = evt.target
-        const value = target.checked ? (props.checkedLabel ?? true) : (props.uncheckedLabel ?? false)
+        const value = target.checked ? (props.checkedValue ?? true) : (props.uncheckedValue ?? false)
 
         ctx.emit('change', value)
       }
