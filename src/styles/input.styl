@@ -22,7 +22,6 @@
     transition all .3s
     vertical-align middle
     width 100%
-    z-index 1
 
     &:focus {
       box-shadow 0 0 0 0.25rem rgba(color--primary.light, 0.25)
@@ -45,8 +44,8 @@
     top 0
     text-align center
     color color--placeholder
-    z-index 3
     center-el()
+    pointer-events none
   }
 
   &__suffix {
@@ -56,8 +55,8 @@
     top 0
     text-align center
     color color--placeholder
-    z-index 3
     center-el()
+    pointer-events none
 
     .sui-icon {
       vertical-align baseline
@@ -70,6 +69,7 @@
     .sui-icon.toggle-password,
     .sui-icon.clear-input {
       cursor pointer
+      pointer-events auto
       transition color .3s
 
       &:hover {
@@ -97,8 +97,13 @@
 
 .sui-input--group {
 
-  .sui-input__input:focus {
-    z-index 3
+  &.is-focused {
+    .sui-input__input {
+      z-index 2
+    }
+    .sui-input__prefix, .sui-input__suffix {
+      z-index 3 !important
+    }
   }
 
   .sui-input__prepend, .sui-input__append {
@@ -107,7 +112,6 @@
     border 1px solid color--border
     color color--text.normal
     box-sizing border-box
-    z-index 2
     center-el()
 
     // buttons
@@ -118,7 +122,7 @@
   }
 
   &.has-prepend  {
-    &.hovering-input {
+    &.is-hovering {
       .sui-button {
         border-right-color color--primary.normal
       }
@@ -140,7 +144,7 @@
     }
   }
   &.has-append  {
-    &.hovering-input {
+    &.is-hovering {
       .sui-button {
         border-left-color color--primary.normal
       }

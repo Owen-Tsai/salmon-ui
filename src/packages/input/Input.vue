@@ -6,7 +6,8 @@
       'is-readonly': readonly,
       'is-exceeded': isExceeded,
     }, {
-      'hovering-input': hoveringInput && ($slots.prepend || $slots.append),
+      'is-hovering': hoveringInput && ($slots.prepend || $slots.append),
+      'is-focused': isFocused
     }, {
       'has-prefix': prefixIcon || $slots.prefix,
       'has-suffix': suffixIcon || $slots.suffix || clearable || showPasswordToggle,
@@ -116,7 +117,6 @@
     suffix: 'append',
     prefix: 'prepend',
   }
-
 
   export default defineComponent({
     name: 'SInput',
@@ -317,6 +317,7 @@
         showSuffixWordCount,
 
         isExceeded,
+        isFocused,
         hoveringInput,
 
         handlePasswordToggle,
