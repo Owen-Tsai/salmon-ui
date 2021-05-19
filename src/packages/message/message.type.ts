@@ -27,15 +27,6 @@ export type TypedMessageOptions<T extends MessageType> =
 
 export type MessageVM = Partial<VNode>
 
-export interface IMessage {
-  (options?: MessageOptions) : IMessageHandler
-  success: (options?: TypedMessageOptions<'success'>) => IMessageHandler
-  warning: (options?: TypedMessageOptions<'warning'>) => IMessageHandler
-  info: (options?: TypedMessageOptions<'default'>) => IMessageHandler
-  error: (options?: TypedMessageOptions<'error'>) => IMessageHandler
-  closeAll(): void
-}
-
 export interface IMessageInstance {
   vm: MessageVM
 }

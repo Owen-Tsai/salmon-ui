@@ -80,7 +80,7 @@ const Message = function(
     ).visible = false
   }
 }
-// TODO: remove container DOM after closing
+
 export const close = (
   id: string,
   userCallbackOnClose?: (vm: MessageVM) => void
