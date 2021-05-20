@@ -99,10 +99,10 @@
 
   &.is-focused {
     .sui-input__input {
-      z-index 2
+      z-index 1
     }
     .sui-input__prefix, .sui-input__suffix {
-      z-index 3 !important
+      z-index 2 !important
     }
   }
 
@@ -114,16 +114,26 @@
     box-sizing border-box
     center-el()
 
-    // buttons
+    // button
     .sui-button,
     .sui-button:hover, .sui-button:active, .sui-button:focus {
       margin 0 -13px 0 -13px
+    }
+
+    // select
+    .sui-select {
+      margin-top -2px
+      margin-left -18px
+      margin-right -18px
     }
   }
 
   &.has-prepend  {
     &.is-hovering {
       .sui-button {
+        border-right-color color--primary.normal
+      }
+      .sui-select .sui-input__input {
         border-right-color color--primary.normal
       }
     }
@@ -137,6 +147,12 @@
         border-bottom-right-radius 0
         margin-right -13px
       }
+      .sui-input__input {
+        border-top-left-radius border-radius--normal
+        border-top-right-radius 0
+        border-bottom-left-radius border-radius--normal
+        border-bottom-right-radius 0
+      }
     }
     .sui-input__input {
       border-top-left-radius 0
@@ -146,6 +162,9 @@
   &.has-append  {
     &.is-hovering {
       .sui-button {
+        border-left-color color--primary.normal
+      }
+      .sui-select .sui-input__input {
         border-left-color color--primary.normal
       }
     }
@@ -158,6 +177,12 @@
         border-top-left-radius 0
         border-bottom-left-radius 0
         margin-left -13px
+      }
+      .sui-input__input {
+        border-top-left-radius 0
+        border-top-right-radius border-radius--normal
+        border-bottom-left-radius 0
+        border-bottom-right-radius border-radius--normal
       }
     }
     .sui-input__input {

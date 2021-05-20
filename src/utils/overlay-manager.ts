@@ -53,7 +53,7 @@ const onModalClick = () => {
 }
 
 let hasModal = false
-let zIndex: number = 0
+let zIndex: number = 1000
 
 const instances = {}
 

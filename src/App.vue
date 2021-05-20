@@ -240,6 +240,52 @@
           <s-button class="demo-m-a" @click="selectLimit = selectLimit === 2 ? 3 : 2">切换 limit</s-button>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Notifications</h2>
+        <div class="demo-content">
+          <div class="demo-message-form">
+            <div class="row">
+              <s-select v-model="notice.type" style="width: 100%" placeholder="类型">
+                <s-option value="default"></s-option>
+                <s-option value="success"></s-option>
+                <s-option value="warning"></s-option>
+                <s-option value="error"></s-option>
+              </s-select>
+              <s-input type="number" v-model="notice.duration" placeholder="持续时间"></s-input>
+            </div>
+            <div class="row">
+              <s-input v-model="notice.title" placeholder="标题"></s-input>
+              <s-input v-model="notice.content" placeholder="内容"></s-input>
+            </div>
+            <div class="row">
+              <s-input v-model="notice.icon" placeholder="图标">
+                <template #prepend>
+                  <s-select v-model="notice.showIcon" style="width: 100px">
+                    <s-option value="true">显示</s-option>
+                    <s-option value="false">不显示</s-option>
+                  </s-select>
+                </template>
+              </s-input>
+            </div>
+            <div class="row">
+              <s-radio-group v-model="notice.position">
+                <s-radio label="top-right">右上</s-radio>
+                <s-radio label="top-left">左上</s-radio>
+                <s-radio label="bottom-right">右下</s-radio>
+                <s-radio label="bottom-right">左下</s-radio>
+              </s-radio-group>
+            </div>
+
+            <s-button class="demo-m-a" type="primary" @click="notify()">
+              显示 Notification
+            </s-button>
+            <s-button class="demo-m-a" @click="shorthandNotify">
+              Shorthand
+            </s-button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -574,9 +620,11 @@
             </div>
           </div>
 
-
           <s-button class="demo-m-a" @click="showMessage()" type="primary">
             显示 Message
+          </s-button>
+          <s-button class="demo-m-a" @click="shorthandMessage()">
+            Shorthand
           </s-button>
           <br>
         </div>
@@ -667,7 +715,16 @@
         content: '你好，欢迎使用 Salmon UI！',
         duration: 3000,
         icon: undefined
-      }
+      },
+      notice: {
+        type: 'default',
+        title: '欢迎使用 Salmon UI',
+        content: 'Salmon UI 是基于 Vue 3.x 的 Web 端用户界面组件库，拥有简洁统一的视觉表现和语义化的程序实现',
+        duration: 5000,
+        icon: undefined,
+        showIcon: 'false',
+        position: 'top-right'
+      },
     }),
     methods: {
       changeBadgeValue(value) {
@@ -696,8 +753,25 @@
           type: this.msg.type || 'default',
           message: this.msg.content || '你好，欢迎使用 Salmon UI',
           icon: this.msg.icon || undefined,
-          duration: this.msg.duration || undefined
+          duration: parseInt(this.msg.duration)
         })
+      },
+      shorthandMessage() {
+        this.$message.success('hello world')
+      },
+      notify() {
+        this.$notify({
+          type: this.notice.type || 'default',
+          title: this.notice.title,
+          content: this.notice.content,
+          showIcon: this.notice.showIcon !== 'false',
+          icon: this.notice.icon || undefined,
+          duration: parseInt(this.notice.duration),
+          position: this.notice.position
+        })
+      },
+      shorthandNotify() {
+        this.$notify.error('发生了不可预知的错误')
       }
     },
   }
