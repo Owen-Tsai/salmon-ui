@@ -6,6 +6,7 @@
   >
     <div
       v-show="visible"
+      :id="id"
       :class="[
         'sui-message',
         `sui-message--${type}`,

@@ -121,7 +121,7 @@ export const closeAll = () => {
   }
 }
 
-(['success', 'warning', 'info', 'error'] as const).forEach(type => {
+(['success', 'warning', 'default', 'error'] as const).forEach(type => {
   Message[type] = options => {
     if (typeof options === 'string') {
       options = {
