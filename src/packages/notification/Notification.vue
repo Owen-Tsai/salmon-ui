@@ -2,17 +2,20 @@
   <transition
     name="slide-fade"
     @before-leave="onClose"
-    @after-leave="onDestroy"
+    @after-leave="handleDestroy"
   >
     <div
       v-show="visible"
+      :id="id"
       :class="[
         'sui-notification',
         `sui-notification--${type}`,
+        horizontalClass,
         customClass
       ]"
       @mouseenter="clearTimer()"
       @mouseleave="startTimer()"
+      :style="customStyle"
     >
       <s-icon
         v-if="showIcon"
@@ -25,6 +28,14 @@
         <p v-if="!useHTML">{{ content }}</p>
         <template v-else v-html="content"></template>
       </div>
+
+      <div
+        v-if="dismissible"
+        class="sui-notification__close-icon"
+        @click="close"
+      >
+        <s-icon name="x"></s-icon>
+      </div>
     </div>
   </transition>
 </template>
@@ -32,11 +43,24 @@
 <script lang="ts">
   import {
     defineComponent,
-    PropType
+    PropType,
+    computed,
+    ref,
+    onMounted
   } from 'vue'
 
+  import useTimer from '@/utils/use-overlay-timer'
+
+  const _iconTypeMap = {
+    success: 'check-circle',
+    warning: 'alert-circle',
+    error: 'x-circle',
+    default: 'info'
+  }
+
   import {
-    NotificationType
+    NotificationType,
+    NotificationPosition
   } from './notification.type'
 
   import SIcon from '../icon'
@@ -73,11 +97,68 @@
       },
       showIcon: Boolean,
       icon: String,
-      id: String
+      id: String,
+      dismissible: {
+        type: Boolean,
+        default: true
+      },
+      position: {
+        type: String as PropType<NotificationPosition>,
+        default: 'top-right'
+      }
     },
     emits: ['destroy'],
-    setup(props) {
+    setup(props, { emit }) {
+      // data
+      const timer: number | null = null
+      const visible = ref(false)
 
+      // computed
+      const horizontalClass = computed(() => {
+        return props.position.indexOf('right') > 1 ? 'right' : 'left'
+      })
+      const verticalProperty = computed(() => {
+        return props.position.startsWith('top') ? 'top' : 'bottom'
+      })
+      const customStyle = computed(() => {
+        return {
+          [verticalProperty.value]: `${props.offset}px`,
+        }
+      })
+
+      const iconName = computed(() => {
+        if (props.icon) return props.icon
+
+        return _iconTypeMap[props.type]
+      })
+
+      const {
+        startTimer,
+        clearTimer,
+        close
+      } = useTimer(props, timer, visible)
+
+      const handleDestroy = () => {
+        emit('destroy')
+      }
+
+      // hooks
+      onMounted(() => {
+        startTimer()
+        visible.value = true
+      })
+
+      return {
+        startTimer,
+        clearTimer,
+        close,
+        handleDestroy,
+
+        customStyle,
+        iconName,
+        visible,
+        horizontalClass
+      }
     }
   })
 </script>

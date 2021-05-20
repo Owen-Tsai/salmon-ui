@@ -35,6 +35,7 @@
     defineComponent,
     PropType,
     ref,
+    computed,
     onMounted
   } from 'vue'
 
@@ -44,7 +45,14 @@
     MessageType,
   } from './message.type'
 
-  import useOverlay from '@/utils/use-overlay'
+  import useTimer from '@/utils/use-overlay-timer'
+
+  const _iconTypeMap = {
+    success: 'check-circle',
+    warning: 'alert-circle',
+    error: 'x-circle',
+    default: 'info'
+  }
 
   export default defineComponent({
     name: 'SMessage',
@@ -88,14 +96,24 @@
       const visible = ref(false)
       let timer: number | null = null
 
+      // computed
+      const customStyle = computed(() => ({
+        top: `${props.offset}px`,
+        zIndex: props.zIndex
+      }))
+
+      const iconName = computed(() => {
+        if (props.icon) return props.icon
+
+        return _iconTypeMap[props.type]
+      })
+
       // methods
       const {
         startTimer,
         clearTimer,
         close,
-        customStyle,
-        iconName
-      } = useOverlay(props, timer, visible)
+      } = useTimer(props, timer, visible)
 
       const onDestroy = () => {
         emit('destroy')
