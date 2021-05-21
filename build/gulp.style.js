@@ -19,8 +19,9 @@ const buildAllStyles = (cb) => {
 
 const buildComponentsStyles = (cb) => {
   Object.keys(components).forEach(component => {
-    gulp.src(`../src/styles/${component}.styl`)
-      .pipe(stylus())
+    gulp.src(`../src/styles/${component}.styl`, {
+      allowEmpty: true
+    }).pipe(stylus())
       .pipe(prefix())
       .pipe(cleanCSS())
       .pipe(rename(`${component}.css`))

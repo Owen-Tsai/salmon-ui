@@ -13,7 +13,7 @@ const dirs = dirsAndFiles.filter(item => {
 const obj = {}
 if(dirs.length > 0) {
   dirs.forEach(dir => {
-    obj[dir] = `packages/${dir}/index.js`
+    obj[dir] = `packages/${dir}/index.ts`
   })
 }
 

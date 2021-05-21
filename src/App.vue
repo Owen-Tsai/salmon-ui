@@ -629,6 +629,25 @@
           <br>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Ratings</h2>
+        <div class="demo-content">
+          <s-rate v-model="ratingModel"></s-rate>
+          <br>
+          <s-rate v-model="ratingModel2" :max="7"></s-rate>
+          <br>
+          <s-rate v-model="ratingModel" show-score></s-rate>
+          <br>
+          <s-rate v-model="ratingModel" show-text></s-rate>
+          <br>
+          <s-rate v-model="ratingModel" disabled></s-rate>
+          <br>
+          <s-rate v-model="ratingModel" readonly></s-rate>
+          <br>
+          <s-rate v-model="ratingModel" icon="heart" color="#ff5150"></s-rate>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -657,7 +676,8 @@
   import SInput from './packages/input'
   import SSelect from './packages/select'
   import SOption from './packages/select-option'
-  import SSlider from './packages/slider/Slider'
+  import SSlider from './packages/slider'
+  import SRate from './packages/rate'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -675,7 +695,8 @@
       SSwitch,
       SInput,
       SSelect, SOption,
-      SSlider
+      SSlider,
+      SRate
     },
     data: () => ({
       avatar1, avatar2,
@@ -725,6 +746,8 @@
         showIcon: 'false',
         position: 'top-right'
       },
+      ratingModel: 0,
+      ratingModel2: 0,
     }),
     methods: {
       changeBadgeValue(value) {

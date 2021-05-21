@@ -1,0 +1,34 @@
+.sui-rate {
+  display inline-flex
+  align-items center
+  cursor pointer
+
+  & &__item {
+    height 100%
+    display inline-flex
+  }
+
+  & &__icon {
+    transition all .3s
+    font-size font-size--text.large
+    margin-right 8px
+  }
+
+  &:not(.is-disabled):not(.is-readonly) &__icon {
+    &:hover {
+      transform scale(1.2)
+    }
+  }
+
+  &.is-readonly {
+    cursor auto
+  }
+  &.is-disabled {
+    cursor not-allowed
+  }
+
+  & &__text {
+    font-size font-size--text.medium
+    color color--text.normal
+  }
+}

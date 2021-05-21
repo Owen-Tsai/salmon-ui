@@ -13,13 +13,18 @@
     ref,
     PropType
   } from 'vue'
+
   import tippy from 'tippy.js'
   import { Placement, sticky } from 'tippy.js'
+
+  import OverlayManager from '@/utils/overlay-manager'
+
   import {
     basePopperConfig,
     themeType,
     triggerType
   } from '@/utils/popper-options'
+
   import throwError from '@/utils/class.error'
 
   export default defineComponent({
@@ -69,6 +74,7 @@
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
         offset: props.offset,
+        zIndex: OverlayManager.nextZIndex(),
         sticky: true,
         theme: themeType(props.theme),
       }

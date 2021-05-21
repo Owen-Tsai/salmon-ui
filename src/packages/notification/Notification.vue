@@ -54,19 +54,19 @@
 
   import useTimer from '@/utils/use-overlay-timer'
 
-  const _iconTypeMap = {
-    success: 'check-circle',
-    warning: 'alert-circle',
-    error: 'x-circle',
-    default: 'info'
-  }
-
   import {
     NotificationType,
     NotificationPosition
   } from './notification.type'
 
   import SIcon from '../icon'
+
+  const _iconTypeMap = {
+    success: 'check-circle',
+    warning: 'alert-circle',
+    error: 'x-circle',
+    default: 'info'
+  }
 
   export default defineComponent({
     name: 'SNotification',
@@ -126,6 +126,7 @@
       const customStyle = computed(() => {
         return {
           [verticalProperty.value]: `${props.offset}px`,
+          zIndex: props.zIndex
         }
       })
 
