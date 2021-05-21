@@ -1,5 +1,5 @@
 <template>
-  <span class="sui-icon" v-html="renderedIcon" aria-hidden="true"></span>
+  <i class="sui-icon" v-html="renderedIcon" aria-hidden="true"></i>
 </template>
 
 <script lang="ts">
@@ -36,13 +36,3 @@
     }
   })
 </script>
-
-<style lang="stylus" scoped>
-  .sui-icon {
-    display inline-block
-    width 1em
-    height 1em
-    vertical-align middle
-    line-height 1
-  }
-</style>
