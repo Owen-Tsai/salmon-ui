@@ -1,6 +1,6 @@
 <template>
   <transition
-    name="slide-fade"
+    name="sui-message"
     @before-leave="onClose"
     @after-leave="onDestroy"
   >

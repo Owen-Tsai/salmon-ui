@@ -55,10 +55,10 @@ const Notification = function(
   }
 
   const container = document.createElement('div')
-  const instanceVm = createVNode({
+  const instanceVm = createVNode(
     NotificationConstructor,
-    options
-  })
+    options as any
+  )
 
   console.log(instanceVm)
 
@@ -138,5 +138,7 @@ export const closeAll = () => {
     })
   }
 }
+
+Notification.closeAll = closeAll
 
 export default Notification

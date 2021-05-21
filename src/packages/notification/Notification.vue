@@ -1,6 +1,6 @@
 <template>
   <transition
-    name="slide-fade"
+    name="sui-notification"
     @before-leave="onClose"
     @after-leave="handleDestroy"
   >
@@ -11,6 +11,8 @@
         'sui-notification',
         `sui-notification--${type}`,
         horizontalClass,
+        showIcon ? 'has-icon' : null,
+        title ? 'has-title' : null,
         customClass
       ]"
       @mouseenter="clearTimer()"
@@ -21,10 +23,11 @@
         v-if="showIcon"
         :name="iconName"
         class="sui-notification__icon"
+        :stroke-width="2"
       ></s-icon>
 
       <div class="sui-notification__text">
-        <div class="sui-notification__title">{{ title }}</div>
+        <div class="sui-notification__title" v-if="title">{{ title }}</div>
         <p v-if="!useHTML">{{ content }}</p>
         <template v-else v-html="content"></template>
       </div>
