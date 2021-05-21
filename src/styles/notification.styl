@@ -1,0 +1,99 @@
+.sui-notification {
+  position fixed
+  display flex
+  align-items flex-start
+  width 320px
+  background-color #ffffff
+  border 1px solid color--border
+  border-radius: border-radius--large
+  box-shadow box-shadow--elevation
+  padding 16px 24px
+  box-sizing border-box
+  font-size: font-size--text.medium
+  color: color--text.normal
+  transition: all .3s
+
+  & &__text {
+    padding-right 16px
+
+    & ^[0]__title {
+      font-weight 600
+      font-size 16px
+      margin-bottom 8px
+      color: color--text.dark
+    }
+
+    p {
+      margin 0
+    }
+  }
+
+  &.has-icon {
+    padding-left 16px
+  }
+
+  & &__icon {
+    font-size 22px
+    margin-right 8px
+    color color--primary.normal
+  }
+
+  &.has-title {
+    & ^[0]__icon {
+      font-size font-size--display.small
+      margin-right 8px
+    }
+  }
+
+  & &__close-icon {
+    position absolute
+    top 16px
+    right 16px
+    line-height 0
+    font-size font-size--text.large
+    cursor pointer
+    transition color .3s
+
+    &:hover {
+      color color--text.dark
+    }
+  }
+
+  &.right {
+    right 16px
+  }
+  &.left {
+    left 16px
+  }
+
+  &--success {
+    & ^[0]__icon {
+      color: color--success.normal !important
+    }
+  }
+  &--warning {
+    & ^[0]__icon {
+      color: color--warning.normal !important
+    }
+  }
+  &--error {
+    & ^[0]__icon {
+      color: color--error.normal !important
+    }
+  }
+}
+
+.sui-notification-enter-from {
+  &.right {
+    right 0
+    transform translateX(100%)
+  }
+  &.left {
+    left 0
+    transform translateX(-100%)
+  }
+}
+
+.sui-notification-leave-to {
+  opacity 0
+}
