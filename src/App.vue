@@ -641,7 +641,7 @@
           <br>
           <s-rate v-model="ratingModel" show-text></s-rate>
           <br>
-          <s-rate v-model="ratingModel" disabled></s-rate>
+          <s-rate v-model="ratingModel3" disabled></s-rate>
           <br>
           <s-rate v-model="ratingModel" readonly></s-rate>
           <br>
@@ -748,6 +748,7 @@
       },
       ratingModel: 0,
       ratingModel2: 0,
+      ratingModel3: 3.7
     }),
     methods: {
       changeBadgeValue(value) {

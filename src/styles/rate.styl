@@ -2,29 +2,39 @@
   display inline-flex
   align-items center
   cursor pointer
+  line-height 1.5
 
   & &__item {
     height 100%
-    display inline-flex
+    display inline-block
+    position relative
+    line-height 1
+    box-sizing border-box
   }
 
   & &__icon {
-    transition all .3s
-    font-size font-size--text.large
-    margin-right 8px
-  }
+    font-size font-size--display.small
+    display inline-block
+    line-height 1
+    margin-right 6px
 
-  &:not(.is-disabled):not(.is-readonly) &__icon {
-    &:hover {
-      transform scale(1.2)
+    svg {
+      fill currentColor
     }
   }
 
-  &.is-readonly {
-    cursor auto
+  & &__icon-decimal {
+    line-height 1
+    display inline-block
+    position absolute
+    font-size font-size--display.small
+    overflow hidden
+    left 0
+    top 0
   }
+
   &.is-disabled {
-    cursor not-allowed
+    cursor auto
   }
 
   & &__text {
