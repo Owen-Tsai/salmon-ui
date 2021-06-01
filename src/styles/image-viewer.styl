@@ -1,0 +1,97 @@
+.sui-image-viewer__wrapper {
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+}
+
+.sui-image-viewer__mask {
+  position absolute
+  height 100%
+  width 100%
+  top 0
+  left 0
+  opacity 0.5
+  background-color #000
+  z-index -1
+}
+
+.sui-image-viewer__btn {
+  z-index 1
+  cursor pointer
+  display inline-flex
+  align-items center
+  justify-content center
+  padding 12px
+  font-size 24px
+  color #ffffff
+  background-color color--text.normal
+  border-radius @padding * 2 + @font-size
+  transition all .3s
+
+  .sui-icon {
+    height 24px
+    width @height
+  }
+
+  &.sui-image-viewer__actions {
+    position absolute
+    padding 12px 16px
+    bottom 24px
+    cursor auto
+    left 50%
+    transform translateX(-50%)
+
+    & .sui-icon.is-divided {
+      margin-right 24px
+      margin-left @margin-right - 14px
+    }
+
+    & .sui-icon:not(:last-child):not(.is-divided) {
+      margin-right 14px
+    }
+
+    & .sui-icon {
+      cursor pointer
+    }
+  }
+
+  &.sui-image-viewer__prev,
+  &.sui-image-viewer__next {
+    position absolute
+    top 50%
+    transform translateY(-50%)
+
+    &.is-disabled {
+      cursor not-allowed
+      background-color color--placeholder
+      opacity .8
+    }
+  }
+
+  &.sui-image-viewer__prev {
+    left 24px
+  }
+  &.sui-image-viewer__next {
+    right 24px
+  }
+
+  &.sui-image-viewer__close {
+    position absolute
+    top 24px
+    right 24px
+  }
+}
+
+.sui-image-viewer__panel {
+  display flex
+  align-items center
+  justify-content center
+  height 100%
+  width 100%
+
+  img {
+    user-select none
+  }
+}
