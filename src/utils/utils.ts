@@ -59,3 +59,55 @@ export const getScrollContainer = (
 
   return parent
 }
+
+export const isInContainer = (
+  el: HTMLElement,
+  container: HTMLElement,
+): boolean => {
+  if (!el || !container) return false
+
+  const elRect = el.getBoundingClientRect()
+  let containerRect: Partial<DOMRect>
+
+  if (
+    [window, document, document.documentElement, null, undefined].includes(
+      container,
+    )
+  ) {
+    containerRect = {
+      top: 0,
+      right: window.innerWidth,
+      bottom: window.innerHeight,
+      left: 0,
+    }
+  } else {
+    containerRect = container.getBoundingClientRect()
+  }
+
+  if (!containerRect) {
+    return false
+  } else {
+    const c = containerRect as DOMRect
+    return (
+      elRect.top < c.bottom &&
+      elRect.bottom > c.top &&
+      elRect.right > c.left &&
+      elRect.left < c.right
+    )
+  }
+}
+
+// throttled function which only invokes the passed function at most once
+// per animation frame on a browser or per 1000/60 ms on Node
+export function rafThrottle(fn): Function {
+  let locked = false
+  return function (...args: any[]) {
+    if (locked) return
+    locked = true
+    window.requestAnimationFrame(() => {
+      // @ts-ignore
+      fn.apply(this, args)
+      locked = false
+    })
+  }
+}

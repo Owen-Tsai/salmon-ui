@@ -286,6 +286,57 @@
           </div>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Images</h2>
+        <div class="demo-content">
+          <s-image
+            class="demo-m-a"
+            src="https://not-exist"
+            style="width: 150px; height: 150px"
+          ></s-image>
+          <s-image
+            class="demo-m-a"
+            src="https://not-exist"
+            style="width: 150px; height: 150px"
+          >
+            <template #error>
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  background-color: #f6f5fa;
+                  justify-content: center"
+              >
+                <s-icon
+                  name="x-circle"
+                  style="font-size: 24px"
+                  color="#a0a3bd"
+                ></s-icon>
+              </div>
+            </template>
+          </s-image>
+          <s-image
+            v-for="fit in fits" :key="fit"
+            class="demo-m-a"
+            style="width: 150px; height: 150px"
+            :src="url"
+            :fit="fit"
+          ></s-image>
+          <s-image
+            class="demo-m-a"
+            style="width: 150px; height: 150px"
+
+            :src="url"
+            :preview-src-list="[
+              'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+              'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+            ]"
+          ></s-image>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -678,6 +729,7 @@
   import SOption from './packages/select-option'
   import SSlider from './packages/slider'
   import SRate from './packages/rate'
+  import SImage from './packages/image'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -696,7 +748,8 @@
       SInput,
       SSelect, SOption,
       SSlider,
-      SRate
+      SRate,
+      SImage
     },
     data: () => ({
       avatar1, avatar2,
@@ -748,7 +801,9 @@
       },
       ratingModel: 0,
       ratingModel2: 0,
-      ratingModel3: 3.7
+      ratingModel3: 3.7,
+      fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     }),
     methods: {
       changeBadgeValue(value) {
