@@ -1,0 +1,27 @@
+.sui-tabs-header {
+  border-bottom 1px solid color--placeholder
+  position relative
+
+  .sui-tab {
+    display inline-flex
+    padding 8px 16px
+    position relative
+    align-items center
+    justify-content center
+    cursor pointer
+    transition all .3s
+
+    &.is-active {
+      color color--primary.normal
+    }
+  }
+
+  .sui-tabs__line {
+    height 2px
+    bottom 0
+    left 0
+    position absolute
+    background-color color--primary.normal
+    transition all .3s
+  }
+}
