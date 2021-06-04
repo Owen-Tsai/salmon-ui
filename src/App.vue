@@ -473,6 +473,18 @@
           <s-slider disabled height="200px" range vertical v-model="sliderRange"></s-slider>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Tabs</h2>
+        <div class="demo-content">
+          <s-tabs-header v-model="activeTab">
+            <s-tab label="hello" name="1"></s-tab>
+            <s-tab label="world" name="2"></s-tab>
+            <s-tab label="maomao" name="3"></s-tab>
+            <s-tab name="4">caicai</s-tab>
+          </s-tabs-header>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -730,6 +742,8 @@
   import SSlider from './packages/slider'
   import SRate from './packages/rate'
   import SImage from './packages/image'
+  import STab from './packages/tab'
+  import STabsHeader from './packages/tabs-header'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -749,7 +763,8 @@
       SSelect, SOption,
       SSlider,
       SRate,
-      SImage
+      SImage,
+      STabsHeader, STab
     },
     data: () => ({
       avatar1, avatar2,
@@ -803,7 +818,8 @@
       ratingModel2: 0,
       ratingModel3: 3.7,
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      activeTab: '1'
     }),
     methods: {
       changeBadgeValue(value) {
