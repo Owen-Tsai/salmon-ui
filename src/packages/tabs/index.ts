@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import TabsHeader from './TabsHeader.vue'
+import TabsHeader from './Tabs.vue'
 
 TabsHeader.install = (app: App) => {
   app.component(TabsHeader.name, TabsHeader)
