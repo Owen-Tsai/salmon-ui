@@ -477,12 +477,57 @@
       <div class="demo-block">
         <h2>Tabs</h2>
         <div class="demo-content">
-          <s-tabs-header v-model="activeTab">
-            <s-tab label="hello" name="1"></s-tab>
-            <s-tab label="world" name="2"></s-tab>
-            <s-tab label="maomao" name="3"></s-tab>
-            <s-tab name="4">caicai</s-tab>
-          </s-tabs-header>
+          <s-tabs v-model="activeTab">
+            <template #header>
+              <s-tab label="hello" name="1"></s-tab>
+              <s-tab label="world" name="2"></s-tab>
+              <s-tab label="maomao" name="3"></s-tab>
+              <s-tab name="4">caicai</s-tab>
+            </template>
+
+            <s-tab-item
+              v-for="i in 3" :key="`tab-${i}`"
+              :name="`${i}`"
+            >This is tab item No.{{ i }}</s-tab-item>
+            <s-tab-item
+              name="4"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque cumque deserunt dolorem doloremque, exercitationem harum id laudantium minima obcaecati officiis optio quisquam quos rerum similique tempora, temporibus ullam voluptas voluptatem.
+            </s-tab-item>
+          </s-tabs>
+          <br>
+          <s-tabs v-model="activeTab2" outlined>
+            <template #header>
+              <s-tab label="hello" name="1"></s-tab>
+              <s-tab label="world" name="2"></s-tab>
+              <s-tab label="maomao" name="3"></s-tab>
+              <s-tab name="4">caicai</s-tab>
+            </template>
+
+            <s-tab-item
+              v-for="i in 4" :key="`tab-${i}`"
+              :name="`${i}`"
+            >This is tab item No.{{ i }}</s-tab-item>
+          </s-tabs>
+          <br>
+          <s-tabs v-model="activeTab" vertical style="height: 200px">
+            <template #header>
+              <s-tab label="hello" name="1"></s-tab>
+              <s-tab label="world" name="2"></s-tab>
+              <s-tab label="maomao" name="3"></s-tab>
+              <s-tab name="4">caicai</s-tab>
+            </template>
+
+            <s-tab-item
+              v-for="i in 3" :key="`tab-${i}`"
+              :name="`${i}`"
+            >This is tab item No.{{ i }}</s-tab-item>
+            <s-tab-item
+              name="4"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque cumque deserunt dolorem doloremque, exercitationem harum id laudantium minima obcaecati officiis optio quisquam quos rerum similique tempora, temporibus ullam voluptas voluptatem.
+            </s-tab-item>
+          </s-tabs>
         </div>
       </div>
     </section>
@@ -743,7 +788,8 @@
   import SRate from './packages/rate'
   import SImage from './packages/image'
   import STab from './packages/tab'
-  import STabsHeader from './packages/tabs-header'
+  import STabs from './packages/tabs'
+  import STabItem from './packages/tab-item'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -764,7 +810,7 @@
       SSlider,
       SRate,
       SImage,
-      STabsHeader, STab
+      STabs, STab, STabItem,
     },
     data: () => ({
       avatar1, avatar2,
@@ -819,7 +865,8 @@
       ratingModel3: 3.7,
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      activeTab: '1'
+      activeTab: '1',
+      activeTab2: '3'
     }),
     methods: {
       changeBadgeValue(value) {

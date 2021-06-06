@@ -26,8 +26,8 @@
   } from 'vue'
 
   import {
-    ITabsHeaderProvider
-  } from '../tabs-header/tabs-header.type'
+    ITabsProvider
+  } from '../tabs/tabs.type'
 
   import SIcon from '../icon'
 
@@ -50,7 +50,7 @@
         handleTabClick,
         activeName,
         tabStyle
-      } = inject('tabsHeader', {} as ITabsHeaderProvider)
+      } = inject('tabs', {} as ITabsProvider)
 
       // computed
       const isDismissible = computed(() => {
