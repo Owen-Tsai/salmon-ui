@@ -741,7 +741,7 @@
       <div class="demo-block">
         <h2>Ratings</h2>
         <div class="demo-content">
-          <s-rate v-model="ratingModel"></s-rate>
+          <s-rate v-model="ratingModel" :texts="[1, '2', '3', '4', '5']"></s-rate>
           <br>
           <s-rate v-model="ratingModel2" :max="7"></s-rate>
           <br>
