@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sui-progress"
+    :class="['sui-progress', `is-${type}`]"
     role="progressbar"
     :aria-valuenow="percentage"
     aria-valuemin="0"
@@ -9,16 +9,19 @@
     <!-- linear -->
     <div
       v-if="type === 'linear'"
-      class="sui-progress--linear"
+      :class="['sui-progress--linear', {
+        'is-active': status === 'active'
+      }]"
     >
       <div class="sui-progress__bar">
         <div class="sui-progress__track"></div>
-        <div class="sui-progress__fill"></div>
+        <div class="sui-progress__fill" :style="linearFillStyle"></div>
       </div>
       <div class="sui-progress__info">
         <span v-if="percentage !== 100">{{ percentage }}%</span>
         <s-icon
           :name="finishIcon"
+          v-else
         ></s-icon>
       </div>
     </div>
@@ -54,6 +57,7 @@
         <span v-if="percentage !== 100">{{ percentage }}%</span>
         <s-icon
           :name="finishIcon"
+          v-else
         ></s-icon>
       </div>
     </div>
@@ -62,16 +66,11 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType,
-    computed,
-  } from 'vue'
+  import {computed, defineComponent, PropType,} from 'vue'
 
   import SIcon from '../icon'
 
-  type ProgressType = 'linear' | 'circular' | 'dashboard'
-  type ProgressStatus = 'success' | 'error' | 'normal' | 'active'
+  import {IProgressColor, ProgressStatus, ProgressType} from './progress.type'
 
   export default defineComponent({
     name: 'SProgress',
@@ -98,13 +97,13 @@
       },
       strokeWidth: {
         type: Number,
-        default: 6
+        default: 8
       },
       strokeCap: {
         type: String as PropType<any>
       },
       color: {
-        type: String,
+        type: [String, Function, Array],
         default: '#0066ff'
       },
       // only available when in circular or dashboard type
@@ -113,15 +112,16 @@
         default: 128
       }
     },
-    setup(props, { emit }) {
+    setup(props) {
       const linearFillStyle = computed(() => {
         return {
           width: `${props.percentage}%`,
+          backgroundColor: stroke.value
         }
       })
 
       const relativeStrokeWidth = computed(() => {
-        return (props.strokeWidth - props.size).toFixed(1)
+        return (props.strokeWidth / props.size * 100).toFixed(1)
       })
 
       const radius = computed(() => {
@@ -180,23 +180,55 @@
       })
 
       const stroke = computed(() => {
-        let color
-        if (props.color) {
-          color =
+        if (props.status === 'error') {
+          return '#d13e32'
+        } else if (props.status === 'success') {
+          return '#28a745'
         }
+
+        return getCurrentColor(props.percentage)
       })
 
       // methods
-      const getCurrentColor: (percentage: number): string => {
-        if (typeof props.color === 'string') {
-
-        } else if (props.color === 'array') {
-          
+      const getCurrentColor = (percentage: number): string => {
+        if (Array.isArray(props.color)) {
+          return getLeveledColor(percentage)
+        } else if (typeof props.color === 'function') {
+          return props.color(percentage)
         }
+
+        return props.color as string
+      }
+
+      const getLeveledColor = (percentage: number): string => {
+        const arr = getColorsArray()
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i].percentage > percentage) {
+            return arr[i].color
+          }
+        }
+        return arr[arr.length - 1].color
+      }
+
+      const getColorsArray = (): IProgressColor[] => {
+        const colors = props.color as Array<IProgressColor | string>
+        const span = 100 / colors.length
+        return colors.map((obj, index) => {
+          if (typeof obj === 'string') {
+            return {
+              color: obj,
+              percentage: (index + 1) * span
+            }
+          }
+
+          return obj
+        })
       }
 
       return {
         trackPath,
+        stroke,
 
         relativeStrokeWidth,
 

@@ -741,7 +741,7 @@
       <div class="demo-block">
         <h2>Ratings</h2>
         <div class="demo-content">
-          <s-rate v-model="ratingModel" :texts="[1, '2', '3', '4', '5']"></s-rate>
+          <s-rate v-model="ratingModel" show-text :texts="['E', 'D', 'C', 'B', 'A']"></s-rate>
           <br>
           <s-rate v-model="ratingModel2" :max="7"></s-rate>
           <br>
@@ -754,6 +754,34 @@
           <s-rate v-model="ratingModel" readonly></s-rate>
           <br>
           <s-rate v-model="ratingModel" icon="heart" color="#ff5150"></s-rate>
+        </div>
+      </div>
+
+      <div class="demo-block">
+        <h2>Progress</h2>
+        <div class="demo-content">
+          <s-progress type="linear" status="active" :percentage="percentage1"></s-progress>
+          <br>
+          <s-progress type="linear" :color="progressColor" :percentage="percentage2"></s-progress>
+          <br>
+          <s-progress type="linear" color="orange" status="active" :percentage="90"></s-progress>
+          <br>
+          <div>
+            <s-progress type="circular" :percentage="percentage1"></s-progress>
+            <s-progress type="circular" status="success" :percentage="87"></s-progress>
+            <s-progress type="circular" :size="100" :color="progressColor" :percentage="percentage2"></s-progress>
+          </div>
+          <br>
+          <div>
+            <s-progress type="dashboard" :percentage="percentage1"></s-progress>
+            <s-progress type="dashboard" status="error" :percentage="90"></s-progress>
+            <s-progress type="dashboard" :size="100" :color="progressColor" :percentage="percentage2"></s-progress>
+          </div>
+          <br>
+          <s-button-group>
+            <s-button @click="percentage2 += 10"><s-icon name="plus"></s-icon></s-button>
+            <s-button @click="percentage2 -= 10"><s-icon name="minus"></s-icon></s-button>
+          </s-button-group>
         </div>
       </div>
     </section>
@@ -790,6 +818,7 @@
   import STab from './packages/tab'
   import STabs from './packages/tabs'
   import STabItem from './packages/tab-item'
+  import SProgress from './packages/progress'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -811,6 +840,7 @@
       SRate,
       SImage,
       STabs, STab, STabItem,
+      SProgress
     },
     data: () => ({
       avatar1, avatar2,
@@ -866,7 +896,16 @@
       fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       activeTab: '1',
-      activeTab2: '3'
+      activeTab2: '3',
+      percentage1: 43,
+      percentage2: 50,
+      progressColor: [
+        {color: '#f56c6c', percentage: 20},
+        {color: '#e6a23c', percentage: 40},
+        {color: '#5cb87a', percentage: 60},
+        {color: '#1989fa', percentage: 80},
+        {color: '#6f7ad3', percentage: 100}
+      ]
     }),
     methods: {
       changeBadgeValue(value) {
