@@ -337,6 +337,67 @@
           ></s-image>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Accordion</h2>
+        <div class="demo-content">
+          <s-accordion v-model="activeAccordion">
+            <s-accordion-item
+              title="MaoMao"
+              name="panel1"
+            >
+              <b>She is the best artist I've ever seen.</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid amet architecto commodi consequatur cumque dolor, doloremque, eaque est fugiat fugit impedit ipsam mollitia obcaecati quas quidem rerum sed, veniam.
+            </s-accordion-item>
+            <s-accordion-item
+              title="CaiCai"
+              name="panel2"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet delectus excepturi exercitationem id ipsa iste, laudantium modi mollitia natus pariatur perferendis quis quos sint soluta tempore veritatis voluptas voluptates? Commodi?
+            </s-accordion-item>
+            <s-accordion-item
+              title="Big Mao"
+              name="panel3"
+            >
+              <b>She is the best artist I've ever seen.</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid amet architecto commodi consequatur cumque dolor, doloremque, eaque est fugiat fugit impedit ipsam mollitia obcaecati quas quidem rerum sed, veniam.
+            </s-accordion-item>
+            <s-accordion-item
+              title="Big Cai"
+              name="panel4"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet delectus excepturi exercitationem id ipsa iste, laudantium modi mollitia natus pariatur perferendis quis quos sint soluta tempore veritatis voluptas voluptates? Commodi?
+            </s-accordion-item>
+          </s-accordion>
+
+          <br>
+
+          <s-accordion v-model="activeAccordion2" outlined :header-style="{ backgroundColor: '#f7f7f7' }" :multiple="false">
+            <s-accordion-item
+              title="MaoMao"
+              name="panel1"
+            >
+              <b>She is the best artist I've ever seen.</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid amet architecto commodi consequatur cumque dolor, doloremque, eaque est fugiat fugit impedit ipsam mollitia obcaecati quas quidem rerum sed, veniam.
+            </s-accordion-item>
+            <s-accordion-item
+              title="CaiCai"
+              name="panel2"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet delectus excepturi exercitationem id ipsa iste, laudantium modi mollitia natus pariatur perferendis quis quos sint soluta tempore veritatis voluptas voluptates? Commodi?
+            </s-accordion-item>
+            <s-accordion-item
+              title="Big Mao"
+              name="panel3"
+            >
+              <b>She is the best artist I've ever seen.</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid amet architecto commodi consequatur cumque dolor, doloremque, eaque est fugiat fugit impedit ipsam mollitia obcaecati quas quidem rerum sed, veniam.
+            </s-accordion-item>
+            <s-accordion-item
+              title="Big Cai"
+              name="panel4"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet delectus excepturi exercitationem id ipsa iste, laudantium modi mollitia natus pariatur perferendis quis quos sint soluta tempore veritatis voluptas voluptates? Commodi?
+            </s-accordion-item>
+          </s-accordion>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -819,6 +880,8 @@
   import STabs from './packages/tabs'
   import STabItem from './packages/tab-item'
   import SProgress from './packages/progress'
+  import SAccordion from './packages/accordion'
+  import SAccordionItem from './packages/accordion-item'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -840,7 +903,8 @@
       SRate,
       SImage,
       STabs, STab, STabItem,
-      SProgress
+      SProgress,
+      SAccordion, SAccordionItem
     },
     data: () => ({
       avatar1, avatar2,
@@ -905,7 +969,9 @@
         {color: '#5cb87a', percentage: 60},
         {color: '#1989fa', percentage: 80},
         {color: '#6f7ad3', percentage: 100}
-      ]
+      ],
+      activeAccordion: ['panel1'],
+      activeAccordion2: 'panel2'
     }),
     methods: {
       changeBadgeValue(value) {

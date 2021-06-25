@@ -111,3 +111,5 @@ export function rafThrottle(fn): Function {
     })
   }
 }
+
+export const generateId = (): number => Math.floor(Math.random() * 10000)

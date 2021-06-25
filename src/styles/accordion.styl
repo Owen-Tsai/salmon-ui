@@ -1,0 +1,62 @@
+.sui-accordion {
+  border-top: 1px solid color--border
+  font-size: font-size--text.medium
+  color: color--text.normal
+
+  & &-item {
+    &__header {
+      display flex
+      align-items center
+      justify-content space-between
+      height 48px
+      border-bottom 1px solid color--border
+      transition all .3s
+      color: color--text.dark
+      cursor pointer
+
+      &.is-active {
+        border-bottom-color transparent
+
+        .sui-accordion-item__icon {
+          transform rotate(90deg)
+        }
+      }
+    }
+
+    &__icon {
+      font-size font-size--text.larger
+      transition transform .3s ease-in-out
+    }
+
+    &__content {
+      padding-bottom 24px
+      border-bottom 1px solid color--border
+    }
+  }
+}
+
+.sui-accordion.is-outlined {
+  border-radius border-radius--normal
+  border 1px solid color--border
+  border-bottom 0
+
+  .sui-accordion-item {
+    &__header {
+      padding 0 16px
+
+      &.is-active {
+        border-bottom-color color--border
+      }
+    }
+
+    &__content {
+      padding 16px
+    }
+  }
+}
+
+.sui-collapse-transition {
+  transition: .3s height ease-in-out,
+          .3s padding-top ease-in-out,
+          .3s padding-bottom ease-in-out
+}
