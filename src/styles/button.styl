@@ -17,7 +17,7 @@
   border-radius: border-radius--normal
   color color--text.normal
   font-weight 400
-  transition all .2s
+  transition all ease-in-out .2s
   outline none
 
   span:not(.sui-icon) {
@@ -38,34 +38,34 @@
     margin-right 4px
   }
 
-  make-button(color--primary)
+  make-button(colors--primary)
 
   &.is-danger {
-    make-button(color--error)
+    make-button(colors--error)
   }
 
   // types
   &--primary {
-    make-primary-button(color--primary)
+    make-primary-button(colors--primary)
 
     &.is-danger {
-      make-primary-button(color--error)
+      make-primary-button(colors--error)
     }
   }
 
   &--outlined {
-    make-outlined-button(color--primary)
+    make-outlined-button(colors--primary)
 
     &.is-danger {
-      make-outlined-button(color--error)
+      make-outlined-button(colors--error)
     }
   }
 
   &--text {
-    make-text-button(color--primary)
+    make-text-button(colors--primary)
 
     &.is-danger {
-      make-text-button(color--error)
+      make-text-button(colors--error)
     }
   }
 

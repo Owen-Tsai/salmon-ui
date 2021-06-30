@@ -14,7 +14,8 @@
     border-radius 0
   }
   .sui-button:not(:last-child) {
-    margin-right -1px
+    margin-right 0
+    border-right 0
   }
 
   .sui-button + .sui-button {
@@ -32,10 +33,10 @@
     border-left-color #ffffff !important
   }
   .sui-button--outlined:not(:first-child) {
-    border-left-color: color--primary.normal
+    border-left-color: colors--primary.normal
 
     &.is-danger {
-      border-left-color: color--error.normal
+      border-left-color: colors--error.normal
     }
   }
 }

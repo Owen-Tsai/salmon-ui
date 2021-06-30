@@ -2,6 +2,11 @@
 color--placeholder = #a0a3bd
 color--border = #d9dbe9
 
+color--primary = #2258e3
+color--success = #06ba63
+color--error = #E63333
+color--warning = #FFBE4D
+
 color--text = {
   normal: #4a4a68,
   dark: #14142b,
@@ -15,39 +20,40 @@ color--bg = {
   light: #fcfcfc
 }
 
-color--primary = {
-  normal: #0066ff,
-  x-light: #e6f4ff,
-  light: #2986ff,
-  dark: #004fd9
+colors--primary = {
+  normal: color--primary,
+  x-light: lighten(color--primary, 90%),
+  //light: #4a7ff0,
+  light: lighten(color--primary, 12%),
+  dark: darken(color--primary, 12%)
 }
 
-color--success = {
-  normal: #28a745,
-  x-light: #eef9d8,
-  light: #47b35d,
-  dark: #188034
+colors--success = {
+  normal: color--success,
+  x-light: lighten(color--success, 90%),
+  light: lighten(color--success, 12%),
+  dark: darken(color--success, 12%)
 }
 
-color--error = {
-  normal: #d13e32,
-  x-light: #fff2f0,
-  light: #de6859,
-  dark: #ab2720
+colors--error = {
+  normal: color--error,
+  x-light: lighten(color--error, 90%),
+  light: lighten(color--error, 12%),
+  dark: darken(color--error, 12%)
 }
 
-color--warning = {
-  normal: #ffc107,
-  x-light: #fffbd1,
-  light: #ffd230,
-  dark: #d99b00
+colors--warning = {
+  normal: color--warning,
+  x-light: lighten(color--warning, 90%),
+  light: lighten(color--warning, 12%),
+  dark: darken(color--warning, 12%),
 }
 
 typesMap = {
-  'default': color--primary,
-  'success': color--success,
-  'warning': color--warning,
-  'error': color--error
+  'default': colors--primary,
+  'success': colors--success,
+  'warning': colors--warning,
+  'error': colors--error
 }
 
 // typography
@@ -75,4 +81,4 @@ border-radius--large = 8px
 box-shadow--normal = 0 4px 8px rgba(0, 0, 0, 16%)
 
 box-shadow--elevation = 0 3px 6px -4px rgba(0, 0, 0, 12%), 0 6px 16px 0 rgba(0, 0, 0, 8%), 0 9px 28px 8px rgba(0, 0, 0, 5%)
-box-shadow--primary = 0 0 0 0.25rem rgba(color--primary.light, 0.25)
+box-shadow--primary = 0 0 0 0.25rem rgba(colors--primary.light, 0.25)
