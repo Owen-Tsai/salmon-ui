@@ -634,29 +634,6 @@
       </div>
 
       <div class="demo-block">
-        <h2>Button Groups</h2>
-        <div class="demo-content">
-          <s-button-group class="demo-m-y" size="small">
-            <s-button type="primary">主要按钮</s-button>
-            <s-button type="primary">主要按钮</s-button>
-            <s-button type="primary">主要按钮</s-button>
-          </s-button-group>
-
-          <s-button-group class="demo-m-y">
-            <s-button type="outlined">outlined</s-button>
-            <s-button type="outlined">outlined</s-button>
-            <s-button type="outlined">outlined</s-button>
-          </s-button-group>
-
-          <s-button-group class="demo-m-y" size="large">
-            <s-button>大号按钮</s-button>
-            <s-button>大号按钮</s-button>
-            <s-button>大号按钮</s-button>
-          </s-button-group>
-        </div>
-      </div>
-
-      <div class="demo-block">
         <h2>Radios & Radio Groups</h2>
         <div class="demo-content">
           <s-radio v-model="radio1" label="mao" disabled>毛毛</s-radio>
