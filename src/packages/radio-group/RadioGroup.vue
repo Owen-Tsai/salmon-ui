@@ -12,7 +12,8 @@
   import {
     defineComponent,
     provide,
-    toRefs, reactive,
+    toRefs,
+    reactive,
     nextTick
   } from 'vue'
 

@@ -636,12 +636,12 @@
       <div class="demo-block">
         <h2>Radios & Radio Groups</h2>
         <div class="demo-content">
-          <s-radio v-model="radio1" label="mao" disabled>毛毛</s-radio>
-          <s-radio v-model="radio2" label="cai">蔡蔡</s-radio>
+          <s-radio v-model="radio1" value="mao" disabled>毛毛</s-radio>
+          <s-radio v-model="radio2" value="cai">蔡蔡</s-radio>
           <p>测试：左值为{{ radio1 }}, 右值为{{ radio2 || '未选中' }}</p>
           <s-radio-group v-model="radio3">
-            <s-radio label="mao">毛毛</s-radio>
-            <s-radio label="cai">蔡蔡</s-radio>
+            <s-radio value="mao">毛毛</s-radio>
+            <s-radio value="cai">蔡蔡</s-radio>
           </s-radio-group>
           <p>测试：选中值为{{ radio3 }}</p>
         </div>
@@ -830,7 +830,6 @@
   import SIcon from './packages/icon'
   import SAlert from './packages/alert'
   import SButton from "./packages/button"
-  import SButtonGroup from './packages/button-group'
   import SAvatar from './packages/avatar'
   import SBadge from './packages/badge'
   import SBreadcrumb from './packages/breadcrumb'
@@ -865,10 +864,11 @@
 
   export default {
     components: {
-      SButton, SButtonGroup,
+      SButton,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
-      STag, SRadio, SRadioGroup,
+      STag,
+      SRadio, SRadioGroup,
       SCheckbox, SCheckboxGroup,
       STooltip, SPopover,
       SCard,

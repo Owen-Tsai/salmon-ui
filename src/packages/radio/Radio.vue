@@ -3,7 +3,7 @@
     :class="[
       'sui-radio',
       computedDisabled ? 'is-disabled' : '',
-      model === label ? 'is-checked' : '',
+      model === value ? 'is-checked' : '',
       focus ? 'is-focus': ''
     ]"
     :aria-disabled="computedDisabled"
@@ -15,7 +15,7 @@
         ref="radioRef"
         v-model="model"
         class="sui-radio__original"
-        :value="label" :name="name"
+        :value="value" :name="name"
         :disabled="computedDisabled"
         @change="handleChange"
         @focus="focus = true"
@@ -24,7 +24,7 @@
     </span>
 
     <span class="sui-radio__label">
-      <slot>{{ label }}</slot>
+      <slot>{{ value }}</slot>
     </span>
   </label>
 </template>
@@ -41,7 +41,7 @@
   export default defineComponent({
     name: 'SRadio',
     props: {
-      label: [String, Number, Boolean],
+      value: [String, Number, Boolean],
       modelValue: [String, Number, Boolean],
       disabled: Boolean,
       name: String,
