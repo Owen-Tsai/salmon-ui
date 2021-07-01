@@ -3,7 +3,7 @@
     :class="[
       'sui-button',
       `sui-button--${type}`,
-      size ? `sui-button--${size}` : '',
+      computedSize ? `sui-button--${computedSize}` : '',
       shape ? `sui-button--${shape}` : '',
       disabled ? 'is-disabled' : '',
       loading ? 'is-loading' : '',
@@ -24,7 +24,7 @@
 
 <script lang="ts">
   import SIcon from '../icon'
-  import { defineComponent } from 'vue'
+  import { computed, defineComponent, inject } from 'vue'
 
   const _types = [
     'default', 'primary', 'outlined', 'text'
@@ -78,6 +78,13 @@
     },
     emits: ['click'],
     setup(props, ctx) {
+      // injected
+      const buttonGroupSize: any = inject('buttonGroupSize', {})
+
+      // computed
+      const computedSize = computed(() => {
+        return buttonGroupSize?.value || props.size
+      })
 
       // methods
       const handleClick = (evt) => {
@@ -85,6 +92,7 @@
       }
 
       return {
+        computedSize,
         handleClick
       }
     }

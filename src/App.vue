@@ -634,6 +634,29 @@
       </div>
 
       <div class="demo-block">
+        <h2>Button Groups</h2>
+        <div class="demo-content">
+          <s-button-group class="demo-m-y" size="small">
+            <s-button type="primary">主要按钮</s-button>
+            <s-button type="primary">主要按钮</s-button>
+            <s-button type="primary">主要按钮</s-button>
+          </s-button-group>
+
+          <s-button-group class="demo-m-y">
+            <s-button type="outlined">outlined</s-button>
+            <s-button type="outlined">outlined</s-button>
+            <s-button type="outlined">outlined</s-button>
+          </s-button-group>
+
+          <s-button-group class="demo-m-y" size="large">
+            <s-button>大号按钮</s-button>
+            <s-button>大号按钮</s-button>
+            <s-button>大号按钮</s-button>
+          </s-button-group>
+        </div>
+      </div>
+
+      <div class="demo-block">
         <h2>Radios & Radio Groups</h2>
         <div class="demo-content">
           <s-radio v-model="radio1" value="mao" disabled>毛毛</s-radio>
@@ -829,7 +852,8 @@
 <script>
   import SIcon from './packages/icon'
   import SAlert from './packages/alert'
-  import SButton from "./packages/button"
+  import SButton from './packages/button'
+  import SButtonGroup from './packages/button-group'
   import SAvatar from './packages/avatar'
   import SBadge from './packages/badge'
   import SBreadcrumb from './packages/breadcrumb'
@@ -864,7 +888,7 @@
 
   export default {
     components: {
-      SButton,
+      SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
       STag,
