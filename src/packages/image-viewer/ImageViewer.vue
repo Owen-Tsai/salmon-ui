@@ -321,7 +321,7 @@
       watch(currentImg, () => {
         nextTick(() => {
           const img: HTMLImageElement = imgEl.value
-          if (!img.complete) {
+          if (img && !img.complete) {
             isLoading.value = true
           }
         })

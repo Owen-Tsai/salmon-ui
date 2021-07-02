@@ -8,21 +8,27 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import {
     defineComponent,
     provide,
     toRefs,
     reactive,
-    nextTick
+    nextTick,
+    PropType
   } from 'vue'
+
+  type RadioButtonSize = '' | 'small' | 'large'
 
   export default defineComponent({
     name: 'SRadioGroup',
     props: {
       modelValue: [String, Number, Boolean],
       disabled: Boolean,
-      name: String
+      size: {
+        type: String as PropType<RadioButtonSize>,
+        default: ''
+      }
     },
     emits: ['change', 'update:modelValue'],
     setup(props, ctx) {
@@ -37,6 +43,7 @@
       provide('radioGroup', reactive({
         ...toRefs(props),
         changeEvent,
+        name: 'radioGroup'
       }))
 
     }

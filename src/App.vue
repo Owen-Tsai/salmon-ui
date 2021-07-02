@@ -667,6 +667,20 @@
             <s-radio value="cai">蔡蔡</s-radio>
           </s-radio-group>
           <p>测试：选中值为{{ radio3 }}</p>
+          <s-radio-group v-model="radio4">
+            <s-radio-button value="mao">毛毛</s-radio-button>
+            <s-radio-button value="cai">蔡蔡</s-radio-button>
+            <s-radio-button value="big-mao">大毛</s-radio-button>
+            <s-radio-button value="big-cai">大蔡</s-radio-button>
+          </s-radio-group>
+          <br>
+          <s-radio-group v-model="radio4" size="small">
+            <s-radio-button value="mao">毛毛</s-radio-button>
+            <s-radio-button value="cai">蔡蔡</s-radio-button>
+            <s-radio-button value="big-mao">大毛</s-radio-button>
+            <s-radio-button disabled value="big-cai">大蔡</s-radio-button>
+          </s-radio-group>
+          <p>测试：radio button选中值为 {{ radio4 }}</p>
         </div>
       </div>
 
@@ -682,13 +696,13 @@
             <s-checkbox value="da-mao">大毛毛</s-checkbox>
             <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
-          <p>测试：选中的值包含{{ checkbox3 }}</p>
           <s-checkbox-group v-model="checkbox3" :min="1" :max="3">
             <s-checkbox value="mao">毛毛</s-checkbox>
             <s-checkbox value="cai">蔡蔡</s-checkbox>
             <s-checkbox value="da-mao">大毛毛</s-checkbox>
             <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
+          <p>测试：选中的值包含{{ checkbox3 }}</p>
         </div>
       </div>
 
@@ -882,6 +896,7 @@
   import SProgress from './packages/progress'
   import SAccordion from './packages/accordion'
   import SAccordionItem from './packages/accordion-item'
+  import SRadioButton from './packages/radio-button'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -892,7 +907,7 @@
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
       STag,
-      SRadio, SRadioGroup,
+      SRadio, SRadioGroup, SRadioButton,
       SCheckbox, SCheckboxGroup,
       STooltip, SPopover,
       SCard,
@@ -913,6 +928,7 @@
       radio1: 'mao',
       radio2: '',
       radio3: '',
+      radio4: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
       popoverDisabled: false,

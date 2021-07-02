@@ -2,11 +2,11 @@
   <label
     :class="[
       'sui-radio',
-      computedDisabled ? 'is-disabled' : '',
+      isDisabled ? 'is-disabled' : '',
       model === value ? 'is-checked' : '',
       focus ? 'is-focus': ''
     ]"
-    :aria-disabled="computedDisabled"
+    :aria-disabled="isDisabled"
   >
     <span class="sui-radio__input">
       <span class="sui-radio__inner"></span>
@@ -16,7 +16,7 @@
         v-model="model"
         class="sui-radio__original"
         :value="value" :name="name"
-        :disabled="computedDisabled"
+        :disabled="isDisabled"
         @change="handleChange"
         @focus="focus = true"
         @blur="focus = false"
@@ -29,14 +29,13 @@
   </label>
 </template>
 
-<script>
+<script lang="ts">
   import {
     defineComponent,
     ref,
-    computed,
-    inject,
-    nextTick
   } from 'vue'
+
+  import useRadio from '@/utils/compositions/radio'
 
   export default defineComponent({
     name: 'SRadio',
@@ -46,44 +45,17 @@
       disabled: Boolean,
       name: String,
     },
-    setup(props, ctx) {
+    setup(props, { emit }) {
       const focus = ref(false)
-      // injected
-      const radioGroup = inject('radioGroup', null)
 
-      // computed
-      const isGroup = computed(() => {
-        return !!radioGroup
-      })
-      const computedDisabled = computed(() => {
-        if(isGroup.value) {
-          return radioGroup.disabled || props.disabled
-        } else {
-          return props.disabled
-        }
-      })
-      const model = computed({
-        get() {
-          return isGroup.value ? radioGroup.modelValue : props.modelValue
-        },
-        set(val) {
-          if(isGroup.value) {
-            radioGroup.changeEvent(val)
-          } else {
-            ctx.emit('update:modelValue', val)
-          }
-        }
-      })
-
-      // methods
-      const handleChange = () => {
-        nextTick(() => {
-          ctx.emit('change', model.value)
-        })
-      }
+      const {
+        model,
+        isDisabled,
+        handleChange
+      } = useRadio(props, emit)
 
       return {
-        computedDisabled,
+        isDisabled,
         model,
         handleChange,
         focus
