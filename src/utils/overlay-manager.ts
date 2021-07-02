@@ -84,7 +84,7 @@ const OverlayManager: IManager = {
 
   doOnModalClick: () => {
     const count = OverlayManager.modalStack.length
-    let topItem = OverlayManager.modalStack[count - 1]
+    const topItem = OverlayManager.modalStack[count - 1]
     if (!topItem) return
 
     const instance = OverlayManager.getInstance(topItem.id)

@@ -18,7 +18,7 @@ import {
 let seed = 1
 
 // all instances
-let instances: MessageInstanceQueue = []
+const instances: MessageInstanceQueue = []
 
 const Message = function(
   opts: MessageOptions = {} as MessageOptions
@@ -85,10 +85,9 @@ export const close = (
   id: string,
   userCallbackOnClose?: (vm: MessageVM) => void
 ) => {
-  let count = instances.length
-  let index: number
+  const count = instances.length
 
-  index = instances.findIndex(({ vm }) => {
+  const index = instances.findIndex(({ vm }) => {
     const _id = vm.component?.props.id
     return id === _id
   })

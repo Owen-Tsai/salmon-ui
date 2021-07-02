@@ -18,7 +18,7 @@ let seed = 1
 
 // 4 queues has to be stored independently
 // for offset to be calculated correctly
-let instances: Record<NotificationPosition, NotificationQueue> = {
+const instances: Record<NotificationPosition, NotificationQueue> = {
   'top-left': [],
   'top-right': [],
   'bottom-left': [],
@@ -129,7 +129,7 @@ export const close = (
 })
 
 export const closeAll = () => {
-  for (let key in instances) {
+  for (const key in instances) {
     const notifications = instances[key as NotificationPosition]
     notifications.forEach(({ vm }) => {
       (
