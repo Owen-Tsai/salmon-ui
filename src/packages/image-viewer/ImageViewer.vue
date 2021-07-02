@@ -117,7 +117,7 @@
     props: {
       srcList: {
         type: Array as PropType<string[] | File[]>,
-        default: []
+        default: () => []
       },
       zIndex: {
         type: Number,

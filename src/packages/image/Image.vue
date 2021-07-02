@@ -91,7 +91,7 @@
       },
       previewSrcList: {
         type: Array as PropType<string[]>,
-        default: []
+        default: () => []
       },
       zIndex: Number,
       hideOnClickMask: Boolean,

@@ -78,7 +78,7 @@
       showScore: Boolean,
       texts: {
         type: Array as PropType<string[]>,
-        default: ['很差', '不满', '一般', '尚可', '很好']
+        default: () => ['很差', '不满', '一般', '尚可', '很好']
       },
       inactiveColor: {
         type: String,
