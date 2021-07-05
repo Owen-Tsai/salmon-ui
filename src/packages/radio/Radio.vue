@@ -2,11 +2,12 @@
   <label
     :class="[
       'sui-radio',
-      isDisabled ? 'is-disabled' : '',
-      model === value ? 'is-checked' : '',
-      focus ? 'is-focus': ''
+      isDisabled ? 'is-disabled' : null,
+      model === value ? 'is-checked' : null,
+      focus ? 'is-focus': null
     ]"
     :aria-disabled="isDisabled"
+    :aria-checked="model === value"
   >
     <span class="sui-radio__input">
       <span class="sui-radio__inner"></span>
@@ -15,7 +16,7 @@
         ref="radioRef"
         v-model="model"
         class="sui-radio__original"
-        :value="value" :name="name"
+        :value="value" :name="computedName"
         :disabled="isDisabled"
         @change="handleChange"
         @focus="focus = true"
@@ -50,6 +51,7 @@
 
       const {
         model,
+        computedName,
         isDisabled,
         handleChange
       } = useRadio(props, emit)
@@ -57,6 +59,7 @@
       return {
         isDisabled,
         model,
+        computedName,
         handleChange,
         focus
       }

@@ -6,6 +6,7 @@
   cursor pointer
   display inline-flex
   align-items center
+  outline none
   transition all .2s
 
   &__input {
@@ -85,7 +86,7 @@
     }
   }
 
-  &.is-focus {
+  &.is-focus, &:focus {
     & ^[0]__input ^[0]__inner {
       box-shadow: box-shadow--primary
     }

@@ -10,8 +10,9 @@ interface IRadioGroupProvider {
   name: string,
   modelValue: RadioModel,
   disabled: boolean,
+  group: boolean,
   changeEvent: (v: RadioModel) => void,
-  size?: RadioSize
+  size?: RadioSize,
 }
 
 import throwError from '@/utils/class.error'
@@ -22,7 +23,15 @@ const useRadio = (props, emit) => {
 
   // computed
   const isGroup = computed(() => {
-    return radioGroup.name === 'radioGroup'
+    return radioGroup.group
+  })
+
+  const computedName = computed(() => {
+    if (isGroup.value) {
+      return radioGroup.name
+    } else {
+      return props.name
+    }
   })
 
   // throw an error if v-model is omitted and is not in a group
@@ -54,6 +63,10 @@ const useRadio = (props, emit) => {
     }
   })
 
+  const buttonSize = computed(() => {
+    return radioGroup.size
+  })
+
   const handleChange = () => {
     nextTick().then(() => {
       emit('change', model.value)
@@ -65,6 +78,8 @@ const useRadio = (props, emit) => {
     isDisabled,
     model,
     radioGroup,
+    computedName,
+    buttonSize,
 
     handleChange
   }

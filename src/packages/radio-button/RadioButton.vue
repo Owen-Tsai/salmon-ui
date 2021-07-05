@@ -11,20 +11,17 @@
     ]"
     :aria-checked="model === value"
     :aria-disabled="isDisabled"
-    :tabindex="tabindex"
-    @keydown.space.stop.prevent="model = isDisabled ? model : value"
   >
     <input
       class="sui-radio-button__original"
       ref="inputEl"
       type="radio"
       v-model="model"
-      :value="value" :name="name"
+      :value="value" :name="computedName"
       :disabled="isDisabled"
       @change="handleChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
-      tabindex="-1"
     >
     <span class="sui-radio-button__btn">
       <slot>{{ value }}</slot>
@@ -65,7 +62,8 @@
         isGroup,
         model,
         handleChange,
-        radioGroup
+        buttonSize,
+        computedName
       } = useRadio(props, emit)
 
       if (!isGroup.value) {
@@ -75,18 +73,11 @@
         )
       }
 
-      const size = computed(() => {
-        if (radioGroup.size !== undefined) {
-          return radioGroup.size
-        }
-
-        return ''
-      })
-
       return {
         model,
         tabindex,
-        size,
+        size: buttonSize,
+        computedName,
 
         isDisabled,
         isGroup,

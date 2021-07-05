@@ -1,7 +1,7 @@
 <template>
   <div
     class="sui-radio-group"
-    ref="radioGroup"
+    ref="radioGroupEl"
     role="radiogroup"
   >
     <slot></slot>
@@ -17,6 +17,7 @@
     nextTick,
     PropType
   } from 'vue'
+  import { generateId } from '@/utils/utils'
 
   type RadioButtonSize = '' | 'small' | 'large'
 
@@ -28,6 +29,10 @@
       size: {
         type: String as PropType<RadioButtonSize>,
         default: ''
+      },
+      name: {
+        type: String,
+        default: () => `radio-group-${generateId()}`
       }
     },
     emits: ['change', 'update:modelValue'],
@@ -43,7 +48,7 @@
       provide('radioGroup', reactive({
         ...toRefs(props),
         changeEvent,
-        name: 'radioGroup'
+        group: true
       }))
 
     }
