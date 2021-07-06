@@ -95,4 +95,20 @@
       box-shadow: box-shadow--primary
     }
   }
+  &.is-indeterminate {
+    .sui-checkbox__inner {
+      background-color #ffffff !important
+      border-color: colors--primary.normal
+      &::before {
+        width 10px
+        height @width
+        border none
+        left calc(50% - 5px)
+        top calc(50% - 5px)
+        transform rotate(0deg) scale(1) !important
+        opacity 1
+        background-color colors--primary.normal
+      }
+    }
+  }
 }

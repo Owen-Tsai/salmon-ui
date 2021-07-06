@@ -4,21 +4,27 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import {
     defineComponent,
     provide,
     computed,
     nextTick,
     toRefs,
+    reactive
   } from 'vue'
+
+  import { generateId } from '@/utils/utils'
 
   export default defineComponent({
     name: 'SCheckboxGroup',
     props: {
       modelValue: [ Object, Boolean, Array ],
       disabled: Boolean,
-      name: String,
+      name: {
+        type: String,
+        default: () => `checkbox-group-${generateId()}`
+      },
       min: Number,
       max: Number
     },
@@ -31,7 +37,7 @@
         })
       }
 
-      const modelValue = computed({
+      const model = computed({
         get() {
           return props.modelValue
         },
@@ -40,11 +46,12 @@
         },
       })
 
-      provide('checkboxGroup', {
+      provide('checkboxGroup', reactive({
         changeEvent,
-        modelValue,
+        model,
+        group: 'checkboxGroup',
         ...toRefs(props)
-      })
+      }))
     }
   })
 </script>
