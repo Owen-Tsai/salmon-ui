@@ -48,7 +48,7 @@
       provide('radioGroup', reactive({
         ...toRefs(props),
         changeEvent,
-        group: true
+        group: 'radioGroup'
       }))
 
     }

@@ -10,7 +10,7 @@ interface IRadioGroupProvider {
   name: string,
   modelValue: RadioModel,
   disabled: boolean,
-  group: boolean,
+  group: string,
   changeEvent: (v: RadioModel) => void,
   size?: RadioSize,
 }
@@ -23,7 +23,7 @@ const useRadio = (props, emit) => {
 
   // computed
   const isGroup = computed(() => {
-    return radioGroup.group
+    return radioGroup.group === 'radioGroup'
   })
 
   const computedName = computed(() => {
@@ -38,7 +38,7 @@ const useRadio = (props, emit) => {
   if (!isGroup.value && props.modelValue === undefined) {
     throwError(
       'sui-radio',
-      'Radio should either be used with `v-model` or in a radio-group'
+      'Radio(and radio-button) should either be used with `v-model` or in a radio-group'
     )
   }
 

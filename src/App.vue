@@ -690,7 +690,7 @@
           <s-checkbox v-model="checkbox1" value="mao">毛毛</s-checkbox>
           <s-checkbox v-model="checkbox2" value="cai">蔡蔡</s-checkbox>
           <p>测试：毛毛被选中 {{ checkbox1 }}, 蔡蔡被选中 {{ checkbox2 }}</p>
-          <s-checkbox-group v-model="checkbox3">
+          <s-checkbox-group v-model="checkbox3" @change="handleCheckboxChange">
             <s-checkbox value="mao">毛毛</s-checkbox>
             <s-checkbox value="cai">蔡蔡</s-checkbox>
             <s-checkbox value="da-mao">大毛毛</s-checkbox>
@@ -703,6 +703,11 @@
             <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
           <p>测试：选中的值包含{{ checkbox3 }}</p>
+          <s-checkbox
+            :indeterminate="checkboxIndeterminate"
+            v-model="checkboxAll"
+            @change="handleCheckAllChange"
+          >全选</s-checkbox>
         </div>
       </div>
 
@@ -931,6 +936,8 @@
       radio4: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
+      checkboxIndeterminate: false,
+      checkboxAll: false,
       popoverDisabled: false,
       popoverVisible: false,
       popperContent: 'something real good is gonna happen',
@@ -1002,12 +1009,15 @@
         this.popperContent =
           this.popperContent === '970212' ? '961127' : '970212'
       },
-      move() {
-        this.left += 1
-        let el = document.querySelector('#slide')
-        let tippy = el._tippy
-        tippy.hide()
-        tippy.show()
+      handleCheckAllChange(val) {
+        this.checkbox3 = val ? ['mao', 'cai', 'da-mao', 'da-cai'] : [];
+        this.checkboxIndeterminate = false
+      },
+      handleCheckboxChange(val) {
+        console.log(val)
+        let checkedCount = val.length
+        this.checkboxAll = checkedCount === 4
+        this.checkboxIndeterminate = checkedCount > 0 && checkedCount < 4
       },
       log(e) {
         console.log(e)

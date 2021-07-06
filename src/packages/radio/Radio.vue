@@ -46,6 +46,7 @@
       disabled: Boolean,
       name: String,
     },
+    emits: ['update:modelValue', 'change'],
     setup(props, { emit }) {
       const focus = ref(false)
 
