@@ -689,7 +689,8 @@
         <div class="demo-content">
           <s-checkbox v-model="checkbox1" value="mao">毛毛</s-checkbox>
           <s-checkbox v-model="checkbox2" value="cai">蔡蔡</s-checkbox>
-          <p>测试：毛毛被选中 {{ checkbox1 }}, 蔡蔡被选中 {{ checkbox2 }}</p>
+          <s-checkbox v-model="checkbox4" checked-value="yes" unchecked-value="no">测试</s-checkbox>
+          <p>测试：毛毛被选中 {{ checkbox1 }}, 蔡蔡被选中 {{ checkbox2 }}，测试的值 {{ checkbox4 }}</p>
           <s-checkbox-group v-model="checkbox3" @change="handleCheckboxChange">
             <s-checkbox value="mao">毛毛</s-checkbox>
             <s-checkbox value="cai">蔡蔡</s-checkbox>
@@ -708,6 +709,20 @@
             v-model="checkboxAll"
             @change="handleCheckAllChange"
           >全选</s-checkbox>
+          <br>
+          <s-checkbox-group v-model="checkbox3">
+            <s-checkbox-button value="mao">毛毛</s-checkbox-button>
+            <s-checkbox-button value="cai">蔡蔡</s-checkbox-button>
+            <s-checkbox-button value="da-mao">大毛毛</s-checkbox-button>
+            <s-checkbox-button value="da-cai">大蔡蔡</s-checkbox-button>
+          </s-checkbox-group>
+          <br>
+          <s-checkbox-group v-model="checkbox3" :min="1" :max="3" size="small">
+            <s-checkbox-button value="mao">毛毛</s-checkbox-button>
+            <s-checkbox-button value="cai">蔡蔡</s-checkbox-button>
+            <s-checkbox-button value="da-mao">大毛毛</s-checkbox-button>
+            <s-checkbox-button value="da-cai">大蔡蔡</s-checkbox-button>
+          </s-checkbox-group>
         </div>
       </div>
 
@@ -902,6 +917,7 @@
   import SAccordion from './packages/accordion'
   import SAccordionItem from './packages/accordion-item'
   import SRadioButton from './packages/radio-button'
+  import SCheckboxButton from './packages/checkbox-button'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -913,7 +929,7 @@
       SBreadcrumb, SBreadcrumbItem,
       STag,
       SRadio, SRadioGroup, SRadioButton,
-      SCheckbox, SCheckboxGroup,
+      SCheckbox, SCheckboxGroup, SCheckboxButton,
       STooltip, SPopover,
       SCard,
       SDropdown, SDropdownItem, SDropdownMenu,
@@ -936,6 +952,7 @@
       radio4: '',
       checkbox1: false, checkbox2: false,
       checkbox3: [],
+      checkbox4: 'no',
       checkboxIndeterminate: false,
       checkboxAll: false,
       popoverDisabled: false,

@@ -11,10 +11,13 @@
     computed,
     nextTick,
     toRefs,
-    reactive
+    reactive,
+    PropType
   } from 'vue'
 
   import { generateId } from '@/utils/utils'
+
+  type CheckboxButtonSize = '' | 'small' | 'large'
 
   export default defineComponent({
     name: 'SCheckboxGroup',
@@ -26,7 +29,11 @@
         default: () => `checkbox-group-${generateId()}`
       },
       min: Number,
-      max: Number
+      max: Number,
+      size: {
+        type: String as PropType<CheckboxButtonSize>,
+        default: ''
+      }
     },
     emits: ['update:modelValue', 'change'],
     setup(props, ctx) {

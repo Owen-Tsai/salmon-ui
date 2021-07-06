@@ -48,6 +48,10 @@ const useCheckbox = (props, emit) => {
     return isGroup.value ? checkboxGroup.name : props.name
   })
 
+  const size = computed(() =>
+    isGroup.value ? checkboxGroup.size : null
+  )
+
   const model = computed({
     get() {
       return isGroup.value ? storedModel.value : (props.modelValue ?? selfModel)
@@ -125,6 +129,7 @@ const useCheckbox = (props, emit) => {
     isDisabled,
     isGroup,
     computedName,
+    size,
 
     model,
     handleChange

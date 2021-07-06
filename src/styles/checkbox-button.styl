@@ -1,0 +1,89 @@
+.sui-checkbox-button {
+  position relative
+  display inline-block
+  transition all .15s
+
+  &__original {
+    opacity 0
+    position absolute
+    top 0
+    left 0
+    z-index -1
+  }
+
+  &__btn {
+    display inline-flex
+    align-items center
+    justify-content center
+    font-size font-size--text.medium
+    color color--text.normal
+    padding 0 16px
+    min-height 40px
+    border 1px solid color--border
+    cursor pointer
+    transition all .15s
+
+    &:hover {
+      color colors--primary.normal
+    }
+  }
+
+  &:first-child {
+    & ^[0]__btn {
+      border-top-left-radius border-radius--normal
+      border-bottom-left-radius border-radius--normal
+    }
+  }
+  &:last-child {
+    & ^[0]__btn {
+      border-top-right-radius border-radius--normal
+      border-bottom-right-radius border-radius--normal
+    }
+  }
+  &:not(:first-child) {
+    & ^[0]__btn {
+      border-left 0
+    }
+  }
+
+  &.is-checked {
+    & ^[0]__btn {
+      background-color colors--primary.normal
+      border-color color--border
+      color #ffffff
+    }
+  }
+  &.is-focused {
+    & ^[0]__btn {
+      box-shadow box-shadow--primary
+    }
+  }
+  &.is-disabled {
+    & ^[0]__btn {
+      background-color color--bg.normal
+      color color--placeholder
+      cursor not-allowed
+    }
+  }
+  &.is-checked.is-disabled {
+    & ^[0]__btn {
+      opacity 0.4
+      background-color colors--primary.normal
+      color #ffffff
+      border-color colors--primary.light
+      cursor not-allowed
+    }
+  }
+
+  // sizes
+  &--small {
+    & ^[0]__btn {
+      min-height 32px
+    }
+  }
+  &--large {
+    & ^[0]__btn {
+      min-height 48px
+    }
+  }
+}

@@ -63,7 +63,6 @@
       uncheckedValue: [ String, Number ],
       indeterminate: Boolean,
       disabled: Boolean,
-      checked: Boolean,
       name: String
     },
     emits: ['update:modelValue', 'change'],
