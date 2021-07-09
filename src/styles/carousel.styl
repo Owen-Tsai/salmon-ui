@@ -1,0 +1,162 @@
+.swiper-container {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  /* Fix of Webkit flickering */
+  z-index: 1;
+}
+.swiper-container-vertical > .swiper-wrapper {
+  flex-direction: column;
+}
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+.swiper-container-android .swiper-slide,
+.swiper-wrapper {
+  transform: translate3d(0px, 0, 0);
+}
+.swiper-container-multirow > .swiper-wrapper {
+  flex-wrap: wrap;
+}
+.swiper-container-multirow-column > .swiper-wrapper {
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.swiper-container-free-mode > .swiper-wrapper {
+  transition-timing-function: ease-out;
+  margin: 0 auto;
+}
+.swiper-container-pointer-events {
+  touch-action: pan-y;
+  &.swiper-container-vertical {
+    touch-action: pan-x;
+  }
+}
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+}
+.swiper-slide-invisible-blank {
+  visibility: hidden;
+}
+/* Auto Height */
+.swiper-container-autoheight {
+  &,
+  .swiper-slide {
+    height: auto;
+  }
+
+  .swiper-wrapper {
+    align-items: flex-start;
+    transition-property: transform, height;
+  }
+}
+
+.sui-carousel__arrow {
+  position absolute
+  background-color transparent
+  border 2px solid #ffffff
+  height 32px
+  width @height
+  margin 0
+  font-size 18px
+  outline none
+  color #ffffff
+  top calc(50% - 16px)
+  z-index 1
+  border-radius 50%
+  display flex
+  align-items center
+  justify-content center
+  opacity 0.6
+  cursor pointer
+  transition all .15s
+
+  &:hover {
+    opacity 1
+  }
+
+  ^[0]&--left {
+    left 16px
+  }
+  ^[0]&--right {
+    right 16px
+  }
+}
+
+.sui-carousel__pagination {
+  position absolute
+  z-index 1
+  left 50%
+  bottom 4px
+  transform translateX(-50%)
+
+  .sui-carousel__indicator {
+    height 2px
+    width 16px
+    border none
+    outline none
+    background-color #ffffff
+    opacity 0.6
+    padding 0
+    cursor pointer
+    transition all .3s
+
+    &:not(:last-child) {
+      margin-right 4px
+    }
+    &.is-active {
+      width 24px
+      opacity 1
+    }
+  }
+
+  &.is-vertical {
+    top 50%
+    display flex
+    flex-direction column
+    right 14px
+    bottom auto
+    left auto
+    transform translateY(-50%)
+
+    .sui-carousel__indicator {
+      width: 2px
+      height 14px
+
+      &:not(:last-child) {
+        margin-bottom 4px
+        margin-right 0
+      }
+      &.is-active {
+        height 20px
+        width 2px
+        opacity 1
+      }
+    }
+  }
+}
+
+.carousel-arrow-left-enter-from,
+.carousel-arrow-left-leave-to {
+  opacity 0
+  transform translateX(-16px)
+}
+
+.carousel-arrow-right-enter-from,
+.carousel-arrow-right-leave-to {
+  opacity 0
+  transform translateX(16px)
+}

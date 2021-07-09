@@ -591,6 +591,33 @@
           </s-tabs>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Carousel</h2>
+        <div class="demo-content">
+          <s-carousel class="demo-carousel demo-m-y">
+            <s-carousel-item
+              v-for="i in 4" :key="i"
+            >{{ i }}</s-carousel-item>
+          </s-carousel>
+          <s-carousel
+            class="demo-carousel demo-m-y"
+            autoplay
+          >
+            <s-carousel-item
+              v-for="i in 4" :key="i"
+            >{{ i }}</s-carousel-item>
+          </s-carousel>
+          <s-carousel
+            class="demo-carousel-vertical demo-m-y"
+            direction="vertical"
+          >
+            <s-carousel-item
+              v-for="i in 4" :key="i"
+            >{{ i }}</s-carousel-item>
+          </s-carousel>
+        </div>
+      </div>
     </section>
 
     <section class="dev-demo-col">
@@ -918,6 +945,8 @@
   import SAccordionItem from './packages/accordion-item'
   import SRadioButton from './packages/radio-button'
   import SCheckboxButton from './packages/checkbox-button'
+  import SCarousel from './packages/carousel'
+  import SCarouselItem from './packages/carousel-item'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -941,7 +970,8 @@
       SImage,
       STabs, STab, STabItem,
       SProgress,
-      SAccordion, SAccordionItem
+      SAccordion, SAccordionItem,
+      SCarousel, SCarouselItem,
     },
     data: () => ({
       avatar1, avatar2,
@@ -1012,7 +1042,14 @@
         {color: '#6f7ad3', percentage: 100}
       ],
       activeAccordion: ['panel1'],
-      activeAccordion2: 'panel2'
+      activeAccordion2: 'panel2',
+      carouselConfig: {
+        autoplay: {
+          delay: 3000,
+          pauseOnMouseEnter: true,
+        },
+        loop: true
+      },
     }),
     methods: {
       changeBadgeValue(value) {
@@ -1076,6 +1113,7 @@
 
     .dev-demo-col {
       margin 16px
+      min-width: 0;
 
       .demo-block {
         h2 {
@@ -1182,6 +1220,40 @@
 
       * {
         padding 4px
+      }
+    }
+  }
+
+  .demo-carousel {
+    & .sui-carousel__item {
+      height 180px
+      line-height @height
+      color #ffffff
+      text-align center
+
+      &:nth-child(odd) {
+        background-color #364d79
+      }
+      &:nth-child(2n) {
+        background-color #99a9bf
+      }
+    }
+  }
+
+  .demo-carousel-vertical {
+    height 180px
+
+    & .sui-carousel__item {
+      height 180px
+      line-height @height
+      color #ffffff
+      text-align center
+
+      &:nth-child(odd) {
+        background-color #364d79
+      }
+      &:nth-child(2n) {
+        background-color #99a9bf
       }
     }
   }
