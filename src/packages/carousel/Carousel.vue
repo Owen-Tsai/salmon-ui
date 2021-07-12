@@ -75,10 +75,10 @@
 
   import {
     CarouselArrowOption,
-    AutoPlayOption,
     CarouselTransition,
     CarouselDirection,
-    CarouselSlidesPerViewOption
+    CarouselSlidesPerViewOption,
+    IAutoplayConfig
   } from './carousel.type'
 
   export default defineComponent({
@@ -99,9 +99,14 @@
         type: Boolean,
         default: false
       },
-      autoplay: {
-        type: [Boolean, Object] as PropType<AutoPlayOption>,
-        default: false
+      autoplay: Boolean,
+      duration: {
+        type: Number,
+        default: 3000
+      },
+      pauseOnMouseEnter: {
+        type: Boolean,
+        default: true
       },
       direction: {
         type: String as PropType<CarouselDirection>,
@@ -154,6 +159,13 @@
             (slides.value && activeIndex.value < slides.value?.length - 1)
           )
       })
+      const autoplayConfig = computed(() => {
+        return {
+          delay: props.duration,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: props.pauseOnMouseEnter
+        } as IAutoplayConfig
+      })
 
       // methods
       const toPrevSlide = () => {
@@ -173,7 +185,7 @@
             rootEl.value as HTMLElement,
             {
               loop: props.loop,
-              autoplay: props.autoplay,
+              autoplay: props.autoplay ? autoplayConfig.value : false,
               direction: props.direction,
               initialSlide: props.initialIndex,
               effect: props.transition,

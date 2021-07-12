@@ -5,6 +5,6 @@ export type CarouselSlidesPerViewOption = 'auto' | number
 
 export interface IAutoplayConfig {
   delay?: number,
-  pauseOnMouseEnter?: boolean
+  pauseOnMouseEnter?: boolean,
+  disableOnInteraction?: boolean
 }
-export type AutoPlayOption = boolean | IAutoplayConfig
