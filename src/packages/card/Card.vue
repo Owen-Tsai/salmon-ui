@@ -1,5 +1,7 @@
 <template>
-  <div class="sui-card" :class="{ 'is-hoverable': hoverable }">
+  <div :class="[
+    'sui-card', `sui-card--shadow-${shadow}`
+  ]">
     <div
       v-if="$slots.header || title"
       class="sui-card__header"
@@ -21,13 +23,24 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import {
+    defineComponent,
+    PropType
+  } from 'vue'
+
+  type CardShadowOption = 'hover' | 'never' | 'always'
 
   export default defineComponent({
     name: 'SCard',
     props: {
       title: String,
-      hoverable: Boolean,
+      shadow: {
+        type: String as PropType<CardShadowOption>,
+        default: 'never',
+        validator: (v: string) => {
+          return ['hover', 'never', 'always'].includes(v)
+        }
+      },
       bodyStyle: {
         type: Object,
         default: { padding: '24px' } as Object

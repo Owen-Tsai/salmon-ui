@@ -13,7 +13,10 @@
   &.is-borderless {
     border: none
   }
-  &.is-hoverable:hover {
+  ^[0]&--shadow-hover:hover {
+    box-shadow: box-shadow--normal
+  }
+  ^[0]&--shadow-always {
     box-shadow: box-shadow--normal
   }
 }

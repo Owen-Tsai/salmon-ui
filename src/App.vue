@@ -487,7 +487,7 @@
       <div class="demo-block">
         <h2>Cards</h2>
         <div class="demo-content">
-          <s-card hoverable class="demo-card">
+          <s-card shadow="hover" class="demo-card">
             <template #header>
               <div class="demo-card-header">
                 <h3>穿搭指南</h3>
