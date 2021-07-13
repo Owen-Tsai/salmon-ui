@@ -41,7 +41,7 @@
     </span>
 
     <span class="sui-checkbox__label">
-      <slot>{{ value }}</slot>
+      <slot></slot>
     </span>
   </label>
 </template>
