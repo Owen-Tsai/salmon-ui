@@ -36,7 +36,7 @@ const useCheckbox = (props, emit) => {
   }
 
   // data
-  const selfModel = ref(false)
+  const selfModel = ref<CheckboxModel>(false)
   const exceedLimit = ref(false)
 
   // computed
@@ -69,8 +69,9 @@ const useCheckbox = (props, emit) => {
 
         exceedLimit.value === false && checkboxGroup.changeEvent(val)
       } else {
+        console.log('logged', val)
         emit('update:modelValue', val)
-        selfModel.value = val as boolean
+        selfModel.value = val as any
       }
     }
   })

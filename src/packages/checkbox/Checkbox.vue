@@ -40,7 +40,10 @@
       >
     </span>
 
-    <span class="sui-checkbox__label">
+    <span
+      class="sui-checkbox__label"
+      v-if="$slots.default"
+    >
       <slot></slot>
     </span>
   </label>
