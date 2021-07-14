@@ -730,6 +730,10 @@
             <s-checkbox value="da-mao">大毛毛</s-checkbox>
             <s-checkbox value="da-cai">大蔡蔡</s-checkbox>
           </s-checkbox-group>
+          <s-checkbox v-model="checkbox3" value="mao">毛毛</s-checkbox>
+          <s-checkbox v-model="checkbox3" value="cai">蔡蔡</s-checkbox>
+          <s-checkbox v-model="checkbox3" value="da-mao">大毛毛</s-checkbox>
+          <s-checkbox v-model="checkbox3" value="da-cai">大蔡蔡</s-checkbox>
           <p>测试：选中的值包含{{ checkbox3 }}</p>
           <s-checkbox
             :indeterminate="checkboxIndeterminate"
@@ -906,6 +910,55 @@
           </s-button-group>
         </div>
       </div>
+
+      <div class="demo-block">
+        <h2>Table</h2>
+        <div class="demo-content">
+          <s-table
+            class="demo-m-y"
+            :headers="headers"
+            :data="tableData"
+          >
+            <template v-slot:item-price="{ item }">
+              {{ `￥${item.price}.00` }}
+            </template>
+          </s-table>
+          <s-table
+            class="demo-m-y"
+            :headers="headers"
+            :data="tableData"
+            border stripe
+          ></s-table>
+          <s-table
+            class="demo-m-y"
+            :headers="[
+              { label: '', value: 's-table-expand' },
+              ...headers,
+            ]"
+            :data="tableData"
+            expandable
+            row-pk-field="index"
+            v-model:expanded-rows="expandedRows"
+          >
+            <template v-slot:expanded="{ item }">
+              {{ item }}
+            </template>
+          </s-table>
+          <p>expanded rows are: {{ expandedRows }}</p>
+          <s-table
+            class="demo-m-y"
+            :headers="[
+              { label: '', value: 's-table-select' },
+              ...headers,
+            ]"
+            selectable
+            :data="tableData"
+            row-pk-field="index"
+            v-model:selected-rows="selectedRows"
+          ></s-table>
+          <p>selected rows are: {{ selectedRows }}</p>
+        </div>
+      </div>
     </section>
   </main>
 </template>
@@ -947,6 +1000,7 @@
   import SCheckboxButton from './packages/checkbox-button'
   import SCarousel from './packages/carousel'
   import SCarouselItem from './packages/carousel-item'
+  import STable from './packages/table'
 
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
@@ -972,6 +1026,7 @@
       SProgress,
       SAccordion, SAccordionItem,
       SCarousel, SCarouselItem,
+      STable
     },
     data: () => ({
       avatar1, avatar2,
@@ -1050,6 +1105,22 @@
         },
         loop: true
       },
+
+      // headers
+      headers: [
+        { label: 'No.',  value: 'index' },
+        { label: 'Name',  value: 'name' },
+        { label: 'Price',  value: 'price' },
+      ],
+      tableData: [
+        { index: '01', name: 'Legend of Zelda: Breath of the Wild', price: 425.00 },
+        { index: '02', name: 'World of Warcraft', price: 78.00 },
+        { index: '03', name: 'Fallout 4', price: 199.00 },
+        { index: '04', name: 'Elder Scroll: Skyrim', price: 198.00 },
+        { index: '05', name: 'Final Fantasy 6', price: 99.00 },
+      ],
+      expandedRows: [],
+      selectedRows: []
     }),
     methods: {
       changeBadgeValue(value) {
@@ -1064,7 +1135,7 @@
           this.popperContent === '970212' ? '961127' : '970212'
       },
       handleCheckAllChange(val) {
-        this.checkbox3 = val ? ['mao', 'cai', 'da-mao', 'da-cai'] : [];
+        this.checkbox3 = val ? ['mao', 'cai', 'da-mao', 'da-cai'] : []
         this.checkboxIndeterminate = false
       },
       handleCheckboxChange(val) {

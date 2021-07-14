@@ -1,0 +1,76 @@
+.sui-table {
+  min-width 100%
+  border-collapse collapse
+  border-spacing 0
+  table-layout fixed
+
+  th {
+    border-bottom 1px solid color--border
+    margin 0
+    padding 8px 16px
+    font-size font-size--text.medium
+    font-weight 700
+    color color--text.normal
+    overflow hidden
+
+    &.sui-table__extra-col {
+      padding 8px
+
+      .sui-checkbox {
+        padding-right 0
+      }
+    }
+  }
+
+  td {
+    padding 8px 16px
+    font-size: font-size--text.medium
+    color: color--text.normal
+    overflow hidden
+
+    .sui-icon {
+      transition all .2s
+      font-size 16px
+      cursor pointer
+
+      &.is-expanded {
+        transform rotate(90deg)
+      }
+    }
+
+    &.sui-table__extra-col {
+      padding 8px
+      line-height 1
+
+      .sui-checkbox {
+        padding-right 0
+      }
+    }
+  }
+
+  tbody tr:not(.sui-table__expand-row) {
+    border-bottom 1px solid color--border
+    transition all .15s
+
+    &:hover {
+      background-color color--bg.dark
+    }
+  }
+
+  ^[0]__expand-row {
+    background-color color--bg.normal
+  }
+
+  &.is-bordered {
+    td, th {
+      border 1px solid color--border
+    }
+  }
+  &.is-striped {
+    tbody tr:not(.sui-table__expand-row) {
+      &:nth-child(2n) {
+        background-color colors--primary.x-light
+      }
+    }
+  }
+}
