@@ -57,7 +57,7 @@
   export default defineComponent({
     name: 'SCheckbox',
     props: {
-      modelValue: [ Boolean, Number, String ],
+      modelValue: [ Boolean, Number, String, Array ],
       value: [ Boolean, Number, String ],
       checkedValue: [ String, Number ],
       uncheckedValue: [ String, Number ],
