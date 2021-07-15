@@ -10,7 +10,7 @@
     padding 8px 16px
     font-size font-size--text.medium
     font-weight 700
-    color color--text.normal
+    color: color--text.normal
     overflow hidden
 
     &.sui-table__extra-col {
@@ -19,6 +19,10 @@
       .sui-checkbox {
         padding-right 0
       }
+    }
+
+    &.is-sortable {
+      cursor pointer
     }
   }
 
@@ -71,6 +75,25 @@
       &:nth-child(2n) {
         background-color colors--primary.x-light
       }
+    }
+  }
+
+  .sui-table__sort {
+    opacity 0
+    outline none
+    border none
+    background-color transparent
+    color color--text.normal
+    padding 0 4px
+    line-height 1
+    transition all .15s
+
+    &.is-shown {
+      opacity 0.35
+    }
+    &.is-activated {
+      opacity 1
+      color: colors--primary.normal
     }
   }
 }

@@ -6,6 +6,11 @@ import {
 import { generateId } from '@/utils/utils'
 import throwError from '@/utils/class.error'
 
+import {
+  ITableSortingHeader,
+  ITableHeader
+} from '@/packages/table/table.type'
+
 export const useExpansion = (emit) => {
   const expanded = ref<any[]>([])
 
@@ -76,5 +81,83 @@ export const useSelection = (props, emit) => {
     isAllSelected,
     handleSelectChange,
     handleAllSelectChange
+  }
+}
+
+export const useSorting = (props) => {
+  const headersHovering = ref<boolean[]>(new Array(props.headers.length).fill(false))
+  const activatedSortingHeader = ref<ITableSortingHeader>()
+  const sortedData = ref([...props.data])
+
+  const handleThMouseEnter = (item, i) => {
+    if (!item.sortable) return
+    headersHovering.value[i] = true
+  }
+  const handleThMouseLeave = (item, i) => {
+    if (!item.sortable) return
+    headersHovering.value[i] = false
+  }
+  const isHeaderSortingActivated = (item, i) => {
+    if (activatedSortingHeader.value?.index === i) {
+      return activatedSortingHeader.value
+    }
+
+    return false
+  }
+  const handleThClick = (item, i) => {
+    if (!item.sortable) return
+    const e = isHeaderSortingActivated(item, i)
+
+    if (e) {
+      if (e.activated) {
+
+        e.order = (e.order === 'ascending' ? 'descending' : 'none')
+
+        if (e.order === 'none') {
+          e.activated = false
+        }
+
+      } else {
+        e.activated = true
+        e.order = 'ascending'
+      }
+    } else {
+      activatedSortingHeader.value = {
+        index: i,
+        activated: true,
+        order: 'ascending'
+      }
+    }
+
+    doSort(e ? e.order : 'ascending', item)
+  }
+
+  const doSort = (
+    order: 'ascending' | 'descending' | 'none',
+    headerItem: ITableHeader
+  ) => {
+    if (order === 'none') {
+      sortedData.value = [...props.data]
+    } else {
+      sortedData.value = sortedData.value.sort(
+        (a, b) => {
+          a = a[headerItem.value]
+          b = b[headerItem.value]
+
+          return (a === b ? 0 : a > b ? 1 : -1) * (order === 'ascending' ? 1 : -1)
+        }
+      )
+    }
+  }
+
+  return {
+    sortedData,
+    headersHovering,
+    activatedSortingHeader,
+
+    isHeaderSortingActivated,
+    handleThMouseEnter,
+    handleThMouseLeave,
+    handleThClick
   }
 }

@@ -4,3 +4,9 @@ export interface ITableHeader {
   sortable?: boolean,
   align?: string
 }
+
+export interface ITableSortingHeader {
+  index: number,
+  activated: boolean,
+  order: 'ascending' | 'descending' | 'none'
+}

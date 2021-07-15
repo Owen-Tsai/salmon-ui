@@ -957,6 +957,24 @@
             v-model:selected-rows="selectedRows"
           ></s-table>
           <p>selected rows are: {{ selectedRows }}</p>
+          <s-table
+            class="demo-m-y"
+            :headers="[
+              { label: 'No.',  value: 'index' },
+              { label: 'Name',  value: 'name' },
+              { label: 'Price',  value: 'price', sortable: true },
+            ]"
+            :data="tableData"
+          ></s-table>
+          <s-table
+            class="demo-m-y"
+            :headers="[
+              { label: 'No.',  value: 'index' },
+              { label: 'Name',  value: 'name', sortable: true },
+              { label: 'Price',  value: 'price', sortable: true },
+            ]"
+            :data="tableData"
+          ></s-table>
         </div>
       </div>
     </section>

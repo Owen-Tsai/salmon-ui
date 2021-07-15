@@ -16,8 +16,12 @@
         :class="{
           'sui-table__extra-col':
             (item.value === 's-table-select' || item.value === 's-table-expand') ?
-              '20px' : 'auto'
+              '20px' : 'auto',
+          'is-sortable': item.sortable
         }"
+        @click="handleThClick(item, i)"
+        @mouseenter="handleThMouseEnter(item, i)"
+        @mouseleave="handleThMouseLeave(item, i)"
       >
         <template
           v-if="item.value === 's-table-select'"
@@ -29,13 +33,25 @@
           ></s-checkbox>
         </template>
         <template v-else>{{ item.label }}</template>
+
+        <template v-if="item.sortable">
+          <button :class="[
+            'sui-table__sort',
+            {
+              'is-shown': headersHovering[i],
+              'is-activated': showSortingIcon(item, i)
+            }
+          ]">
+            <s-icon :name="sortingIconName(item, i)" stroke-width="3"></s-icon>
+          </button>
+        </template>
       </th>
     </tr>
     </thead>
 
     <tbody>
     <template
-      v-for="(item, i) in data"
+      v-for="(item, i) in sortedData"
       :key="`col-${i}`"
     >
       <tr @click="handleRowClick(item)">
@@ -89,7 +105,7 @@
 <script lang="ts">
   import {
     defineComponent,
-    PropType,
+    PropType
   } from 'vue'
 
   import {
@@ -101,7 +117,8 @@
 
   import {
     useExpansion,
-    useSelection
+    useSelection,
+    useSorting
   } from '@/utils/compositions/table'
 
   import throwError from '@/utils/class.error'
@@ -143,6 +160,16 @@
         toggleRowExpansion
       } = useExpansion(emit)
 
+      const {
+        sortedData,
+        headersHovering,
+        activatedSortingHeader,
+        isHeaderSortingActivated,
+        handleThClick,
+        handleThMouseEnter,
+        handleThMouseLeave
+      } = useSorting(props)
+
       const handleRowClick = (row) => {
         emit('click:row', row)
 
@@ -169,16 +196,42 @@
         return false
       }
 
+      const showSortingIcon = (item, i) => {
+        const e = isHeaderSortingActivated(item, i)
+        return e && e.activated
+      }
+
+      const sortingIconName = (item, i) => {
+        const e = isHeaderSortingActivated(item, i)
+
+        if (e && e.order === 'descending') {
+          return 'arrow-down'
+        } else {
+          return 'arrow-up'
+        }
+      }
+
       return {
+        sortedData,
+
         selected,
         randomName,
+        headersHovering,
+        activatedSortingHeader,
+        showSortingIcon,
+        sortingIconName,
 
         isRowExpanded,
         isAllSelected,
+        isHeaderSortingActivated,
 
         handleRowClick,
         handleSelectChange,
         handleAllSelectChange,
+
+        handleThClick,
+        handleThMouseEnter,
+        handleThMouseLeave,
 
         toggleRowExpansion,
         renderExtraCol,
