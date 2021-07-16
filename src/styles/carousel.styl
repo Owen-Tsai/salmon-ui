@@ -88,6 +88,11 @@
     opacity 1
   }
 
+  &:focus-visible {
+    background-color #ffffff
+    color color--text.normal
+  }
+
   ^[0]&--left {
     left 16px
   }
@@ -104,7 +109,7 @@
   transform translateX(-50%)
 
   .sui-carousel__indicator {
-    height 2px
+    height 3px
     width 16px
     border none
     outline none
@@ -112,6 +117,7 @@
     opacity 0.6
     padding 0
     cursor pointer
+    border-radius border-radius--normal
     transition all .3s
 
     &:not(:last-child) {
@@ -120,6 +126,14 @@
     &.is-active {
       width 24px
       opacity 1
+
+      &:focus-visible {
+        opacity: 1
+      }
+    }
+    &:focus-visible, &:hover {
+      opacity 0.85
+      transform scale(1, 1.5)
     }
   }
 
@@ -131,9 +145,10 @@
     bottom auto
     left auto
     transform translateY(-50%)
+    transform-origin right
 
     .sui-carousel__indicator {
-      width: 2px
+      width: 3px
       height 14px
 
       &:not(:last-child) {
@@ -142,8 +157,17 @@
       }
       &.is-active {
         height 20px
-        width 2px
+        width 3px
         opacity 1
+
+        &:focus-visible {
+          opacity 1
+          transform scale(1.5, 1)
+        }
+      }
+      &:focus-visible, &:hover {
+        opacity 0.85
+        transform scale(1.5, 1)
       }
     }
   }

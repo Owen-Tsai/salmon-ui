@@ -15,7 +15,9 @@
     >
       <button
         v-show="showLeftArrow"
+        :disabled="!showLeftArrow"
         class="sui-carousel__arrow sui-carousel__arrow--left"
+        :class="customLeftArrowClass"
         @click="toPrevSlide"
       >
         <s-icon name="chevron-left"></s-icon>
@@ -27,7 +29,9 @@
     >
       <button
         v-show="showRightArrow"
+        :disabled="!showRightArrow"
         class="sui-carousel__arrow sui-carousel__arrow--right"
+        :class="customRightArrowClass"
         @click="toNextSlide"
       >
         <s-icon name="chevron-right"></s-icon>
@@ -134,7 +138,9 @@
       spaceBetween: {
         type: Number,
         default: 0
-      }
+      },
+      customLeftArrowClass: String,
+      customRightArrowClass: String
     },
     emits: ['change'],
     setup(props, { emit }) {
