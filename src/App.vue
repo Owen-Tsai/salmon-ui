@@ -603,6 +603,7 @@
           <s-carousel
             class="demo-carousel demo-m-y"
             autoplay
+            :allow-touch-move="false"
           >
             <s-carousel-item
               v-for="i in 4" :key="i"
@@ -959,11 +960,7 @@
           <p>selected rows are: {{ selectedRows }}</p>
           <s-table
             class="demo-m-y"
-            :headers="[
-              { label: 'No.',  value: 'index' },
-              { label: 'Name',  value: 'name' },
-              { label: 'Price',  value: 'price', sortable: true },
-            ]"
+            :headers="headers"
             :data="tableData"
           ></s-table>
           <s-table
@@ -1128,7 +1125,7 @@
       headers: [
         { label: 'No.',  value: 'index' },
         { label: 'Name',  value: 'name' },
-        { label: 'Price',  value: 'price' },
+        { label: 'Price',  value: 'price', sortable: true },
       ],
       tableData: [
         { index: '01', name: 'Legend of Zelda: Breath of the Wild', price: 425.00 },

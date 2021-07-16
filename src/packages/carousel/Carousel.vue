@@ -139,6 +139,10 @@
         type: Number,
         default: 0
       },
+      allowTouchMove: {
+        type: Boolean,
+        default: true
+      },
       customLeftArrowClass: String,
       customRightArrowClass: String
     },
@@ -200,6 +204,7 @@
               slidesPerView: props.slidesPerView,
               resistanceRatio: 0,
               threshold: 4,
+              allowTouchMove: props.allowTouchMove,
               on: {
                 slideChange: (swiper: Swiper) => {
                   activeIndex.value = swiper.realIndex
