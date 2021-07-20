@@ -629,12 +629,11 @@
           <s-button class="demo-m-a" icon="heart">爱你</s-button>
           <s-button class="demo-m-a" type="outlined">outlined 按钮</s-button>
           <s-button class="demo-m-a" type="text">文字按钮</s-button>
-
+          <br>
           <s-button class="demo-m-a" danger type="primary">危险按钮</s-button>
-          <s-button class="demo-m-a" danger icon="heart">爱你</s-button>
           <s-button class="demo-m-a" danger type="outlined">outlined 危险</s-button>
           <s-button class="demo-m-a" danger type="text">危险文字</s-button>
-
+          <br>
           <s-button class="demo-m-a" type="primary" shape="round">圆角按钮</s-button>
           <s-button class="demo-m-a" type="primary" shape="round">
             <s-icon name="heart"></s-icon>
@@ -933,11 +932,12 @@
           <s-table
             class="demo-m-y"
             :headers="[
+              { label: '', value: 's-table-select' },
               { label: '', value: 's-table-expand' },
               ...headers,
             ]"
             :data="tableData"
-            expandable
+            expandable selectable
             row-pk-field="index"
             v-model:expanded-rows="expandedRows"
           >

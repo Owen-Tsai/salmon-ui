@@ -1,10 +1,10 @@
 
 make-button(color) {
   &:not(.is-disabled):not(.is-loading):hover {
-    border 1px solid color.normal
+    background-color color.x-light
     color color.normal
   }
-  &:not(.is-disabled):not(.is-loading):focus {
+  &:not(.is-disabled):not(.is-loading):focus-visible {
     border 1px solid color.normal
     color color.normal
     box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
@@ -26,7 +26,7 @@ make-primary-button(color) {
     background-color color.light
     border: 1px solid color.light
   }
-  &:not(.is-disabled):not(.is-loading):focus {
+  &:not(.is-disabled):not(.is-loading):focus-visible {
     border: 1px solid color.light
     background-color color.light
     color #ffffff
@@ -49,7 +49,7 @@ make-outlined-button(color) {
     background-color color.normal
     border: 1px solid color.normal
   }
-  &:not(.is-disabled):not(.is-loading):focus {
+  &:not(.is-disabled):not(.is-loading):focus-visible {
     border: 1px solid color.light
     color color.light
     box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
@@ -63,16 +63,20 @@ make-outlined-button(color) {
 
 make-text-button(color) {
   border 0 !important
-  background-color transparent !important
+  background-color transparent
   color: color.normal
 
   &:not(.is-disabled):not(.is-loading):hover {
     color color.light
+    background-color color--bg.normal
   }
-  &:not(.is-disabled):not(.is-loading):focus {
+  &:not(.is-disabled):not(.is-loading):focus-visible {
+    color color.light
     box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+    background-color color--bg.normal
   }
   &:not(.is-disabled):not(.is-loading):active {
     color color.dark
+    background-color color.x-light
   }
 }
