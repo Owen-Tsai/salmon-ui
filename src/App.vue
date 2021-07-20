@@ -1128,11 +1128,11 @@
         { label: 'Price',  value: 'price', sortable: true },
       ],
       tableData: [
-        { index: '01', name: 'Legend of Zelda: Breath of the Wild', price: 425.00 },
-        { index: '02', name: 'World of Warcraft', price: 78.00 },
-        { index: '03', name: 'Fallout 4', price: 199.00 },
-        { index: '04', name: 'Elder Scroll: Skyrim', price: 198.00 },
-        { index: '05', name: 'Final Fantasy 6', price: 99.00 },
+        { id: 'a', index: '01', name: 'Legend of Zelda: Breath of the Wild', price: 425.00 },
+        { id: 'a', index: '02', name: 'World of Warcraft', price: 78.00 },
+        { id: 'a', index: '03', name: 'Fallout 4', price: 199.00 },
+        { id: 'a', index: '04', name: 'Elder Scroll: Skyrim', price: 198.00 },
+        { id: 'a', index: '05', name: 'Final Fantasy 6', price: 99.00 },
       ],
       expandedRows: [],
       selectedRows: []

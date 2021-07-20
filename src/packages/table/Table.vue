@@ -42,7 +42,7 @@
               'is-activated': showSortingIcon(item, i)
             }
           ]">
-            <s-icon :name="sortingIconName(item, i)" stroke-width="3"></s-icon>
+            <s-icon :name="getSortingIconName(item, i)" stroke-width="3"></s-icon>
           </button>
         </template>
       </th>
@@ -78,15 +78,19 @@
         </td>
 
         <!-- normal cols -->
-        <td
+        <template
           v-for="(value, key) in item"
           :key="`cell-${key}`"
         >
-          <slot
-            :item="item"
-            :name="`item-${key}`"
-          >{{ value }}</slot>
-        </td>
+          <td
+            v-if="isColEnabled(key)"
+          >
+            <slot
+              :item="item"
+              :name="`item-${key}`"
+            >{{ value }}</slot>
+          </td>
+        </template>
       </tr>
 
       <tr
@@ -105,7 +109,8 @@
 <script lang="ts">
   import {
     defineComponent,
-    PropType
+    PropType,
+    computed
   } from 'vue'
 
   import {
@@ -167,7 +172,9 @@
         isHeaderSortingActivated,
         handleThClick,
         handleThMouseEnter,
-        handleThMouseLeave
+        handleThMouseLeave,
+        showSortingIcon,
+        getSortingIconName
       } = useSorting(props)
 
       const handleRowClick = (row) => {
@@ -196,30 +203,32 @@
         return false
       }
 
-      const showSortingIcon = (item, i) => {
-        const e = isHeaderSortingActivated(item, i)
-        return e && e.activated
-      }
-
-      const sortingIconName = (item, i) => {
-        const e = isHeaderSortingActivated(item, i)
-
-        if (e && e.order === 'descending') {
-          return 'arrow-down'
-        } else {
-          return 'arrow-up'
+      const headerKeys = computed(() => {
+        const arr: any[] = []
+        if (props.headers) {
+          props.headers.forEach(e => {
+            arr.push(e.value)
+          })
         }
+
+        return arr
+      })
+
+      const isColEnabled = (key) => {
+        return headerKeys.value.includes(key)
       }
 
       return {
         sortedData,
+        headerKeys,
+        isColEnabled,
 
         selected,
         randomName,
         headersHovering,
         activatedSortingHeader,
         showSortingIcon,
-        sortingIconName,
+        getSortingIconName,
 
         isRowExpanded,
         isAllSelected,

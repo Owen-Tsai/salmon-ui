@@ -150,6 +150,21 @@ export const useSorting = (props) => {
     }
   }
 
+  const showSortingIcon = (item, i) => {
+    const e = isHeaderSortingActivated(item, i)
+    return e && e.activated
+  }
+
+  const getSortingIconName = (item, i) => {
+    const e = isHeaderSortingActivated(item, i)
+
+    if (e && e.order === 'descending') {
+      return 'arrow-down'
+    } else {
+      return 'arrow-up'
+    }
+  }
+
   return {
     sortedData,
     headersHovering,
@@ -158,6 +173,9 @@ export const useSorting = (props) => {
     isHeaderSortingActivated,
     handleThMouseEnter,
     handleThMouseLeave,
-    handleThClick
+    handleThClick,
+
+    showSortingIcon,
+    getSortingIconName
   }
 }
