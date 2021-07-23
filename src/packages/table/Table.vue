@@ -67,7 +67,7 @@
         </td>
         <!-- extra col for selection checkbox -->
         <td
-          v-if="selectable && renderExtraCol('select')"
+          v-if="selectable"
           class="sui-table__extra-col"
         >
           <s-checkbox

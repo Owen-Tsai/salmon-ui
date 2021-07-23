@@ -7,46 +7,49 @@ color--success = #06ba63
 color--error = #E63333
 color--warning = #FFBE4D
 
-color--text = {
-  normal: #4a4a68,
-  dark: #14142b,
-  light: #8e90ad,
+colors--text = {
+  normal: #222B45,
+  secondary: #8F9BB3,
+  disabled: rgba(#8F9BB3, 0.5),
   vert: #f7f7fc
 }
 
-color--bg = {
-  normal: #f6f5fa,
+colors--surface = {
+  disabled: #f6f5fa,
   dark: #e8e8e8,
-  light: #fcfcfc
+  normal: #EDF1F7,
 }
 
 colors--primary = {
   normal: color--primary,
   x-light: lighten(color--primary, 90%),
-  //light: #4a7ff0,
-  light: lighten(color--primary, 15%),
-  dark: darken(color--primary, 12%)
+  light: lighten(color--primary, 16%),
+  dark: darken(color--primary, 14%)
 }
 
 colors--success = {
   normal: color--success,
   x-light: lighten(color--success, 90%),
-  light: lighten(color--success, 15%),
-  dark: darken(color--success, 12%)
+  light: lighten(color--success, 16%),
+  dark: darken(color--success, 14%)
 }
 
 colors--error = {
   normal: color--error,
   x-light: lighten(color--error, 90%),
-  light: lighten(color--error, 15%),
-  dark: darken(color--error, 12%)
+  light: lighten(color--error, 16%),
+  dark: darken(color--error, 14%)
 }
 
 colors--warning = {
   normal: color--warning,
   x-light: lighten(color--warning, 90%),
-  light: lighten(color--warning, 15%),
-  dark: darken(color--warning, 12%),
+  light: lighten(color--warning, 16%),
+  dark: darken(color--warning, 14%),
+}
+
+colors--neutral = {
+
 }
 
 typesMap = {
@@ -81,4 +84,4 @@ border-radius--large = 8px
 box-shadow--normal = 0 4px 8px rgba(0, 0, 0, 16%)
 
 box-shadow--elevation = 0 3px 6px -4px rgba(0, 0, 0, 12%), 0 6px 16px 0 rgba(0, 0, 0, 8%), 0 9px 28px 8px rgba(0, 0, 0, 5%)
-box-shadow--primary = 0 0 0 0.25rem rgba(colors--primary.light, 0.25)
+box-shadow--primary = 0 0 0 0.25rem rgba(colors--surface.normal, 1)

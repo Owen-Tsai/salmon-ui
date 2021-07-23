@@ -1,7 +1,7 @@
 .sui-checkbox {
   box-sizing border-box
   font-size font-size--text.medium
-  color color--text.normal
+  color colors--text.normal
   line-height 1.5
   cursor pointer
   display inline-flex
@@ -68,11 +68,11 @@
   &.is-disabled {
     cursor not-allowed
     & ^[0]__input ^[0]__inner {
-      background-color: color--bg.normal !important
+      background-color: colors--surface.normal !important
       border-color: color--border !important
     }
     & ^[0]__label {
-      color color--text.light
+      color colors--text.secondary
     }
 
     &.is-checked {

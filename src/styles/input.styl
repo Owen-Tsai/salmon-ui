@@ -11,7 +11,7 @@
 
   &__input {
     display inline-block
-    color color--text.normal
+    color colors--text.normal
     background-color #ffffff
     border 1px solid color--border
     border-radius border-radius--normal
@@ -33,7 +33,7 @@
     }
 
     &[disabled] {
-      background-color color--bg.normal
+      background-color colors--surface.normal
       cursor not-allowed
     }
   }
@@ -74,7 +74,7 @@
       transition color .3s
 
       &:hover {
-        color color--text.normal
+        color colors--text.normal
       }
     }
 
@@ -108,10 +108,10 @@
   }
 
   .sui-input__prepend, .sui-input__append {
-    background-color color--bg.dark
+    background-color colors--surface.dark
     padding 0 12px
     border 1px solid color--border
-    color color--text.normal
+    color colors--text.normal
     box-sizing border-box
     center-el()
 
