@@ -1,80 +1,93 @@
 // colors
-color--placeholder = #a0a3bd
-color--border = #d9dbe9
-
 color--primary = #2258e3
 color--success = #06ba63
 color--error = #E63333
 color--warning = #FFBE4D
 
-colors--primary = {
-  _100: #e6f0ff,
-  _200: #a1c5ff,
-  _300: #77a5fc,
-  _400: #4a7ff0,
-  _500: #2258e3,
-  _600: #133dbd,
-  _700: #082696,
-  _800: #001570,
-  _900: #000b4a
-}
+colors--primary = #e6f0ff,
+  #a1c5ff,
+  #77a5fc,
+  #4a7ff0,
+  #2258e3,
+  #133dbd,
+  #082696,
+  #001570,
+  #000b4a
 
-colors--success = {
-  _100: #d5eddf,
-  _200: #72e0a0,
-  _300: #4ad488,
-  _400: #26c774,
-  _500: #06ba63,
-  _600: #009451,
-  _700: #006e40,
-  _800: #00472c,
-  _900: #002116
-}
+colors--success = #d5eddf,
+  #72e0a0,
+  #4ad488,
+  #26c774,
+  #06ba63,
+  #009451,
+  #006e40,
+  #00472c,
+  #002116
 
-colors--error = {
-  _100: #ffe9e6,
-  _200: #ffbab3,
-  _300: #ff928a,
-  _400: #f2615c,
-  _500: #e63333,
-  _600: #bf2126,
-  _700: #99121b,
-  _800: #730813,
-  _900: #4d050e
-}
+colors--error = #ffe9e6,
+  #ffbab3,
+  #ff928a,
+  #f2615c,
+  #e63333,
+  #bf2126,
+  #99121b,
+  #730813,
+  #4d050e
 
-colors--warning = {
-  _100: #fffbf0,
-  _200: #fff0c7,
-  _300: #ffe29e,
-  _400: #ffd175,
-  _500: #ffbe4d,
-  _600: #d99836,
-  _700: #b37524,
-  _800: #8c5515,
-  _900: #663a0e
-}
+colors--warning = #fffbf0,
+  #fff0c7,
+  #ffe29e,
+  #ffd175,
+  #ffbe4d,
+  #d99836,
+  #b37524,
+  #8c5515,
+  #663a0e
 
-colors--text = {
-  normal: #222B45,
-  secondary: #8F9BB3,
-  disabled: rgba(#8F9BB3, 0.5),
-  vert: #f7f7fc
-}
+colors--neutral = #ffffff,
+  #fafafa,
+  #f5f5f5,
+  #eaeaea,
+  #d9d9d9,
+  #bfbfbf,
+  #8c8c8c,
+  #595959,
+  #434343,
+  #262626,
+  #1f1f1f,
+  #141414,
+  #000000
 
-colors--surface = {
-  disabled: #f6f5fa,
-  dark: #e8e8e8,
-  normal: #EDF1F7,
-}
+color--primary-lighter = colors--primary[0]
+color--success-lighter = colors--success[0]
+color--warning-lighter = colors--warning[0]
+color--error-lighter = colors--error[0]
 
-colors--neutral = {
-  normal: #222b45,
-  light: #8f9bb3,
-  lightTransparent: rgba(#8f9bb3, 0.5),
-  lighter: #f6f5fa,
+color--primary-light = colors--primary[4]
+color--success-light = colors--success[4]
+color--warning-light = colors--warning[4]
+color--error-light = colors--error[4]
 
-}
+color--primary-dark = colors--primary[6]
+color--success-dark = colors--success[6]
+color--warning-dark = colors--warning[6]
+color--error-dark = colors--error[6]
+
+color--primary-darker = colors--primary[8]
+color--success-darker = colors--success[8]
+color--warning-darker = colors--warning[8]
+color--error-darker = colors--error[8]
+
+color--text = colors--neutral[9]
+color--text-light = colors--neutral[6]
+
+color--disabled = colors--neutral[5]
+color--border = colors--neutral[4]
+color--divider = colors--neutral[3]
+
+color--surface = colors--neutral[2]
+color--surface-light = colors--neutral[1]
+color--surface-dark = colors--neutral[3]
 
 typesMap = {
   'default': colors--primary,
@@ -108,4 +121,4 @@ border-radius--large = 8px
 box-shadow--normal = 0 4px 8px rgba(0, 0, 0, 16%)
 
 box-shadow--elevation = 0 3px 6px -4px rgba(0, 0, 0, 12%), 0 6px 16px 0 rgba(0, 0, 0, 8%), 0 9px 28px 8px rgba(0, 0, 0, 5%)
-box-shadow--primary = 0 0 0 0.25rem rgba(colors--surface.normal, 1)
+box-shadow--primary = 0 0 0 0.25rem rgba(color--primary, 0.2)

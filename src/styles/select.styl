@@ -25,7 +25,7 @@
     list-style-type none
     position relative
     font-size font-size--text.medium
-    color colors--text.normal
+    color color--text
     padding 8px 12px
     cursor pointer
     outline none
@@ -37,14 +37,14 @@
 
     &:not(.is-disabled) {
       &:hover {
-        background-color: colors--primary.x-light
+        background-color: color--primary-lighter
       }
       &:focus {
         box-shadow box-shadow--primary
       }
       &.is-selected {
         font-weight: 500
-        color: colors--primary.normal
+        color: color--primary
         position: relative
 
         .sui-option__check-icon > svg {
@@ -54,7 +54,7 @@
     }
 
     &.is-disabled {
-      background-color colors--surface.normal
+      background-color color--surface
       color color--placeholder
       cursor not-allowed
     }

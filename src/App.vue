@@ -1260,14 +1260,14 @@
       margin-top 4px
       margin-bottom 4px
       font-size 14px
-      color colors--text.normal
+      color color--text
     }
     .demo-card-header {
       display flex
       align-items center
       justify-content space-between
       padding 0 24px
-      color colors--text.normal
+      color color--text
     }
     .demo-card-footer {
       padding 8px 24px
@@ -1289,7 +1289,7 @@
       line-height 1.6
     }
     span {
-      color: colors--text.secondary
+      color: color--text-light
       font-size: font-size--text.small
       display block
       margin-bottom 8px

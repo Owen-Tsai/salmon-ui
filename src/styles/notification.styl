@@ -10,7 +10,7 @@
   padding 16px 24px
   box-sizing border-box
   font-size: font-size--text.medium
-  color: colors--text.normal
+  color: color--text
   transition: all .3s
 
   & &__text {
@@ -20,7 +20,7 @@
       font-weight 600
       font-size 16px
       margin-bottom 8px
-      color: colors--text.normal
+      color: color--text
     }
 
     p {
@@ -35,7 +35,7 @@
   & &__icon {
     font-size 22px
     margin-right 8px
-    color colors--primary.normal
+    color color--primary
   }
 
   &.has-title {
@@ -55,7 +55,7 @@
     transition color .3s
 
     &:hover {
-      color colors--text.normal
+      color color--text
     }
   }
 
@@ -68,17 +68,17 @@
 
   &--success {
     & ^[0]__icon {
-      color: colors--success.normal !important
+      color: color--success !important
     }
   }
   &--warning {
     & ^[0]__icon {
-      color: colors--warning.normal !important
+      color: color--warning !important
     }
   }
   &--error {
     & ^[0]__icon {
-      color: colors--error.normal !important
+      color: color--error !important
     }
   }
 }

@@ -1,82 +1,82 @@
 
-make-button(color) {
+make-button(colors) {
   &:not(.is-disabled):not(.is-loading):hover {
-    background-color color.x-light
-    color color.normal
+    background-color colors[0]
+    color colors[4]
   }
   &:not(.is-disabled):not(.is-loading):focus-visible {
-    border 1px solid color.normal
-    color color.normal
-    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+    border 1px solid colors[4]
+    color colors[4]
+    box-shadow 0 0 0 0.25rem rgba(colors[3], 0.25)
   }
   &:not(.is-disabled):not(.is-loading):active {
-    border 1px solid color.dark
-    color color.dark
-    background-color: color.x-light
+    border 1px solid colors[5]
+    color colors[5]
+    background-color: colors[0]
   }
 }
 
-make-primary-button(color) {
-  background-color color.normal
-  color #ffffff
-  border: 1px solid color.normal
+make-primary-button(colors) {
+  background-color colors[4]
+  color colors--neutral[0]
+  border: 1px solid colors[4]
 
   &:not(.is-disabled):not(.is-loading):hover {
-    color #ffffff
-    background-color color.light
-    border: 1px solid color.light
+    color colors--neutral[0]
+    background-color colors[3]
+    border: 1px solid colors[3]
   }
   &:not(.is-disabled):not(.is-loading):focus-visible {
-    border: 1px solid color.light
-    background-color color.light
-    color #ffffff
-    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+    border: 1px solid colors[3]
+    background-color colors[3]
+    color colors--neutral[0]
+    box-shadow 0 0 0 0.25rem rgba(colors[3], 0.25)
   }
   &:not(.is-disabled):not(.is-loading):active {
-    border: 1px solid color.dark
-    background-color color.dark
-    color #ffffff
+    border: 1px solid colors[5]
+    background-color colors[5]
+    color colors--neutral[0]
   }
 }
 
-make-outlined-button(color) {
-  background-color: color.x-light
-  border: 1px solid color.normal
-  color: color.normal
+make-outlined-button(colors) {
+  background-color: colors[0]
+  border: 1px solid colors[4]
+  color: colors[4]
 
   &:not(.is-disabled):not(.is-loading):hover {
-    color #ffffff !important
-    background-color color.normal
-    border: 1px solid color.normal
+    color colors--neutral[0] !important
+    background-color colors[4]
+    border: 1px solid colors[4]
   }
   &:not(.is-disabled):not(.is-loading):focus-visible {
-    border: 1px solid color.light
-    color color.light
-    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
+    border: 1px solid colors[3]
+    color colors[3]
+    box-shadow 0 0 0 0.25rem rgba(colors[3], 0.25)
   }
   &:not(.is-disabled):not(.is-loading):active {
-    border: 1px solid color.dark
-    background-color color.dark
-    color #ffffff
+    border: 1px solid colors[5]
+    background-color colors[5]
+    color colors--neutral[0]
   }
 }
 
-make-text-button(color) {
+make-text-button(colors) {
   border 0 !important
   background-color transparent
-  color: color.normal
+  color: colors[4]
 
   &:not(.is-disabled):not(.is-loading):hover {
-    color color.light
-    background-color colors--surface.normal
+    color colors[3]
+    background-color color--surface
   }
   &:not(.is-disabled):not(.is-loading):focus-visible {
-    color color.light
-    box-shadow 0 0 0 0.25rem rgba(color.light, 0.25)
-    background-color colors--surface.normal
+    color colors[3]
+    box-shadow 0 0 0 0.25rem rgba(colors[3], 0.25)
+    background-color color--surface
   }
   &:not(.is-disabled):not(.is-loading):active {
-    color color.dark
-    background-color color.x-light
+    color colors[5]
+    background-color colors[0]
   }
 }

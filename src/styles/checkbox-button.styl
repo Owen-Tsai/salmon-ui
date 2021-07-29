@@ -16,7 +16,7 @@
     align-items center
     justify-content center
     font-size font-size--text.medium
-    color colors--text.normal
+    color color--text
     padding 0 16px
     min-height 40px
     border 1px solid color--border
@@ -24,7 +24,7 @@
     transition all .15s
 
     &:hover {
-      color colors--primary.normal
+      color color--primary
     }
   }
 
@@ -48,7 +48,7 @@
 
   &.is-checked {
     & ^[0]__btn {
-      background-color colors--primary.normal
+      background-color color--primary
       border-color color--border
       color #ffffff
     }
@@ -60,7 +60,7 @@
   }
   &.is-disabled {
     & ^[0]__btn {
-      background-color colors--surface.normal
+      background-color color--surface
       color color--placeholder
       cursor not-allowed
     }
@@ -68,9 +68,9 @@
   &.is-checked.is-disabled {
     & ^[0]__btn {
       opacity 0.4
-      background-color colors--primary.normal
+      background-color color--primary
       color #ffffff
-      border-color colors--primary.light
+      border-color color--primary-light
       cursor not-allowed
     }
   }

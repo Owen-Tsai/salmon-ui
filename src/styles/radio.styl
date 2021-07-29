@@ -1,7 +1,7 @@
 .sui-radio {
   box-sizing border-box
   font-size font-size--text.medium
-  color colors--text.normal
+  color color--text
   line-height 1.5
   cursor pointer
   display inline-flex
@@ -55,10 +55,10 @@
   // states
   &.is-checked {
     & ^[0]__input ^[0]__inner {
-      border-color: colors--primary.normal
+      border-color: color--primary
 
       &::before {
-        background-color colors--primary.normal
+        background-color color--primary
         transform scale(1)
       }
     }
@@ -66,7 +66,7 @@
   &.is-disabled {
     cursor not-allowed
     & ^[0]__input ^[0]__inner {
-      background-color: colors--surface.normal !important
+      background-color: color--surface !important
       border-color: color--border !important
 
       &::before {
@@ -74,15 +74,15 @@
       }
     }
     & ^[0]__label {
-      color colors--text.secondary
+      color color--text-secondary
     }
   }
 
   &:hover {
-    color: colors--primary.normal
+    color: color--primary
 
     & ^[0]__input ^[0]__inner {
-      border-color colors--primary.normal
+      border-color color--primary
     }
   }
 

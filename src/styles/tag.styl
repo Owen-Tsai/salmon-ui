@@ -6,24 +6,24 @@
   padding 0 8px
   border-radius border-radius--normal
 
-  for type, color in typesMap {
+  for type, colors in typesMap {
     &--{type} {
-      border: 1px solid color.normal
-      background-color: color.normal
-      color: colors--text.vert
+      border: 1px solid colors[4]
+      background-color: colors[4]
+      color: colors--neutral[0]
 
       & ^[0]__close-token:hover {
         background-color #ffffff
-        color color.normal
+        color colors[4]
       }
     }
   }
 
   &--warning {
-    color: colors--text.normal
+    color: color--text
 
     & ^[0]__close-token:hover {
-      color colors--text.normal
+      color color--text
     }
   }
 
@@ -36,15 +36,15 @@
 
   // outlined
   &.is-outlined {
-    for type, color in typesMap {
+    for type, colors in typesMap {
       &^[0]--{type} {
-        border: 1px solid color.normal
-        background-color: color.x-light
-        color: color.normal
+        border: 1px solid colors[4]
+        background-color: colors[0]
+        color: colors[4]
 
         & ^[0]__close-token:hover {
-          background-color color.normal
-          color colors--text.vert
+          background-color colors[4]
+          color colors--neutral[0]
         }
       }
     }

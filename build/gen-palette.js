@@ -141,13 +141,11 @@ for (let i = 1; i <= lightColorCount; i += 1) {
       v: getValue(hsv, lightColorCount - i + 1, true),
     }),
   );
-  const colorIndex = `_${i}00`
-  patterns[colorIndex] = colorString
+  patterns.push(colorString)
 }
 
 // primary color
-let primaryColorIndex = lightColorCount + 1
-patterns[`_${primaryColorIndex}00`] = toHex(pColor);
+patterns.push(toHex(pColor))
 
 // dark variants
 for (let i = 1; i <= darkColorCount; i += 1) {
@@ -159,8 +157,7 @@ for (let i = 1; i <= darkColorCount; i += 1) {
       v: getValue(hsv, i),
     }),
   );
-  const colorIndex = `_${primaryColorIndex + i}00`
-  patterns[colorIndex] = colorString
+  patterns.push(colorString)
 }
 
 // dark theme patterns

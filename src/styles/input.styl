@@ -11,7 +11,7 @@
 
   &__input {
     display inline-block
-    color colors--text.normal
+    color color--text
     background-color #ffffff
     border 1px solid color--border
     border-radius border-radius--normal
@@ -26,14 +26,14 @@
 
     &:focus {
       box-shadow box-shadow--primary
-      border-color colors--primary.normal
+      border-color color--primary
     }
     &:not([disabled]):hover {
-      border-color colors--primary.normal
+      border-color color--primary
     }
 
     &[disabled] {
-      background-color colors--surface.normal
+      background-color color--surface
       cursor not-allowed
     }
   }
@@ -74,7 +74,7 @@
       transition color .3s
 
       &:hover {
-        color colors--text.normal
+        color color--text
       }
     }
 
@@ -108,10 +108,10 @@
   }
 
   .sui-input__prepend, .sui-input__append {
-    background-color colors--surface.dark
+    background-color color--surface-dark
     padding 0 12px
     border 1px solid color--border
-    color colors--text.normal
+    color color--text
     box-sizing border-box
     center-el()
 
@@ -132,10 +132,10 @@
   &.has-prepend  {
     &.is-hovering {
       .sui-button {
-        border-right-color colors--primary.normal
+        border-right-color color--primary
       }
       .sui-select .sui-input__input {
-        border-right-color colors--primary.normal
+        border-right-color color--primary
       }
     }
     .sui-input__prepend {
@@ -163,10 +163,10 @@
   &.has-append  {
     &.is-hovering {
       .sui-button {
-        border-left-color colors--primary.normal
+        border-left-color color--primary
       }
       .sui-select .sui-input__input {
-        border-left-color colors--primary.normal
+        border-left-color color--primary
       }
     }
     .sui-input__append {

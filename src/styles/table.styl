@@ -10,7 +10,7 @@
     padding 8px 16px
     font-size font-size--text.medium
     font-weight 700
-    color: colors--text.normal
+    color: color--text
     overflow hidden
 
     &.sui-table__extra-col {
@@ -29,7 +29,7 @@
   td {
     padding 8px 16px
     font-size: font-size--text.medium
-    color: colors--text.normal
+    color: color--text
     overflow hidden
 
     .sui-icon {
@@ -57,12 +57,12 @@
     transition all .15s
 
     &:hover {
-      background-color colors--surface.dark
+      background-color color--surface-dark
     }
   }
 
   ^[0]__expand-row {
-    background-color colors--surface.normal
+    background-color color--surface
   }
 
   &.is-bordered {
@@ -73,7 +73,7 @@
   &.is-striped {
     tbody tr:not(.sui-table__expand-row) {
       &:nth-child(2n) {
-        background-color colors--primary.x-light
+        background-color color--primary-lighter
       }
     }
   }
@@ -83,7 +83,7 @@
     outline none
     border none
     background-color transparent
-    color colors--text.normal
+    color color--text
     padding 0 4px
     line-height 1
     transition all .15s
@@ -93,7 +93,7 @@
     }
     &.is-activated {
       opacity 1
-      color: colors--primary.normal
+      color: color--primary
     }
   }
 }
