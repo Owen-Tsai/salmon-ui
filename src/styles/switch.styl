@@ -4,7 +4,7 @@
   box-sizing border-box
   height 24px
   border 1px solid transparent
-  background-color color--placeholder
+  background-color colors--neutral[5]
   border-radius @height
   outline none
   cursor: pointer
@@ -19,7 +19,7 @@
     border-radius 18px
     left 2px
     top 2px
-    background-color #ffffff
+    background-color colors--neutral[0]
     transition all .3s cubic-bezier(.78,.14,.15,.86)
   }
 
@@ -27,7 +27,7 @@
     position absolute
     line-height 24px
     top 0
-    color #ffffff
+    color colors--neutral[0]
 
     &--active {
       left 8px
@@ -45,9 +45,14 @@
     }
 
     .sui-icon {
-      font-size 16px
+      font-size 18px
+      margin-top -1px
       height 100%
       width 100%
+
+      svg {
+        stroke-width 2
+      }
     }
   }
 
