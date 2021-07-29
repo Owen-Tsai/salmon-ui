@@ -270,10 +270,10 @@
             </div>
             <div class="row">
               <s-radio-group v-model="notice.position">
-                <s-radio label="top-right">右上</s-radio>
-                <s-radio label="top-left">左上</s-radio>
-                <s-radio label="bottom-right">右下</s-radio>
-                <s-radio label="bottom-left">左下</s-radio>
+                <s-radio value="top-right">右上</s-radio>
+                <s-radio value="top-left">左上</s-radio>
+                <s-radio value="bottom-right">右下</s-radio>
+                <s-radio value="bottom-left">左下</s-radio>
               </s-radio-group>
             </div>
 
