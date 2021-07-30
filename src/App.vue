@@ -412,6 +412,13 @@
           </s-alert>
           <s-alert class="demo-m-y" type="success" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
           <s-alert class="demo-m-y" type="warning" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" type="success" outlined>
+            <template #title style="vertical-align: middle">
+              <s-icon name="star"></s-icon>
+              Title with icon
+            </template>
+            Lorem ipsum dolor sit amet, consectetur adipisicing.
+          </s-alert>
         </div>
       </div>
 

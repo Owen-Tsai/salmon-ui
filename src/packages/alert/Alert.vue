@@ -27,9 +27,16 @@
             </slot>
           </p>
 
-          <div class="sui-alert__close-icon" @click="close">
-            <s-icon :name="closeIcon" v-if="dismissible"></s-icon>
-          </div>
+          <button
+            v-if="dismissible"
+            class="sui-alert__close-btn"
+            @click="close"
+          >
+            <s-icon
+              :name="closeIcon"
+              stroke-width="1.5"
+            ></s-icon>
+          </button>
         </div>
       </div>
     </div>

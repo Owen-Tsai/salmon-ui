@@ -11,6 +11,12 @@
       border: 1px solid colors[4]
       background-color: colors[4]
       color: colors--neutral[0]
+
+      & ^[0]__close-btn {
+        &:focus {
+          background-color colors[2]
+        }
+      }
     }
   }
 
@@ -42,12 +48,23 @@
     }
   }
 
-  &__close-icon {
+  &__close-btn {
+    background none
+    border none
+    outline none
     position absolute
-    right 0
-    line-height 0
+    right -4px
     cursor pointer
-    top 4px
+    top 2px
+    color inherit
+    border-radius 50%
+    font-size: font-size--text.large
+    height @font-size + 4px
+    width @height
+    display inline-flex
+    align-items center
+    justify-content center
+    transition all .1s
   }
 
   // is outlined
@@ -57,6 +74,12 @@
         border: 1px solid colors[4]
         background-color: colors[0]
         color: colors[4]
+
+        & ^[0]__close-btn {
+          &:focus {
+            background-color colors[1]
+          }
+        }
       }
     }
   }
