@@ -70,15 +70,15 @@
       border-color: color--border !important
 
       &::before {
-        background-color color--placeholder !important
+        background-color color--disabled !important
       }
     }
     & ^[0]__label {
-      color color--text-secondary
+      color color--disabled
     }
   }
 
-  &:hover {
+  &:hover:not(.is-disabled) {
     color: color--primary
 
     & ^[0]__input ^[0]__inner {
