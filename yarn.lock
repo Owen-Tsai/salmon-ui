@@ -2710,8 +2710,8 @@ ansi-regex@^5.0.0:
 
 ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   version "3.2.1"
-  resolved "https://registry.npm.taobao.org/ansi-styles/download/ansi-styles-3.2.1.tgz?cache=0&sync_timestamp=1611325836307&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fansi-styles%2Fdownload%2Fansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
-  integrity sha1-QfuyAkPlCxK+DwS43tvwdSDOhB0=
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
+  integrity sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==
   dependencies:
     color-convert "^1.9.0"
 
@@ -3416,15 +3416,7 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.4.2:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.npm.taobao.org/chalk/download/chalk-4.1.0.tgz#4e14870a618d9e2edd97dd8345fd9d9dc315646a"
-  integrity sha1-ThSHCmGNni7dl92DRf2dncMVZGo=
-  dependencies:
-    ansi-styles "^4.1.0"
-    supports-color "^7.1.0"
-
-chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.1"
   resolved "https://registry.nlark.com/chalk/download/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
   integrity sha1-yAs/qyi/Y3HmhjMl7uZ+YYt35q0=
@@ -3678,8 +3670,8 @@ collection-visit@^1.0.0:
 
 color-convert@^1.9.0:
   version "1.9.3"
-  resolved "https://registry.npm.taobao.org/color-convert/download/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
-  integrity sha1-u3GFBpDh8TZWfeYp0tVHHe2kweg=
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
+  integrity sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==
   dependencies:
     color-name "1.1.3"
 
@@ -3692,7 +3684,7 @@ color-convert@^2.0.1:
 
 color-name@1.1.3:
   version "1.1.3"
-  resolved "https://registry.nlark.com/color-name/download/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+  resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
   integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
 
 color-name@~1.1.4:
@@ -4649,7 +4641,7 @@ escape-html@~1.0.3:
 
 escape-string-regexp@^1.0.5:
   version "1.0.5"
-  resolved "https://registry.npm.taobao.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz?cache=0&sync_timestamp=1618677309735&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fescape-string-regexp%2Fdownload%2Fescape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
 escape-string-regexp@^2.0.0:
@@ -5712,7 +5704,7 @@ handle-thing@^2.0.0:
 
 has-flag@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.nlark.com/has-flag/download/has-flag-3.0.0.tgz?cache=0&sync_timestamp=1618847009337&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fhas-flag%2Fdownload%2Fhas-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
+  resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
   integrity sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
 
 has-flag@^4.0.0:
@@ -7839,11 +7831,6 @@ nan@^2.12.1:
   resolved "https://registry.npm.taobao.org/nan/download/nan-2.14.2.tgz?cache=0&sync_timestamp=1602591700047&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnan%2Fdownload%2Fnan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha1-9TdkAGlRaPTMaUrJOT0MlYXu6hk=
 
-nanoid@^3.1.20:
-  version "3.1.20"
-  resolved "https://registry.npm.taobao.org/nanoid/download/nanoid-3.1.20.tgz?cache=0&sync_timestamp=1606835818061&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnanoid%2Fdownload%2Fnanoid-3.1.20.tgz#badc263c6b1dcf14b71efaa85f6ab4c1d6cfc788"
-  integrity sha1-utwmPGsdzxS3HvqoX2q0wdbPx4g=
-
 nanoid@^3.1.23:
   version "3.1.23"
   resolved "https://registry.nlark.com/nanoid/download/nanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
@@ -8805,7 +8792,7 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
   resolved "https://registry.npm.taobao.org/postcss-value-parser/download/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha1-RD9qIM7WSBor2k+oUypuVdeJoss=
 
-postcss@^7.0.14, postcss@^7.0.32:
+postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.32:
   version "7.0.36"
   resolved "https://registry.nlark.com/postcss/download/postcss-7.0.36.tgz#056f8cffa939662a8f5905950c07d5285644dfcb"
   integrity sha1-BW+M/6k5ZiqPWQWVDAfVKFZE38s=
@@ -8814,16 +8801,7 @@ postcss@^7.0.14, postcss@^7.0.32:
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postcss@^7.0.17:
-  version "7.0.35"
-  resolved "https://registry.npm.taobao.org/postcss/download/postcss-7.0.35.tgz?cache=0&sync_timestamp=1612638009555&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpostcss%2Fdownload%2Fpostcss-7.0.35.tgz#d2be00b998f7f211d8a276974079f2e92b970e24"
-  integrity sha1-0r4AuZj38hHYonaXQHny6SuXDiQ=
-  dependencies:
-    chalk "^2.4.2"
-    source-map "^0.6.1"
-    supports-color "^6.1.0"
-
-postcss@^8.1.10, postcss@^8.2.15, postcss@^8.2.6, postcss@^8.2.9:
+postcss@^8.1.10, postcss@^8.2.15, postcss@^8.2.4, postcss@^8.2.6, postcss@^8.2.9:
   version "8.3.5"
   resolved "https://registry.nlark.com/postcss/download/postcss-8.3.5.tgz#982216b113412bc20a86289e91eb994952a5b709"
   integrity sha1-mCIWsRNBK8IKhiiekeuZSVKltwk=
@@ -8831,15 +8809,6 @@ postcss@^8.1.10, postcss@^8.2.15, postcss@^8.2.6, postcss@^8.2.9:
     colorette "^1.2.2"
     nanoid "^3.1.23"
     source-map-js "^0.6.2"
-
-postcss@^8.2.4:
-  version "8.2.6"
-  resolved "https://registry.npm.taobao.org/postcss/download/postcss-8.2.6.tgz#5d69a974543b45f87e464bc4c3e392a97d6be9fe"
-  integrity sha1-XWmpdFQ7Rfh+RkvEw+OSqX1r6f4=
-  dependencies:
-    colorette "^1.2.1"
-    nanoid "^3.1.20"
-    source-map "^0.6.1"
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -9818,8 +9787,8 @@ source-map@^0.5.0, source-map@^0.5.1, source-map@^0.5.6, source-map@~0.5.1:
 
 source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
-  resolved "https://registry.nlark.com/source-map/download/source-map-0.6.1.tgz?cache=0&sync_timestamp=1618847019434&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsource-map%2Fdownload%2Fsource-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
-  integrity sha1-dHIq8y6WFOnCh6jQu95IteLxomM=
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+  integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
 source-map@^0.7.3, source-map@~0.7.2:
   version "0.7.3"
@@ -10119,15 +10088,15 @@ stylus@^0.54.0, stylus@^0.54.7:
 
 supports-color@^5.3.0:
   version "5.5.0"
-  resolved "https://registry.nlark.com/supports-color/download/supports-color-5.5.0.tgz?cache=0&sync_timestamp=1622293630895&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsupports-color%2Fdownload%2Fsupports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
-  integrity sha1-4uaaRKyHcveKHsCzW2id9lMO/I8=
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
+  integrity sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==
   dependencies:
     has-flag "^3.0.0"
 
 supports-color@^6.1.0:
   version "6.1.0"
-  resolved "https://registry.nlark.com/supports-color/download/supports-color-6.1.0.tgz?cache=0&sync_timestamp=1622293630895&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsupports-color%2Fdownload%2Fsupports-color-6.1.0.tgz#0764abc69c63d5ac842dd4867e8d025e880df8f3"
-  integrity sha1-B2Srxpxj1ayELdSGfo0CXogN+PM=
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-6.1.0.tgz#0764abc69c63d5ac842dd4867e8d025e880df8f3"
+  integrity sha512-qe1jfm1Mg7Nq/NSh6XE24gPXROEVsWHxC1LIx//XNlD9iw7YZQGjZNjYN7xGaEG6iKdA8EtNFW6R0gjnVXp+wQ==
   dependencies:
     has-flag "^3.0.0"
 
