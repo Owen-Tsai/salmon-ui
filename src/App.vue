@@ -4,14 +4,14 @@
       <div class="demo-block">
         <h2>Icons</h2>
         <div class="demo-content" id="icon-demo">
-          <div><s-icon size="36" color="#2f363d"><apps-fill></apps-fill></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><archive></archive></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><attachment></attachment></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><award-fill></award-fill></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><ISwitch></ISwitch></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><playstation></playstation></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><xbox-fill></xbox-fill></s-icon></div>
-          <div><s-icon size="36" color="#2f363d"><thumb-up-fill></thumb-up-fill></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><apps-fill></apps-fill></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><archive></archive></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><attachment></attachment></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><award-fill></award-fill></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><ISwitch></ISwitch></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><playstation></playstation></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><xbox-fill></xbox-fill></s-icon></div>
+          <div><s-icon :size="36" color="#2f363d"><thumb-up-fill></thumb-up-fill></s-icon></div>
         </div>
       </div>
 
@@ -416,16 +416,35 @@
             </template>
             Salmon UI 是一个用于快速开发用户界面的组件库
           </s-alert>
-          <s-alert class="demo-m-y" type="error" icon="wifi-off" :dismissible="false">
+          <s-alert class="demo-m-y" type="error" :dismissible="false">
+            <template #prefix>
+              <wifi-off></wifi-off>
+            </template>
             <template v-slot:title>错误</template>
             <span>检测不到可用的网络连接<a style="margin-left: 8px; color: #fff" href="#">重试</a></span>
           </s-alert>
-          <s-alert class="demo-m-y" type="success" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m-y" type="warning" icon="smile">你好，欢迎使用 Salmon UI</s-alert>
+          <s-alert class="demo-m-y" type="success">
+            <template #prefix>
+              <s-icon color="#006e40">
+                <thumb-up-fill></thumb-up-fill>
+              </s-icon>
+            </template>
+            你好，欢迎使用 Salmon UI
+          </s-alert>
+          <s-alert class="demo-m-y" type="warning">
+            你好，欢迎使用 Salmon UI
+            <template #close>
+              <s-icon>
+                <close-circle></close-circle>
+              </s-icon>
+            </template>
+          </s-alert>
           <s-alert class="demo-m-y" type="success" outlined>
-            <template #title style="vertical-align: middle">
-              <s-icon name="star"></s-icon>
-              Title with icon
+            <template #title>
+              <s-icon :size="24">
+                <archive></archive>
+              </s-icon>
+              <span> 已归档</span>
             </template>
             Lorem ipsum dolor sit amet, consectetur adipisicing.
           </s-alert>
@@ -1036,7 +1055,7 @@
 
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
-    EmotionHappy,
+    EmotionHappy, WifiOff, CloseCircle
   } from '@salmon-ui/icons'
 
   import avatar1 from './assets/avatar.jpg'
@@ -1045,7 +1064,7 @@
   export default {
     components: {
       AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
-      EmotionHappy,
+      EmotionHappy, WifiOff, CloseCircle,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,

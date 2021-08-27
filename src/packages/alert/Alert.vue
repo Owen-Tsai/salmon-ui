@@ -11,12 +11,15 @@
       ref="alertNode"
     >
       <div class="sui-alert__wrapper">
-        <s-icon
-          v-if="icon" :name="icon"
+        <span
+          v-if="$slots.prefix"
           :class="[
-            'sui-alert__icon', largeIcon ? 'is-large' : ''
+            'sui-alert__prefix', 'sui-alert__icon',
+            largeIcon ? 'is-large' : null
           ]"
-        ></s-icon>
+        >
+          <slot name="prefix"></slot>
+        </span>
         <div class="sui-alert__content">
           <div v-if="title || $slots.title" class="sui-alert__title">
             <slot name="title">{{ title }}</slot>
@@ -32,10 +35,11 @@
             class="sui-alert__close-btn"
             @click="close"
           >
-            <s-icon
-              :name="closeIcon"
-              stroke-width="1.5"
-            ></s-icon>
+            <slot name="close">
+              <s-icon>
+                <close></close>
+              </s-icon>
+            </slot>
           </button>
         </div>
       </div>
@@ -46,13 +50,14 @@
 <script lang="ts">
   import { computed, ref, defineComponent } from 'vue'
   import SIcon from '../icon'
+  import { Close } from '@salmon-ui/icons'
 
   const _types = ['success', 'warning', 'error', 'default']
 
   export default defineComponent({
     name: 'SAlert',
     components: {
-      SIcon
+      SIcon, Close
     },
     props: {
       icon: String,
