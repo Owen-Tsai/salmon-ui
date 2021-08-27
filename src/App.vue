@@ -4,14 +4,14 @@
       <div class="demo-block">
         <h2>Icons</h2>
         <div class="demo-content" id="icon-demo">
-          <div><s-icon name="smile"></s-icon></div>
-          <div><s-icon name="user"></s-icon></div>
-          <div><s-icon name="lock"></s-icon></div>
-          <div><s-icon name="shield"></s-icon></div>
-          <div><s-icon name="umbrella"></s-icon></div>
-          <div><s-icon name="star"></s-icon></div>
-          <div><s-icon name="mail"></s-icon></div>
-          <div><s-icon name="github"></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><apps-fill></apps-fill></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><archive></archive></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><attachment></attachment></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><award-fill></award-fill></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><ISwitch></ISwitch></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><playstation></playstation></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><xbox-fill></xbox-fill></s-icon></div>
+          <div><s-icon size="36" color="#2f363d"><thumb-up-fill></thumb-up-fill></s-icon></div>
         </div>
       </div>
 
@@ -404,8 +404,18 @@
       <div class="demo-block">
         <h2>Alerts</h2>
         <div class="demo-content">
-          <s-alert class="demo-m-y" icon="smile" title="Greetings!">你好，欢迎使用 Salmon UI</s-alert>
-          <s-alert class="demo-m-y" icon="smile" outlined>Salmon UI 是一个用于快速开发用户界面的组件库</s-alert>
+          <s-alert class="demo-m-y" title="Greetings!">
+            <template #prefix>
+              <s-icon><emotion-happy></emotion-happy></s-icon>
+            </template>
+            你好，欢迎使用 Salmon UI
+          </s-alert>
+          <s-alert class="demo-m-y" outlined>
+            <template #prefix>
+              <s-icon><emotion-happy></emotion-happy></s-icon>
+            </template>
+            Salmon UI 是一个用于快速开发用户界面的组件库
+          </s-alert>
           <s-alert class="demo-m-y" type="error" icon="wifi-off" :dismissible="false">
             <template v-slot:title>错误</template>
             <span>检测不到可用的网络连接<a style="margin-left: 8px; color: #fff" href="#">重试</a></span>
@@ -1024,11 +1034,18 @@
   import SCarouselItem from './packages/carousel-item'
   import STable from './packages/table'
 
+  import {
+    AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
+    EmotionHappy,
+  } from '@salmon-ui/icons'
+
   import avatar1 from './assets/avatar.jpg'
   import avatar2 from './assets/avatar2.jpg'
 
   export default {
     components: {
+      AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
+      EmotionHappy,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
