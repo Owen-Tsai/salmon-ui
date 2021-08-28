@@ -60,7 +60,6 @@
       SIcon, Close
     },
     props: {
-      icon: String,
       type: {
         type: String,
         default: 'default',
@@ -72,10 +71,6 @@
       dismissible: {
         type: Boolean,
         default: true
-      },
-      closeIcon: {
-        type: String,
-        default: 'x'
       },
       message: String,
       title: String
