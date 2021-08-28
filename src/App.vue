@@ -662,7 +662,12 @@
         <h2>Buttons</h2>
         <div class="demo-content">
           <s-button class="demo-m-a" type="primary">主要按钮</s-button>
-          <s-button class="demo-m-a" icon="heart">爱你</s-button>
+          <s-button class="demo-m-a">
+            <template #prefix>
+              <s-icon><heart></heart></s-icon>
+            </template>
+            爱你
+          </s-button>
           <s-button class="demo-m-a" type="outlined">outlined 按钮</s-button>
           <s-button class="demo-m-a" type="text">文字按钮</s-button>
           <br>
@@ -672,10 +677,14 @@
           <br>
           <s-button class="demo-m-a" type="primary" shape="round">圆角按钮</s-button>
           <s-button class="demo-m-a" type="primary" shape="round">
-            <s-icon name="heart"></s-icon>
+            <s-icon><heart></heart></s-icon>
             圆角按钮
           </s-button>
-          <s-button class="demo-m-a" type="primary" shape="circle" icon="star"></s-button>
+          <s-button class="demo-m-a" type="primary" shape="circle">
+            <s-icon>
+              <thumb-up-fill></thumb-up-fill>
+            </s-icon>
+          </s-button>
 
           <br>
 
@@ -683,9 +692,15 @@
           <s-button class="demo-m-a" shape="round">Default</s-button>
           <s-button class="demo-m-a" shape="round" size="small">Small</s-button>
 
-          <s-button class="demo-m-a" size="large" shape="circle" icon="star"></s-button>
-          <s-button class="demo-m-a" shape="circle" icon="star"></s-button>
-          <s-button class="demo-m-a" size="small" shape="circle" icon="star"></s-button>
+          <s-button class="demo-m-a" size="large" shape="circle">
+            <s-icon><heart></heart></s-icon>
+          </s-button>
+          <s-button class="demo-m-a" shape="circle">
+            <s-icon><heart></heart></s-icon>
+          </s-button>
+          <s-button class="demo-m-a" size="small" shape="circle">
+            <s-icon><heart></heart></s-icon>
+          </s-button>
 
           <br>
 
@@ -1055,7 +1070,7 @@
 
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
-    EmotionHappy, WifiOff, CloseCircle
+    EmotionHappy, WifiOff, CloseCircle, Heart
   } from '@salmon-ui/icons'
 
   import avatar1 from './assets/avatar.jpg'
@@ -1064,7 +1079,7 @@
   export default {
     components: {
       AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
-      EmotionHappy, WifiOff, CloseCircle,
+      EmotionHappy, WifiOff, CloseCircle, Heart,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,

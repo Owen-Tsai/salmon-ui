@@ -8,23 +8,29 @@
       disabled ? 'is-disabled' : '',
       loading ? 'is-loading' : '',
       danger ? 'is-danger' : '',
-      icon ? 'has-icon' : ''
+      $slots.prefix || $slots.affix ? 'has-icon' : ''
     ]"
     :disabled="disabled || loading"
     :autofocus="autofocus"
-
     @click="handleClick"
   >
-    <s-icon :name="icon" v-if="icon && iconPlacement === 'left' && !loading"></s-icon>
-    <s-icon class="rotating loader" name="loader" v-if="loading"></s-icon>
+    <slot name="prefix" v-if="!loading"></slot>
+    <slot name="loader" v-if="loading">
+      <s-icon class="rotating loader">
+        <loader></loader>
+      </s-icon>
+    </slot>
     <span v-if="$slots.default" class="sui-button__label"><slot></slot></span>
-    <s-icon class="is-right" :name="icon" v-if="icon && iconPlacement === 'right' && !loading"></s-icon>
+    <slot name="affix" v-if="!loading"></slot>
   </button>
 </template>
 
 <script lang="ts">
   import SIcon from '../icon'
   import { computed, defineComponent, inject } from 'vue'
+  import {
+    Loader
+  } from '@salmon-ui/icons'
 
   const _types = [
     'default', 'primary', 'outlined', 'text'
@@ -35,7 +41,10 @@
 
   export default defineComponent({
     name: 'SButton',
-    components: {SIcon},
+    components: {
+      SIcon,
+      Loader
+    },
     props: {
       type: {
         type: String,
@@ -61,14 +70,6 @@
         type: String,
         validator: (v: string) => {
           return _shapes.includes(v)
-        }
-      },
-      icon: String,
-      iconPlacement: {
-        type: String,
-        default: 'left',
-        validator: (v: string) => {
-          return ['left', 'right'].includes(v)
         }
       },
       disabled: Boolean,
