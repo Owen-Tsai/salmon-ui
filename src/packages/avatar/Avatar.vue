@@ -8,26 +8,20 @@
       :style="fitStyle"
       @error="handleError"
     />
-    <s-icon :name="icon" v-else-if="icon"></s-icon>
     <slot v-else></slot>
   </span>
 </template>
 
 <script lang="ts">
-  import SIcon from '../icon'
   import { defineComponent, ref, computed } from 'vue'
 
   const _sizes = [ 'large', 'small', '' ]
 
   export default defineComponent({
     name: 'SAvatar',
-    components: {
-      SIcon
-    },
     props: {
       src: String,
       srcSet: String,
-      icon: String,
       alt: String,
       size: {
         type: [String, Number],
@@ -63,9 +57,6 @@
         const prefix = 'sui-avatar--'
         if(typeof props.size === 'string' && props.size !== '') {
           arr.push(`${prefix}${props.size}`)
-        }
-        if(props.icon) {
-          arr.push(`${prefix}icon`)
         }
         if(props.shape) {
           arr.push(`${prefix}${props.shape}`)

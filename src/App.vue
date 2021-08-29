@@ -30,7 +30,11 @@
           <s-avatar class="demo-m-a" :size="64">三文咸鱼</s-avatar>
           <s-avatar class="demo-m-a" :size="64">Lucy</s-avatar>
           <s-avatar class="demo-m-a" :size="64">张三</s-avatar>
-          <s-avatar class="demo-m-a" icon="user"></s-avatar>
+          <s-avatar class="demo-m-a">
+            <s-icon :size="36">
+              <user></user>
+            </s-icon>
+          </s-avatar>
         </div>
       </div>
 
@@ -1070,7 +1074,7 @@
 
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
-    EmotionHappy, WifiOff, CloseCircle, Heart
+    EmotionHappy, WifiOff, CloseCircle, Heart, User
   } from '@salmon-ui/icons'
 
   import avatar1 from './assets/avatar.jpg'
@@ -1079,7 +1083,7 @@
   export default {
     components: {
       AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
-      EmotionHappy, WifiOff, CloseCircle, Heart,
+      EmotionHappy, WifiOff, CloseCircle, Heart, User,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
