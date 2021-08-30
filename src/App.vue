@@ -31,7 +31,7 @@
           <s-avatar class="demo-m-a" :size="64">Lucy</s-avatar>
           <s-avatar class="demo-m-a" :size="64">张三</s-avatar>
           <s-avatar class="demo-m-a">
-            <s-icon :size="36">
+            <s-icon :size="36" color="#99a5af">
               <user></user>
             </s-icon>
           </s-avatar>
@@ -60,8 +60,16 @@
           <br>
 
           <s-button-group class="demo-m-a">
-            <s-button icon="plus" @click="changeBadgeValue(1)"></s-button>
-            <s-button icon="minus" @click="changeBadgeValue(-1)"></s-button>
+            <s-button @click="changeBadgeValue(1)">
+              <s-icon>
+                <add></add>
+              </s-icon>
+            </s-button>
+            <s-button @click="changeBadgeValue(-1)">
+              <s-icon>
+                <subtract></subtract>
+              </s-icon>
+            </s-button>
           </s-button-group>
         </div>
       </div>
@@ -960,8 +968,16 @@
           </div>
           <br>
           <s-button-group>
-            <s-button @click="percentage2 += 10"><s-icon name="plus"></s-icon></s-button>
-            <s-button @click="percentage2 -= 10"><s-icon name="minus"></s-icon></s-button>
+            <s-button @click="percentage2 += 10">
+              <s-icon>
+                <add></add>
+              </s-icon>
+            </s-button>
+            <s-button @click="percentage2 -= 10">
+              <s-icon>
+                <subtract></subtract>
+              </s-icon>
+            </s-button>
           </s-button-group>
         </div>
       </div>
@@ -1074,7 +1090,7 @@
 
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
-    EmotionHappy, WifiOff, CloseCircle, Heart, User
+    EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract
   } from '@salmon-ui/icons'
 
   import avatar1 from './assets/avatar.jpg'
@@ -1083,7 +1099,7 @@
   export default {
     components: {
       AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
-      EmotionHappy, WifiOff, CloseCircle, Heart, User,
+      EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,
