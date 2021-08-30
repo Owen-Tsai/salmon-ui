@@ -11,15 +11,20 @@
 
     <s-icon
       v-if="dismissible"
-      class="sui-tag__close-token" name="x"
+      class="sui-tag__close-token"
       @click="handleClose"
-    ></s-icon>
+    >
+      <close></close>
+    </s-icon>
   </span>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
   import SIcon from '../icon'
+  import {
+    Close
+  } from '@salmon-ui/icons'
 
   const _types = [
     'default', 'success', 'warning', 'error'
@@ -27,7 +32,7 @@
 
   export default defineComponent({
     name: 'STag',
-    components: { SIcon },
+    components: { SIcon, Close },
     props: {
       type: {
         type: String,
