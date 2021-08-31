@@ -189,7 +189,7 @@
                 <s-icon><xbox-fill></xbox-fill></s-icon>
                 Xbox
               </s-dropdown-item>
-              <s-dropdown placement="right-start">
+              <s-dropdown submenu placement="right-start">
                 <template #reference>
                   <s-dropdown-item>Others</s-dropdown-item>
                 </template>

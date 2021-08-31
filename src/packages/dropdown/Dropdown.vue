@@ -1,5 +1,5 @@
 <template>
-  <div class="sui-dropdown">
+  <div class="sui-dropdown" v-if="!submenu">
     <div class="sui-dropdown__reference" ref="referenceEl">
       <slot name="reference"></slot>
     </div>
@@ -11,6 +11,23 @@
       <slot></slot>
     </div>
   </div>
+
+  <li
+    v-else
+    class="sui-dropdown sui-dropdown-menu__item"
+    ref="referenceEl"
+  >
+    <div class="sui-dropdown__reference" ref="referenceEl">
+      <slot name="reference"></slot>
+    </div>
+    <div
+      class="sui-dropdown__popper"
+      ref="popperEl"
+      :style="computedStyle"
+    >
+      <slot></slot>
+    </div>
+  </li>
 </template>
 
 <script lang="ts">
@@ -56,7 +73,8 @@
         default: true
       },
       disabled: Boolean,
-      maxHeight: Number
+      maxHeight: Number,
+      submenu: Boolean
     },
     setup(props, ctx) {
       let tippyInstance: any = null
