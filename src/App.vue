@@ -154,11 +154,20 @@
               <s-button type="primary">Click 触发</s-button>
             </template>
             <s-dropdown-menu>
-              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
-              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
-              <s-dropdown-item icon="umbrella">雨伞图标</s-dropdown-item>
-              <s-dropdown-item icon="lock" :disabled="popoverDisabled">禁用选项</s-dropdown-item>
-              <s-dropdown-item icon="lock" divided>分割选项</s-dropdown-item>
+              <s-dropdown-item>
+                <s-icon>
+                  <apps-fill></apps-fill>
+                </s-icon>
+                内容带图标
+              </s-dropdown-item>
+              <s-dropdown-item>
+                <s-icon>
+                  <i-switch></i-switch>
+                </s-icon>
+                Nintendo Switch
+              </s-dropdown-item>
+              <s-dropdown-item :disabled="popoverDisabled">禁用选项</s-dropdown-item>
+              <s-dropdown-item divided>分割选项</s-dropdown-item>
               <s-dropdown-item>没有图标的选项</s-dropdown-item>
             </s-dropdown-menu>
           </s-dropdown>
@@ -168,19 +177,28 @@
               <s-button shape="round" type="primary">多级菜单</s-button>
             </template>
             <s-dropdown-menu>
-              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
-              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
+              <s-dropdown-item>
+                <s-icon><i-switch></i-switch></s-icon>
+                Nintendo Switch
+              </s-dropdown-item>
+              <s-dropdown-item>
+                <s-icon><playstation></playstation></s-icon>
+                Playstation
+              </s-dropdown-item>
+              <s-dropdown-item>
+                <s-icon><xbox-fill></xbox-fill></s-icon>
+                Xbox
+              </s-dropdown-item>
               <s-dropdown placement="right-start">
                 <template #reference>
-                  <s-dropdown-item icon="star">星星图标</s-dropdown-item>
+                  <s-dropdown-item>Others</s-dropdown-item>
                 </template>
                 <s-dropdown-menu>
-                  <s-dropdown-item icon="star">星星星星图标</s-dropdown-item>
-                  <s-dropdown-item icon="user">用星星户中心</s-dropdown-item>
+                  <s-dropdown-item>Steam</s-dropdown-item>
+                  <s-dropdown-item>Epic</s-dropdown-item>
+                  <s-dropdown-item>Origin</s-dropdown-item>
                 </s-dropdown-menu>
               </s-dropdown>
-              <s-dropdown-item icon="star">星星图标</s-dropdown-item>
-              <s-dropdown-item icon="user">用户中心</s-dropdown-item>
             </s-dropdown-menu>
           </s-dropdown>
         </div>

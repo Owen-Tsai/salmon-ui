@@ -9,19 +9,17 @@
     :tabindex="disabled ? null : -1"
     @click="handleClick"
   >
-    <s-icon class="sui-dropdown-menu__item__icon" :name="icon" v-if="icon"></s-icon>
     <slot></slot>
   </li>
 </template>
 <script lang="ts">
   import {
-    defineComponent, getCurrentInstance,
+    defineComponent,
+    getCurrentInstance,
     inject
   } from 'vue'
-  import SIcon from '../icon'
 
   export default defineComponent({
-    components: { SIcon },
     name: 'SDropdownItem',
     props: {
       command: {
@@ -30,7 +28,6 @@
       },
       disabled: Boolean,
       divided: Boolean,
-      icon: String
     },
     emits: ['click'],
     setup(props, ctx) {
