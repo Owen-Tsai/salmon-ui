@@ -14,11 +14,17 @@
 
   <li
     v-else
-    class="sui-dropdown sui-dropdown-menu__item"
+    class="sui-dropdown sui-dropdown-menu__item sui-dropdown-submenu"
     ref="referenceEl"
   >
     <div class="sui-dropdown__reference" ref="referenceEl">
       <slot name="reference"></slot>
+      <s-icon :class="[
+        'submenu-arrow',
+        isSubmenuExpanded ? 'rotate--180' : null
+      ]">
+        <arrow-right-s></arrow-right-s>
+      </s-icon>
     </div>
     <div
       class="sui-dropdown__popper"
@@ -44,7 +50,14 @@
   } from 'vue'
   import tippy from 'tippy.js'
   import { Placement } from 'tippy.js'
-  import {dropdownPopperConfig, themeType, triggerType} from '@/utils/popper-options'
+  import {
+    dropdownPopperConfig,
+    themeType,
+    triggerType
+  } from '@/utils/popper-options'
+
+  import SIcon from '../icon'
+  import { ArrowRightS } from '@salmon-ui/icons'
 
   const _placements = [
     'top', 'top-start', 'top-end',
@@ -54,6 +67,10 @@
 
   export default defineComponent({
     name: 'SDropdown',
+    components: {
+      SIcon,
+      ArrowRightS
+    },
     props: {
       type: String,
       splitButton: Boolean,
@@ -81,6 +98,21 @@
       const referenceEl = ref<Element>()
       const popperEl = ref<Element>()
       const instance = getCurrentInstance()
+      const isSubmenuExpanded = ref(false)
+
+      const handleMenuHide = (instance) => {
+        ctx.emit('before-hide', instance)
+        if (props.submenu) {
+          isSubmenuExpanded.value = false
+        }
+      }
+
+      const handleMenuShow = (instance) => {
+        ctx.emit('before-show', instance)
+        if (props.submenu) {
+          isSubmenuExpanded.value = true
+        }
+      }
 
       const options = {
         placement: props.placement,
@@ -89,8 +121,12 @@
         theme: themeType('light'),
         interactive: true,
         classes: ['sui-popper--dropdown'],
-        onHide: (instance) => { ctx.emit('before-hide', instance) },
-        onShow: (instance) => {ctx.emit('before-show', instance)},
+        onHide: (instance) => {
+          handleMenuHide(instance)
+        },
+        onShow: (instance) => {
+          handleMenuShow(instance)
+        },
         onHidden: (instance) => { ctx.emit('after-hide', instance) },
         onShown: (instance) => { ctx.emit('after-hide', instance) }
       }
@@ -152,7 +188,8 @@
       return {
         referenceEl, popperEl,
         commandHandler, handleClick,
-        computedStyle
+        computedStyle,
+        isSubmenuExpanded
       }
     }
   })

@@ -33,7 +33,10 @@
 
       .sui-icon {
         font-size 18px
-        margin-right 8px
+
+        &:not(.submenu-arrow) {
+          margin-right 8px
+        }
       }
 
       // states
@@ -55,6 +58,18 @@
           width 100%
           border-top 1px solid color--border
         }
+      }
+    }
+  }
+
+  &-submenu {
+    .sui-dropdown__reference {
+      display flex
+      align-content center
+      justify-content space-between
+
+      .submenu-arrow {
+        transition all .2s
       }
     }
   }
