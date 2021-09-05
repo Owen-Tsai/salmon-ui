@@ -845,25 +845,36 @@
             class="demo-m-sy"
             v-model="inputModel1"
             placeholder="请输入关键字"
-            prefix-icon="smile"
-          ></s-input>
-          <s-input
-            class="demo-m-sy"
-            v-model="inputModel1"
-            placeholder="请输入关键字"
-            prefix-icon="search"
-            suffix-icon="search"
           >
-            <template #append>
-              <s-button type="primary">搜索</s-button>
+            <template #prefix>
+              <s-icon>
+                <emotion-happy></emotion-happy>
+              </s-icon>
             </template>
           </s-input>
           <s-input
             class="demo-m-sy"
             v-model="inputModel1"
             placeholder="请输入关键字"
-            prefix-icon="search"
           >
+            <template #append>
+              <s-button type="primary">搜索</s-button>
+            </template>
+            <template #prefix>
+              <s-icon><search></search></s-icon>
+            </template>
+            <template #suffix>
+              <s-icon><search></search></s-icon>
+            </template>
+          </s-input>
+          <s-input
+            class="demo-m-sy"
+            v-model="inputModel1"
+            placeholder="请输入关键字"
+          >
+            <template #prefix>
+              <s-icon><search></search></s-icon>
+            </template>
             <template #prepend>
               <s-button>搜索</s-button>
             </template>
@@ -886,18 +897,21 @@
             placeholder="请输入关键字"
           >
             <template #suffix>
-              <s-icon name="lock"></s-icon>
+              <s-icon><i-switch></i-switch></s-icon>
             </template>
           </s-input>
           <s-input
             class="demo-m-sy"
             show-password-toggle
             clearable
-            suffix-icon="lock"
             v-model="inputModel2"
             placeholder="请输入关键字"
             disabled
-          ></s-input>
+          >
+            <template #suffix>
+              <s-icon><i-switch></i-switch></s-icon>
+            </template>
+          </s-input>
           <s-input
             class="demo-m-sy"
             v-model="inputModel1"
@@ -1108,7 +1122,7 @@
 
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
-    EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract
+    EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract, Search
   } from '@salmon-ui/icons'
 
   import avatar1 from './assets/avatar.jpg'
@@ -1117,7 +1131,7 @@
   export default {
     components: {
       AppsFill, Archive, Attachment, AwardFill, ISwitch: Switch, Playstation, XboxFill, ThumbUpFill,
-      EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract,
+      EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract, Search,
       SButton, SButtonGroup,
       SIcon, SAlert, SAvatar, SBadge,
       SBreadcrumb, SBreadcrumbItem,

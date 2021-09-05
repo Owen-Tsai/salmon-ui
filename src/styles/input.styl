@@ -38,11 +38,15 @@
     }
   }
 
+  .sui-icon {
+    font-size 18px
+  }
+
   &__prefix {
     height 100%
     position absolute
-    left 12px
-    top 0
+    left 10px
+    top -1px
     text-align center
     color color--disabled
     center-el()
@@ -52,16 +56,12 @@
   &__suffix {
     height 100%
     position absolute
-    right 12px
-    top 0
+    right 10px
+    top -1px
     text-align center
     color color--disabled
     center-el()
     pointer-events none
-
-    .sui-icon {
-      vertical-align baseline
-    }
 
     .sui-icon:not(:last-child) {
       margin-right 6px

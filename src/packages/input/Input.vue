@@ -9,8 +9,8 @@
       'is-hovering': hoveringInput && ($slots.prepend || $slots.append),
       'is-focused': isFocused
     }, {
-      'has-prefix': prefixIcon || $slots.prefix,
-      'has-suffix': suffixIcon || $slots.suffix || clearable || showPasswordToggle,
+      'has-prefix': $slots.prefix,
+      'has-suffix': $slots.suffix || clearable || showPasswordToggle,
       'has-prepend': $slots.prepend,
       'has-append': $slots.append,
       'sui-input--group': $slots.prepend || $slots.append
@@ -46,9 +46,8 @@
     >
 
     <!-- prefix -->
-    <span v-if="prefixIcon || $slots.prefix" class="sui-input__prefix">
+    <span v-if="$slots.prefix" class="sui-input__prefix">
       <slot name="prefix"></slot>
-      <s-icon v-if="prefixIcon" :name="prefixIcon"></s-icon>
     </span>
     <!-- suffix -->
     <span
@@ -61,26 +60,24 @@
           v-if="!showSuffixClear || !showSuffixPasswordToggle || !showSuffixWordCount"
         >
           <slot name="suffix"></slot>
-          <s-icon
-            v-if="suffixIcon"
-            class="sui-input__icon"
-            :name="suffixIcon"
-          ></s-icon>
         </template>
         <!-- password toggle -->
         <s-icon
           v-if="showSuffixPasswordToggle"
           class="sui-input__icon toggle-password"
-          :name="passwordVisible ? 'eye-off' : 'eye'"
           @click="handlePasswordToggle"
-        ></s-icon>
+        >
+          <eye-fill v-show="passwordVisible"></eye-fill>
+          <eye-close v-show="!passwordVisible"></eye-close>
+        </s-icon>
         <!-- clear -->
         <s-icon
           v-if="showSuffixClear && !disabled && !readonly"
           class="sui-input__icon clear-input"
-          name="x"
           @click="clearInput"
-        ></s-icon>
+        >
+          <close></close>
+        </s-icon>
         <!-- word count -->
         <span v-if="showSuffixWordCount" class="sui-input__count">
           <span class="sui-input__count-inner">
@@ -112,6 +109,11 @@
   import useAttrs from '@/utils/use-attrs'
   import SIcon from '../icon'
 
+  import {
+    EyeFill, EyeClose,
+    Close
+  } from '@salmon-ui/icons'
+
   const _sizes = ['small', '', 'large']
   const _pendantMap = {
     suffix: 'append',
@@ -122,7 +124,9 @@
     name: 'SInput',
     inheritAttrs: false,
     components: {
-      SIcon
+      SIcon,
+      EyeFill, EyeClose,
+      Close,
     },
     props: {
       modelValue: {
@@ -153,8 +157,6 @@
       tabindex: String,
       label: String,
       placeholder: String,
-      prefixIcon: String,
-      suffixIcon: String,
       inputStyle: {
         type: Object as PropType<CSSStyleRule>,
       }
@@ -192,7 +194,6 @@
       )
       const showSuffixIcon = computed(() =>
         ctx.slots.suffix ||
-        props.suffixIcon ||
         props.showPasswordToggle ||
         props.showWordCount ||
         props.clearable
