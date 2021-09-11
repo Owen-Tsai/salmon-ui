@@ -11,7 +11,9 @@
       :prefix-icon="prefixIcon"
     >
       <template #suffix>
-        <s-icon name="chevron-down" ref="suffixEl"></s-icon>
+        <s-icon ref="suffixEl">
+          <arrow-down-s></arrow-down-s>
+        </s-icon>
       </template>
     </s-input>
 
@@ -49,6 +51,7 @@
 
   import SInput from '../input'
   import SIcon from '../icon'
+  import { ArrowDownS } from '@salmon-ui/icons'
 
   interface IOption {
     label?: string,
@@ -58,7 +61,8 @@
   export default defineComponent({
     components: {
       SInput,
-      SIcon
+      SIcon,
+      ArrowDownS
     },
     props: {
       modelValue: [Array, String, Number, Boolean, Object],
