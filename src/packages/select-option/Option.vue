@@ -14,9 +14,10 @@
     <s-icon
       v-if="isMultipleSelect"
       v-show="itemSelected"
-      name="check"
       class="sui-option__check-icon"
-    ></s-icon>
+    >
+      <check></check>
+    </s-icon>
   </li>
 </template>
 
@@ -31,11 +32,13 @@
   } from 'vue'
 
   import SIcon from '../icon'
+  import { Check } from '@salmon-ui/icons'
 
   export default defineComponent({
     name: 'SOption',
     components: {
-      SIcon
+      SIcon,
+      Check
     },
     props: {
       disabled: Boolean,
