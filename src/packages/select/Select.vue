@@ -3,12 +3,15 @@
     <!-- reference -->
     <s-input
       ref="referenceEl"
-      class="sui-select__input"
+      :class="[
+        'sui-select__input',
+      ]"
       v-model="renderedLabel"
       :placeholder="placeholder"
-      readonly
+      :readonly="!searchable"
       :disabled="disabled"
       :prefix-icon="prefixIcon"
+      @change="handleInputChange"
     >
       <template #suffix>
         <s-icon ref="suffixEl">
@@ -35,14 +38,12 @@
     ref,
     computed,
     onMounted,
-    PropType,
-    watchEffect,
     watch,
     provide,
     reactive
   } from 'vue'
-  import tippy from 'tippy.js'
-  import { Placement } from 'tippy.js'
+
+  import tippy, { sticky } from 'tippy.js'
   import {
     triggerType,
     themeType,
@@ -52,6 +53,8 @@
   import SInput from '../input'
   import SIcon from '../icon'
   import { ArrowDownS } from '@salmon-ui/icons'
+
+  import isEqual from 'lodash/isEqual'
 
   interface IOption {
     label?: string,
@@ -69,14 +72,8 @@
       placeholder: String,
       disabled: Boolean,
       prefixIcon: String,
-      placement: {
-        type: String as PropType<Placement>,
-        default: 'bottom',
-        validator: (v: string) => {
-          return ['bottom', 'top'].includes(v)
-        }
-      },
       multiple: Boolean,
+      searchable: Boolean,
       limit: {
         type: Number,
         default: 0
@@ -118,7 +115,7 @@
       const getSelectedIndex = (option: IOption): number => {
         if(Array.isArray(selected.value)) {
           return selected.value.findIndex(el =>
-            el.value === option.value
+            isEqual(el.value, option.value)
           )
         }
 
@@ -164,23 +161,28 @@
         }
       }
 
+      const handleInputChange = (val) => {
+        console.log(val)
+      }
+
       const options = {
-        placement: props.placement,
         hideOnClick: true,
-        // plugins: ['sticky'],
+        plugins: [sticky],
         trigger: triggerType('click'),
         theme: themeType('light'),
         interactive: true,
         classes: ['sui-popper--select'],
         onHide: handleHide,
         onShow: handleShow,
+        sticky: true
       }
 
       onMounted(() => {
         if(referenceEl.value) {
           tippyInstance = tippy(referenceEl.value.$el, {
             ...options, ...dropdownPopperConfig, ...{
-              content: popperEl.value
+              content: popperEl.value,
+              placement: 'bottom'
             }
           })
         }
@@ -190,13 +192,6 @@
         }
 
         setSelectLabel()
-      })
-
-      watchEffect(() => {
-        if(!tippyInstance) return
-        tippyInstance.setProps({
-          placement: props.placement,
-        })
       })
 
       watch(() => props.disabled, (val) => {
@@ -223,6 +218,7 @@
         menuWidth,
         referenceEl, popperEl, suffixEl,
         handleOptionClick,
+        handleInputChange
       }
     }
   })

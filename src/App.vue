@@ -246,6 +246,20 @@
             <s-option value="da-mao">大毛毛</s-option>
             <s-option value="da-cai">大蔡蔡</s-option>
           </s-select>
+          <p>Test: selected value is {{ selectModelSearch }}</p>
+          <s-select v-model="selectModelSearch" searchable>
+            <s-option value="mao">毛毛</s-option>
+            <s-option value="cai">蔡蔡</s-option>
+            <s-option value="da-mao">大毛毛</s-option>
+            <s-option value="da-cai">大蔡蔡</s-option>
+          </s-select>
+          <p>Test: selected value is {{ selectModelObj }}</p>
+          <s-select v-model="selectModelObj">
+            <s-option :value="{ id: 1, value: 'mao' }">毛毛</s-option>
+            <s-option :value="{ id: 2, value: 'cai' }">蔡蔡</s-option>
+            <s-option :value="{ id: 3, value: 'maomao' }">大毛毛</s-option>
+            <s-option :value="{ id: 4, value: 'caicai' }">大蔡蔡</s-option>
+          </s-select>
           <p>测试：选中的值是{{ selectModel3 }}</p>
           <s-select
             v-model="selectModel3"
@@ -266,6 +280,13 @@
             <s-option value="cai">蔡蔡</s-option>
             <s-option value="da-mao"></s-option>
             <s-option value="da-cai">大蔡蔡</s-option>
+          </s-select>
+          <p>测试多选：选中的值是{{ selectModel4 }}</p>
+          <s-select v-model="selectModel4" multiple :limit="3">
+            <s-option :value="{ id: 1, value: 'mao' }">毛毛</s-option>
+            <s-option :value="{ id: 2, value: 'cai' }">蔡蔡</s-option>
+            <s-option :value="{ id: 3, value: 'maomao' }">大毛毛</s-option>
+            <s-option :value="{ id: 4, value: 'caicai' }">大蔡蔡</s-option>
           </s-select>
           <s-button class="demo-m-a" @click="selectLimit = selectLimit === 2 ? 3 : 2">切换 limit</s-button>
         </div>
@@ -702,6 +723,7 @@
           <s-button class="demo-m-a" type="text">文字按钮</s-button>
           <br>
           <s-button class="demo-m-a" danger type="primary">危险按钮</s-button>
+          <s-button class="demo-m-a" danger>危险操作</s-button>
           <s-button class="demo-m-a" danger type="outlined">outlined 危险</s-button>
           <s-button class="demo-m-a" danger type="text">危险文字</s-button>
           <br>
@@ -1175,6 +1197,9 @@
       selectModel: 'da-mao',
       selectModel2: ['mao', 'da-mao', 'cai'],
       selectModel3: '',
+      selectModel4: [],
+      selectModelSearch: '',
+      selectModelObj: '',
       selectLimit: 2,
       sliderValue: 10,
       sliderRange: [0, 20],

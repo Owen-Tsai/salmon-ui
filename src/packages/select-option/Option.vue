@@ -34,6 +34,8 @@
   import SIcon from '../icon'
   import { Check } from '@salmon-ui/icons'
 
+  import isEqual from 'lodash/isEqual'
+
   export default defineComponent({
     name: 'SOption',
     components: {
@@ -51,7 +53,7 @@
 
       const renderedLabel = computed(() => {
         if(!ctx.slots.default) {
-          return props.label ? props.label : props.value
+          return props.label ? props.label.toString() : props.value
         } else {
           return labelSpanEl.value?.innerText
         }
@@ -89,11 +91,11 @@
         ctx.emit('click')
       }
 
-      const isOptionSelected = (): boolean => {
+      const isOptionSelected = ():boolean => {
         if(isMultipleSelect.value) {
           return selectComponent.props.modelValue.includes(props.value)
         } else {
-          return selectComponent.props.modelValue === props.value
+          return isEqual(selectComponent.props.modelValue, props.value)
         }
       }
 
