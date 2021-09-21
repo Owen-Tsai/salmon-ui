@@ -256,11 +256,9 @@
         ctx.emit('change', event.target.value)
       }
       const handleCompositionStart = () => {
-        console.log(`composing`)
         isComposing.value = true
       }
       const handleCompositionEnd = () => {
-        console.log(`composing-end`)
         isComposing.value = false
       }
       const handleMouseEnter = () => {
