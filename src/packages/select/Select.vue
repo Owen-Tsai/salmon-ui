@@ -7,7 +7,7 @@
         'sui-select__input',
       ]"
       v-model="renderedLabel"
-      :placeholder="placeholder"
+      :placeholder="computedPlaceholder"
       :readonly="!searchable"
       :disabled="disabled"
       :prefix-icon="prefixIcon"
@@ -55,6 +55,7 @@
   import { ArrowDownS } from '@salmon-ui/icons'
 
   import isEqual from 'lodash/isEqual'
+  import classNamePlugin from '@/utils/className.tippy'
 
   interface IOption {
     label?: string,
@@ -88,6 +89,7 @@
       const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
       const selectedValues = ref<any[]>([])
       const renderedLabel = ref<string>('')
+      const inputLabel = ref<string>('')
 
       let tippyInstance: any = null
 
@@ -97,6 +99,14 @@
         }
 
         return '0'
+      })
+
+      const computedPlaceholder = computed(():undefined | string => {
+        if (props.searchable && renderedLabel.value) {
+          return renderedLabel.value
+        }
+
+        return props.placeholder
       })
 
       const handleHide = () => {
@@ -162,12 +172,13 @@
       }
 
       const handleInputChange = (val) => {
-        console.log(val)
+        if (props.searchable) {
+          inputLabel.value = val
+        }
       }
 
       const options = {
         hideOnClick: true,
-        plugins: [sticky],
         trigger: triggerType('click'),
         theme: themeType('light'),
         interactive: true,
@@ -177,12 +188,15 @@
         sticky: true
       }
 
+      const observer = ref<any>(null)
+
       onMounted(() => {
         if(referenceEl.value) {
           tippyInstance = tippy(referenceEl.value.$el, {
             ...options, ...dropdownPopperConfig, ...{
               content: popperEl.value,
-              placement: 'bottom'
+              placement: 'bottom',
+              plugins: [sticky, classNamePlugin]
             }
           })
         }
@@ -192,7 +206,20 @@
         }
 
         setSelectLabel()
+
+        observer.value = new MutationObserver(handleSlotChange)
+        observer.value.observe(popperEl.value.querySelector('.sui-select__menu'), {
+          attributes: true,
+          childList: true,
+          subtree: true
+        })
       })
+
+      const handleSlotChange = (e) => {
+        console.log('changed', e)
+        tippyInstance.hide()
+        tippyInstance.show()
+      }
 
       watch(() => props.disabled, (val) => {
         if(val) {
@@ -209,13 +236,16 @@
       provide('select', reactive({
         props,
         selected, selectedValues,
+        inputLabel,
         handleOptionClick
       }))
 
       return {
         selected,
         renderedLabel,
+        inputLabel,
         menuWidth,
+        computedPlaceholder,
         referenceEl, popperEl, suffixEl,
         handleOptionClick,
         handleInputChange
