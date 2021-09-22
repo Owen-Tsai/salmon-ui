@@ -2,16 +2,29 @@
   <div class="sui-select">
     <!-- reference -->
     <s-input
+      v-if="!searchable"
       ref="referenceEl"
-      :class="[
-        'sui-select__input',
-      ]"
+      class="sui-select__input"
       v-model="renderedLabel"
       :placeholder="placeholder"
-      :readonly="!searchable"
+      readonly
       :disabled="disabled"
-      :prefix-icon="prefixIcon"
+    >
+      <template #suffix>
+        <s-icon ref="suffixEl">
+          <arrow-down-s></arrow-down-s>
+        </s-icon>
+      </template>
+    </s-input>
+
+    <s-input
+      v-else
+      ref="referenceEl"
+      class="sui-select__input"
+      v-model="searchInputValue"
+      :placeholder="searchInputPlaceholder"
       @change="handleInputChange"
+      @focus="handleInputFocus"
     >
       <template #suffix>
         <s-icon ref="suffixEl">
@@ -44,6 +57,8 @@
   } from 'vue'
 
   import tippy, { sticky } from 'tippy.js'
+  import ClassName from '@/utils/className.tippy'
+
   import {
     triggerType,
     themeType,
@@ -84,6 +99,8 @@
       const referenceEl = ref()
       const popperEl = ref()
       const suffixEl = ref()
+      const searchInputValue = ref()
+      const searchInputPlaceholder = ref()
 
       const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
       const selectedValues = ref<any[]>([])
@@ -161,20 +178,21 @@
         }
       }
 
-      const handleInputChange = (val) => {
-        console.log(val)
+      const handleInputChange = (newVal) => {
+        console.log(newVal)
+      }
+
+      const handleInputFocus = () => {
+        searchInputValue.value = ''
       }
 
       const options = {
         hideOnClick: true,
-        plugins: [sticky],
         trigger: triggerType('click'),
         theme: themeType('light'),
         interactive: true,
-        classes: ['sui-popper--select'],
         onHide: handleHide,
         onShow: handleShow,
-        sticky: true
       }
 
       onMounted(() => {
@@ -182,7 +200,10 @@
           tippyInstance = tippy(referenceEl.value.$el, {
             ...options, ...dropdownPopperConfig, ...{
               content: popperEl.value,
-              placement: 'bottom'
+              placement: 'bottom',
+              plugins: [sticky, ClassName],
+              sticky: true,
+              classes: ['sui-popper--select'],
             }
           })
         }
@@ -209,7 +230,8 @@
       provide('select', reactive({
         props,
         selected, selectedValues,
-        handleOptionClick
+        handleOptionClick,
+        searchInputValue
       }))
 
       return {
@@ -218,7 +240,10 @@
         menuWidth,
         referenceEl, popperEl, suffixEl,
         handleOptionClick,
-        handleInputChange
+        searchInputValue,
+        searchInputPlaceholder,
+        handleInputChange,
+        handleInputFocus
       }
     }
   })

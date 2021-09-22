@@ -4,7 +4,7 @@
       'sui-select__option',
       optionDisabled ? 'is-disabled' : '',
       divided ? 'is-divided': '',
-      itemSelected ? 'is-selected' : ''
+      isOptionSelected ? 'is-selected' : ''
     ]"
     @click="handleClick"
   >
@@ -13,7 +13,7 @@
     </span>
     <s-icon
       v-if="isMultipleSelect"
-      v-show="itemSelected"
+      v-show="isOptionSelected"
       class="sui-option__check-icon"
     >
       <check></check>
@@ -27,7 +27,6 @@
     computed,
     inject,
     ref,
-    watchEffect,
     onMounted
   } from 'vue'
 
@@ -67,7 +66,7 @@
           selectComponent.selected.length >= selectComponent.props.limit &&
           selectComponent.props.limit > 0 &&
           selectComponent.props.multiple &&
-          !itemSelected.value
+          !isOptionSelected.value
         ) {
           return true
         }
@@ -77,8 +76,6 @@
 
       // injected
       const selectComponent:any = inject('select')
-
-      let itemSelected = ref(false)
 
       const handleClick = () => {
         if(optionDisabled.value) return
@@ -91,29 +88,24 @@
         ctx.emit('click')
       }
 
-      const isOptionSelected = ():boolean => {
+      const isOptionSelected = computed(():boolean => {
         if(isMultipleSelect.value) {
           return selectComponent.props.modelValue.includes(props.value)
         } else {
           return isEqual(selectComponent.props.modelValue, props.value)
         }
-      }
-
-      onMounted(() => {
-        if(selectComponent.props.modelValue && isOptionSelected()) {
-          handleClick()
-          itemSelected.value = true
-        }
       })
 
-      watchEffect(() => {
-        itemSelected.value = isOptionSelected()
+      onMounted(() => {
+        if(selectComponent.props.modelValue && isOptionSelected.value) {
+          handleClick()
+        }
       })
 
       return {
         labelSpanEl,
         renderedLabel,
-        itemSelected,
+        isOptionSelected,
         optionDisabled,
         isMultipleSelect,
         handleClick
