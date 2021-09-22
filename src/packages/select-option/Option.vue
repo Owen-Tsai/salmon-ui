@@ -1,11 +1,10 @@
 <template>
   <li
-    v-show="!optionHidden"
     :class="[
       'sui-select__option',
       optionDisabled ? 'is-disabled' : '',
       divided ? 'is-divided': '',
-      isOptionSelected ? 'is-selected' : ''
+      itemSelected ? 'is-selected' : ''
     ]"
     @click="handleClick"
   >
@@ -14,7 +13,7 @@
     </span>
     <s-icon
       v-if="isMultipleSelect"
-      v-show="isOptionSelected"
+      v-show="itemSelected"
       class="sui-option__check-icon"
     >
       <check></check>
@@ -28,7 +27,7 @@
     computed,
     inject,
     ref,
-    watch,
+    watchEffect,
     onMounted
   } from 'vue'
 
@@ -51,13 +50,12 @@
     },
     setup(props, ctx) {
       const labelSpanEl = ref<HTMLSpanElement>()
-      const optionHidden = ref(false)
 
-      const renderedLabel = computed(():string => {
+      const renderedLabel = computed(() => {
         if(!ctx.slots.default) {
-          return props.label ? props.label.toString() : String(props.value)
+          return props.label ? props.label.toString() : props.value
         } else {
-          return labelSpanEl.value?.innerText || ''
+          return labelSpanEl.value?.innerText
         }
       })
       const isMultipleSelect = computed(() => {
@@ -69,7 +67,7 @@
           selectComponent.selected.length >= selectComponent.props.limit &&
           selectComponent.props.limit > 0 &&
           selectComponent.props.multiple &&
-          !isOptionSelected.value
+          !itemSelected.value
         ) {
           return true
         }
@@ -79,6 +77,8 @@
 
       // injected
       const selectComponent:any = inject('select')
+
+      let itemSelected = ref(false)
 
       const handleClick = () => {
         if(optionDisabled.value) return
@@ -91,30 +91,30 @@
         ctx.emit('click')
       }
 
-      const isOptionSelected = computed(():boolean => {
+      const isOptionSelected = ():boolean => {
         if(isMultipleSelect.value) {
           return selectComponent.props.modelValue.includes(props.value)
         } else {
           return isEqual(selectComponent.props.modelValue, props.value)
         }
-      })
+      }
 
       onMounted(() => {
-        if(selectComponent.props.modelValue && isOptionSelected.value) {
+        if(selectComponent.props.modelValue && isOptionSelected()) {
           handleClick()
+          itemSelected.value = true
         }
       })
 
-      watch(() => selectComponent.inputLabel, (val) => {
-        optionHidden.value = !(renderedLabel.value.includes(val) || !val)
+      watchEffect(() => {
+        itemSelected.value = isOptionSelected()
       })
 
       return {
         labelSpanEl,
         renderedLabel,
+        itemSelected,
         optionDisabled,
-        optionHidden,
-        isOptionSelected,
         isMultipleSelect,
         handleClick
       }
