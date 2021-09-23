@@ -23,7 +23,8 @@
       class="sui-select__input"
       v-model="searchInputValue"
       :placeholder="searchInputPlaceholder"
-      @change="handleInputChange"
+      @composition:start="handleComposition('start')"
+      @composition:end="handleComposition('end')"
       @focus="handleInputFocus"
     >
       <template #suffix>
@@ -101,6 +102,7 @@
       const suffixEl = ref()
       const searchInputValue = ref()
       const searchInputPlaceholder = ref()
+      const isInputComposing = ref(false)
 
       const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
       const selectedValues = ref<any[]>([])
@@ -146,9 +148,19 @@
             str += i === selected.value.length - 1 ? '' : ', '
           }
 
-          renderedLabel.value = str
+          if (props.searchable) {
+            searchInputPlaceholder.value = str
+            searchInputValue.value = str
+          } else {
+            renderedLabel.value = str
+          }
         } else if(!Array.isArray(selected.value)) {
-          renderedLabel.value = selected.value?.label || selected.value?.value
+          if (props.searchable) {
+            searchInputPlaceholder.value = selected.value?.label || selected.value?.value
+            searchInputValue.value = selected.value?.label || selected.value?.value
+          } else {
+            renderedLabel.value = selected.value?.label || selected.value?.value
+          }
         }
       }
 
@@ -178,12 +190,12 @@
         }
       }
 
-      const handleInputChange = (newVal) => {
-        console.log(newVal)
-      }
-
       const handleInputFocus = () => {
         searchInputValue.value = ''
+      }
+
+      const handleComposition = (state: 'start' | 'end') => {
+        isInputComposing.value = state === 'start'
       }
 
       const options = {
@@ -231,7 +243,8 @@
         props,
         selected, selectedValues,
         handleOptionClick,
-        searchInputValue
+        searchInputValue,
+        isInputComposing
       }))
 
       return {
@@ -242,8 +255,8 @@
         handleOptionClick,
         searchInputValue,
         searchInputPlaceholder,
-        handleInputChange,
-        handleInputFocus
+        handleInputFocus,
+        handleComposition
       }
     }
   })
