@@ -163,7 +163,7 @@
     },
     emits: [
       'update:modelValue', 'change', 'focus', 'blur', 'input',
-      'keydown', 'clear'
+      'keydown', 'clear', 'composition:start', 'composition:end'
     ],
     setup(props, ctx) {
       const inputEl = ref()
@@ -257,9 +257,11 @@
       }
       const handleCompositionStart = () => {
         isComposing.value = true
+        ctx.emit('composition:start')
       }
       const handleCompositionEnd = () => {
         isComposing.value = false
+        ctx.emit('composition:end')
       }
       const handleMouseEnter = () => {
         isHovering.value = true
