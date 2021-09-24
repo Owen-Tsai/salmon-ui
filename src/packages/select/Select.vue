@@ -120,9 +120,24 @@
 
       const handleHide = () => {
         suffixEl.value.$el.classList.remove('select-suffix-rotate')
+        if (props.searchable) {
+          if (!searchInputValue.value || !validateInputValue()) {
+            searchInputValue.value = renderedLabel.value
+          }
+        }
       }
       const handleShow = () => {
         suffixEl.value.$el.classList.add('select-suffix-rotate')
+      }
+      const validateInputValue = () => {
+        const optionEls: HTMLElement[] = popperEl.value.querySelector('.sui-select__option')
+        for (let i = 0; i < optionEls.length; i++) {
+          if (optionEls[i].innerHTML === searchInputValue.value) {
+            return true
+          }
+        }
+
+        return false
       }
       const processSelectedValues = () => {
         if(!Array.isArray(selected.value)) return
@@ -151,16 +166,16 @@
           if (props.searchable) {
             searchInputPlaceholder.value = str
             searchInputValue.value = str
-          } else {
-            renderedLabel.value = str
           }
+
+          renderedLabel.value = str
         } else if(!Array.isArray(selected.value)) {
           if (props.searchable) {
             searchInputPlaceholder.value = selected.value?.label || selected.value?.value
             searchInputValue.value = selected.value?.label || selected.value?.value
-          } else {
-            renderedLabel.value = selected.value?.label || selected.value?.value
           }
+
+          renderedLabel.value = selected.value?.label || selected.value?.value
         }
       }
 
