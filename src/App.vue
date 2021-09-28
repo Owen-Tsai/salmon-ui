@@ -240,7 +240,7 @@
         <h2>Selects</h2>
         <div class="demo-content">
           <p>测试：选中的值是{{ selectModel }}</p>
-          <s-select v-model="selectModel">
+          <s-select v-model="selectModel" disabled>
             <s-option value="mao">毛毛</s-option>
             <s-option value="cai">蔡蔡</s-option>
             <s-option value="da-mao">大毛毛</s-option>
@@ -248,6 +248,11 @@
           </s-select>
           <p>Test: selected value is {{ selectModelSearch }}</p>
           <s-select v-model="selectModelSearch" searchable>
+            <template #prefix>
+              <s-icon>
+                <user></user>
+              </s-icon>
+            </template>
             <s-option value="mao">毛毛</s-option>
             <s-option value="cai">蔡蔡</s-option>
             <s-option value="da-mao">大毛毛</s-option>
@@ -255,6 +260,11 @@
           </s-select>
           <p>Test: selected value is {{ selectModelObj }}</p>
           <s-select v-model="selectModelObj">
+            <template #prefix>
+              <s-icon>
+                <user></user>
+              </s-icon>
+            </template>
             <s-option :value="{ id: 1, value: 'mao' }">毛毛</s-option>
             <s-option :value="{ id: 2, value: 'cai' }">蔡蔡</s-option>
             <s-option :value="{ id: 3, value: 'maomao' }">大毛毛</s-option>
@@ -1199,7 +1209,7 @@
       selectModel3: '',
       selectModel4: [],
       selectModelSearch: '',
-      selectModelObj: '',
+      selectModelObj: undefined,
       selectLimit: 2,
       sliderValue: 10,
       sliderRange: [0, 20],

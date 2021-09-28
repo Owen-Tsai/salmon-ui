@@ -15,6 +15,9 @@
           <arrow-down-s></arrow-down-s>
         </s-icon>
       </template>
+      <template #prefix v-if="$slots.prefix">
+        <slot name="prefix"></slot>
+      </template>
     </s-input>
 
     <s-input
@@ -27,6 +30,9 @@
       @composition:end="handleComposition('end')"
       @focus="handleInputFocus"
     >
+      <template #prefix v-if="$slots.prefix">
+        <slot name="prefix"></slot>
+      </template>
       <template #suffix>
         <s-icon ref="suffixEl">
           <arrow-down-s></arrow-down-s>
@@ -72,10 +78,11 @@
 
   import isEqual from 'lodash/isEqual'
 
-  interface IOption {
-    label?: string,
-    value: any
-  }
+  import {
+    IOption,
+    ISelectProvider,
+    OptionValue
+  } from './select.type'
 
   export default defineComponent({
     components: {
@@ -87,7 +94,6 @@
       modelValue: [Array, String, Number, Boolean, Object],
       placeholder: String,
       disabled: Boolean,
-      prefixIcon: String,
       multiple: Boolean,
       searchable: Boolean,
       limit: {
@@ -105,7 +111,7 @@
       const isInputComposing = ref(false)
 
       const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
-      const selectedValues = ref<any[]>([])
+      const selectedValues = ref<OptionValue[]>([])
       const renderedLabel = ref<string>('')
 
       let tippyInstance: any = null
@@ -208,7 +214,6 @@
       const handleInputFocus = () => {
         searchInputValue.value = ''
       }
-
       const handleComposition = (state: 'start' | 'end') => {
         isInputComposing.value = state === 'start'
       }
@@ -260,7 +265,7 @@
         handleOptionClick,
         searchInputValue,
         isInputComposing
-      }))
+      } as ISelectProvider))
 
       return {
         selected,
