@@ -106,8 +106,8 @@
       const referenceEl = ref()
       const popperEl = ref()
       const suffixEl = ref()
-      const searchInputValue = ref()
-      const searchInputPlaceholder = ref()
+      const searchInputValue = ref('')
+      const searchInputPlaceholder = ref('')
       const isInputComposing = ref(false)
 
       const selected = props.multiple ? ref<IOption[]>([]) : ref<IOption>()
@@ -176,12 +176,14 @@
 
           renderedLabel.value = str
         } else if(!Array.isArray(selected.value)) {
+          const val = selected.value ?
+            String(selected.value.label) || String(selected.value.value) : ''
           if (props.searchable) {
-            searchInputPlaceholder.value = selected.value?.label || selected.value?.value
-            searchInputValue.value = selected.value?.label || selected.value?.value
+            searchInputPlaceholder.value = val
+            searchInputValue.value = val
           }
 
-          renderedLabel.value = selected.value?.label || selected.value?.value
+          renderedLabel.value = val
         }
       }
 
