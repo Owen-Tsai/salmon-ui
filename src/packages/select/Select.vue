@@ -60,7 +60,8 @@
     onMounted,
     watch,
     provide,
-    reactive
+    reactive,
+    CreateComponentPublicInstance
   } from 'vue'
 
   import tippy, { sticky } from 'tippy.js'
@@ -103,9 +104,9 @@
     },
     setup(props, ctx) {
       // refs
-      const referenceEl = ref()
-      const popperEl = ref()
-      const suffixEl = ref()
+      const referenceEl = ref<CreateComponentPublicInstance>()
+      const popperEl = ref<HTMLElement>()
+      const suffixEl = ref<CreateComponentPublicInstance>()
       const searchInputValue = ref('')
       const searchInputPlaceholder = ref('')
       const isInputComposing = ref(false)
@@ -125,7 +126,7 @@
       })
 
       const handleHide = () => {
-        suffixEl.value.$el.classList.remove('select-suffix-rotate')
+        suffixEl.value!.$el.classList.remove('select-suffix-rotate')
         if (props.searchable) {
           if (!searchInputValue.value || !validateInputValue()) {
             searchInputValue.value = renderedLabel.value
@@ -133,10 +134,10 @@
         }
       }
       const handleShow = () => {
-        suffixEl.value.$el.classList.add('select-suffix-rotate')
+        suffixEl.value!.$el.classList.add('select-suffix-rotate')
       }
       const validateInputValue = () => {
-        const optionEls: HTMLElement[] = popperEl.value.querySelector('.sui-select__option')
+        const optionEls = popperEl.value!.querySelectorAll('.sui-select__option')!
         for (let i = 0; i < optionEls.length; i++) {
           if (optionEls[i].innerHTML === searchInputValue.value) {
             return true
