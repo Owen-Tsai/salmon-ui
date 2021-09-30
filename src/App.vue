@@ -1148,6 +1148,8 @@
   import SCarouselItem from './packages/carousel-item'
   import STable from './packages/table'
 
+  import { h } from 'vue'
+
   import {
     AppsFill, Archive, Attachment, AwardFill, Switch, Playstation, XboxFill, ThumbUpFill,
     EmotionHappy, WifiOff, CloseCircle, Heart, User, Add, Subtract, Search
@@ -1319,7 +1321,7 @@
           title: this.notice.title,
           content: this.notice.content,
           showIcon: this.notice.showIcon,
-          icon: this.notice.icon || undefined,
+          icon: h(Heart),
           duration: parseInt(this.notice.duration),
           position: this.notice.position
         })

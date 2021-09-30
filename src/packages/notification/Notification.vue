@@ -51,6 +51,7 @@
   import {
     defineComponent,
     PropType,
+    VNode,
     computed,
     ref,
     onMounted
@@ -108,7 +109,7 @@
         default: undefined
       },
       showIcon: Boolean,
-      icon: String,
+      icon: Object as PropType<VNode | (() => VNode)>,
       id: String,
       dismissible: {
         type: Boolean,
