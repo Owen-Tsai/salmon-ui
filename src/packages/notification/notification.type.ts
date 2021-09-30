@@ -12,7 +12,8 @@ export interface INotificationConfig {
   type?: NotificationType,
   position?: NotificationPosition,
   zIndex?: number,
-  id?: string
+  id?: string,
+  icon?: VNode | (() => VNode)
 }
 
 export interface INotificationHandler {

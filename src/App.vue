@@ -320,14 +320,10 @@
               <s-input v-model="notice.content" placeholder="内容"></s-input>
             </div>
             <div class="row">
-              <s-input v-model="notice.icon" placeholder="图标">
-                <template #prepend>
-                  <s-select v-model="notice.showIcon" style="width: 100px">
-                    <s-option value="true">显示</s-option>
-                    <s-option value="false">不显示</s-option>
-                  </s-select>
-                </template>
-              </s-input>
+              <s-radio-group v-model="notice.showIcon">
+                <s-radio-button :value="true">显示</s-radio-button>
+                <s-radio-button :value="false">不显示</s-radio-button>
+              </s-radio-group>
             </div>
             <div class="row">
               <s-radio-group v-model="notice.position">
@@ -1236,8 +1232,7 @@
         title: '欢迎使用 Salmon UI',
         content: 'Salmon UI 是基于 Vue 3.x 的 Web 端用户界面组件库，拥有简洁统一的视觉表现和语义化的程序实现',
         duration: 5000,
-        icon: undefined,
-        showIcon: 'false',
+        showIcon: false,
         position: 'top-right'
       },
       ratingModel: 0,
@@ -1323,7 +1318,7 @@
           type: this.notice.type || 'default',
           title: this.notice.title,
           content: this.notice.content,
-          showIcon: this.notice.showIcon !== 'false',
+          showIcon: this.notice.showIcon,
           icon: this.notice.icon || undefined,
           duration: parseInt(this.notice.duration),
           position: this.notice.position
@@ -1449,7 +1444,7 @@
       display flex
       align-items center
 
-      * {
+      *:not(.sui-radio-button) {
         padding 4px
       }
     }

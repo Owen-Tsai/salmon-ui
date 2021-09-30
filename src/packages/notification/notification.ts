@@ -31,7 +31,6 @@ const _gap = 16
 const Notification = function(
   options: INotificationConfig = {} as INotificationConfig
 ) {
-  console.log('init start')
   const position = options.position || 'top-right'
   let verticalOffset = options.offset || 0
 
@@ -60,8 +59,6 @@ const Notification = function(
     options as any
   )
 
-  console.log(instanceVm)
-
   if (instanceVm.props) {
     instanceVm.props.onDestroy = () => {
       render(null, container)
@@ -72,8 +69,6 @@ const Notification = function(
 
   instances[position].push({ vm: instanceVm })
   document.body.appendChild(container)
-
-  console.log('init end')
 
   return {
     close: () => (

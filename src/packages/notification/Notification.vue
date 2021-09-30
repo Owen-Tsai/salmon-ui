@@ -19,12 +19,14 @@
       @mouseleave="startTimer()"
       :style="customStyle"
     >
-      <s-icon
-        v-if="showIcon"
-        :name="iconName"
-        class="sui-notification__icon"
-        :stroke-width="2"
-      ></s-icon>
+      <slot name="icon">
+        <s-icon class="sui-notification__icon" v-if="showIcon">
+          <checkbox-circle-fill v-if="type === 'success'"></checkbox-circle-fill>
+          <alert-fill v-else-if="type === 'warning'"></alert-fill>
+          <error-warning-fill v-else-if="type === 'error'"></error-warning-fill>
+          <information-fill v-else></information-fill>
+        </s-icon>
+      </slot>
 
       <div class="sui-notification__text">
         <div class="sui-notification__title" v-if="title">{{ title }}</div>
@@ -37,7 +39,9 @@
         class="sui-notification__close-icon"
         @click="close"
       >
-        <s-icon name="x"></s-icon>
+        <s-icon>
+          <close></close>
+        </s-icon>
       </div>
     </div>
   </transition>
@@ -60,18 +64,23 @@
   } from './notification.type'
 
   import SIcon from '../icon'
-
-  const _iconTypeMap = {
-    success: 'check-circle',
-    warning: 'alert-circle',
-    error: 'x-circle',
-    default: 'info'
-  }
+  import {
+    Close,
+    CheckboxCircleFill,
+    AlertFill,
+    ErrorWarningFill,
+    InformationFill
+  } from '@salmon-ui/icons'
 
   export default defineComponent({
     name: 'SNotification',
     components: {
-      SIcon
+      SIcon,
+      Close,
+      CheckboxCircleFill,
+      AlertFill,
+      ErrorWarningFill,
+      InformationFill
     },
     props: {
       type: {
@@ -130,12 +139,6 @@
         }
       })
 
-      const iconName = computed(() => {
-        if (props.icon) return props.icon
-
-        return _iconTypeMap[props.type]
-      })
-
       const {
         startTimer,
         clearTimer,
@@ -159,7 +162,6 @@
         handleDestroy,
 
         customStyle,
-        iconName,
         visible,
         horizontalClass
       }
