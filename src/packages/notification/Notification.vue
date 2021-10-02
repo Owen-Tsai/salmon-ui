@@ -19,12 +19,15 @@
       @mouseleave="startTimer()"
       :style="customStyle"
     >
-      <slot name="icon">
-        <s-icon class="sui-notification__icon" v-if="showIcon">
+      <slot name="icon" v-if="showIcon">
+        <s-icon class="sui-notification__icon" v-if="!icon">
           <checkbox-circle-fill v-if="type === 'success'"></checkbox-circle-fill>
           <alert-fill v-else-if="type === 'warning'"></alert-fill>
           <error-warning-fill v-else-if="type === 'error'"></error-warning-fill>
           <information-fill v-else></information-fill>
+        </s-icon>
+        <s-icon class="sui-notification__icon" v-else>
+          <component :is="icon"></component>
         </s-icon>
       </slot>
 

@@ -56,7 +56,8 @@ const Notification = function(
   const container = document.createElement('div')
   const instanceVm = createVNode(
     NotificationConstructor,
-    options as any
+    options as any,
+    () => options.icon || null
   )
 
   if (instanceVm.props) {

@@ -324,6 +324,7 @@
                 <s-radio-button :value="true">显示</s-radio-button>
                 <s-radio-button :value="false">不显示</s-radio-button>
               </s-radio-group>
+              <s-checkbox v-model="notice.customIcon">Custom Icon</s-checkbox>
             </div>
             <div class="row">
               <s-radio-group v-model="notice.position">
@@ -1235,7 +1236,8 @@
         content: 'Salmon UI 是基于 Vue 3.x 的 Web 端用户界面组件库，拥有简洁统一的视觉表现和语义化的程序实现',
         duration: 5000,
         showIcon: false,
-        position: 'top-right'
+        position: 'top-right',
+        customIcon: false
       },
       ratingModel: 0,
       ratingModel2: 0,
@@ -1321,7 +1323,7 @@
           title: this.notice.title,
           content: this.notice.content,
           showIcon: this.notice.showIcon,
-          icon: h(Heart),
+          icon: this.notice.customIcon ? h(Heart) : null,
           duration: parseInt(this.notice.duration),
           position: this.notice.position
         })
