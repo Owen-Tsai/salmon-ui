@@ -10,7 +10,9 @@ export interface IMessageConfig {
   onClose?: () => void,
   type?: MessageType,
   zIndex?: number,
-  id?: string
+  id?: string,
+  icon?: VNode | (() => VNode),
+  showIcon?: boolean
 }
 
 export interface IMessageHandler {

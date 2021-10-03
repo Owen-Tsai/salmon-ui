@@ -56,11 +56,10 @@ const Message = function(
   const container = document.createElement('div')
   container.className = `container_${id}`
 
-  const message = options.message
-
   const instanceVm = createVNode(
     MessageConstructor,
-    options as any
+    options as any,
+    () => options.icon || null
   )
 
   if (!instanceVm.props) return

@@ -17,12 +17,17 @@
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
-      <s-icon
-        v-if="showIcon"
-        class="sui-message__icon"
-        :name="iconName"
-        stroke-width="2"
-      ></s-icon>
+      <slot name="icon" v-if="showIcon">
+        <s-icon v-if="!icon" class="sui-message__icon">
+          <checkbox-circle-fill v-if="type === 'success'"></checkbox-circle-fill>
+          <alert-fill v-else-if="type === 'warning'"></alert-fill>
+          <error-warning-fill v-else-if="type === 'error'"></error-warning-fill>
+          <information-fill v-else></information-fill>
+        </s-icon>
+        <s-icon v-else class="sui-message__icon">
+          <component :is="icon"></component>
+        </s-icon>
+      </slot>
 
       <p v-if="useHTML" v-html="message"></p>
       <p v-else>{{ message }}</p>
@@ -34,12 +39,19 @@
   import {
     defineComponent,
     PropType,
+    VNode,
     ref,
     computed,
     onMounted
   } from 'vue'
 
   import SIcon from '../icon'
+  import {
+    CheckboxCircleFill,
+    AlertFill,
+    ErrorWarningFill,
+    InformationFill
+  } from '@salmon-ui/icons'
 
   import {
     MessageType,
@@ -47,17 +59,14 @@
 
   import useTimer from '@/utils/use-overlay-timer'
 
-  const _iconTypeMap = {
-    success: 'check-circle',
-    warning: 'alert-circle',
-    error: 'x-circle',
-    default: 'info'
-  }
-
   export default defineComponent({
     name: 'SMessage',
     components: {
-      SIcon
+      SIcon,
+      CheckboxCircleFill,
+      AlertFill,
+      ErrorWarningFill,
+      InformationFill
     },
     props: {
       type: {
@@ -87,7 +96,7 @@
         type: Boolean,
         default: true
       },
-      icon: String,
+      icon: Object as PropType<VNode | (() => VNode)>,
       id: String
     },
     emits: ['destroy'],
@@ -101,12 +110,6 @@
         top: `${props.offset}px`,
         zIndex: props.zIndex
       }))
-
-      const iconName = computed(() => {
-        if (props.icon) return props.icon
-
-        return _iconTypeMap[props.type]
-      })
 
       // methods
       const {
@@ -128,7 +131,6 @@
       return {
         visible,
         customStyle,
-        iconName,
 
         startTimer,
         clearTimer,
