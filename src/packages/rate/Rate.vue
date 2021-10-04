@@ -21,16 +21,21 @@
       <s-icon
         class="sui-rate__icon"
         :style="getItemStyle(item)"
-        :name="icon"
-      ></s-icon>
+      >
+        <slot>
+          <star-fill></star-fill>
+        </slot>
+      </s-icon>
       <s-icon
         v-if="showDecimalIcon(item)"
         class="sui-rate__icon-decimal"
         :color="color"
-        :duo-tone-color="color"
-        :name="icon"
         :style="decimalIconStyle"
-      ></s-icon>
+      >
+        <slot>
+          <star-fill></star-fill>
+        </slot>
+      </s-icon>
     </span>
 
     <span
@@ -51,10 +56,15 @@
 
   import SIcon from '../icon'
 
+  import {
+    StarFill
+  } from '@salmon-ui/icons'
+
   export default defineComponent({
     name: 'SRate',
     components: {
-      SIcon
+      SIcon,
+      StarFill
     },
     props: {
       modelValue: {

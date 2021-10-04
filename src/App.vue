@@ -1009,7 +1009,9 @@
           <br>
           <s-rate v-model="ratingModel" readonly></s-rate>
           <br>
-          <s-rate v-model="ratingModel" icon="heart" color="#ff5150"></s-rate>
+          <s-rate v-model="ratingModel" color="#ff5150">
+            <heart></heart>
+          </s-rate>
         </div>
       </div>
 
