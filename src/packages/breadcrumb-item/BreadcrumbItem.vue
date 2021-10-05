@@ -1,66 +1,52 @@
-<template>
-  <span class="sui-breadcrumb-item">
-    <span
-      class="sui-breadcrumb-item__content"
-      :class="{'is-link': to}"
-      ref="item"
-    >
-      <slot></slot>
-    </span>
-
-    <s-icon
-      class="sui-breadcrumb-item__separator"
-      :name="separateIcon" v-if="separateIcon"
-      stroke-width="2.5"
-    ></s-icon>
-    <span v-else class="sui-breadcrumb-item__separator">{{ separator }}</span>
-  </span>
-</template>
-
 <script lang="ts">
   import {
+    h,
     defineComponent,
-    inject,
-    ref,
-    onMounted,
-    getCurrentInstance
   } from 'vue'
 
   import SIcon from '../icon'
-
-  interface IBreadcrumbProps {
-    separator?: string,
-    separateIcon?: string
-  }
+  import { ArrowRightSFill } from '@salmon-ui/icons'
 
   export default defineComponent({
     name: 'SBreadcrumbItem',
-    components: { SIcon },
     props: {
       to: {
         type: [String, Object],
         default: ''
       },
     },
-    setup(props) {
-      const parentProps: IBreadcrumbProps | undefined = inject('props')
-      const item = ref()
-      const componentInstance = getCurrentInstance()
-      const router = componentInstance?.appContext.config.globalProperties.$router
+    render() {
+      const namePrefix = 'sui-breadcrumb-item'
+      let hasCustomSeparator = false
 
-      onMounted(() => {
-        item.value.setAttribute('role', 'link')
-        item.value.addEventListener('click', () => {
-          if(!props.to || !router) return
-          router.push(props.to)
-        })
-      })
-
-      return {
-        item,
-        separator: parentProps?.separator,
-        separateIcon: parentProps?.separateIcon
+      const attrs = {
+        class: namePrefix
       }
-    }
+      const contentElAttrs = {
+        class: [
+          `${namePrefix}__content`,
+          this.to ? 'is-link' : null
+        ],
+      }
+      const separatorElAttrs = {
+        class: `${namePrefix}__separator`
+      }
+      if (this.$parent?.$slots?.separator) {
+        hasCustomSeparator = true
+      }
+
+      return h(
+        'span',
+        attrs,
+        [
+          h('span', contentElAttrs, this.$slots.default?.()),
+          h('span', separatorElAttrs,
+            hasCustomSeparator ?
+              this.$parent?.$slots?.separator!() :
+              h(SIcon, h(ArrowRightSFill))
+          )
+        ]
+      )
+    },
   })
 </script>

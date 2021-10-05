@@ -513,19 +513,25 @@
         <h2>Breadcrumb</h2>
         <div class="demo-content">
           <s-breadcrumb>
-            <s-breadcrumb-item to="/">首页</s-breadcrumb-item>
-            <s-breadcrumb-item class="demo-m-y">
-              <a href="">订单管理</a>
-            </s-breadcrumb-item>
-            <s-breadcrumb-item>订单列表</s-breadcrumb-item>
-            <s-breadcrumb-item>订单详情</s-breadcrumb-item>
+            <s-breadcrumb-item>首页</s-breadcrumb-item>
+            <s-breadcrumb-item>我的文章</s-breadcrumb-item>
+            <s-breadcrumb-item>《JavaScript框架设计》</s-breadcrumb-item>
           </s-breadcrumb>
-
-          <s-breadcrumb separate-icon="chevron-right" class="demo-m-y">
-            <s-breadcrumb-item to="/">首页</s-breadcrumb-item>
+          <s-breadcrumb>
+            <template #separator>
+              <s-icon>
+                <subtract></subtract>
+              </s-icon>
+            </template>
+            <s-breadcrumb-item>首页</s-breadcrumb-item>
             <s-breadcrumb-item>订单管理</s-breadcrumb-item>
-            <s-breadcrumb-item>订单列表</s-breadcrumb-item>
-            <s-breadcrumb-item>订单详情</s-breadcrumb-item>
+            <s-breadcrumb-item>No.02121127</s-breadcrumb-item>
+          </s-breadcrumb>
+          <s-breadcrumb>
+            <template #separator>/</template>
+            <s-breadcrumb-item>首页</s-breadcrumb-item>
+            <s-breadcrumb-item>订单管理</s-breadcrumb-item>
+            <s-breadcrumb-item>No.02121127</s-breadcrumb-item>
           </s-breadcrumb>
         </div>
       </div>
