@@ -27,11 +27,9 @@
       :style="customHeaderStyle"
     >
       <slot name="title">{{ title }}</slot>
-      <s-icon
-        class="sui-accordion-item__icon"
-        stroke-width="1.25"
-        name="chevron-right"
-      ></s-icon>
+      <s-icon class="sui-accordion-item__icon">
+        <arrow-right-s></arrow-right-s>
+      </s-icon>
     </div>
 
     <s-transition-wrapper>
@@ -61,6 +59,7 @@
 
   import SIcon from '../icon'
   import STransitionWrapper from './TransitonWrapper.vue'
+  import { ArrowRightS } from '@salmon-ui/icons'
 
   import {
     generateId
@@ -74,7 +73,8 @@
     name: 'SAccordionItem',
     components: {
       SIcon,
-      STransitionWrapper
+      STransitionWrapper,
+      ArrowRightS
     },
     props: {
       title: String,
