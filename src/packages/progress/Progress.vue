@@ -18,11 +18,14 @@
         <div class="sui-progress__fill" :style="linearFillStyle"></div>
       </div>
       <div class="sui-progress__info">
-        <span v-if="percentage !== 100">{{ percentage }}%</span>
-        <s-icon
-          :name="finishIcon"
-          v-else
-        ></s-icon>
+        <slot>
+          <span v-if="percentage !== 100">{{ percentage }}%</span>
+          <slot v-else name="icon">
+            <s-icon class="is-finished">
+              <checkbox-circle-fill></checkbox-circle-fill>
+            </s-icon>
+          </slot>
+        </slot>
       </div>
     </div>
 
@@ -54,11 +57,14 @@
         </svg>
       </div>
       <div class="sui-progress__info">
-        <span v-if="percentage !== 100">{{ percentage }}%</span>
-        <s-icon
-          :name="finishIcon"
-          v-else
-        ></s-icon>
+        <slot>
+          <span v-if="percentage !== 100">{{ percentage }}%</span>
+          <slot v-else name="icon">
+            <s-icon class="is-finished">
+              <checkbox-circle-fill></checkbox-circle-fill>
+            </s-icon>
+          </slot>
+        </slot>
       </div>
     </div>
 
@@ -66,16 +72,26 @@
 </template>
 
 <script lang="ts">
-  import {computed, defineComponent, PropType,} from 'vue'
+  import {
+    computed,
+    defineComponent,
+    PropType
+  } from 'vue'
 
   import SIcon from '../icon'
+  import { CheckboxCircleFill } from '@salmon-ui/icons'
 
-  import {IProgressColor, ProgressStatus, ProgressType} from './progress.type'
+  import {
+    IProgressColor,
+    ProgressStatus,
+    ProgressType
+  } from './progress.type'
 
   export default defineComponent({
     name: 'SProgress',
     components: {
-      SIcon
+      SIcon,
+      CheckboxCircleFill
     },
     props: {
       type: {
@@ -89,7 +105,8 @@
       percentage: {
         type: Number,
         default: 0,
-        required: true
+        required: true,
+        validator: (val: number): boolean => val >= 0 && val <= 100
       },
       finishIcon: {
         type: String,
@@ -104,7 +121,7 @@
       },
       color: {
         type: [String, Function, Array],
-        default: '#0066ff'
+        default: '#2258e3'
       },
       // only available when in circular or dashboard type
       size: {
@@ -181,9 +198,9 @@
 
       const stroke = computed(() => {
         if (props.status === 'error') {
-          return '#d13e32'
+          return '#E63333'
         } else if (props.status === 'success') {
-          return '#28a745'
+          return '#06ba63'
         }
 
         return getCurrentColor(props.percentage)

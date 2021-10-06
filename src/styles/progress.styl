@@ -5,8 +5,19 @@
 
 .sui-progress__info {
   min-width 48px
-  font-size font-size--text.medium
+  font-size: font-size--text.medium
   color color--text
+  display inline-flex
+  align-content center
+  line-height 24px
+
+  .sui-icon {
+    font-size 24px
+
+    &.is-finished {
+      color color--success
+    }
+  }
 }
 
 .sui-progress--linear {
@@ -64,7 +75,7 @@
     left 0
     top 50%
     width 100%
-    text-align center
+    justify-content center
     transform translateY(-50%)
   }
 }

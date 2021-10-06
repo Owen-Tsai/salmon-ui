@@ -1026,9 +1026,24 @@
         <div class="demo-content">
           <s-progress type="linear" status="active" :percentage="percentage1"></s-progress>
           <br>
-          <s-progress type="linear" :color="progressColor" :percentage="percentage2"></s-progress>
+          <s-progress type="linear" :color="progressColor" :percentage="percentage2">
+            <template #icon>
+              <s-icon color="#06f">
+                <i-switch></i-switch>
+              </s-icon>
+            </template>
+          </s-progress>
           <br>
           <s-progress type="linear" color="orange" status="active" :percentage="90"></s-progress>
+          <br>
+          <s-progress type="linear" status="active" :percentage="percentage2">
+            <template v-if="percentage2 === 100">
+              Finished!
+            </template>
+            <template v-else>
+              Loading...
+            </template>
+          </s-progress>
           <br>
           <div>
             <s-progress type="circular" :percentage="percentage1"></s-progress>
