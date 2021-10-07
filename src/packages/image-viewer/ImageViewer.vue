@@ -16,9 +16,9 @@
         class="sui-image-viewer__btn sui-image-viewer__close"
         @click="hide"
       >
-        <s-icon
-          name="x"
-        ></s-icon>
+        <s-icon>
+          <close></close>
+        </s-icon>
       </span>
 
       <!-- arrows -->
@@ -31,9 +31,9 @@
           ]"
           @click="toPrev"
         >
-          <s-icon
-            name="chevron-left"
-          ></s-icon>
+          <s-icon>
+            <arrow-left-s></arrow-left-s>
+          </s-icon>
         </span>
         <span
           :class="[
@@ -43,23 +43,33 @@
           ]"
           @click="toNext"
         >
-          <s-icon
-            name="chevron-right"
-          ></s-icon>
+          <s-icon>
+            <arrow-right-s></arrow-right-s>
+          </s-icon>
         </span>
       </template>
 
       <!-- actions -->
       <div class="sui-image-viewer__actions sui-image-viewer__btn">
-        <s-icon name="zoom-out" @click="handleActions('zoomOut')"></s-icon>
-        <s-icon name="zoom-in" @click="handleActions('zoomIn')"></s-icon>
+        <s-icon @click="handleActions('zoomOut')">
+          <zoom-out></zoom-out>
+        </s-icon>
+        <s-icon @click="handleActions('zoomIn')">
+          <zoom-in></zoom-in>
+        </s-icon>
         <s-icon
-          :name="mode.icon"
           class="is-divided"
           @click="toggleMode"
-        ></s-icon>
-        <s-icon name="rotate-ccw" @click="handleActions('anticlockwise')"></s-icon>
-        <s-icon name="rotate-cw" @click="handleActions('clockwise')"></s-icon>
+        >
+          <fullscreen v-show="mode.icon === 'maximize'"></fullscreen>
+          <fullscreen-exit v-show="mode.icon === 'minimize'"></fullscreen-exit>
+        </s-icon>
+        <s-icon @click="handleActions('anticlockwise')">
+          <anticlockwise></anticlockwise>
+        </s-icon>
+        <s-icon @click="handleActions('clockwise')">
+          <clockwise></clockwise>
+        </s-icon>
       </div>
 
       <!-- preview panel -->
@@ -93,6 +103,17 @@
   } from 'vue'
 
   import SIcon from '../icon'
+  import {
+    Anticlockwise,
+    Clockwise,
+    Close,
+    ZoomIn,
+    ZoomOut,
+    Fullscreen,
+    FullscreenExit,
+    ArrowLeftS,
+    ArrowRightS
+  } from '@salmon-ui/icons'
 
   import { rafThrottle } from '@/utils/utils'
 
@@ -112,7 +133,16 @@
   export default defineComponent({
     name: 'SImageViewer',
     components: {
-      SIcon
+      SIcon,
+      Anticlockwise,
+      Clockwise,
+      Close,
+      ZoomIn,
+      ZoomOut,
+      Fullscreen,
+      FullscreenExit,
+      ArrowLeftS,
+      ArrowRightS
     },
     props: {
       srcList: {
