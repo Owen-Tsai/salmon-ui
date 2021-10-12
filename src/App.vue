@@ -369,10 +369,11 @@
                   justify-content: center"
               >
                 <s-icon
-                  name="x-circle"
                   style="font-size: 24px"
                   color="#a0a3bd"
-                ></s-icon>
+                >
+                  <close-circle></close-circle>
+                </s-icon>
               </div>
             </template>
           </s-image>
