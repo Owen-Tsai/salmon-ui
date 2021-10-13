@@ -20,7 +20,9 @@
         :class="customLeftArrowClass"
         @click="toPrevSlide"
       >
-        <s-icon name="chevron-left"></s-icon>
+        <s-icon>
+          <arrow-left-s></arrow-left-s>
+        </s-icon>
       </button>
     </transition>
     <transition
@@ -34,7 +36,9 @@
         :class="customRightArrowClass"
         @click="toNextSlide"
       >
-        <s-icon name="chevron-right"></s-icon>
+        <s-icon>
+          <arrow-right-s></arrow-right-s>
+        </s-icon>
       </button>
     </transition>
 
@@ -73,6 +77,9 @@
   } from 'vue'
 
   import SIcon from '../icon'
+  import {
+    ArrowLeftS, ArrowRightS
+  } from '@salmon-ui/icons'
 
   import Swiper, { Autoplay } from 'swiper/core'
   Swiper.use([Autoplay])
@@ -88,7 +95,8 @@
   export default defineComponent({
     name: 'SCarousel',
     components: {
-      SIcon
+      SIcon,
+      ArrowLeftS, ArrowRightS
     },
     props: {
       showArrows: {
