@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sui-carousel swiper-container"
+    class="sui-carousel"
     ref="rootEl"
     @mouseenter="isHovering = true"
     @mouseleave="isHovering = false"
@@ -81,8 +81,10 @@
     ArrowLeftS, ArrowRightS
   } from '@salmon-ui/icons'
 
-  import Swiper, { Autoplay } from 'swiper/core'
-  Swiper.use([Autoplay])
+  import Swiper, { Autoplay, EffectFade, EffectCards, EffectCreative } from 'swiper'
+  Swiper.use([
+    Autoplay, EffectCards, EffectFade, EffectCreative
+  ])
 
   import {
     CarouselArrowOption,
@@ -150,6 +152,10 @@
       allowTouchMove: {
         type: Boolean,
         default: true
+      },
+      effect: {
+        type: String,
+        default: 'slide'
       },
       customLeftArrowClass: String,
       customRightArrowClass: String

@@ -4392,12 +4392,12 @@ dom-serializer@^1.0.1:
     domhandler "^4.2.0"
     entities "^2.0.0"
 
-dom7@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/dom7/download/dom7-3.0.0.tgz#b861ce5d67a6becd7aaa3ad02942ff14b1240331"
-  integrity sha1-uGHOXWemvs16qjrQKUL/FLEkAzE=
+dom7@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/dom7/-/dom7-4.0.0.tgz#69c8fb9b170c92d64f385fdc37f81456e82b80a1"
+  integrity sha512-xOJ0LAHFwktyj8Xljz4R2wzRI+Y9mR0plkMP0WlqtwqAkqn/vbdAyRifiW/w8mXe17LGktntcAwsQ5fKVDBNYg==
   dependencies:
-    ssr-window "^3.0.0-alpha.1"
+    ssr-window "^4.0.0"
 
 domelementtype@^2.0.1:
   version "2.1.0"
@@ -9850,10 +9850,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-ssr-window@^3.0.0, ssr-window@^3.0.0-alpha.1:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/ssr-window/download/ssr-window-3.0.0.tgz#fd5b82801638943e0cc704c4691801435af7ac37"
-  integrity sha1-/VuCgBY4lD4MxwTEaRgBQ1r3rDc=
+ssr-window@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/ssr-window/-/ssr-window-4.0.0.tgz#4ee82fc360c5f88a022f321740bcfec59ada1a61"
+  integrity sha512-qCg6wJNeGNTVcPK2KFNfwtHU1gA3UZDZdxogu+Ys5+Ue5PMOENxUb7sscpAWWo4mWOBkJRCwQ50IlyA7qZ0hxw==
 
 ssri@^8.0.1:
   version "8.0.1"
@@ -10132,13 +10132,13 @@ svgo@^2.3.0:
     csso "^4.2.0"
     stable "^0.1.8"
 
-swiper@^6.7.5:
-  version "6.7.5"
-  resolved "https://registry.nlark.com/swiper/download/swiper-6.7.5.tgz#8f150c7281919b7d6bea00889e9dc16448e92986"
-  integrity sha1-jxUMcoGRm31r6gCInp3BZEjpKYY=
+swiper@^7.0.8:
+  version "7.0.8"
+  resolved "https://registry.npmjs.org/swiper/-/swiper-7.0.8.tgz#5727cf4c34ca11e4b038ccff2a984bbf41d2f6ad"
+  integrity sha512-1IpWjHam98eTNiysi9MauvPHdLgrLesSYGd7JXvQEJkvW/NvI9gogMfRfbv+7jCK3+nIWuCpVnJmKCOBtJi4JA==
   dependencies:
-    dom7 "^3.0.0"
-    ssr-window "^3.0.0"
+    dom7 "^4.0.0"
+    ssr-window "^4.0.0"
 
 symbol-tree@^3.2.4:
   version "3.2.4"

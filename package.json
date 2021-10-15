@@ -15,7 +15,7 @@
     "@salmon-ui/icons": "^1.0.5-beta3",
     "core-js": "^3.6.5",
     "lodash": "^4.17.21",
-    "swiper": "^6.7.5",
+    "swiper": "^7.0.8",
     "tippy.js": "^6.3.1",
     "vue": "^3.1.3"
   },
