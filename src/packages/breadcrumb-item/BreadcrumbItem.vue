@@ -43,7 +43,7 @@
           h('span', separatorElAttrs,
             hasCustomSeparator ?
               this.$parent?.$slots?.separator!() :
-              h(SIcon, h(ArrowRightSFill))
+              h(SIcon, () => h(ArrowRightSFill))
           )
         ]
       )
