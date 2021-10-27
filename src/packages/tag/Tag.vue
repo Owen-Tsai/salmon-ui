@@ -3,7 +3,8 @@
     :class="[
       'sui-tag',
       `sui-tag--${type}`,
-      outlined ? 'is-outlined' : ''
+      outlined ? 'is-outlined' : null,
+      rounded ? 'is-rounded' : null
     ]"
     @click="handleClick"
   >
@@ -42,6 +43,7 @@
         }
       },
       outlined: Boolean,
+      rounded: Boolean,
       dismissible: Boolean
     },
     emits: ['click', 'close'],

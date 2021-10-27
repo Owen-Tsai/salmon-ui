@@ -548,6 +548,7 @@
             <s-tag class="demo-m-a" type="error" dismissible>hot</s-tag>
             <s-tag class="demo-m-a" type="error" dismissible outlined>hot</s-tag>
             <s-tag class="demo-m-a" type="success">兼容</s-tag>
+            <s-tag class="demo-m-a" rounded>新功能</s-tag>
           </div>
         </div>
 
