@@ -119,7 +119,6 @@
         hideOnClick: props.hideOnClick,
         trigger: triggerType(props.trigger),
         theme: themeType('light'),
-        interactive: true,
         classes: ['sui-popper--dropdown'],
         onHide: (instance) => {
           handleMenuHide(instance)
@@ -174,7 +173,9 @@
       }
 
       const handleClick = () => {
-        tippyInstance.hide()
+        // tippyInstance.hide()
+        // TODO: check if parent dropdown exists, and hide all parent tippy instances
+        console.log(tippyInstance)
       }
 
       // provide

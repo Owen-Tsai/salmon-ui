@@ -4,13 +4,15 @@ export const basePopperConfig = {
   animation: 'scale-subtle',
   inertia: true,
   plugins: [ classNamePlugin ],
-  appendTo: document.body
+  appendTo: document.body,
+  interactive: true
 }
 
 export const dropdownPopperConfig = {
   animation: 'shift-away',
   plugins: [ classNamePlugin ],
-  appendTo: document.body
+  appendTo: document.body,
+  interactive: true
 }
 
 export const triggerType = (trigger: any) => {
