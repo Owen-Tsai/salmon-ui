@@ -48,11 +48,11 @@
 </template>
 
 <script lang="ts">
-  import { computed, ref, defineComponent } from 'vue'
+import {computed, ref, defineComponent, PropType} from 'vue'
   import SIcon from '../icon'
   import { Close } from '@salmon-ui/icons'
 
-  const _types = ['success', 'warning', 'error', 'default']
+  import type { AlertType } from '@/packages/alert/alert.type'
 
   export default defineComponent({
     name: 'SAlert',
@@ -61,11 +61,8 @@
     },
     props: {
       type: {
-        type: String,
+        type: String as PropType<AlertType>,
         default: 'default',
-        validator: (v: string) => {
-          return _types.includes(v)
-        }
       },
       outlined: Boolean,
       dismissible: {
@@ -83,7 +80,7 @@
 
       // computed properties
       const largeIcon = computed(() => {
-        return !!((props.title || ctx.slots.title) && (props.message || ctx.slots.default));
+        return !!((props.title || ctx.slots.title) && (props.message || ctx.slots.default))
       })
 
       // methods
