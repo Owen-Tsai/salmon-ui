@@ -173,9 +173,7 @@
       }
 
       const handleClick = () => {
-        // tippyInstance.hide()
-        // TODO: check if parent dropdown exists, and hide all parent tippy instances
-        console.log(tippyInstance)
+        tippyInstance.hide()
       }
 
       // provide

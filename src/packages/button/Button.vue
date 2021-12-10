@@ -20,7 +20,7 @@
         <loader></loader>
       </s-icon>
     </slot>
-    <span v-if="$slots.default" class="sui-button__label"><slot></slot></span>
+    <slot></slot>
     <slot name="affix" v-if="!loading"></slot>
   </button>
 </template>
