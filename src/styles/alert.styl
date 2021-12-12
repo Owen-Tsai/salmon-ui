@@ -1,7 +1,9 @@
-@import "common/var.styl"
+@import 'common/variables/alert.var.styl'
+@import 'common/var.styl'
+@import 'common/mixins/mixin.common.styl'
 
 .sui-alert {
-  padding 12px 16px
+  padding alert-padding--y alert-padding--x
   border-radius border-radius--normal
   box-sizing border-box
   font-size font-size--text.medium
@@ -12,11 +14,12 @@
     &--{type} {
       border: 1px solid colors[4]
       background-color: colors[4]
-      color: colors--neutral[0]
+      color: color--white
 
       & ^[0]__close-btn {
         &:focus {
           background-color colors[2]
+          ring(color--white)
         }
       }
     }
@@ -24,6 +27,11 @@
 
   &--warning {
     color: color--text
+    & ^[0]__close-btn {
+      &:focus {
+        ring(color--text)
+      }
+    }
   }
 
   &__wrapper {
@@ -62,16 +70,14 @@
   &__close-btn {
     background none
     border none
-    outline none
     position absolute
     right -4px
     cursor pointer
     top 2px
     color inherit
     border-radius 50%
-    font-size: font-size--text.large
-    height @font-size + 4px
-    width @height
+    font-size: font-size--icon.medium
+    padding 2px
     display inline-flex
     align-items center
     justify-content center
@@ -89,6 +95,7 @@
         & ^[0]__close-btn {
           &:focus {
             background-color colors[1]
+            ring(colors[4])
           }
         }
       }
