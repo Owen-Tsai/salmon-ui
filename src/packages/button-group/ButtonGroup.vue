@@ -5,24 +5,42 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, provide, ref } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  provide,
+  reactive
+} from 'vue'
 
-  const _sizes = ['', 'large', 'small']
+  import type {
+    ButtonSize,
+    ButtonShape,
+    ButtonType
+  } from '@/packages/button/button.type'
+  import type { IButtonGroupProvider } from './button-group.type'
 
   export default defineComponent({
     name: 'SButtonGroup',
     props: {
       size: {
-        type: String,
-        validator: (v: string) => {
-          return _sizes.includes(v)
-        }
+        type: String as PropType<ButtonSize>,
+      },
+      shape: {
+        type: String as PropType<ButtonShape>,
+      },
+      type: {
+        type: String as PropType<ButtonType>,
+        default: 'default'
       }
     },
     setup(props) {
-      const buttonSizes = ref(props.size)
+      const provided = reactive({
+        size: props.size,
+        shape: props.shape,
+        type: props.type
+      } as IButtonGroupProvider)
 
-      provide('buttonGroupSize', buttonSizes)
+      provide('buttonGroupProvider', provided)
     }
   })
 </script>

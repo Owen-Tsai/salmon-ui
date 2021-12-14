@@ -4,7 +4,7 @@
       'sui-button',
       `sui-button--${type}`,
       computedSize ? `sui-button--${computedSize}` : '',
-      shape ? `sui-button--${shape}` : '',
+      computedShape ? `sui-button--${shape}` : '',
       disabled ? 'is-disabled' : '',
       loading ? 'is-loading' : '',
       danger ? 'is-danger' : '',
@@ -27,17 +27,23 @@
 
 <script lang="ts">
   import SIcon from '../icon'
-  import { computed, defineComponent, inject } from 'vue'
-  import {
-    Loader
-  } from '@salmon-ui/icons'
 
-  const _types = [
-    'default', 'primary', 'outlined', 'text'
-  ]
-  const _nativeTypes = [ 'button', 'submit', 'reset' ]
-  const _sizes = [ '', 'large', 'small' ]
-  const _shapes = [ '', 'round', 'circle' ]
+  import {
+    computed,
+    defineComponent,
+    inject,
+    PropType
+  } from 'vue'
+
+  import type {
+    ButtonSize,
+    ButtonType,
+    ButtonShape,
+    ButtonNativeType
+  } from './button.type'
+  import type { IButtonGroupProvider } from '@/packages/button-group/button-group.type'
+
+  import { Loader } from '@salmon-ui/icons'
 
   export default defineComponent({
     name: 'SButton',
@@ -47,30 +53,18 @@
     },
     props: {
       type: {
-        type: String,
-        default: 'default',
-        validator: (v: string) => {
-          return _types.includes(v)
-        }
+        type: String as PropType<ButtonType>,
+        default: () => 'default'
       },
       nativeType: {
-        type: String,
-        default: 'button',
-        validator: (v: string) => {
-          return _nativeTypes.includes(v)
-        }
+        type: String as PropType<ButtonNativeType>,
+        default: () => 'button'
       },
       size: {
-        type: String,
-        validator: (v: string) => {
-          return _sizes.includes(v)
-        }
+        type: String as PropType<ButtonSize>,
       },
       shape: {
-        type: String,
-        validator: (v: string) => {
-          return _shapes.includes(v)
-        }
+        type: String as PropType<ButtonShape>,
       },
       disabled: Boolean,
       loading: Boolean,
@@ -80,11 +74,23 @@
     emits: ['click'],
     setup(props, ctx) {
       // injected
-      const buttonGroupSize: any = inject('buttonGroupSize', {})
+      const buttonGroupProvider: IButtonGroupProvider = inject('buttonGroupProvider', {
+        type: 'default',
+        size: undefined,
+        shape: undefined
+      })
 
       // computed
       const computedSize = computed(() => {
-        return buttonGroupSize?.value || props.size
+        const size = buttonGroupProvider.size || props.size
+        return size === undefined ? '' : size
+      })
+      const computedType = computed(() =>
+        props.type || buttonGroupProvider.type
+      )
+      const computedShape = computed(() => {
+        const shape = buttonGroupProvider.shape || props.shape
+        return shape === undefined ? '' : shape
       })
 
       // methods
@@ -94,6 +100,8 @@
 
       return {
         computedSize,
+        computedType,
+        computedShape,
         handleClick
       }
     }
