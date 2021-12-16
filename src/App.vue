@@ -174,7 +174,7 @@
 
           <s-dropdown class="demo-m-a">
             <template #reference>
-              <s-button shape="round" type="primary">多级菜单</s-button>
+              <s-button shape="rounded" type="primary">多级菜单</s-button>
             </template>
             <s-dropdown-menu>
               <s-dropdown-item>
@@ -742,8 +742,8 @@
           <s-button class="demo-m-a" danger type="outlined">outlined 危险</s-button>
           <s-button class="demo-m-a" danger type="text">危险文字</s-button>
           <br>
-          <s-button class="demo-m-a" type="primary" shape="round">圆角按钮</s-button>
-          <s-button class="demo-m-a" type="primary" shape="round">
+          <s-button class="demo-m-a" type="primary" shape="rounded">圆角按钮</s-button>
+          <s-button class="demo-m-a" type="primary" shape="rounded">
             <s-icon><heart></heart></s-icon>
             圆角按钮
           </s-button>
@@ -755,9 +755,9 @@
 
           <br>
 
-          <s-button class="demo-m-a" shape="round" size="large">Large</s-button>
-          <s-button class="demo-m-a" shape="round">Default</s-button>
-          <s-button class="demo-m-a" shape="round" size="small">Small</s-button>
+          <s-button class="demo-m-a" shape="rounded" size="large">Large</s-button>
+          <s-button class="demo-m-a" shape="rounded">Default</s-button>
+          <s-button class="demo-m-a" shape="rounded" size="small">Small</s-button>
 
           <s-button class="demo-m-a" size="large" shape="circle">
             <s-icon><heart></heart></s-icon>
@@ -774,7 +774,7 @@
           <s-button class="demo-m-a" disabled>禁用</s-button>
           <s-button class="demo-m-a" type="text" disabled>禁用</s-button>
           <s-button class="demo-m-a" loading>载入中</s-button>
-          <s-button class="demo-m-a" type="primary" shape="round" loading>载入中</s-button>
+          <s-button class="demo-m-a" type="primary" shape="rounded" loading>载入中</s-button>
         </div>
       </div>
 

@@ -12,35 +12,45 @@ import {
   reactive
 } from 'vue'
 
-  import type {
-    ButtonSize,
-    ButtonShape,
-    ButtonType
-  } from '@/packages/button/button.type'
-  import type { IButtonGroupProvider } from './button-group.type'
+import type {
+  ButtonSize,
+  ButtonShape,
+  ButtonType
+} from '@/packages/button/button.type'
 
-  export default defineComponent({
-    name: 'SButtonGroup',
-    props: {
-      size: {
-        type: String as PropType<ButtonSize>,
-      },
-      shape: {
-        type: String as PropType<ButtonShape>,
-      },
-      type: {
-        type: String as PropType<ButtonType>,
-        default: 'default'
-      }
+import {
+  _buttonShapes,
+  _buttonSizes,
+  _buttonTypes
+} from '@/packages/button/button.type'
+
+import type { IButtonGroupProvider } from './button-group.type'
+
+export default defineComponent({
+  name: 'SButtonGroup',
+  props: {
+    size: {
+      type: String as PropType<ButtonSize>,
+      validator: (v: string) => _buttonSizes.includes(v)
     },
-    setup(props) {
-      const provided = reactive({
-        size: props.size,
-        shape: props.shape,
-        type: props.type
-      } as IButtonGroupProvider)
-
-      provide('buttonGroupProvider', provided)
+    shape: {
+      type: String as PropType<ButtonShape>,
+      validator: (v: string) => _buttonShapes.includes(v)
+    },
+    type: {
+      type: String as PropType<ButtonType>,
+      default: 'default',
+      validator: (v: string) => _buttonTypes.includes(v)
     }
-  })
+  },
+  setup(props) {
+    const provided = reactive({
+      size: props.size,
+      shape: props.shape,
+      type: props.type
+    } as IButtonGroupProvider)
+
+    provide('buttonGroupProvider', provided)
+  }
+})
 </script>
