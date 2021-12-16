@@ -15,58 +15,58 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, computed } from 'vue'
+import { defineComponent, computed } from 'vue'
 
-  const _types = ['default', 'success', 'warning', 'error']
+const _types = ['default', 'success', 'warning', 'error']
 
-  export default defineComponent({
-    name: 'SBadge',
-    props: {
-      type: {
-        type: String,
-        default: 'default',
-        validator: (v: string) => {
-          return _types.includes(v)
-        }
-      },
-      dot: Boolean,
-      max: {
-        type: Number,
-        default: 99
-      },
-      hidden: Boolean,
-      value: [String, Number],
-      top: Number,
-      right: Number
-    },
-    setup(props) {
-      const computedValue = computed(() => {
-        if(props.dot) {
-          return
-        }
-        if(typeof props.value === 'number') {
-          return props.value > props.max ? `${props.max}+` : props.value
-        }
-
-        return props.value
-      })
-
-      const posStyle = computed(() => {
-        const style: Partial<CSSStyleDeclaration> = {}
-
-        if(props.top) {
-          style.top = `${props.top}px`
-        }
-        if(props.right) {
-          style.right = `${props.right}px`
-        }
-
-        return style
-      })
-
-      return {
-        computedValue, posStyle
+export default defineComponent({
+  name: 'SBadge',
+  props: {
+    type: {
+      type: String,
+      default: 'default',
+      validator: (v: string) => {
+        return _types.includes(v)
       }
+    },
+    dot: Boolean,
+    max: {
+      type: Number,
+      default: 99
+    },
+    hidden: Boolean,
+    value: [String, Number],
+    top: Number,
+    right: Number
+  },
+  setup(props) {
+    const computedValue = computed(() => {
+      if (props.dot) {
+        return
+      }
+      if (typeof props.value === 'number') {
+        return props.value > props.max ? `${props.max}+` : props.value
+      }
+
+      return props.value
+    })
+
+    const posStyle = computed(() => {
+      const style: Partial<CSSStyleDeclaration> = {}
+
+      if (props.top) {
+        style.top = `${props.top}px`
+      }
+      if (props.right) {
+        style.right = `${props.right}px`
+      }
+
+      return style
+    })
+
+    return {
+      computedValue, posStyle
     }
-  })
+  }
+})
 </script>

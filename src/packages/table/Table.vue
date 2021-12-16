@@ -88,7 +88,8 @@
             <slot
               :item="item"
               :name="`item-${key}`"
-            >{{ value }}</slot>
+            >{{ value }}
+            </slot>
           </td>
         </template>
       </tr>
@@ -107,144 +108,144 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType,
-    computed
-  } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  computed
+} from 'vue'
 
-  import {
-    ITableHeader
-  } from './table.type'
+import {
+  ITableHeader
+} from './table.type'
 
-  import SIcon from '../icon'
-  import SCheckbox from '../checkbox'
+import SIcon from '../icon'
+import SCheckbox from '../checkbox'
 
-  import {
-    useExpansion,
-    useSelection,
-    useSorting
-  } from '@/utils/compositions/table'
+import {
+  useExpansion,
+  useSelection,
+  useSorting
+} from '@/utils/compositions/table'
 
-  import throwError from '@/utils/class.error'
+import throwError from '@/utils/class.error'
 
-  export default defineComponent({
-    name: 'STable',
-    components: {
-      SIcon,
-      SCheckbox
+export default defineComponent({
+  name: 'STable',
+  components: {
+    SIcon,
+    SCheckbox
+  },
+  emits: ['click:row', 'update:expandedRows', 'update:selectedRows'],
+  props: {
+    headers: {
+      type: Array as PropType<ITableHeader[]>,
     },
-    emits: ['click:row', 'update:expandedRows', 'update:selectedRows'],
-    props: {
-      headers: {
-        type: Array as PropType<ITableHeader[]>,
-      },
-      data: Array,
-      border: Boolean,
-      stripe: Boolean,
-      rowPkField: {
-        type: [String, Number],
-        default: 'id'
-      },
-      expandable: Boolean,
-      expandedRows: Array,
-      selectable: Boolean,
-      selectedRows: Array
+    data: Array,
+    border: Boolean,
+    stripe: Boolean,
+    rowPkField: {
+      type: [String, Number],
+      default: 'id'
     },
-    setup(props, { emit }) {
-      const {
-        randomName,
-        selected,
-        isAllSelected,
-        handleSelectChange,
-        handleAllSelectChange
-      } = useSelection(props, emit)
+    expandable: Boolean,
+    expandedRows: Array,
+    selectable: Boolean,
+    selectedRows: Array
+  },
+  setup(props, {emit}) {
+    const {
+      randomName,
+      selected,
+      isAllSelected,
+      handleSelectChange,
+      handleAllSelectChange
+    } = useSelection(props, emit)
 
-      const {
-        isRowExpanded,
-        toggleRowExpansion
-      } = useExpansion(emit)
+    const {
+      isRowExpanded,
+      toggleRowExpansion
+    } = useExpansion(emit)
 
-      const {
-        sortedData,
-        headersHovering,
-        activatedSortingHeader,
-        isHeaderSortingActivated,
-        handleThClick,
-        handleThMouseEnter,
-        handleThMouseLeave,
-        showSortingIcon,
-        getSortingIconName
-      } = useSorting(props)
+    const {
+      sortedData,
+      headersHovering,
+      activatedSortingHeader,
+      isHeaderSortingActivated,
+      handleThClick,
+      handleThMouseEnter,
+      handleThMouseLeave,
+      showSortingIcon,
+      getSortingIconName
+    } = useSorting(props)
 
-      const handleRowClick = (row) => {
-        emit('click:row', row)
+    const handleRowClick = (row) => {
+      emit('click:row', row)
 
-        if (props.expandable) {
-          if (!row[props.rowPkField]) {
-            throwError(
-              'sui-table',
-              'expandable table has to provide extra field with the same ' +
-              'value provided in the props: ' + props.rowPkField
-            )
-          }
-
-          toggleRowExpansion(row[props.rowPkField])
-        }
-      }
-
-      const renderExtraCol = (key) => {
-        if (props.headers) {
-          return props.headers.filter(
-            e => e.value === `s-table-${key}`
-          ).length >= 1
+      if (props.expandable) {
+        if (!row[props.rowPkField]) {
+          throwError(
+            'sui-table',
+            'expandable table has to provide extra field with the same ' +
+            'value provided in the props: ' + props.rowPkField
+          )
         }
 
-        return false
-      }
-
-      const headerKeys = computed(() => {
-        const arr: any[] = []
-        if (props.headers) {
-          props.headers.forEach(e => {
-            arr.push(e.value)
-          })
-        }
-
-        return arr
-      })
-
-      const isColEnabled = (key) => {
-        return headerKeys.value.includes(key)
-      }
-
-      return {
-        sortedData,
-        headerKeys,
-        isColEnabled,
-
-        selected,
-        randomName,
-        headersHovering,
-        activatedSortingHeader,
-        showSortingIcon,
-        getSortingIconName,
-
-        isRowExpanded,
-        isAllSelected,
-        isHeaderSortingActivated,
-
-        handleRowClick,
-        handleSelectChange,
-        handleAllSelectChange,
-
-        handleThClick,
-        handleThMouseEnter,
-        handleThMouseLeave,
-
-        toggleRowExpansion,
-        renderExtraCol,
+        toggleRowExpansion(row[props.rowPkField])
       }
     }
-  })
+
+    const renderExtraCol = (key) => {
+      if (props.headers) {
+        return props.headers.filter(
+          e => e.value === `s-table-${key}`
+        ).length >= 1
+      }
+
+      return false
+    }
+
+    const headerKeys = computed(() => {
+      const arr: any[] = []
+      if (props.headers) {
+        props.headers.forEach(e => {
+          arr.push(e.value)
+        })
+      }
+
+      return arr
+    })
+
+    const isColEnabled = (key) => {
+      return headerKeys.value.includes(key)
+    }
+
+    return {
+      sortedData,
+      headerKeys,
+      isColEnabled,
+
+      selected,
+      randomName,
+      headersHovering,
+      activatedSortingHeader,
+      showSortingIcon,
+      getSortingIconName,
+
+      isRowExpanded,
+      isAllSelected,
+      isHeaderSortingActivated,
+
+      handleRowClick,
+      handleSelectChange,
+      handleAllSelectChange,
+
+      handleThClick,
+      handleThMouseEnter,
+      handleThMouseLeave,
+
+      toggleRowExpansion,
+      renderExtraCol,
+    }
+  }
+})
 </script>

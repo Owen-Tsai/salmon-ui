@@ -5,60 +5,60 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    provide,
-    computed,
-    nextTick,
-    toRefs,
-    reactive,
-    PropType
-  } from 'vue'
+import {
+  defineComponent,
+  provide,
+  computed,
+  nextTick,
+  toRefs,
+  reactive,
+  PropType
+} from 'vue'
 
-  import { generateId } from '@/utils/utils'
+import { generateId } from '@/utils/utils'
 
-  type CheckboxButtonSize = '' | 'small' | 'large'
+type CheckboxButtonSize = '' | 'small' | 'large'
 
-  export default defineComponent({
-    name: 'SCheckboxGroup',
-    props: {
-      modelValue: [ Object, Boolean, Array ],
-      disabled: Boolean,
-      name: {
-        type: String,
-        default: () => `checkbox-group-${generateId()}`
-      },
-      min: Number,
-      max: Number,
-      size: {
-        type: String as PropType<CheckboxButtonSize>,
-        default: ''
-      }
+export default defineComponent({
+  name: 'SCheckboxGroup',
+  props: {
+    modelValue: [Object, Boolean, Array],
+    disabled: Boolean,
+    name: {
+      type: String,
+      default: () => `checkbox-group-${generateId()}`
     },
-    emits: ['update:modelValue', 'change'],
-    setup(props, ctx) {
-      const changeEvent = val => {
-        ctx.emit('update:modelValue', val)
-        nextTick(() => {
-          ctx.emit('change', val)
-        })
-      }
-
-      const model = computed({
-        get() {
-          return props.modelValue
-        },
-        set(val) {
-          changeEvent(val)
-        },
-      })
-
-      provide('checkboxGroup', reactive({
-        changeEvent,
-        model,
-        group: 'checkboxGroup',
-        ...toRefs(props)
-      }))
+    min: Number,
+    max: Number,
+    size: {
+      type: String as PropType<CheckboxButtonSize>,
+      default: ''
     }
-  })
+  },
+  emits: ['update:modelValue', 'change'],
+  setup(props, ctx) {
+    const changeEvent = val => {
+      ctx.emit('update:modelValue', val)
+      nextTick(() => {
+        ctx.emit('change', val)
+      })
+    }
+
+    const model = computed({
+      get() {
+        return props.modelValue
+      },
+      set(val) {
+        changeEvent(val)
+      },
+    })
+
+    provide('checkboxGroup', reactive({
+      changeEvent,
+      model,
+      group: 'checkboxGroup',
+      ...toRefs(props)
+    }))
+  }
+})
 </script>

@@ -20,7 +20,7 @@ let seed = 1
 // all instances
 const instances: MessageInstanceQueue = []
 
-const Message = function(
+const Message = function (
   opts: MessageOptions = {} as MessageOptions
 ) {
   if (typeof opts === 'string') {
@@ -31,7 +31,7 @@ const Message = function(
 
   // set offset between multiple instances
   let verticalOffset = opts.offset || 24
-  instances.forEach(({ vm }) => {
+  instances.forEach(({vm}) => {
     verticalOffset += (vm.el?.offsetHeight || 0) + 16
   })
 
@@ -69,13 +69,13 @@ const Message = function(
 
   render(instanceVm, container)
 
-  instances.push({ vm: instanceVm })
+  instances.push({vm: instanceVm})
 
   document.body.appendChild(container.firstElementChild as Element)
 
   return {
     close: () => (
-      instanceVm.component?.proxy as ComponentPublicInstance<{visible: boolean}>
+      instanceVm.component?.proxy as ComponentPublicInstance<{ visible: boolean }>
     ).visible = false
   }
 }
@@ -86,14 +86,14 @@ export const close = (
 ) => {
   const count = instances.length
 
-  const index = instances.findIndex(({ vm }) => {
+  const index = instances.findIndex(({vm}) => {
     const _id = vm.component?.props.id
     return id === _id
   })
 
   if (index === -1) return
 
-  const { vm } = instances[index]
+  const {vm} = instances[index]
   if (!vm) return
   userCallbackOnClose?.(vm)
 

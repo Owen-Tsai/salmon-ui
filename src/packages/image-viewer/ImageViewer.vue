@@ -92,18 +92,48 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType,
-    ref,
-    computed,
-    watch,
-    nextTick,
-    onMounted
-  } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  ref,
+  computed,
+  watch,
+  nextTick,
+  onMounted
+} from 'vue'
 
-  import SIcon from '../icon'
-  import {
+import SIcon from '../icon'
+import {
+  Anticlockwise,
+  Clockwise,
+  Close,
+  ZoomIn,
+  ZoomOut,
+  Fullscreen,
+  FullscreenExit,
+  ArrowLeftS,
+  ArrowRightS
+} from '@salmon-ui/icons'
+
+import { rafThrottle } from '@/utils/utils'
+
+const Mode = {
+  contain: {
+    name: 'container',
+    icon: 'maximize'
+  },
+  original: {
+    name: 'original',
+    icon: 'minimize'
+  }
+}
+
+type ImageViewerAction = 'zoomIn' | 'zoomOut' | 'anticlockwise' | 'clockwise'
+
+export default defineComponent({
+  name: 'SImageViewer',
+  components: {
+    SIcon,
     Anticlockwise,
     Clockwise,
     Close,
@@ -113,284 +143,254 @@
     FullscreenExit,
     ArrowLeftS,
     ArrowRightS
-  } from '@salmon-ui/icons'
-
-  import { rafThrottle } from '@/utils/utils'
-
-  const Mode = {
-    contain: {
-      name: 'container',
-      icon: 'maximize'
+  },
+  props: {
+    srcList: {
+      type: Array as PropType<string[] | File[]>,
+      default: () => []
     },
-    original: {
-      name: 'original',
-      icon: 'minimize'
+    zIndex: {
+      type: Number,
+      default: 1000
+    },
+    initialIndex: {
+      type: Number,
+      default: 0
+    },
+    infinite: Boolean,
+    hideOnClickMask: Boolean
+  },
+  emits: ['close', 'change'],
+  setup(props, {emit}) {
+    // data
+    let wheelHandler: any = null
+    let dragHandler: any = null
+
+    const isLoading = ref(true)
+    const index = ref(props.initialIndex)
+    const wrapperEl = ref()
+    const imgEl = ref()
+    const mode = ref(Mode.contain)
+    const transform = ref({
+      scale: 1,
+      rotation: 0,
+      offsetX: 0,
+      offsetY: 0,
+      enableTransition: true
+    })
+
+    // computed props
+    const isSingle = computed(() => props.srcList.length <= 1)
+    const isFirst = computed(() => index.value === 0)
+    const isLast = computed(() => index.value === props.srcList.length - 1)
+    const currentImg = computed(() => props.srcList[index.value])
+
+    const imgStyle = computed(() => {
+      const {
+        scale, rotation, offsetX, offsetY, enableTransition
+      } = transform.value
+
+      const style = {
+        transform: `scale(${scale}) rotate(${rotation}deg)`,
+        transition: enableTransition ? `transform .3s` : '',
+        marginLeft: `${offsetX}px`,
+        marginTop: `${offsetY}px`
+      } as CSSStyleDeclaration
+
+      if (mode.value.name === Mode.contain.name) {
+        style.maxWidth = style.maxHeight = '100%'
+      }
+
+      return style
+    })
+
+    // methods
+    const hide = () => {
+      deregisterHandlers()
+      emit('close')
     }
-  }
 
-  type ImageViewerAction = 'zoomIn' | 'zoomOut' | 'anticlockwise' | 'clockwise'
+    const registerHandlers = () => {
+      wheelHandler = rafThrottle((e: WheelEvent) => {
+        const delta = e.deltaY
+        if (delta > 0) {
+          handleActions('zoomOut', {
+            zoomRate: 0.05,
+            enableTransition: false
+          })
+        } else {
+          handleActions('zoomIn', {
+            zoomRate: 0.05,
+            enableTransition: false
+          })
+        }
+      })
 
-  export default defineComponent({
-    name: 'SImageViewer',
-    components: {
-      SIcon,
-      Anticlockwise,
-      Clockwise,
-      Close,
-      ZoomIn,
-      ZoomOut,
-      Fullscreen,
-      FullscreenExit,
-      ArrowLeftS,
-      ArrowRightS
-    },
-    props: {
-      srcList: {
-        type: Array as PropType<string[] | File[]>,
-        default: () => []
-      },
-      zIndex: {
-        type: Number,
-        default: 1000
-      },
-      initialIndex: {
-        type: Number,
-        default: 0
-      },
-      infinite: Boolean,
-      hideOnClickMask: Boolean
-    },
-    emits: ['close', 'change'],
-    setup(props, { emit }) {
-      // data
-      let wheelHandler: any = null
-      let dragHandler: any = null
+      document.addEventListener('wheel', wheelHandler)
+    }
 
-      const isLoading = ref(true)
-      const index = ref(props.initialIndex)
-      const wrapperEl = ref()
-      const imgEl = ref()
-      const mode = ref(Mode.contain)
-      const transform = ref({
+    const deregisterHandlers = () => {
+      document.removeEventListener('wheel', wheelHandler)
+      wheelHandler = null
+    }
+
+    const handleMaskClick = () => {
+      if (props.hideOnClickMask) {
+        hide()
+      }
+    }
+
+    const handleLoad = () => {
+      isLoading.value = false
+    }
+
+    const handleError = (e) => {
+      isLoading.value = false
+      e.target.alt = '加载失败'
+    }
+
+    const handleMouseDown = (e: MouseEvent) => {
+      if (isLoading.value || e.button !== 0) return
+      const {offsetX, offsetY} = transform.value
+      const startX = e.pageX
+      const startY = e.pageY
+      dragHandler = rafThrottle(ev => {
+        transform.value = {
+          ...transform.value,
+          offsetX: offsetX + ev.pageX - startX,
+          offsetY: offsetY + ev.pageY - startY,
+        }
+      })
+      document.addEventListener('mousemove', dragHandler)
+      document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', dragHandler)
+      })
+
+      e.preventDefault()
+    }
+
+    const reset = () => {
+      transform.value = {
         scale: 1,
         rotation: 0,
-        offsetX: 0,
         offsetY: 0,
-        enableTransition: true
-      })
+        offsetX: 0,
+        enableTransition: false
+      }
+    }
 
-      // computed props
-      const isSingle = computed(() => props.srcList.length <= 1)
-      const isFirst = computed(() => index.value === 0)
-      const isLast = computed(() => index.value === props.srcList.length - 1)
-      const currentImg = computed(() => props.srcList[index.value])
+    const toggleMode = () => {
+      if (isLoading.value) return
 
-      const imgStyle = computed(() => {
-        const {
-          scale, rotation, offsetX, offsetY, enableTransition
-        } = transform.value
+      if (mode.value.name === Mode.contain.name) {
+        mode.value = Mode.original
+      } else {
+        mode.value = Mode.contain
+      }
 
-        const style = {
-          transform: `scale(${scale}) rotate(${rotation}deg)`,
-          transition: enableTransition ? `transform .3s`: '',
-          marginLeft: `${offsetX}px`,
-          marginTop: `${offsetY}px`
-        } as CSSStyleDeclaration
+      reset()
+    }
 
-        if (mode.value.name === Mode.contain.name) {
-          style.maxWidth = style.maxHeight = '100%'
+    const toPrev = () => {
+      if (isFirst.value && !props.infinite) return
+      const len = props.srcList.length
+
+      if (isFirst.value) {
+        index.value = len - 1
+      } else {
+        index.value -= 1
+      }
+    }
+
+    const toNext = () => {
+      if (isLast.value && !props.infinite) return
+      if (isLast.value) {
+        index.value = 0
+      } else {
+        index.value += 1
+      }
+    }
+
+    const handleActions = (action: ImageViewerAction, options = {}) => {
+      if (isLoading.value) return
+
+      const {zoomRate, rotation, enableTransition} = {
+        zoomRate: 0.2,
+        rotation: 90,
+        enableTransition: true,
+        ...options
+      }
+
+      switch (action) {
+        case 'zoomIn':
+          if (transform.value.scale < 4) {
+            transform.value.scale = parseFloat(
+              (transform.value.scale + zoomRate).toFixed(3)
+            )
+          }
+          break
+        case 'zoomOut':
+          if (transform.value.scale > 0.2) {
+            transform.value.scale = parseFloat(
+              (transform.value.scale - zoomRate).toFixed(3)
+            )
+          }
+          break
+        case 'anticlockwise':
+          transform.value.rotation -= rotation
+          break
+        case 'clockwise':
+          transform.value.rotation += rotation
+          break
+      }
+
+      transform.value.enableTransition = enableTransition
+    }
+
+    // watchers
+    watch(currentImg, () => {
+      nextTick(() => {
+        const img: HTMLImageElement = imgEl.value
+        if (img && !img.complete) {
+          isLoading.value = true
         }
-
-        return style
       })
+    })
+
+    watch(index, (val) => {
+      reset()
+      emit('change', val)
+    })
+
+    // hooks
+    onMounted(() => {
+      registerHandlers()
+      wrapperEl.value?.focus?.()
+    })
+
+    return {
+      // computed props
+      index,
+      isSingle,
+      isFirst,
+      isLast,
+      mode,
+      imgStyle,
 
       // methods
-      const hide = () => {
-        deregisterHandlers()
-        emit('close')
-      }
+      hide,
 
-      const registerHandlers = () => {
-        wheelHandler = rafThrottle((e: WheelEvent) => {
-          const delta = e.deltaY
-          if (delta > 0) {
-            handleActions('zoomOut', {
-              zoomRate: 0.05,
-              enableTransition: false
-            })
-          } else {
-            handleActions('zoomIn', {
-              zoomRate: 0.05,
-              enableTransition: false
-            })
-          }
-        })
+      toPrev,
+      toNext,
+      toggleMode,
 
-        document.addEventListener('wheel', wheelHandler)
-      }
-
-      const deregisterHandlers = () => {
-        document.removeEventListener('wheel', wheelHandler)
-        wheelHandler = null
-      }
-
-      const handleMaskClick = () => {
-        if (props.hideOnClickMask) {
-          hide()
-        }
-      }
-
-      const handleLoad = () => {
-        isLoading.value = false
-      }
-
-      const handleError = (e) => {
-        isLoading.value = false
-        e.target.alt = '加载失败'
-      }
-
-      const handleMouseDown = (e: MouseEvent) => {
-        if (isLoading.value || e.button !== 0) return
-        const { offsetX, offsetY } = transform.value
-        const startX = e.pageX
-        const startY = e.pageY
-        dragHandler = rafThrottle(ev => {
-          transform.value = {
-            ...transform.value,
-            offsetX: offsetX + ev.pageX - startX,
-            offsetY: offsetY + ev.pageY - startY,
-          }
-        })
-          document.addEventListener('mousemove', dragHandler)
-          document.addEventListener('mouseup', () => {
-          document.removeEventListener('mousemove', dragHandler)
-        })
-
-        e.preventDefault()
-      }
-
-      const reset = () => {
-        transform.value = {
-          scale: 1,
-          rotation: 0,
-          offsetY: 0,
-          offsetX: 0,
-          enableTransition: false
-        }
-      }
-
-      const toggleMode = () => {
-        if (isLoading.value) return
-
-        if (mode.value.name === Mode.contain.name) {
-          mode.value = Mode.original
-        } else {
-          mode.value = Mode.contain
-        }
-
-        reset()
-      }
-
-      const toPrev = () => {
-        if (isFirst.value && !props.infinite) return
-        const len = props.srcList.length
-
-        if (isFirst.value) {
-          index.value = len - 1
-        } else {
-          index.value -= 1
-        }
-      }
-
-      const toNext = () => {
-        if (isLast.value && !props.infinite) return
-        if (isLast.value) {
-          index.value = 0
-        } else {
-          index.value += 1
-        }
-      }
-
-      const handleActions = (action: ImageViewerAction, options = {}) => {
-        if (isLoading.value) return
-
-        const { zoomRate, rotation, enableTransition } = {
-          zoomRate: 0.2,
-          rotation: 90,
-          enableTransition: true,
-          ...options
-        }
-
-        switch (action) {
-          case 'zoomIn':
-            if (transform.value.scale < 4) {
-              transform.value.scale = parseFloat(
-                (transform.value.scale + zoomRate).toFixed(3)
-              )
-            }
-            break
-          case 'zoomOut':
-            if (transform.value.scale > 0.2) {
-              transform.value.scale = parseFloat(
-                (transform.value.scale - zoomRate).toFixed(3)
-              )
-            }
-            break
-          case 'anticlockwise':
-            transform.value.rotation -= rotation
-            break
-          case 'clockwise':
-            transform.value.rotation += rotation
-            break
-        }
-
-        transform.value.enableTransition = enableTransition
-      }
-
-      // watchers
-      watch(currentImg, () => {
-        nextTick(() => {
-          const img: HTMLImageElement = imgEl.value
-          if (img && !img.complete) {
-            isLoading.value = true
-          }
-        })
-      })
-
-      watch(index, (val) => {
-        reset()
-        emit('change', val)
-      })
-
-      // hooks
-      onMounted(() => {
-        registerHandlers()
-        wrapperEl.value?.focus?.()
-      })
-
-      return {
-        // computed props
-        index,
-        isSingle,
-        isFirst,
-        isLast,
-        mode,
-        imgStyle,
-
-        // methods
-        hide,
-
-        toPrev,
-        toNext,
-        toggleMode,
-
-        handleActions,
-        handleLoad,
-        handleError,
-        handleMouseDown,
-        handleMaskClick
-      }
-
+      handleActions,
+      handleLoad,
+      handleError,
+      handleMouseDown,
+      handleMaskClick
     }
-  })
+
+  }
+})
 </script>

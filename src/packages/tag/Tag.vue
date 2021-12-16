@@ -21,43 +21,43 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
-  import SIcon from '../icon'
-  import {
-    Close
-  } from '@salmon-ui/icons'
+import { defineComponent } from 'vue'
+import SIcon from '../icon'
+import {
+  Close
+} from '@salmon-ui/icons'
 
-  const _types = [
-    'default', 'success', 'warning', 'error'
-  ]
+const _types = [
+  'default', 'success', 'warning', 'error'
+]
 
-  export default defineComponent({
-    name: 'STag',
-    components: { SIcon, Close },
-    props: {
-      type: {
-        type: String,
-        default: 'default',
-        validator: (v: string) => {
-          return _types.includes(v)
-        }
-      },
-      outlined: Boolean,
-      rounded: Boolean,
-      dismissible: Boolean
+export default defineComponent({
+  name: 'STag',
+  components: {SIcon, Close},
+  props: {
+    type: {
+      type: String,
+      default: 'default',
+      validator: (v: string) => {
+        return _types.includes(v)
+      }
     },
-    emits: ['click', 'close'],
-    setup(props, ctx) {
-      const handleClick = (evt) => {
-        ctx.emit('click', evt)
-      }
-      const handleClose = (evt) => {
-        ctx.emit('close', evt)
-      }
-
-      return {
-        handleClick, handleClose
-      }
+    outlined: Boolean,
+    rounded: Boolean,
+    dismissible: Boolean
+  },
+  emits: ['click', 'close'],
+  setup(props, ctx) {
+    const handleClick = (evt) => {
+      ctx.emit('click', evt)
     }
-  })
+    const handleClose = (evt) => {
+      ctx.emit('close', evt)
+    }
+
+    return {
+      handleClick, handleClose
+    }
+  }
+})
 </script>

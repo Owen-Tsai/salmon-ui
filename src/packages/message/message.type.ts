@@ -25,7 +25,7 @@ export type MessageType = 'success' | 'warning' | 'error' | 'default'
 // users can either pass in an config object or the content alone
 export type MessageOptions = IMessageConfig | string
 export type TypedMessageOptions<T extends MessageType> =
-  { type: T; } & Omit<IMessageConfig, 'type'>  | string
+  { type: T; } & Omit<IMessageConfig, 'type'> | string
 
 export type MessageVM = Partial<VNode>
 

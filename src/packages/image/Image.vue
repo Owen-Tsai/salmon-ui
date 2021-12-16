@@ -41,226 +41,226 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType,
-    ref,
-    Ref,
-    computed,
-    watch,
-    onMounted,
-    onBeforeUnmount,
-    nextTick
-  } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  ref,
+  Ref,
+  computed,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  nextTick
+} from 'vue'
 
-  import SImageViewer from '../image-viewer'
+import SImageViewer from '../image-viewer'
 
-  import throttle from 'lodash/throttle'
-  import useAttrs from '@/utils/use-attrs'
+import throttle from 'lodash/throttle'
+import useAttrs from '@/utils/use-attrs'
 
-  import {
-    getScrollContainer,
-    isInContainer
-  } from '@/utils/utils'
+import {
+  getScrollContainer,
+  isInContainer
+} from '@/utils/utils'
 
-  const _fitOptions = [
-    'cover', 'contain', 'none', 'scale-down', 'fill', ''
-  ]
+const _fitOptions = [
+  'cover', 'contain', 'none', 'scale-down', 'fill', ''
+]
 
-  let bodyCSSOverflow = ''
+let bodyCSSOverflow = ''
 
-  export default defineComponent({
-    name: 'SImage',
-    components: {
-      SImageViewer
+export default defineComponent({
+  name: 'SImage',
+  components: {
+    SImageViewer
+  },
+  props: {
+    appendToBody: Boolean,
+    src: String,
+    alt: String,
+    fit: {
+      type: String,
+      validator: (v: string) => {
+        return _fitOptions.includes(v)
+      }
     },
-    props: {
-      appendToBody: Boolean,
-      src: String,
-      alt: String,
-      fit: {
-        type: String,
-        validator: (v: string) => {
-          return _fitOptions.includes(v)
-        }
-      },
-      lazy: Boolean,
-      scrollContainer: {
-        type: [String, Object] as PropType<HTMLElement | string>,
-        default: null
-      },
-      previewSrcList: {
-        type: Array as PropType<string[]>,
-        default: () => []
-      },
-      zIndex: Number,
-      hideOnClickMask: Boolean,
-      errorText: {
-        type: String,
-        default: '加载失败'
-      },
-      loadingText: String,
-
+    lazy: Boolean,
+    scrollContainer: {
+      type: [String, Object] as PropType<HTMLElement | string>,
+      default: null
     },
-    emits: ['error'],
-    setup(props, { emit }) {
-      // data
-      const attrs = useAttrs() as Ref<Object>
-      const hasLoadError = ref(false)
-      const isLoading = ref(true)
-      const isViewerVisible = ref(false)
-      const containerEl = ref<HTMLElement>()
+    previewSrcList: {
+      type: Array as PropType<string[]>,
+      default: () => []
+    },
+    zIndex: Number,
+    hideOnClickMask: Boolean,
+    errorText: {
+      type: String,
+      default: '加载失败'
+    },
+    loadingText: String,
 
-      let _scrollContainer: Element | null | Window = null
-      let _lazyLoadHandler: any = null
+  },
+  emits: ['error'],
+  setup(props, {emit}) {
+    // data
+    const attrs = useAttrs() as Ref<Object>
+    const hasLoadError = ref(false)
+    const isLoading = ref(true)
+    const isViewerVisible = ref(false)
+    const containerEl = ref<HTMLElement>()
 
-      // computed
-      const computedStyle = computed(() => {
-        if (props.fit) {
-          return { 'object-fit': props.fit }
-        }
-        return {}
+    let _scrollContainer: Element | null | Window = null
+    let _lazyLoadHandler: any = null
+
+    // computed
+    const computedStyle = computed(() => {
+      if (props.fit) {
+        return {'object-fit': props.fit}
+      }
+      return {}
+    })
+
+    const alignCenter = computed(() => {
+      return props.fit !== 'fill'
+    })
+
+    const previewMode = computed(() => {
+      const {previewSrcList} = props
+      return Array.isArray(previewSrcList) && previewSrcList.length > 0
+    })
+
+    const imageIndex = computed(() => {
+      const {src, previewSrcList} = props
+      let previewIndex = 0
+      const srcIndex = previewSrcList.indexOf(src as string)
+      if (srcIndex >= 0) {
+        previewIndex = srcIndex
+      }
+
+      return previewIndex
+    })
+
+    // methods
+    const loadImage = () => {
+      const attributes = attrs.value
+
+      isLoading.value = true
+      hasLoadError.value = false
+
+      const image = new Image()
+      image.onload = () => handleLoad()
+      image.onerror = handleError
+
+      // bind html attributes to the created img instance
+      Object.keys(attributes).forEach(key => {
+        // avoid override onload callback
+        if (key.toLowerCase() === 'onload') return
+        const value = attributes[key]
+        image.setAttribute(key, value)
       })
+      // bind src
+      image.src = props.src as string
+    }
 
-      const alignCenter = computed(() => {
-        return props.fit !== 'fill'
-      })
+    const handleLoad = () => {
+      isLoading.value = false
+      hasLoadError.value = false
+    }
 
-      const previewMode = computed(() => {
-        const { previewSrcList } = props
-        return Array.isArray(previewSrcList) && previewSrcList.length > 0
-      })
+    const handleError = (e: Event | String) => {
+      isLoading.value = false
+      hasLoadError.value = true
+      emit('error', e)
+    }
 
-      const imageIndex = computed(() => {
-        const { src, previewSrcList } = props
-        let previewIndex = 0
-        const srcIndex = previewSrcList.indexOf(src as string)
-        if (srcIndex >= 0) {
-          previewIndex = srcIndex
-        }
-
-        return previewIndex
-      })
-
-      // methods
-      const loadImage = () => {
-        const attributes = attrs.value
-
-        isLoading.value = true
-        hasLoadError.value = false
-
-        const image = new Image()
-        image.onload = () => handleLoad()
-        image.onerror = handleError
-
-        // bind html attributes to the created img instance
-        Object.keys(attributes).forEach(key => {
-          // avoid override onload callback
-          if (key.toLowerCase() === 'onload') return
-          const value = attributes[key]
-          image.setAttribute(key, value)
-        })
-        // bind src
-        image.src = props.src as string
-      }
-
-      const handleLoad = () => {
-        isLoading.value = false
-        hasLoadError.value = false
-      }
-
-      const handleError = (e: Event | String) => {
-        isLoading.value = false
-        hasLoadError.value = true
-        emit('error', e)
-      }
-
-      const handleLazyLoad = () => {
-        if (isInContainer(
-          containerEl.value as HTMLElement,
-          _scrollContainer as HTMLElement
-        )) {
-          loadImage()
-          removeLazyLoadListener()
-        }
-      }
-
-      const addLazyLoadListener = () => {
-        const { scrollContainer } = props
-
-        if (typeof scrollContainer === 'string') {
-          _scrollContainer = document.querySelector(scrollContainer)
-        } else if (scrollContainer && scrollContainer.nodeType === 1) {
-          _scrollContainer = scrollContainer
-        } else {
-          _scrollContainer = getScrollContainer(containerEl.value as HTMLElement)
-        }
-
-        if (_scrollContainer) {
-          _lazyLoadHandler = throttle(handleLazyLoad, 200)
-          _scrollContainer.addEventListener('scroll', _lazyLoadHandler)
-          setTimeout(() => handleLazyLoad(), 100)
-        }
-      }
-
-      const removeLazyLoadListener = () => {
-        if (!_scrollContainer || !_lazyLoadHandler) return
-
-        _scrollContainer.removeEventListener('scroll', _lazyLoadHandler)
-        _scrollContainer = null
-        _lazyLoadHandler = null
-      }
-
-      const handleClick = () => {
-        // show preview window based on props
-        if (!previewMode.value) return
-
-        // prevent body scroll when previewMode is on
-        bodyCSSOverflow = document.body.style.overflow
-        document.body.style.overflow = 'hidden'
-        isViewerVisible.value = true
-      }
-
-      const closeViewer = () => {
-        document.body.style.overflow = bodyCSSOverflow
-        isViewerVisible.value = false
-      }
-
-      // watchers
-      watch(() => props.src, () => {
+    const handleLazyLoad = () => {
+      if (isInContainer(
+        containerEl.value as HTMLElement,
+        _scrollContainer as HTMLElement
+      )) {
         loadImage()
-      })
-
-      // hooks
-      onMounted(() => {
-        if (props.lazy) {
-          nextTick(addLazyLoadListener)
-        } else {
-          loadImage()
-        }
-      })
-
-      onBeforeUnmount(() => {
-        if (props.lazy) {
-          removeLazyLoadListener()
-        }
-      })
-
-      return {
-        attrs,
-        isLoading,
-        isViewerVisible,
-        hasLoadError,
-        containerEl,
-
-        computedStyle,
-        alignCenter,
-        previewMode,
-        imageIndex,
-
-        handleClick,
-        closeViewer,
+        removeLazyLoadListener()
       }
     }
-  })
+
+    const addLazyLoadListener = () => {
+      const {scrollContainer} = props
+
+      if (typeof scrollContainer === 'string') {
+        _scrollContainer = document.querySelector(scrollContainer)
+      } else if (scrollContainer && scrollContainer.nodeType === 1) {
+        _scrollContainer = scrollContainer
+      } else {
+        _scrollContainer = getScrollContainer(containerEl.value as HTMLElement)
+      }
+
+      if (_scrollContainer) {
+        _lazyLoadHandler = throttle(handleLazyLoad, 200)
+        _scrollContainer.addEventListener('scroll', _lazyLoadHandler)
+        setTimeout(() => handleLazyLoad(), 100)
+      }
+    }
+
+    const removeLazyLoadListener = () => {
+      if (!_scrollContainer || !_lazyLoadHandler) return
+
+      _scrollContainer.removeEventListener('scroll', _lazyLoadHandler)
+      _scrollContainer = null
+      _lazyLoadHandler = null
+    }
+
+    const handleClick = () => {
+      // show preview window based on props
+      if (!previewMode.value) return
+
+      // prevent body scroll when previewMode is on
+      bodyCSSOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      isViewerVisible.value = true
+    }
+
+    const closeViewer = () => {
+      document.body.style.overflow = bodyCSSOverflow
+      isViewerVisible.value = false
+    }
+
+    // watchers
+    watch(() => props.src, () => {
+      loadImage()
+    })
+
+    // hooks
+    onMounted(() => {
+      if (props.lazy) {
+        nextTick(addLazyLoadListener)
+      } else {
+        loadImage()
+      }
+    })
+
+    onBeforeUnmount(() => {
+      if (props.lazy) {
+        removeLazyLoadListener()
+      }
+    })
+
+    return {
+      attrs,
+      isLoading,
+      isViewerVisible,
+      hasLoadError,
+      containerEl,
+
+      computedStyle,
+      alignCenter,
+      previewMode,
+      imageIndex,
+
+      handleClick,
+      closeViewer,
+    }
+  }
+})
 </script>

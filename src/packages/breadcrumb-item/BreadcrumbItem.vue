@@ -1,52 +1,52 @@
 <script lang="ts">
-  import {
-    h,
-    defineComponent,
-  } from 'vue'
+import {
+  h,
+  defineComponent,
+} from 'vue'
 
-  import SIcon from '../icon'
-  import { ArrowRightSFill } from '@salmon-ui/icons'
+import SIcon from '../icon'
+import { ArrowRightSFill } from '@salmon-ui/icons'
 
-  export default defineComponent({
-    name: 'SBreadcrumbItem',
-    props: {
-      to: {
-        type: [String, Object],
-        default: ''
-      },
+export default defineComponent({
+  name: 'SBreadcrumbItem',
+  props: {
+    to: {
+      type: [String, Object],
+      default: ''
     },
-    render() {
-      const namePrefix = 'sui-breadcrumb-item'
-      let hasCustomSeparator = false
+  },
+  render() {
+    const namePrefix = 'sui-breadcrumb-item'
+    let hasCustomSeparator = false
 
-      const attrs = {
-        class: namePrefix
-      }
-      const contentElAttrs = {
-        class: [
-          `${namePrefix}__content`,
-          this.to ? 'is-link' : null
-        ],
-      }
-      const separatorElAttrs = {
-        class: `${namePrefix}__separator`
-      }
-      if (this.$parent?.$slots?.separator) {
-        hasCustomSeparator = true
-      }
+    const attrs = {
+      class: namePrefix
+    }
+    const contentElAttrs = {
+      class: [
+        `${namePrefix}__content`,
+        this.to ? 'is-link' : null
+      ],
+    }
+    const separatorElAttrs = {
+      class: `${namePrefix}__separator`
+    }
+    if (this.$parent?.$slots?.separator) {
+      hasCustomSeparator = true
+    }
 
-      return h(
-        'span',
-        attrs,
-        [
-          h('span', contentElAttrs, this.$slots.default?.()),
-          h('span', separatorElAttrs,
-            hasCustomSeparator ?
-              this.$parent?.$slots?.separator!() :
-              h(SIcon, () => h(ArrowRightSFill))
-          )
-        ]
-      )
-    },
-  })
+    return h(
+      'span',
+      attrs,
+      [
+        h('span', contentElAttrs, this.$slots.default?.()),
+        h('span', separatorElAttrs,
+          hasCustomSeparator ?
+            this.$parent?.$slots?.separator!() :
+            h(SIcon, () => h(ArrowRightSFill))
+        )
+      ]
+    )
+  },
+})
 </script>

@@ -41,7 +41,7 @@ export interface ISliderProvider {
 export type Marker = {
   point: number,
   position: number,
-  marker: {[s: string]: any;}
+  marker: { [s: string]: any; }
 }
 
 export interface ISliderHandle {

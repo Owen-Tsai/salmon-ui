@@ -28,13 +28,13 @@ const instances: Record<NotificationPosition, NotificationQueue> = {
 // space between each instance
 const _gap = 16
 
-const Notification = function(
+const Notification = function (
   options: INotificationConfig = {} as INotificationConfig
 ) {
   const position = options.position || 'top-right'
   let verticalOffset = options.offset || 0
 
-  instances[position].forEach(({ vm }) => {
+  instances[position].forEach(({vm}) => {
     verticalOffset += (vm.el?.offsetHeight || 0) + _gap
   })
 
@@ -68,12 +68,12 @@ const Notification = function(
 
   render(instanceVm, container)
 
-  instances[position].push({ vm: instanceVm })
+  instances[position].push({vm: instanceVm})
   document.body.appendChild(container)
 
   return {
     close: () => (
-      instanceVm.component?.proxy as ComponentPublicInstance<{visible: boolean}>
+      instanceVm.component?.proxy as ComponentPublicInstance<{ visible: boolean }>
     ).visible = false
   }
 }
@@ -86,12 +86,12 @@ export const close = (
   const notifications = instances[position]
   const verticalPos = position.split('-')[0]
 
-  const index = notifications.findIndex(({ vm }) =>
+  const index = notifications.findIndex(({vm}) =>
     vm.component?.props.id === id
   )
 
   if (index === -1) return
-  const { vm } = notifications[index]
+  const {vm} = notifications[index]
 
   if (!vm) return
   // call user's custom callback
@@ -127,9 +127,9 @@ export const close = (
 export const closeAll = () => {
   for (const key in instances) {
     const notifications = instances[key as NotificationPosition]
-    notifications.forEach(({ vm }) => {
+    notifications.forEach(({vm}) => {
       (
-        vm.component?.proxy as ComponentPublicInstance<{visible: boolean}>
+        vm.component?.proxy as ComponentPublicInstance<{ visible: boolean }>
       ).visible = false
     })
   }

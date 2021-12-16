@@ -50,94 +50,94 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    inject,
-    ref,
-    computed
-  } from 'vue'
+import {
+  defineComponent,
+  inject,
+  ref,
+  computed
+} from 'vue'
 
-  import SIcon from '../icon'
-  import STransitionWrapper from './TransitonWrapper.vue'
-  import { ArrowRightS } from '@salmon-ui/icons'
+import SIcon from '../icon'
+import STransitionWrapper from './TransitonWrapper.vue'
+import { ArrowRightS } from '@salmon-ui/icons'
 
-  import {
-    generateId
-  } from '@/utils/utils'
+import {
+  generateId
+} from '@/utils/utils'
 
-  import type {
-    IAccordionProvider
-  } from './accordion.type'
+import type {
+  IAccordionProvider
+} from './accordion.type'
 
-  export default defineComponent({
-    name: 'SAccordionItem',
-    components: {
-      SIcon,
-      STransitionWrapper,
-      ArrowRightS
+export default defineComponent({
+  name: 'SAccordionItem',
+  components: {
+    SIcon,
+    STransitionWrapper,
+    ArrowRightS
+  },
+  props: {
+    title: String,
+    name: {
+      type: [String, Number],
+      required: true,
+      default: () => {
+        generateId()
+      }
     },
-    props: {
-      title: String,
-      name: {
-        type: [String, Number],
-        required: true,
-        default: () => {
-          generateId()
-        }
-      },
-      disabled: Boolean
-    },
-    setup(props) {
-      const accordionComp = inject<IAccordionProvider>('accordion')
+    disabled: Boolean
+  },
+  setup(props) {
+    const accordionComp = inject<IAccordionProvider>('accordion')
 
-      // data
-      const isFocused = ref(false)
-      const isClick = ref(false)
-      const id = ref(generateId())
+    // data
+    const isFocused = ref(false)
+    const isClick = ref(false)
+    const id = ref(generateId())
 
-      // computed
-      const isActive = computed(() => {
-        const names: Array<string | number> = accordionComp?.activeNames.value || []
-        return names.includes(props.name)
-      })
+    // computed
+    const isActive = computed(() => {
+      const names: Array<string | number> = accordionComp?.activeNames.value || []
+      return names.includes(props.name)
+    })
 
-      const customHeaderStyle = computed(() => {
-        if (isActive.value) {
-          return accordionComp?.headerActiveStyle.value ||
-            accordionComp?.headerStyle.value
+    const customHeaderStyle = computed(() => {
+      if (isActive.value) {
+        return accordionComp?.headerActiveStyle.value ||
+          accordionComp?.headerStyle.value
+      } else {
+        return accordionComp?.headerStyle.value
+      }
+    })
+
+    // methods
+    const handleFocus = () => {
+      setTimeout(() => {
+        if (!isClick.value) {
+          isFocused.value = true
         } else {
-          return accordionComp?.headerStyle.value
+          isClick.value = false
         }
-      })
-
-      // methods
-      const handleFocus = () => {
-        setTimeout(() => {
-          if (!isClick.value) {
-            isFocused.value = true
-          } else {
-            isClick.value = false
-          }
-        }, 50)
-      }
-
-      const handleHeaderClick = () => {
-        if (props.disabled) return
-        accordionComp?.handleItemClick(props.name)
-        isFocused.value = false
-        isClick.value = true
-      }
-
-      return {
-        isActive,
-        isFocused,
-        customHeaderStyle,
-
-        id,
-
-        handleFocus,
-        handleHeaderClick,
-      }
+      }, 50)
     }
-  })
+
+    const handleHeaderClick = () => {
+      if (props.disabled) return
+      accordionComp?.handleItemClick(props.name)
+      isFocused.value = false
+      isClick.value = true
+    }
+
+    return {
+      isActive,
+      isFocused,
+      customHeaderStyle,
+
+      id,
+
+      handleFocus,
+      handleHeaderClick,
+    }
+  }
+})
 </script>

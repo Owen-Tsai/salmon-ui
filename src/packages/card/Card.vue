@@ -23,28 +23,28 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType
-  } from 'vue'
+import {
+  defineComponent,
+  PropType
+} from 'vue'
 
-  type CardShadowOption = 'hover' | 'never' | 'always'
+type CardShadowOption = 'hover' | 'never' | 'always'
 
-  export default defineComponent({
-    name: 'SCard',
-    props: {
-      title: String,
-      shadow: {
-        type: String as PropType<CardShadowOption>,
-        default: 'never',
-        validator: (v: string) => {
-          return ['hover', 'never', 'always'].includes(v)
-        }
-      },
-      bodyStyle: {
-        type: Object,
-        default: { padding: '24px' } as Object
+export default defineComponent({
+  name: 'SCard',
+  props: {
+    title: String,
+    shadow: {
+      type: String as PropType<CardShadowOption>,
+      default: 'never',
+      validator: (v: string) => {
+        return ['hover', 'never', 'always'].includes(v)
       }
+    },
+    bodyStyle: {
+      type: Object,
+      default: {padding: '24px'} as Object
     }
-  })
+  }
+})
 </script>

@@ -17,23 +17,23 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent
-  } from 'vue'
+import {
+  defineComponent
+} from 'vue'
 
-  import SIcon from '../icon'
+import SIcon from '../icon'
 
-  export default defineComponent({
-    name: 'SCascadeOption',
-    components: {
-      SIcon
-    },
-    props: {
-      disabled: Boolean,
-      value: [String, Number]
-    },
-    setup(props, { emit }) {
+export default defineComponent({
+  name: 'SCascadeOption',
+  components: {
+    SIcon
+  },
+  props: {
+    disabled: Boolean,
+    value: [String, Number]
+  },
+  setup(props, {emit}) {
 
-    }
-  })
+  }
+})
 </script>

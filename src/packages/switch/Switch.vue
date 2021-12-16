@@ -46,102 +46,102 @@
 </template>
 
 <script lang="ts">
-  import {
-    computed,
-    defineComponent,
-    nextTick,
-    onMounted,
-    ref,
-    watch
-  } from 'vue'
-  import SIcon from '../icon'
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onMounted,
+  ref,
+  watch
+} from 'vue'
+import SIcon from '../icon'
 
-  export default defineComponent({
-    name: 'SSwitch',
-    components: {
-      SIcon
+export default defineComponent({
+  name: 'SSwitch',
+  components: {
+    SIcon
+  },
+  props: {
+    disabled: Boolean,
+    activeText: String,
+    activeIcon: String,
+    activeColor: String,
+    activeValue: {
+      type: [Boolean, Number, String],
+      default: true
     },
-    props: {
-      disabled: Boolean,
-      activeText: String,
-      activeIcon: String,
-      activeColor: String,
-      activeValue: {
-        type: [Boolean, Number, String],
-        default: true
-      },
-      inactiveText: String,
-      inactiveIcon: String,
-      inactiveColor: String,
-      inactiveValue: {
-        type: [Boolean, Number, String],
-        default: false
-      },
-      name: String,
-      minWidth: Number,
-      loading: Boolean,
-      modelValue: {
-        type: [Boolean, Number, String],
-        default: false
-      }
+    inactiveText: String,
+    inactiveIcon: String,
+    inactiveColor: String,
+    inactiveValue: {
+      type: [Boolean, Number, String],
+      default: false
     },
-    setup(props, ctx) {
-      // refs
-      const inputEl = ref()
-      const buttonEl = ref()
-
-      // states
-      const checked = computed(() => {
-        return props.modelValue === props.activeValue
-      })
-      const computedDisabled = computed(() => {
-        return props.disabled || props.loading
-      })
-
-      watch(checked, () => {
-        inputEl.value.checked = checked.value
-        if(props.activeColor || props.inactiveColor) {
-          setBackgroundColor()
-        }
-      })
-
-      if (!~[props.activeValue, props.inactiveValue].indexOf(props.modelValue)) {
-        ctx.emit('update:modelValue', props.inactiveValue)
-        ctx.emit('change', props.inactiveValue)
-      }
-
-      // methods
-      const handleChange = () => {
-        const val = checked.value ? props.inactiveValue : props.activeValue
-        ctx.emit('update:modelValue', val)
-        ctx.emit('change', val)
-
-        nextTick(() => {
-          inputEl.value.checked = checked.value
-        })
-      }
-      const switchValue = () => {
-        if(computedDisabled.value) return
-        handleChange()
-      }
-      const setBackgroundColor = () => {
-        buttonEl.value.style.backgroundColor = checked.value ? props.activeColor : props.inactiveColor
-      }
-
-      onMounted(() => {
-        if (props.activeValue || props.inactiveValue) {
-          setBackgroundColor()
-        }
-        inputEl.value.checked = checked.value
-      })
-
-      return {
-        inputEl, buttonEl,
-        computedDisabled,
-        checked,
-        handleChange,
-        switchValue
-      }
+    name: String,
+    minWidth: Number,
+    loading: Boolean,
+    modelValue: {
+      type: [Boolean, Number, String],
+      default: false
     }
-  })
+  },
+  setup(props, ctx) {
+    // refs
+    const inputEl = ref()
+    const buttonEl = ref()
+
+    // states
+    const checked = computed(() => {
+      return props.modelValue === props.activeValue
+    })
+    const computedDisabled = computed(() => {
+      return props.disabled || props.loading
+    })
+
+    watch(checked, () => {
+      inputEl.value.checked = checked.value
+      if (props.activeColor || props.inactiveColor) {
+        setBackgroundColor()
+      }
+    })
+
+    if (!~[props.activeValue, props.inactiveValue].indexOf(props.modelValue)) {
+      ctx.emit('update:modelValue', props.inactiveValue)
+      ctx.emit('change', props.inactiveValue)
+    }
+
+    // methods
+    const handleChange = () => {
+      const val = checked.value ? props.inactiveValue : props.activeValue
+      ctx.emit('update:modelValue', val)
+      ctx.emit('change', val)
+
+      nextTick(() => {
+        inputEl.value.checked = checked.value
+      })
+    }
+    const switchValue = () => {
+      if (computedDisabled.value) return
+      handleChange()
+    }
+    const setBackgroundColor = () => {
+      buttonEl.value.style.backgroundColor = checked.value ? props.activeColor : props.inactiveColor
+    }
+
+    onMounted(() => {
+      if (props.activeValue || props.inactiveValue) {
+        setBackgroundColor()
+      }
+      inputEl.value.checked = checked.value
+    })
+
+    return {
+      inputEl, buttonEl,
+      computedDisabled,
+      checked,
+      handleChange,
+      switchValue
+    }
+  }
+})
 </script>

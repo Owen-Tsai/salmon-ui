@@ -25,7 +25,8 @@
           v-for="option in topLvNodes" :key="option.value"
           class="sui-cascade-select__menu-item"
           :value="option.value"
-        >{{ option.label || option.value }}</s-option>
+        >{{ option.label || option.value }}
+        </s-option>
       </ul>
       <ul
         class="sui-cascade-select__menu"
@@ -42,54 +43,55 @@
             }
           ]"
           :value="option.value"
-        >{{ option.label || option.value }}</s-option>
+        >{{ option.label || option.value }}
+        </s-option>
       </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    PropType,
-    ref
-  } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  ref
+} from 'vue'
 
-  import SInput from '../input'
-  import SIcon from '../icon'
-  import SOption from './CascadeSelectOption.vue'
+import SInput from '../input'
+import SIcon from '../icon'
+import SOption from './CascadeSelectOption.vue'
 
-  import {
-    ICascadeDataItem,
-    ProcessedData
-  } from './cascade.type'
+import {
+  ICascadeDataItem,
+  ProcessedData
+} from './cascade.type'
 
-  export default defineComponent({
-    name: 'SCascadeSelect',
-    components: {
-      SInput, SIcon,
-      SOption
-    },
-    props: {
-      disabled: Boolean,
-      prefixIcon: String,
-      data: {
-        type: Array as PropType<ICascadeDataItem[]>,
-        default: () => []
-      }
-    },
-    setup(props, { emit }) {
-      const processedData = ref<ProcessedData>([])
-
-      const processData = (data: ICascadeDataItem[], index: number) => {
-        data.forEach((item, index) => {
-          processedData.value[index].push(item)
-
-          if (item.children) {
-            processData(item.children, index)
-          }
-        })
-      }
+export default defineComponent({
+  name: 'SCascadeSelect',
+  components: {
+    SInput, SIcon,
+    SOption
+  },
+  props: {
+    disabled: Boolean,
+    prefixIcon: String,
+    data: {
+      type: Array as PropType<ICascadeDataItem[]>,
+      default: () => []
     }
-  })
+  },
+  setup(props, {emit}) {
+    const processedData = ref<ProcessedData>([])
+
+    const processData = (data: ICascadeDataItem[], index: number) => {
+      data.forEach((item, index) => {
+        processedData.value[index].push(item)
+
+        if (item.children) {
+          processData(item.children, index)
+        }
+      })
+    }
+  }
+})
 </script>

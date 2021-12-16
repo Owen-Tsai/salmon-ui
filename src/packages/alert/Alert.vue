@@ -48,55 +48,55 @@
 </template>
 
 <script lang="ts">
-import {computed, ref, defineComponent, PropType} from 'vue'
-  import SIcon from '../icon'
-  import { Close } from '@salmon-ui/icons'
+import { computed, ref, defineComponent, PropType } from 'vue'
+import SIcon from '../icon'
+import { Close } from '@salmon-ui/icons'
 
-  import type { AlertType } from '@/packages/alert/alert.type'
+import type { AlertType } from '@/packages/alert/alert.type'
 
-  export default defineComponent({
-    name: 'SAlert',
-    components: {
-      SIcon, Close
+export default defineComponent({
+  name: 'SAlert',
+  components: {
+    SIcon, Close
+  },
+  props: {
+    type: {
+      type: String as PropType<AlertType>,
+      default: 'default',
     },
-    props: {
-      type: {
-        type: String as PropType<AlertType>,
-        default: 'default',
-      },
-      outlined: Boolean,
-      dismissible: {
-        type: Boolean,
-        default: true
-      },
-      message: String,
-      title: String
+    outlined: Boolean,
+    dismissible: {
+      type: Boolean,
+      default: true
     },
-    emits: ['close'],
-    setup(props, ctx) {
-      // state
-      const visible = ref(true)
-      const alertNode = ref()
+    message: String,
+    title: String
+  },
+  emits: ['close'],
+  setup(props, ctx) {
+    // state
+    const visible = ref(true)
+    const alertNode = ref()
 
-      // computed properties
-      const largeIcon = computed(() => {
-        return !!((props.title || ctx.slots.title) && (props.message || ctx.slots.default))
-      })
+    // computed properties
+    const largeIcon = computed(() => {
+      return !!((props.title || ctx.slots.title) && (props.message || ctx.slots.default))
+    })
 
-      // methods
-      const close = evt => {
-        evt.preventDefault()
-        const dom = alertNode.value
-        dom.style.height = `${dom.offsetHeight}px`
-        dom.style.height = `${dom.offsetHeight}px`
-        visible.value = false
-        ctx.emit('close', evt)
-      }
-
-      return {
-        visible, largeIcon, close,
-        alertNode
-      }
+    // methods
+    const close = evt => {
+      evt.preventDefault()
+      const dom = alertNode.value
+      dom.style.height = `${dom.offsetHeight}px`
+      dom.style.height = `${dom.offsetHeight}px`
+      visible.value = false
+      ctx.emit('close', evt)
     }
-  })
+
+    return {
+      visible, largeIcon, close,
+      alertNode
+    }
+  }
+})
 </script>

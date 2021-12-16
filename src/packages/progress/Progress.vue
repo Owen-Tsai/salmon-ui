@@ -72,187 +72,187 @@
 </template>
 
 <script lang="ts">
-  import {
-    computed,
-    defineComponent,
-    PropType
-  } from 'vue'
+import {
+  computed,
+  defineComponent,
+  PropType
+} from 'vue'
 
-  import SIcon from '../icon'
-  import { CheckboxCircleFill } from '@salmon-ui/icons'
+import SIcon from '../icon'
+import { CheckboxCircleFill } from '@salmon-ui/icons'
 
-  import {
-    IProgressColor,
-    ProgressStatus,
-    ProgressType
-  } from './progress.type'
+import {
+  IProgressColor,
+  ProgressStatus,
+  ProgressType
+} from './progress.type'
 
-  export default defineComponent({
-    name: 'SProgress',
-    components: {
-      SIcon,
-      CheckboxCircleFill
+export default defineComponent({
+  name: 'SProgress',
+  components: {
+    SIcon,
+    CheckboxCircleFill
+  },
+  props: {
+    type: {
+      type: String as PropType<ProgressType>,
+      default: 'line'
     },
-    props: {
-      type: {
-        type: String as PropType<ProgressType>,
-        default: 'line'
-      },
-      status: {
-        type: String as PropType<ProgressStatus>,
-        default: 'normal'
-      },
-      percentage: {
-        type: Number,
-        default: 0,
-        required: true,
-        validator: (val: number): boolean => val >= 0 && val <= 100
-      },
-      finishIcon: {
-        type: String,
-        default: 'check'
-      },
-      strokeWidth: {
-        type: Number,
-        default: 8
-      },
-      strokeCap: {
-        type: String as PropType<any>
-      },
-      color: {
-        type: [String, Function, Array],
-        default: '#2258e3'
-      },
-      // only available when in circular or dashboard type
-      size: {
-        type: Number,
-        default: 128
+    status: {
+      type: String as PropType<ProgressStatus>,
+      default: 'normal'
+    },
+    percentage: {
+      type: Number,
+      default: 0,
+      required: true,
+      validator: (val: number): boolean => val >= 0 && val <= 100
+    },
+    finishIcon: {
+      type: String,
+      default: 'check'
+    },
+    strokeWidth: {
+      type: Number,
+      default: 8
+    },
+    strokeCap: {
+      type: String as PropType<any>
+    },
+    color: {
+      type: [String, Function, Array],
+      default: '#2258e3'
+    },
+    // only available when in circular or dashboard type
+    size: {
+      type: Number,
+      default: 128
+    }
+  },
+  setup(props) {
+    const linearFillStyle = computed(() => {
+      return {
+        width: `${props.percentage}%`,
+        backgroundColor: stroke.value
       }
-    },
-    setup(props) {
-      const linearFillStyle = computed(() => {
-        return {
-          width: `${props.percentage}%`,
-          backgroundColor: stroke.value
-        }
-      })
+    })
 
-      const relativeStrokeWidth = computed(() => {
-        return (props.strokeWidth / props.size * 100).toFixed(1)
-      })
+    const relativeStrokeWidth = computed(() => {
+      return (props.strokeWidth / props.size * 100).toFixed(1)
+    })
 
-      const radius = computed(() => {
-        if (props.type === 'circular' || props.type === 'dashboard') {
-          return parseInt(`${50 - parseFloat(relativeStrokeWidth.value) / 2}`, 10)
-        }
+    const radius = computed(() => {
+      if (props.type === 'circular' || props.type === 'dashboard') {
+        return parseInt(`${50 - parseFloat(relativeStrokeWidth.value) / 2}`, 10)
+      }
 
-        return 0
-      })
+      return 0
+    })
 
-      /**
-       * M: starting point, absolute coordinates
-       * m: starting point, dx and dy relatively to the current point
-       * a: draw an arc curve
-       */
-      const trackPath = computed(() => {
-        const r = radius.value
-        const isDashboard = props.type === 'dashboard'
+    /**
+     * M: starting point, absolute coordinates
+     * m: starting point, dx and dy relatively to the current point
+     * a: draw an arc curve
+     */
+    const trackPath = computed(() => {
+      const r = radius.value
+      const isDashboard = props.type === 'dashboard'
 
-        return `
+      return `
           M 50 50
           m 0 ${isDashboard ? '' : '-'}${r}
           a ${r} ${r} 0 1 1 0 ${isDashboard ? '-' : ''}${r * 2}
           a ${r} ${r} 0 1 1 0 ${isDashboard ? '' : '-'}${r * 2}
         `
-      })
+    })
 
-      const perimeter = computed(() => {
-        return 2 * Math.PI * radius.value
-      })
+    const perimeter = computed(() => {
+      return 2 * Math.PI * radius.value
+    })
 
-      const rate = computed(() => {
-        return props.type === 'dashboard' ? 0.75 : 1
-      })
+    const rate = computed(() => {
+      return props.type === 'dashboard' ? 0.75 : 1
+    })
 
-      const strokeDashOffset = computed(() => {
-        const offset = -1 * perimeter.value * (1 - rate.value) / 2
-        return `${offset}px`
-      })
+    const strokeDashOffset = computed(() => {
+      const offset = -1 * perimeter.value * (1 - rate.value) / 2
+      return `${offset}px`
+    })
 
-      const trackPathStyle = computed(() => {
-        return {
-          strokeDasharray:
-            `${(perimeter.value * rate.value)}px, ${perimeter.value}px`,
-          strokeDashoffset: strokeDashOffset.value
-        }
-      })
-
-      const fillPathStyle = computed(() => {
-        return {
-          strokeDasharray:
-            `${perimeter.value * rate.value * (props.percentage / 100) }px, ${perimeter.value}px`,
-          strokeDashoffset: strokeDashOffset.value,
-          transition: 'stroke-dasharray 0.6s ease 0s, stroke 0.6s ease'
-        }
-      })
-
-      const stroke = computed(() => {
-        if (props.status === 'error') {
-          return '#E63333'
-        } else if (props.status === 'success') {
-          return '#06ba63'
-        }
-
-        return getCurrentColor(props.percentage)
-      })
-
-      // methods
-      const getCurrentColor = (percentage: number): string => {
-        if (Array.isArray(props.color)) {
-          return getLeveledColor(percentage)
-        } else if (typeof props.color === 'function') {
-          return props.color(percentage)
-        }
-
-        return props.color as string
-      }
-
-      const getLeveledColor = (percentage: number): string => {
-        const arr = getColorsArray()
-
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].percentage > percentage) {
-            return arr[i].color
-          }
-        }
-        return arr[arr.length - 1].color
-      }
-
-      const getColorsArray = (): IProgressColor[] => {
-        const colors = props.color as Array<IProgressColor | string>
-        const span = 100 / colors.length
-        return colors.map((obj, index) => {
-          if (typeof obj === 'string') {
-            return {
-              color: obj,
-              percentage: (index + 1) * span
-            }
-          }
-
-          return obj
-        })
-      }
-
+    const trackPathStyle = computed(() => {
       return {
-        trackPath,
-        stroke,
-
-        relativeStrokeWidth,
-
-        linearFillStyle,
-        trackPathStyle,
-        fillPathStyle,
+        strokeDasharray:
+          `${(perimeter.value * rate.value)}px, ${perimeter.value}px`,
+        strokeDashoffset: strokeDashOffset.value
       }
+    })
+
+    const fillPathStyle = computed(() => {
+      return {
+        strokeDasharray:
+          `${perimeter.value * rate.value * (props.percentage / 100)}px, ${perimeter.value}px`,
+        strokeDashoffset: strokeDashOffset.value,
+        transition: 'stroke-dasharray 0.6s ease 0s, stroke 0.6s ease'
+      }
+    })
+
+    const stroke = computed(() => {
+      if (props.status === 'error') {
+        return '#E63333'
+      } else if (props.status === 'success') {
+        return '#06ba63'
+      }
+
+      return getCurrentColor(props.percentage)
+    })
+
+    // methods
+    const getCurrentColor = (percentage: number): string => {
+      if (Array.isArray(props.color)) {
+        return getLeveledColor(percentage)
+      } else if (typeof props.color === 'function') {
+        return props.color(percentage)
+      }
+
+      return props.color as string
     }
-  })
+
+    const getLeveledColor = (percentage: number): string => {
+      const arr = getColorsArray()
+
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].percentage > percentage) {
+          return arr[i].color
+        }
+      }
+      return arr[arr.length - 1].color
+    }
+
+    const getColorsArray = (): IProgressColor[] => {
+      const colors = props.color as Array<IProgressColor | string>
+      const span = 100 / colors.length
+      return colors.map((obj, index) => {
+        if (typeof obj === 'string') {
+          return {
+            color: obj,
+            percentage: (index + 1) * span
+          }
+        }
+
+        return obj
+      })
+    }
+
+    return {
+      trackPath,
+      stroke,
+
+      relativeStrokeWidth,
+
+      linearFillStyle,
+      trackPathStyle,
+      fillPathStyle,
+    }
+  }
+})
 </script>
