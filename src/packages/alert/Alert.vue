@@ -52,7 +52,7 @@ import { computed, ref, defineComponent, PropType } from 'vue'
 import SIcon from '../icon'
 import { Close } from '@salmon-ui/icons'
 
-import type { AlertType } from '@/packages/alert/alert.type'
+import { AlertType, _alertTypes } from './alert.type'
 
 export default defineComponent({
   name: 'SAlert',
@@ -63,6 +63,7 @@ export default defineComponent({
     type: {
       type: String as PropType<AlertType>,
       default: 'default',
+      validator: (v: string) => _alertTypes.includes(v)
     },
     outlined: Boolean,
     dismissible: {
