@@ -3,7 +3,7 @@ import type {
 } from '@/packages/button/button.type'
 
 export interface IButtonGroupProvider {
-  type: ButtonType | undefined,
-  shape: ButtonShape | undefined,
-  size: ButtonSize | undefined
+  type: ButtonType,
+  shape: ButtonShape,
+  size: ButtonSize
 }

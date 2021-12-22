@@ -7,16 +7,9 @@
 <script lang="ts">
 import {
   defineComponent,
-  PropType,
   provide,
   reactive
 } from 'vue'
-
-import type {
-  ButtonSize,
-  ButtonShape,
-  ButtonType
-} from '@/packages/button/button.type'
 
 import {
   _buttonShapes,
@@ -24,24 +17,16 @@ import {
   _buttonTypes
 } from '@/packages/button/button.type'
 
+import { oneOf } from 'vue-types'
+
 import type { IButtonGroupProvider } from './button-group.type'
 
 export default defineComponent({
   name: 'SButtonGroup',
   props: {
-    size: {
-      type: String as PropType<ButtonSize>,
-      validator: (v: string) => _buttonSizes.includes(v)
-    },
-    shape: {
-      type: String as PropType<ButtonShape>,
-      validator: (v: string) => _buttonShapes.includes(v)
-    },
-    type: {
-      type: String as PropType<ButtonType>,
-      default: 'default',
-      validator: (v: string) => _buttonTypes.includes(v)
-    }
+    size: oneOf(_buttonSizes).def('default'),
+    shape: oneOf(_buttonShapes).def('default'),
+    type: oneOf(_buttonTypes).def('default')
   },
   setup(props) {
     const provided = reactive({

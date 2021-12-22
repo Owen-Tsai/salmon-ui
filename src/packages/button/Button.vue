@@ -27,19 +27,19 @@
 
 <script lang="ts">
 import SIcon from '../icon'
+import { oneOf } from 'vue-types'
 
 import {
   computed,
   defineComponent,
-  inject,
-  PropType
+  inject
 } from 'vue'
 
 import {
-  ButtonSize, _buttonSizes,
-  ButtonType, _buttonTypes,
-  ButtonShape, _buttonShapes,
-  ButtonNativeType, _buttonNativeTypes,
+  _buttonSizes,
+  _buttonShapes,
+  _buttonNativeTypes,
+  _buttonTypes
 } from './button.type'
 import type { IButtonGroupProvider } from '@/packages/button-group/button-group.type'
 
@@ -52,24 +52,10 @@ export default defineComponent({
     Loader
   },
   props: {
-    type: {
-      type: String as PropType<ButtonType>,
-      default: () => 'default',
-      validator: (v: string) => _buttonTypes.includes(v)
-    },
-    nativeType: {
-      type: String as PropType<ButtonNativeType>,
-      default: () => 'button',
-      validator: (v: string) => _buttonNativeTypes.includes(v)
-    },
-    size: {
-      type: String as PropType<ButtonSize>,
-      validator: (v: string) => _buttonSizes.includes(v)
-    },
-    shape: {
-      type: String as PropType<ButtonShape>,
-      validator: (v: string) => _buttonShapes.includes(v)
-    },
+    type: oneOf(_buttonTypes).def('default'),
+    nativeType: oneOf(_buttonNativeTypes).def('button'),
+    size: oneOf(_buttonSizes).def('default'),
+    shape: oneOf(_buttonShapes).def('default'),
     disabled: Boolean,
     loading: Boolean,
     autofocus: Boolean,
@@ -80,8 +66,8 @@ export default defineComponent({
     // injected
     const buttonGroupProvider: IButtonGroupProvider = inject('buttonGroupProvider', {
       type: 'default',
-      size: undefined,
-      shape: undefined
+      size: 'default',
+      shape: 'default'
     })
 
     // computed
