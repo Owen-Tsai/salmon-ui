@@ -2,7 +2,7 @@
   <button
     :class="[
       'sui-button',
-      `sui-button--${type}`,
+      computedType ? `sui-button--${type}` : '',
       computedSize ? `sui-button--${computedSize}` : '',
       computedShape ? `sui-button--${shape}` : '',
       disabled ? 'is-disabled' : '',
@@ -65,22 +65,23 @@ export default defineComponent({
   setup(props, ctx) {
     // injected
     const buttonGroupProvider: IButtonGroupProvider = inject('buttonGroupProvider', {
-      type: 'default',
-      size: 'default',
-      shape: 'default'
+      type: undefined,
+      size: undefined,
+      shape: undefined
     })
 
     // computed
     const computedSize = computed(() => {
       const size = buttonGroupProvider.size || props.size
-      return size === undefined ? '' : size
+      return size === 'default' ? null : size
     })
-    const computedType = computed(() =>
-      props.type || buttonGroupProvider.type
-    )
+    const computedType = computed(() => {
+      const type = buttonGroupProvider.type || props.type
+      return type === 'default' ? null : type
+    })
     const computedShape = computed(() => {
       const shape = buttonGroupProvider.shape || props.shape
-      return shape === undefined ? '' : shape
+      return shape === 'default' ? null : shape
     })
 
     // methods
