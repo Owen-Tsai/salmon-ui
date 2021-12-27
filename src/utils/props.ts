@@ -1,5 +1,29 @@
 // Generate props of a component along with types and validations
-export const generateValidator = <T>(prop: T): (() => boolean) => {
+import type { PropType } from 'vue'
 
-  return () => true
+export const buildProp = <T = any, R extends boolean = boolean, D extends T = T, C = never>({
+  type, values, required, defaultValue, validator
+}: {
+  type?: any,
+  values?: readonly T[],
+  required?: R,
+  defaultValue?: R extends true ? never : D extends Record<string, unknown> | Array<any> ? () => D : D,
+  validator?: (val: any) => boolean
+} = {}) => {
+  return {
+    type: type as PropType<T | C>,
+    required: !!required,
+    default: defaultValue,
+    validator: (val: any) => {
+      let valid = false
+      if (values) {
+        valid ||= [...values, defaultValue].includes(val)
+      }
+      if (validator) {
+        valid ||= validator(val)
+      }
+
+      return valid
+    }
+  } as const
 }
