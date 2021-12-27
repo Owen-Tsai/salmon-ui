@@ -13,9 +13,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import {
+  defineComponent,
+  ref,
+  computed
+} from 'vue'
 
-const _sizes = ['large', 'small', '']
+import {
+  _avatarShape,
+  _avatarObjectFit,
+  _avatarSize
+} from './avatar.type'
+
+import { buildProp } from '@/utils/props'
 
 export default defineComponent({
   name: 'SAvatar',
@@ -23,28 +33,16 @@ export default defineComponent({
     src: String,
     srcSet: String,
     alt: String,
-    size: {
+    size: buildProp({
       type: [String, Number],
-      default: '',
-      validator: (v: string | number) => {
-        if (typeof v === 'string') {
-          return _sizes.includes(v)
-        }
-
-        return true
-      }
-    },
-    shape: {
-      type: String,
-      default: 'circle',
-      validator: (v: string) => {
-        return ['circle', 'square'].includes(v)
-      }
-    },
-    fit: {
-      type: String,
-      default: 'cover'
-    }
+      values: _avatarSize
+    }),
+    shape: buildProp({
+      values: _avatarShape
+    }),
+    fit: buildProp({
+      values: _avatarObjectFit
+    })
   },
   emits: ['error'],
   setup(props, ctx) {
@@ -55,10 +53,12 @@ export default defineComponent({
     const cls = computed(() => {
       const arr: string[] = []
       const prefix = 'sui-avatar--'
-      if (typeof props.size === 'string' && props.size !== '') {
-        arr.push(`${prefix}${props.size}`)
+      if (props.size && typeof props.size === 'string') {
+        if (props.size !== 'default') {
+          arr.push(`${prefix}${props.size}`)
+        }
       }
-      if (props.shape) {
+      if (props.shape && props.shape !== 'square') {
         arr.push(`${prefix}${props.shape}`)
       }
 
@@ -67,7 +67,7 @@ export default defineComponent({
 
     // styles
     const sizeStyle = computed(() => {
-      return typeof props.size === 'number' ? {
+      return typeof(props.size!) === 'number' ? {
         height: `${props.size}px`,
         width: `${props.size}px`,
         lineHeight: `${props.size}px`

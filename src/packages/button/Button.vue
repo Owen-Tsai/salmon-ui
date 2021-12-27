@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import SIcon from '../icon'
-import { oneOf } from 'vue-types'
+import { buildProp } from '@/utils/props'
 
 import {
   computed,
@@ -52,10 +52,22 @@ export default defineComponent({
     Loader
   },
   props: {
-    type: oneOf(_buttonTypes).def('default'),
-    nativeType: oneOf(_buttonNativeTypes).def('button'),
-    size: oneOf(_buttonSizes).def('default'),
-    shape: oneOf(_buttonShapes).def('default'),
+    type: buildProp({
+      values: _buttonTypes,
+      defaultValue: 'default',
+    }),
+    nativeType: buildProp({
+      values: _buttonNativeTypes,
+      defaultValue: 'button'
+    }),
+    size: buildProp({
+      values: _buttonSizes,
+      defaultValue: 'default'
+    }),
+    shape: buildProp({
+      values: _buttonShapes,
+      defaultValue: 'default'
+    }),
     disabled: Boolean,
     loading: Boolean,
     autofocus: Boolean,

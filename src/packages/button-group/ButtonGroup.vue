@@ -17,8 +17,6 @@ import {
   _buttonTypes
 } from '@/packages/button/button.type'
 
-import { oneOf } from 'vue-types'
-
 import type { IButtonGroupProvider } from './button-group.type'
 
 export default defineComponent({
