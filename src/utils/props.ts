@@ -1,7 +1,7 @@
 // Generate props of a component along with types and validations
 import type { PropType } from 'vue'
 
-export const buildProp = <T = any, R extends boolean = boolean, D extends T = T, C = never>({
+export const buildProp = <T = any, R extends boolean = boolean, D extends T = T>({
   type, values, required, defaultValue, validator
 }: {
   type?: any,
@@ -11,7 +11,7 @@ export const buildProp = <T = any, R extends boolean = boolean, D extends T = T,
   validator?: (val: any) => boolean
 } = {}) => {
   return {
-    type: type as PropType<T | C>,
+    type: type as PropType<T | never>,
     required: !!required,
     default: defaultValue,
     validator: (val: any) => {
