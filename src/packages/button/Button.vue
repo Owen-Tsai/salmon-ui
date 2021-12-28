@@ -7,8 +7,7 @@
       computedShape ? `sui-button--${shape}` : '',
       disabled ? 'is-disabled' : '',
       loading ? 'is-loading' : '',
-      danger ? 'is-danger' : '',
-      $slots.prefix || $slots.affix ? 'has-icon' : ''
+      danger ? 'is-danger' : ''
     ]"
     :disabled="disabled || loading"
     :autofocus="autofocus"
@@ -53,20 +52,16 @@ export default defineComponent({
   },
   props: {
     type: buildProp({
-      values: _buttonTypes,
-      defaultValue: 'default',
+      values: _buttonTypes
     }),
     nativeType: buildProp({
-      values: _buttonNativeTypes,
-      defaultValue: 'button'
+      values: _buttonNativeTypes
     }),
     size: buildProp({
-      values: _buttonSizes,
-      defaultValue: 'default'
+      values: _buttonSizes
     }),
     shape: buildProp({
-      values: _buttonShapes,
-      defaultValue: 'default'
+      values: _buttonShapes
     }),
     disabled: Boolean,
     loading: Boolean,
@@ -84,16 +79,13 @@ export default defineComponent({
 
     // computed
     const computedSize = computed(() => {
-      const size = buttonGroupProvider.size || props.size
-      return size === 'default' ? null : size
+      return buttonGroupProvider.size || props.size
     })
     const computedType = computed(() => {
-      const type = buttonGroupProvider.type || props.type
-      return type === 'default' ? null : type
+      return buttonGroupProvider.type || props.type
     })
     const computedShape = computed(() => {
-      const shape = buttonGroupProvider.shape || props.shape
-      return shape === 'default' ? null : shape
+      return buttonGroupProvider.shape || props.shape
     })
 
     // methods
