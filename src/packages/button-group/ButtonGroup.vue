@@ -17,14 +17,22 @@ import {
   _buttonTypes
 } from '@/packages/button/button.type'
 
+import { buildProp } from '@/utils/props'
+
 import type { IButtonGroupProvider } from './button-group.type'
 
 export default defineComponent({
   name: 'SButtonGroup',
   props: {
-    size: oneOf(_buttonSizes).def('default'),
-    shape: oneOf(_buttonShapes).def('default'),
-    type: oneOf(_buttonTypes).def('default')
+    size: buildProp({
+      values: _buttonSizes
+    }),
+    shape: buildProp({
+      values: _buttonShapes
+    }),
+    type: buildProp({
+      values: _buttonTypes
+    })
   },
   setup(props) {
     const provided = reactive({
