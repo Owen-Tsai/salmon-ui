@@ -2,9 +2,9 @@
   <button
     :class="[
       'sui-button',
-      computedType ? `sui-button--${type}` : '',
+      computedType ? `sui-button--${computedType}` : '',
       computedSize ? `sui-button--${computedSize}` : '',
-      computedShape ? `sui-button--${shape}` : '',
+      computedShape ? `sui-button--${computedShape}` : '',
       disabled ? 'is-disabled' : '',
       loading ? 'is-loading' : '',
       danger ? 'is-danger' : ''
@@ -88,7 +88,6 @@ export default defineComponent({
       return buttonGroupProvider.shape || props.shape
     })
 
-    // methods
     const handleClick = (evt) => {
       ctx.emit('click', evt)
     }
