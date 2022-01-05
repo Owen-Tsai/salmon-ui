@@ -21,15 +21,15 @@
           <s-avatar :src="avatar2" size="large" class="demo-m-a"></s-avatar>
           <s-avatar :src="avatar2" class="demo-m-a"></s-avatar>
           <s-avatar :src="avatar2" size="small" class="demo-m-a"></s-avatar>
-          <s-avatar :src="avatar2" class="demo-m-a" size="large" shape="square"></s-avatar>
-          <s-avatar :src="avatar2" class="demo-m-a" shape="square"></s-avatar>
-          <s-avatar :src="avatar2" class="demo-m-a" size="small" shape="square"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" size="large" shape="circle"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" shape="circle"></s-avatar>
+          <s-avatar :src="avatar2" class="demo-m-a" size="small" shape="circle"></s-avatar>
 
           <br>
 
-          <s-avatar class="demo-m-a" :size="64">三文咸鱼</s-avatar>
-          <s-avatar class="demo-m-a" :size="64">Lucy</s-avatar>
-          <s-avatar class="demo-m-a" :size="64">张三</s-avatar>
+          <s-avatar class="demo-m-a" shape="circle" :size="99">三文咸鱼</s-avatar>
+          <s-avatar class="demo-m-a" shape="circle" :size="64">Lucy</s-avatar>
+          <s-avatar class="demo-m-a" shape="circle" :size="64">张三</s-avatar>
           <s-avatar class="demo-m-a">
             <s-icon :size="36" color="#99a5af">
               <user></user>
@@ -781,10 +781,10 @@
       <div class="demo-block">
         <h2>Button Groups</h2>
         <div class="demo-content">
-          <s-button-group class="demo-m-y" size="small">
-            <s-button type="primary">主要按钮</s-button>
-            <s-button type="primary">主要按钮</s-button>
-            <s-button type="primary">主要按钮</s-button>
+          <s-button-group type="primary" class="demo-m-y">
+            <s-button>主要按钮</s-button>
+            <s-button>主要按钮</s-button>
+            <s-button>主要按钮</s-button>
           </s-button-group>
 
           <s-button-group class="demo-m-y">

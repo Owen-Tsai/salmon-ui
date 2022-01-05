@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import SIcon from '../icon'
-import { buildProp } from '@/utils/props'
+import props from './props'
 
 import {
   computed,
@@ -34,13 +34,7 @@ import {
   inject
 } from 'vue'
 
-import {
-  _buttonSizes,
-  _buttonShapes,
-  _buttonNativeTypes,
-  _buttonTypes
-} from './button.type'
-import type { IButtonGroupProvider } from '@/packages/button-group/button-group.type'
+import type { ButtonGroupProps } from '@/packages/button-group/props'
 
 import { Loader } from '@salmon-ui/icons'
 
@@ -50,42 +44,24 @@ export default defineComponent({
     SIcon,
     Loader
   },
-  props: {
-    type: buildProp({
-      values: _buttonTypes
-    }),
-    nativeType: buildProp({
-      values: _buttonNativeTypes
-    }),
-    size: buildProp({
-      values: _buttonSizes
-    }),
-    shape: buildProp({
-      values: _buttonShapes
-    }),
-    disabled: Boolean,
-    loading: Boolean,
-    autofocus: Boolean,
-    danger: Boolean
-  },
+  props: props,
   emits: ['click'],
   setup(props, ctx) {
     // injected
-    const buttonGroupProvider: IButtonGroupProvider = inject('buttonGroupProvider', {
-      type: undefined,
-      size: undefined,
-      shape: undefined
-    })
+    const buttonGroupProvider: ButtonGroupProps = inject(
+      'buttonGroupContext',
+      undefined as ButtonGroupProps
+    )
 
     // computed
     const computedSize = computed(() => {
-      return buttonGroupProvider.size || props.size
+      return buttonGroupProvider?.size || props.size
     })
     const computedType = computed(() => {
-      return buttonGroupProvider.type || props.type
+      return buttonGroupProvider?.type || props.type
     })
     const computedShape = computed(() => {
-      return buttonGroupProvider.shape || props.shape
+      return buttonGroupProvider?.shape || props.shape
     })
 
     const handleClick = (evt) => {
