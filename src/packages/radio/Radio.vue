@@ -36,18 +36,14 @@ import {
   ref,
 } from 'vue'
 
-import useRadio from '@/utils/compositions/radio'
+import { useRadio } from './use-radio'
+import props from './props'
 
 export default defineComponent({
   name: 'SRadio',
-  props: {
-    value: [String, Number, Boolean],
-    modelValue: [String, Number, Boolean],
-    disabled: Boolean,
-    name: String,
-  },
+  props,
   emits: ['update:modelValue', 'change'],
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const focus = ref(false)
 
     const {

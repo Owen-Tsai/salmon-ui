@@ -732,7 +732,7 @@
             <template #prefix>
               <s-icon><heart></heart></s-icon>
             </template>
-            爱你
+            Love
           </s-button>
           <s-button class="demo-m-a" type="outlined">outlined 按钮</s-button>
           <s-button class="demo-m-a" type="text">文字按钮</s-button>
