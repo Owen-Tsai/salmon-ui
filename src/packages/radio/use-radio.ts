@@ -6,7 +6,8 @@ import {
   inject,
   computed,
   SetupContext,
-  nextTick
+  nextTick,
+  ref
 } from 'vue'
 
 import throwError from '@/utils/class.error'
@@ -34,6 +35,8 @@ export const useRadio = (
     )
   }
 
+  const isGrouped = ref(!!radioGroup)
+
   const computedName = computed(() => radioGroup?.name || props.name)
   const isDisabled = computed(() => radioGroup?.disabled || props.disabled)
   
@@ -60,6 +63,7 @@ export const useRadio = (
     model,
     computedName,
     isDisabled,
-    handleChange
+    handleChange,
+    radioGroup
   }
 }

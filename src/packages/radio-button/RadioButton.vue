@@ -32,58 +32,35 @@
 <script lang="ts">
 import {
   defineComponent,
-  ref,
-  computed
+  ref
 } from 'vue'
 
-import useRadio from '@/utils/compositions/radio'
-import throwError from '@/utils/class.error'
+import props from './props'
+import { useRadioButton } from './use-radio-button'
 
 export default defineComponent({
   name: 'SRadioButton',
-  props: {
-    value: [String, Number, Boolean],
-    modelValue: [String, Number, Boolean],
-    disabled: Boolean,
-    name: String,
-  },
-  setup(props, {emit}) {
+  props,
+  setup(props, { emit }) {
     const isFocused = ref(false)
-
-    const tabindex = computed(() => {
-      return (
-        isDisabled.value ||
-        (isGroup.value && model.value !== props.value)
-      ) ? -1 : 0
-    })
 
     const {
       isDisabled,
-      isGroup,
       model,
       handleChange,
-      buttonSize,
-      computedName
-    } = useRadio(props, emit)
-
-    if (!isGroup.value) {
-      throwError(
-        'sui-radio-button',
-        'radio-buttons can only be used inside radio-groups'
-      )
-    }
+      size,
+      computedName,
+      tabindex
+    } = useRadioButton(props, emit)
 
     return {
       model,
       tabindex,
-      size: buttonSize,
+      size,
       computedName,
-
       isDisabled,
-      isGroup,
       isFocused,
-
-      handleChange,
+      handleChange
     }
   }
 })
