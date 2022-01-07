@@ -1,26 +1,18 @@
-import props from './props'
-import radioGroupProps from '@/packages/radio-group/props'
-
 import {
-  ExtractPropTypes,
   inject,
   computed,
   SetupContext,
-  nextTick,
-  ref
+  nextTick
 } from 'vue'
 
 import throwError from '@/utils/class.error'
 
-type RadioProps = ExtractPropTypes<typeof props>
-type RadioGroupContext = ExtractPropTypes<typeof radioGroupProps> & {
-  changeEvent: (v: string | number) => void,
-  groupId: 'radioGroup'
-} | undefined
-type Model = string | number
+import type { RadioProps, Model } from './radio'
+import type { RadioButtonProps } from '@/packages/radio-button/radio-button'
+import type { RadioGroupContext } from '@/packages/radio-group/radio-group'
 
 export const useRadio = (
-  props: RadioProps,
+  props: RadioProps | RadioButtonProps,
   emit: SetupContext<('update:modelValue' | 'change')[]>['emit']
 ) => {
   const radioGroup: RadioGroupContext = inject(
@@ -28,25 +20,33 @@ export const useRadio = (
     undefined as RadioGroupContext
   )
 
-  if (radioGroup && props.modelValue === undefined) {
+  const isGroup = computed(() => radioGroup?.group === 'radio-group')
+
+  if (isGroup.value && props.modelValue === undefined) {
     throwError(
       'sui-radio',
       'radio component should either be used with `v-model` or in a radio-group'
     )
   }
 
-  const isGrouped = ref(!!radioGroup)
+  const computedName = computed(() => isGroup.value ? radioGroup!.name : props.name)
+  const isDisabled = computed(() => isGroup.value 
+    ? radioGroup!.disabled || props.disabled 
+    : props.disabled
+  )
 
-  const computedName = computed(() => radioGroup?.name || props.name)
-  const isDisabled = computed(() => radioGroup?.disabled || props.disabled)
+  console.log(computedName.value, isDisabled.value, isGroup.value)
   
   const model = computed<Model>({
     get () {
-      return (radioGroup?.modelValue || props.modelValue) as Model
+      return (isGroup.value
+        ? radioGroup!.modelValue
+        : props.modelValue
+      ) as Model
     },
     set (val: Model) {
-      if (radioGroup) {
-        radioGroup.changeEvent(val)
+      if (isGroup.value) {
+        radioGroup!.changeEvent(val)
       } else {
         emit('update:modelValue', val)
       }
@@ -59,11 +59,14 @@ export const useRadio = (
     })
   }
 
+  const size = computed(() => radioGroup?.size)
+
   return {
     model,
+    size,
     computedName,
     isDisabled,
     handleChange,
-    radioGroup
+    isGroup
   }
 }

@@ -1,14 +1,10 @@
 import { useRadio } from '@/packages/radio/use-radio'
-import props from './props'
-
-import {
-  ExtractPropTypes,
-  computed
-} from 'vue'
-
+import { computed } from 'vue'
 import throwError from '@/utils/class.error'
 
-type RadioButtonProps = ExtractPropTypes<typeof props>
+import type {
+  RadioButtonProps
+} from './radio-button'
 
 export const useRadioButton = (props: RadioButtonProps, emit) => {
   const {
@@ -16,24 +12,16 @@ export const useRadioButton = (props: RadioButtonProps, emit) => {
     model,
     handleChange,
     computedName,
-    radioGroup
+    isGroup,
+    size
   } = useRadio(props, emit)
-
-  if (radioGroup === undefined) {
-    throwError(
-      'sui-radio-button',
-      '`radio-button`(s) must be used inside a `radio-group` component'
-    )
-  }
 
   const tabindex = computed(() => {
     return (
       isDisabled.value ||
-      (radioGroup !== undefined && model.value !== props.value)
+      (isGroup.value && model.value !== props.value)
     ) ? -1 : 0
   })
-
-  const size = computed(() => radioGroup?.size || props.size)
 
   return {
     isDisabled,

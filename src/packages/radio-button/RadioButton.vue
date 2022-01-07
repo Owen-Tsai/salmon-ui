@@ -35,12 +35,13 @@ import {
   ref
 } from 'vue'
 
-import props from './props'
+import props from './radio-button'
 import { useRadioButton } from './use-radio-button'
 
 export default defineComponent({
   name: 'SRadioButton',
-  props,
+  props: props,
+  emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const isFocused = ref(false)
 

@@ -16,7 +16,8 @@
         ref="radioRef"
         v-model="model"
         class="sui-radio__original"
-        :value="value" :name="computedName"
+        :value="value"
+        :name="computedName"
         :disabled="isDisabled"
         @change="handleChange"
         @focus="focus = true"
@@ -37,7 +38,7 @@ import {
 } from 'vue'
 
 import { useRadio } from './use-radio'
-import props from './props'
+import props from './radio'
 
 export default defineComponent({
   name: 'SRadio',

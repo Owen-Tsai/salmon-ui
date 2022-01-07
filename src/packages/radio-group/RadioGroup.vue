@@ -14,41 +14,34 @@ import {
   provide,
   toRefs,
   reactive,
-  nextTick,
-  PropType
+  nextTick
 } from 'vue'
-import { generateId } from '@/utils/utils'
 
-type RadioButtonSize = '' | 'small' | 'large'
+import props from './radio-group'
+import type { Model } from '@/packages/radio/radio'
+
+import { generateId } from '@/utils/utils'
 
 export default defineComponent({
   name: 'SRadioGroup',
-  props: {
-    modelValue: [String, Number, Boolean],
-    disabled: Boolean,
-    size: {
-      type: String as PropType<RadioButtonSize>,
-      default: ''
-    },
-    name: {
-      type: String,
-      default: () => `radio-group-${generateId()}`
-    }
-  },
+  props,
   emits: ['change', 'update:modelValue'],
   setup(props, ctx) {
     // methods
-    const changeEvent = val => {
+    const changeEvent = (val: Model) => {
       ctx.emit('update:modelValue', val)
       nextTick(() => {
         ctx.emit('change', val)
       })
     }
 
-    provide('radioGroup', reactive({
+    const id = generateId()
+
+    provide('radioGroupContext', reactive({
       ...toRefs(props),
+      name: `radio-group-${id}`,
+      group: 'radio-group',
       changeEvent,
-      group: 'radioGroup'
     }))
 
   }
