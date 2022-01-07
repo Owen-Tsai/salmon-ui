@@ -11,7 +11,7 @@ import {
   reactive
 } from 'vue'
 
-import props from './props'
+import props from './button-group'
 
 export default defineComponent({
   name: 'SButtonGroup',

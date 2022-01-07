@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import SIcon from '../icon'
-import props from './props'
+import props from './button'
 
 import {
   computed,
@@ -34,7 +34,7 @@ import {
   inject
 } from 'vue'
 
-import type { ButtonGroupProps } from '@/packages/button-group/props'
+import type { ButtonGroupProps } from '@/packages/button-group/button-group'
 
 import { Loader } from '@salmon-ui/icons'
 
