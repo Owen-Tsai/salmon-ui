@@ -84,7 +84,7 @@ import {
 import SSliderHandle from './Handle.vue'
 import SSliderMarker from './Marker.vue'
 
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 import { processSizeType } from '@/utils/utils'
 
 import {
@@ -145,7 +145,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'change', 'input'],
   setup(props, {emit}) {
     if (props.min > props.max) {
-      throwError('sui-slider', 'prop `min` should not be greater than `max`')
+      error('sui-slider', 'prop `min` should not be greater than `max`')
     }
 
     // data

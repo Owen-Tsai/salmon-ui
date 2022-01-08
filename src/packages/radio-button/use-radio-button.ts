@@ -1,6 +1,6 @@
 import { useRadio } from '@/packages/radio/use-radio'
 import { computed } from 'vue'
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 import type {
   RadioButtonProps

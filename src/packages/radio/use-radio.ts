@@ -5,7 +5,7 @@ import {
   nextTick
 } from 'vue'
 
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 import type { RadioProps, Model } from './radio'
 import type { RadioButtonProps } from '@/packages/radio-button/radio-button'
@@ -23,7 +23,7 @@ export const useRadio = (
   const isGroup = computed(() => radioGroup?.group === 'radio-group')
 
   if (isGroup.value && props.modelValue === undefined) {
-    throwError(
+    error(
       'sui-radio',
       'radio component should either be used with `v-model` or in a radio-group'
     )

@@ -1,0 +1,1 @@
+export type PartialReturnType<T extends (...args: any) => any> = Partial<ReturnType<T>>

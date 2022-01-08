@@ -25,7 +25,7 @@ import {
   triggerType
 } from '@/utils/popper-options'
 
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 export default defineComponent({
   name: 'STooltip',
@@ -61,7 +61,7 @@ export default defineComponent({
   setup(props) {
     // handle error
     if (props.trigger === 'manual' && props.modelValue === undefined) {
-      throwError('sui-tooltip', 'v-model is required when `trigger` is set to `manual`')
+      error('sui-tooltip', 'v-model is required when `trigger` is set to `manual`')
     }
 
     let tippyInstance: any = null

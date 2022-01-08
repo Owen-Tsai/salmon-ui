@@ -127,7 +127,7 @@ import {
   useSorting
 } from '@/utils/compositions/table'
 
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 export default defineComponent({
   name: 'STable',
@@ -183,7 +183,7 @@ export default defineComponent({
 
       if (props.expandable) {
         if (!row[props.rowPkField]) {
-          throwError(
+          error(
             'sui-table',
             'expandable table has to provide extra field with the same ' +
             'value provided in the props: ' + props.rowPkField

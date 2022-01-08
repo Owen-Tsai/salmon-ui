@@ -2,10 +2,10 @@ import {
   ref,
   computed,
   inject,
-  nextTick
+  nextTick,
 } from 'vue'
 
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 type CheckboxModel = string | number | boolean | string[] | number[]
 type CheckboxSize = '' | 'small' | 'large'
@@ -29,7 +29,7 @@ const useCheckbox = (props, emit) => {
   )
 
   if (!isGroup.value && props.modelValue === undefined) {
-    throwError(
+    error(
       'sui-checkbox',
       'Checkbox(and checkbox-button) should either be used with `v-model` or in a checkbox-group'
     )

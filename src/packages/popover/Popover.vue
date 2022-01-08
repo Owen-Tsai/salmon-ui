@@ -24,7 +24,7 @@ import {
 import { Placement } from '@popperjs/core'
 import { basePopperConfig, triggerType } from '@/utils/popper-options'
 import tippy from 'tippy.js'
-import throwError from "@/utils/class.error";
+import error from "@/utils/class.error";
 
 export default defineComponent({
   name: 'SPopover',
@@ -54,7 +54,7 @@ export default defineComponent({
   setup(props, ctx) {
     // handle error
     if (props.trigger === 'manual' && props.modelValue === undefined) {
-      throwError('sui-popover', 'v-model is required when `trigger` is set to `manual`')
+      error('sui-popover', 'v-model is required when `trigger` is set to `manual`')
     }
 
     let tippyInstance: any = null

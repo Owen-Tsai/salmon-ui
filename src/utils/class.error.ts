@@ -1,4 +1,4 @@
-class SalmonUIError extends Error{
+class SalmonUIError extends Error {
   constructor(msg: string) {
     super(msg)
     this.name = 'SalmonUIError'

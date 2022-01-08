@@ -4,7 +4,7 @@ import {
 } from 'vue'
 
 import { generateId } from '@/utils/utils'
-import throwError from '@/utils/class.error'
+import error from '@/utils/class.error'
 
 import {
   ITableSortingHeader,
@@ -55,7 +55,7 @@ export const useSelection = (props, emit) => {
     } else {
       props.data?.forEach((item: any) => {
         if (!item[props.rowPkField]) {
-          throwError(
+          error(
             'sui-table',
             'selectable table has to provide extra field with the same ' +
             'value provided in the props: ' + props.rowPkField
