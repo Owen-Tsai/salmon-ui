@@ -8,56 +8,34 @@
 import {
   defineComponent,
   provide,
-  computed,
   nextTick,
   toRefs,
-  reactive,
-  PropType
+  reactive
 } from 'vue'
 
+import props from './checkbox-group'
 import { generateId } from '@/utils/utils'
-
-type CheckboxButtonSize = '' | 'small' | 'large'
 
 export default defineComponent({
   name: 'SCheckboxGroup',
-  props: {
-    modelValue: [Object, Boolean, Array],
-    disabled: Boolean,
-    name: {
-      type: String,
-      default: () => `checkbox-group-${generateId()}`
-    },
-    min: Number,
-    max: Number,
-    size: {
-      type: String as PropType<CheckboxButtonSize>,
-      default: ''
-    }
-  },
+  props: props,
   emits: ['update:modelValue', 'change'],
   setup(props, ctx) {
     const changeEvent = val => {
+      console.log(val, 'is fired')
       ctx.emit('update:modelValue', val)
       nextTick(() => {
         ctx.emit('change', val)
       })
     }
 
-    const model = computed({
-      get() {
-        return props.modelValue
-      },
-      set(val) {
-        changeEvent(val)
-      },
-    })
+    const id = generateId()
 
     provide('checkboxGroup', reactive({
-      changeEvent,
-      model,
-      group: 'checkboxGroup',
-      ...toRefs(props)
+      ...toRefs(props),
+      name: `checkbox-group-${id}`,
+      group: 'checkbox-group',
+      changeEvent
     }))
   }
 })

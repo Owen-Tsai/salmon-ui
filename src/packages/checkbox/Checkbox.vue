@@ -31,6 +31,7 @@
         type="checkbox"
         ref="checkboxRef"
         v-model="model"
+        :checked="isChecked"
         :name="computedName"
         :value="value"
         :disabled="isDisabled"
@@ -50,44 +51,32 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref
-} from 'vue'
-
-import useCheckbox from '@/utils/compositions/checkbox'
+import { defineComponent } from 'vue'
+import props from './checkbox'
+import { useCheckbox } from './use-checkbox'
 
 export default defineComponent({
   name: 'SCheckbox',
-  props: {
-    modelValue: [Boolean, Number, String, Array],
-    value: [Boolean, Number, String],
-    checkedValue: [String, Number],
-    uncheckedValue: [String, Number],
-    indeterminate: Boolean,
-    disabled: Boolean,
-    name: String
-  },
+  props: props,
   emits: ['update:modelValue', 'change'],
-  setup(props, {emit}) {
-    const focus = ref(false)
-
+  setup(props) {
     const {
       isGroup,
       isDisabled,
       isChecked,
       model,
       handleChange,
-      computedName
-    } = useCheckbox(props, emit)
+      computedName,
+      focus
+    } = useCheckbox(props)
 
     return {
-      focus,
-      isGroup,
-      isDisabled,
-      model,
       isChecked,
+      isDisabled,
+      isGroup,
       computedName,
+      focus,
+      model,
       handleChange
     }
   }

@@ -321,8 +321,8 @@
             </div>
             <div class="row">
               <s-radio-group v-model="notice.showIcon">
-                <s-radio-button value="true">显示</s-radio-button>
-                <s-radio-button value="false">不显示</s-radio-button>
+                <s-radio-button :value="true">显示</s-radio-button>
+                <s-radio-button :value="false">不显示</s-radio-button>
               </s-radio-group>
               <s-checkbox v-model="notice.customIcon">Custom Icon</s-checkbox>
             </div>
@@ -985,8 +985,8 @@
             </div>
             <div class="row">
               <s-radio-group v-model="msg.showIcon">
-                <s-radio-button value="true">显示</s-radio-button>
-                <s-radio-button value="false">不显示</s-radio-button>
+                <s-radio-button :value="true">显示</s-radio-button>
+                <s-radio-button :value="false">不显示</s-radio-button>
               </s-radio-group>
               <s-checkbox v-model="msg.icon">Custom Icon</s-checkbox>
             </div>
