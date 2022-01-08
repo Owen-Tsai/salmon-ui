@@ -19,12 +19,6 @@ import {
   computed
 } from 'vue'
 
-import {
-  _avatarShape,
-  _avatarObjectFit,
-  _avatarSize
-} from './avatar.type'
-
 import { buildProp } from '@/utils/props'
 
 export default defineComponent({
@@ -35,14 +29,15 @@ export default defineComponent({
     alt: String,
     size: buildProp({
       type: [String, Number],
-      values: _avatarSize
-    }),
+      values: ['large', 'default', 'small'],
+      validator: (val: unknown): val is number => typeof val === 'number'
+    } as const),
     shape: buildProp({
-      values: _avatarShape
-    }),
+      values: ['circle', 'square']
+    } as const),
     fit: buildProp({
-      values: _avatarObjectFit
-    })
+      values: ['cover', 'contain', 'scale-down', 'fill', 'none']
+    } as const)
   },
   emits: ['error'],
   setup(props, ctx) {

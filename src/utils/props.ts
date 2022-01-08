@@ -1,29 +1,41 @@
 // Generate props of a component along with types and validations
 import type { PropType } from 'vue'
 
-export const buildProp = <T = any, R extends boolean = boolean, D extends T = T>({
-  type, values, required, defaultValue, validator
+export function buildProp<
+  T = any,
+  R extends boolean = boolean,
+  D extends T = T,
+  C = never
+>({
+  values,
+  required,
+  default: defaultValue,
+  type,
+  validator,
 }: {
-  type?: any,
-  values?: readonly T[],
-  required?: R,
-  defaultValue?: R extends true ? never : D extends Record<string, unknown> | Array<any> ? () => D : D,
-  validator?: (val: any) => boolean
-} = {}) => {
+  values?: readonly T[]
+  required?: R
+  default?: R extends true
+    ? never
+    : D extends Record<string, unknown> | Array<any>
+    ? () => D
+    : D
+  type?: any
+  validator?: ((val: any) => val is C) | ((val: any) => boolean)
+} = {}) {
   return {
-    type: type as PropType<T | never>,
+    type: type as PropType<T | C>,
     required: !!required,
     default: defaultValue,
-    validator: (val: any) => {
-      let valid = false
-      if (values) {
-        valid ||= [...values, defaultValue].includes(val)
-      }
-      if (validator) {
-        valid ||= validator(val)
-      }
-
-      return valid
-    }
+    validator:
+      values || validator
+        ? (val: unknown) => {
+            let vaild = false
+            if (values)
+              vaild ||= ([...values, defaultValue] as unknown[]).includes(val)
+            if (validator) vaild ||= validator(val)
+            return vaild
+          }
+        : undefined,
   } as const
 }
