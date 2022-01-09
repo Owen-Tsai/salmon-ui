@@ -8,8 +8,8 @@ const props = {
   modelValue: [String, Number, Boolean],
   value: buildProp({
     type: [String, Number, Boolean],
-    defaultValue: ''
-  }),
+    default: ''
+  }as const),
   disabled: Boolean
 }
 
