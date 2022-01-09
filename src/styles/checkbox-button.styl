@@ -1,3 +1,5 @@
+@import './common/mixins/mixin.common'
+
 .sui-checkbox-button {
   position relative
   display inline-block
@@ -55,7 +57,7 @@
   }
   &.is-focused {
     & ^[0]__btn {
-      box-shadow box-shadow--primary
+      ring(color--primary)
     }
 
     z-index 1
