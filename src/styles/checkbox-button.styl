@@ -51,8 +51,13 @@
   &.is-checked {
     & ^[0]__btn {
       background-color color--primary
-      border-color color--border
+      border-color color--primary
+      border-right-color: color--border
       color #ffffff
+    }
+
+    ^[1]:last-child ^[0]__btn {
+      border-right-color: color--primary
     }
   }
   &.is-focused {
