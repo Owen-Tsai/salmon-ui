@@ -4,7 +4,7 @@
 
     <transition name="zoom-in-center">
       <sup
-        v-show="!hidden && (computedValue || dot)"
+        v-show="computedValue || dot"
         class="sui-badge__content"
         :class="{ 'is-dot': dot }"
         v-text="computedValue"
@@ -15,30 +15,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import {
+  defineComponent,
+  computed,
+  CSSProperties
+} from 'vue'
 
-const _types = ['default', 'success', 'warning', 'error']
+import props from './badge'
 
 export default defineComponent({
   name: 'SBadge',
-  props: {
-    type: {
-      type: String,
-      default: 'default',
-      validator: (v: string) => {
-        return _types.includes(v)
-      }
-    },
-    dot: Boolean,
-    max: {
-      type: Number,
-      default: 99
-    },
-    hidden: Boolean,
-    value: [String, Number],
-    top: Number,
-    right: Number
-  },
+  props: props,
   setup(props) {
     const computedValue = computed(() => {
       if (props.dot) {
@@ -52,7 +39,7 @@ export default defineComponent({
     })
 
     const posStyle = computed(() => {
-      const style: Partial<CSSStyleDeclaration> = {}
+      const style: CSSProperties = {}
 
       if (props.top) {
         style.top = `${props.top}px`
