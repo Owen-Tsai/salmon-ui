@@ -24,9 +24,9 @@
           <div v-if="title || $slots.title" class="sui-alert__title">
             <slot name="title">{{ title }}</slot>
           </div>
-          <p v-if="$slots.default || !!message" class="sui-alert__message">
+          <p v-if="$slots.default || !!content" class="sui-alert__message">
             <slot>
-              {{ message }}
+              {{ content }}
             </slot>
           </p>
 
@@ -48,46 +48,38 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, defineComponent, PropType } from 'vue'
+import {
+  computed,
+  ref,
+  defineComponent
+} from 'vue'
+
 import SIcon from '../icon'
 import { Close } from '@salmon-ui/icons'
 
-import { AlertType, _alertTypes } from './alert.type'
+import props from './alert'
 
 export default defineComponent({
   name: 'SAlert',
   components: {
     SIcon, Close
   },
-  props: {
-    type: {
-      type: String as PropType<AlertType>,
-      default: 'default',
-      validator: (v: string) => _alertTypes.includes(v)
-    },
-    outlined: Boolean,
-    dismissible: {
-      type: Boolean,
-      default: true
-    },
-    message: String,
-    title: String
-  },
+  props,
   emits: ['close'],
   setup(props, ctx) {
     // state
     const visible = ref(true)
-    const alertNode = ref()
+    const alertNode = ref<HTMLElement>()
 
     // computed properties
     const largeIcon = computed(() => {
-      return !!((props.title || ctx.slots.title) && (props.message || ctx.slots.default))
+      return !!((props.title || ctx.slots.title) && (props.content || ctx.slots.default))
     })
 
     // methods
-    const close = evt => {
+    const close = (evt: Event) => {
       evt.preventDefault()
-      const dom = alertNode.value
+      const dom = alertNode.value!
       dom.style.height = `${dom.offsetHeight}px`
       dom.style.height = `${dom.offsetHeight}px`
       visible.value = false
