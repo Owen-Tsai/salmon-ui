@@ -1,5 +1,4 @@
 @import 'common/variables/alert.var.styl'
-@import 'common/var.styl'
 @import 'common/mixins/mixin.common.styl'
 
 .sui-alert {
@@ -10,7 +9,7 @@
   transition all transition--slow
   opacity 1
 
-  for type, colors in typesMap {
+  for type, colors in alertTypes {
     &--{type} {
       border: 1px solid colors[4]
       background-color: colors[4]
@@ -86,7 +85,7 @@
 
   // is outlined
   &.is-outlined {
-    for type, colors in typesMap {
+    for type, colors in alertTypes {
       &^[0]--{type} {
         border: 1px solid colors[4]
         background-color: colors[0]

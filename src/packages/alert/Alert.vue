@@ -4,8 +4,8 @@
       class="sui-alert"
       :class="[
         `sui-alert--${type}`,
-        outlined ? 'is-outlined' : '',
-        visible ? '' : 'is-closing'
+        outlined ? 'is-outlined' : null,
+        visible ? null : 'is-closing'
       ]"
       v-show="visible"
       ref="alertNode"
