@@ -4,16 +4,17 @@ import {
   defineComponent,
 } from 'vue'
 
+import { buildProp } from '@/utils/props'
+
 import SIcon from '../icon'
 import { ArrowRightSFill } from '@salmon-ui/icons'
 
 export default defineComponent({
   name: 'SBreadcrumbItem',
   props: {
-    to: {
+    to: buildProp({
       type: [String, Object],
-      default: ''
-    },
+    } as const),
   },
   render() {
     const namePrefix = 'sui-breadcrumb-item'
