@@ -23,6 +23,8 @@ import {
   computed
 } from 'vue'
 
+import { Model } from '../accordion-item/accordion-item'
+
 export default defineComponent({
   name: 'SAccordion',
   props: {
@@ -32,38 +34,32 @@ export default defineComponent({
     },
     modelValue: {
       type: [Number, String, Array] as
-        PropType<number | string | Array<number | string>>,
+        PropType<number | string | Array<Model>>,
       default: () => []
     },
     outlined: Boolean,
-    headerStyle: {
-      type: Object,
-      default: undefined
-    },
-    headerActiveStyle: {
-      type: Object,
-      default: undefined
-    },
-    bodyStyle: {
-      type: Object,
-      default: undefined
-    },
+    headerClass: String,
+    bodyClass: String
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, {emit}) {
-    const activeNames = ref([].concat(props.modelValue as any))
+  setup(props, { emit }) {
+    const activeNames = ref(
+      ([] as Array<number | string>).concat(props.modelValue)
+    )
 
     // methods
-    const setActiveNames = names => {
-      activeNames.value = [].concat(names)
-      const activeValue = props.multiple ? activeNames.value : activeNames.value[0]
+    const setActiveNames = (names: Model[] | Model) => {
+      activeNames.value = ([] as Model[]).concat(names)
+      const activeValue = props.multiple
+        ? activeNames.value
+        : activeNames.value[0]
       emit('update:modelValue', activeValue)
       emit('change', activeValue)
     }
 
-    const handleItemClick = name => {
+    const handleItemClick = (name: Model) => {
       if (props.multiple) {
-        let names: any[] = activeNames.value
+        let names: Model[] = activeNames.value
         const index = names.indexOf(name)
 
         if (index > -1) {
@@ -75,8 +71,9 @@ export default defineComponent({
         setActiveNames(names)
       } else {
         setActiveNames(
-          (activeNames.value[0] || activeNames.value[0] === 0) &&
-          activeNames.value[0] === name
+          (activeNames.value[0] || 
+            activeNames.value[0] === 0
+          ) && activeNames.value[0] === name
             ? ''
             : name,
         )
@@ -85,16 +82,15 @@ export default defineComponent({
 
     // watcher
     watch(() => props.modelValue, () => {
-      activeNames.value = [].concat(props.modelValue as any)
+      activeNames.value = ([] as Model[]).concat(props.modelValue)
     })
 
     // provider
     provide('accordion', {
       activeNames,
       handleItemClick,
-      headerStyle: computed(() => props.headerStyle),
-      headerActiveStyle: computed(() => props.headerActiveStyle),
-      bodyStyle: computed(() => props.bodyStyle)
+      headerClass: computed(() => props.headerClass),
+      bodyClass: computed(() => props.bodyClass)
     })
 
     return {

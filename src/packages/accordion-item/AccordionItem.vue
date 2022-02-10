@@ -15,16 +15,13 @@
       :class="[
         'sui-accordion-item__header',
         {
-          'is-focused': isFocused,
           'is-active': isActive
-        }
+        },
+        customHeaderClass
       ]"
       role="button"
       :tabindex="disabled ? -1 : 0"
       @click="handleHeaderClick"
-      @focus="handleFocus"
-      @blur="isFocused = false"
-      :style="customHeaderStyle"
     >
       <slot name="title">{{ title }}</slot>
       <s-icon class="sui-accordion-item__icon">
@@ -36,7 +33,10 @@
       <div
         v-show="isActive"
         :id="`sui-accordion-content-${id}`"
-        class="sui-accordion-item__content-wrapper"
+        :class="[
+          'sui-accordion-item__content-wrapper',
+          customBodyClass
+        ]"
         role="tabpanel"
         :aria-hidden="!isActive"
         :aria-labelledby="`sui-accordion-header-${id}`"
@@ -61,13 +61,15 @@ import SIcon from '../icon'
 import STransitionWrapper from './TransitonWrapper.vue'
 import { ArrowRightS } from '@salmon-ui/icons'
 
+import props from './accordion-item'
+
 import {
   generateId
 } from '@/utils/utils'
 
 import type {
-  IAccordionProvider
-} from './accordion.type'
+  AccordionCtx
+} from '../accordion/accordion'
 
 export default defineComponent({
   name: 'SAccordionItem',
@@ -76,66 +78,39 @@ export default defineComponent({
     STransitionWrapper,
     ArrowRightS
   },
-  props: {
-    title: String,
-    name: {
-      type: [String, Number],
-      required: true,
-      default: () => {
-        generateId()
-      }
-    },
-    disabled: Boolean
-  },
+  props,
   setup(props) {
-    const accordionComp = inject<IAccordionProvider>('accordion')
+    const accordionCtx = inject<AccordionCtx>('accordion')!
 
     // data
-    const isFocused = ref(false)
-    const isClick = ref(false)
     const id = ref(generateId())
 
     // computed
     const isActive = computed(() => {
-      const names: Array<string | number> = accordionComp?.activeNames.value || []
+      const names = accordionCtx.activeNames.value
       return names.includes(props.name)
     })
 
-    const customHeaderStyle = computed(() => {
-      if (isActive.value) {
-        return accordionComp?.headerActiveStyle.value ||
-          accordionComp?.headerStyle.value
-      } else {
-        return accordionComp?.headerStyle.value
-      }
+    const customHeaderClass = computed(() => {
+      return accordionCtx.headerClass.value
     })
 
-    // methods
-    const handleFocus = () => {
-      setTimeout(() => {
-        if (!isClick.value) {
-          isFocused.value = true
-        } else {
-          isClick.value = false
-        }
-      }, 50)
-    }
+    const customBodyClass = computed(() => {
+      return accordionCtx.bodyClass.value
+    })
 
     const handleHeaderClick = () => {
       if (props.disabled) return
-      accordionComp?.handleItemClick(props.name)
-      isFocused.value = false
-      isClick.value = true
+      accordionCtx.handleItemClick(props.name)
     }
 
     return {
       isActive,
-      isFocused,
-      customHeaderStyle,
+      customHeaderClass,
+      customBodyClass,
 
       id,
 
-      handleFocus,
       handleHeaderClick,
     }
   }
