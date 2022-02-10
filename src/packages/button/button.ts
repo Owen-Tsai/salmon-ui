@@ -6,15 +6,12 @@ import { buildProp } from '@/utils/props'
  */
 export const commonProps = {
   type: buildProp({
-    type: String,
     values: ['primary', 'outlined', 'text']
   } as const),
   size: buildProp({
-    type: String,
     values: ['large', 'small']
   } as const),
   shape: buildProp({
-    type: String,
     values: ['circle', 'rounded']
   } as const),
 }

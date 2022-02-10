@@ -2,16 +2,17 @@
   <button
     :class="[
       'sui-button',
-      computedType ? `sui-button--${computedType}` : '',
-      computedSize ? `sui-button--${computedSize}` : '',
-      computedShape ? `sui-button--${computedShape}` : '',
-      disabled ? 'is-disabled' : '',
-      loading ? 'is-loading' : '',
-      danger ? 'is-danger' : ''
+      computedType ? `sui-button--${computedType}` : null,
+      computedSize ? `sui-button--${computedSize}` : null,
+      computedShape ? `sui-button--${computedShape}` : null,
+      disabled ? 'is-disabled' : null,
+      loading ? 'is-loading' : null,
+      danger ? 'is-danger' : null
     ]"
     :disabled="disabled || loading"
     :autofocus="autofocus"
     @click="handleClick"
+    :type="nativeType"
   >
     <slot name="prefix" v-if="!loading"></slot>
     <slot name="loader" v-if="loading">
