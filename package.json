@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build --config scripts/build-full.ts",
+    "build:no": "vite build --config scripts/build-full.ts",
     "serve": "vite preview"
   },
   "peerDependencies": {
