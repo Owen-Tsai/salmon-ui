@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <main class="dev-demo-container">
     <section class="dev-demo-col">

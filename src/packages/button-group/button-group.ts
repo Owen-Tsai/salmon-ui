@@ -1,4 +1,4 @@
-import { commonProps } from '@/packages/button/button'
+import { commonProps } from 'salmon-ui/button/button'
 import { ExtractPropTypes } from 'vue'
 
 const props = {

@@ -1,37 +1,23 @@
 module.exports = {
-  root: true,
   env: {
-    node: true
+    node: true,
+    'vue/setup-compiler-macros': true
   },
-  'extends': [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/typescript'
-  ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser'
   },
+  plugins: [
+    '@typescript-eslint'
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   },
-  overrides: [
-    // Fix no-used-vars when importing ts types in .vue files
-    {
-      files: ["*.vue"],
-      rules: {
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': 'error'
-      }
-    },
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
-    },
-  ]
+  overrides: []
 }
