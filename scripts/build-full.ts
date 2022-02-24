@@ -14,16 +14,18 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, '..', 'src/index.ts'),
-      name: 'SalmonUI',
-      fileName: (format) => `salmon-ui.${format}.js`
+      entry: path.resolve(__dirname, '../src/index.ts'),
+      formats: ['umd', 'es'],
+      fileName: (f) => `salmon-ui.${f}.js`,
+      name: 'SalmonUI'
     },
     rollupOptions: {
       external: ['vue'],
       output: {
         globals: {
-          vue: 'vue'
-        }
+          vue: 'Vue'
+        },
+        exports: 'named'
       }
     }
   }

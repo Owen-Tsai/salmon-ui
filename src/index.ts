@@ -1,33 +1,25 @@
-import type { Plugin, App } from 'vue'
+import type { App } from 'vue'
 
 import Button from './packages/button'
-import Alert from './packages/alert'
 
 const components = [
-  Button,
-  Alert
-] as Plugin[]
+  Button
+]
 
 const install = (app: App) => {
-  // Object.keys(components).forEach(key => {
-  //   const component = components[key as any]
-
-  //   if (component.install) {
-  //     app.use(component)
-  //   }
-  // })
-
-  // return app
-  components.forEach(key => {
-    if (key.install) {
-      app.use(key)
+  components.forEach(component => {
+    if (component.install) {
+      app.use(component)
     }
   })
 
   return app
 }
 
-export default {
+const SalmonUI = {
+  version: '0.0.1',
   install,
-  version: '0.1'
+  Button
 }
+
+export default SalmonUI
