@@ -1,23 +1,31 @@
 @import 'common/var.styl'
+@import 'common/mixins/index.styl'
 @import 'common/mixins/mixin.button.styl'
-@import 'common/variables/button.var.styl'
 
 .sui-button {
-  display inline-block
+  // variables
+  size--lg = 48px
+  size = 40px
+  size--sm = 32px
+  padding = 0 16px
+  padding--sm = 0 12px
+
+  // styles
+  flex-inline()
   position relative
   line-height 1
   white-space nowrap
   cursor pointer
   border 1px solid color--border
   background-color transparent
-  padding button-padding
-  min-height button-size
+  padding padding
+  min-height size
   font-size: font-size--text.medium
-  vertical-align baseline
+  vertical-align middle
   box-sizing border-box
   border-radius: border-radius--normal
   color color--text
-  font-weight 400
+  font-weight 500
   transition all transition--fast
 
   &::active {
@@ -74,16 +82,16 @@
 
   // shapes
   ^[0]&--rounded {
-    border-radius button-size--lg
+    border-radius size--lg
   }
   ^[0]&--circle {
     border-radius 50%
-    padding ((button-size - font-size--icon.medium) / 2)
+    padding ((size - font-size--icon.medium) / 2)
   }
 
   // sizes
   &^[0]--large {
-    min-height button-size--lg
+    min-height size--lg
     font-size: font-size--text.large
 
     .sui-icon {
@@ -91,15 +99,15 @@
     }
 
     &^[0]--circle {
-      padding ((button-size--lg - font-size--icon.medium) / 2)
+      padding ((size--lg - font-size--icon.medium) / 2)
     }
   }
   &^[0]--small {
-    min-height button-size--sm
-    padding button-padding--sm
+    min-height size--sm
+    padding padding--sm
 
     &^[0]--circle {
-      padding ((button-size--sm - font-size--icon.small) / 2)
+      padding ((size--sm - font-size--icon.small) / 2)
     }
   }
 

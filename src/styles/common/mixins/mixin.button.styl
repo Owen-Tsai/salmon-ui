@@ -1,64 +1,68 @@
 @import './mixin.common.styl'
 
 make-button(colors) {
+  border-hover-token = 2
+  color-hover-token = 6
+  
+
   &:not(.is-disabled):not(.is-loading):hover {
     background-color colors[0]
-    border-color colors[1]
-    color colors[4]
+    border-color colors[border-hover-token]
+    color colors[6]
   }
-  &:not(.is-disabled):not(.is-loading):focus-visible {
-    border 1px solid colors[4]
-    color colors[4]
-    ring(colors[4])
+  &:not(.is-disabled):not(.is-loading):focus {
+    border 1px solid colors[6]
+    color colors[6]
+    ring(colors[6])
   }
   &:not(.is-disabled):not(.is-loading):active {
-    border 1px solid colors[5]
-    color colors[5]
+    border 1px solid colors[7]
+    color colors[7]
     background-color: colors[0]
   }
 }
 
 make-primary-button(colors) {
-  background-color colors[4]
+  background-color colors[6]
   color colors--neutral[0]
-  border: 1px solid colors[4]
+  border: 1px solid colors[6]
 
   &:not(.is-disabled):not(.is-loading):hover {
     color colors--neutral[0]
-    background-color colors[3]
-    border: 1px solid colors[3]
+    background-color colors[5]
+    border: 1px solid colors[5]
   }
-  &:not(.is-disabled):not(.is-loading):focus-visible {
-    border: 1px solid colors[3]
-    background-color colors[3]
-    color colors--neutral[0]
-    ring(colors[4])
-  }
-  &:not(.is-disabled):not(.is-loading):active {
+  &:not(.is-disabled):not(.is-loading):focus {
     border: 1px solid colors[5]
     background-color colors[5]
+    color colors--neutral[0]
+    ring(colors[6])
+  }
+  &:not(.is-disabled):not(.is-loading):active {
+    border: 1px solid colors[7]
+    background-color colors[7]
     color colors--neutral[0]
   }
 }
 
 make-outlined-button(colors) {
   background-color: colors[0]
-  border: 1px solid colors[4]
-  color: colors[4]
+  border: 1px solid colors[6]
+  color: colors[6]
 
   &:not(.is-disabled):not(.is-loading):hover {
     color colors--neutral[0] !important
-    background-color colors[4]
-    border: 1px solid colors[4]
+    background-color colors[6]
+    border: 1px solid colors[6]
   }
-  &:not(.is-disabled):not(.is-loading):focus-visible {
-    border: 1px solid colors[3]
-    color colors[3]
-    ring(colors[4])
+  &:not(.is-disabled):not(.is-loading):focus {
+    border: 1px solid colors[5]
+    color colors[5]
+    ring(colors[6])
   }
   &:not(.is-disabled):not(.is-loading):active {
-    border: 1px solid colors[5]
-    background-color colors[5]
+    border: 1px solid colors[7]
+    background-color colors[7]
     color colors--neutral[0]
   }
 }
@@ -66,19 +70,19 @@ make-outlined-button(colors) {
 make-text-button(colors) {
   border 0 !important
   background-color transparent
-  color: colors[4]
+  color: colors[6]
 
   &:not(.is-disabled):not(.is-loading):hover {
-    color colors[3]
+    color colors[5]
     background-color color--surface
   }
-  &:not(.is-disabled):not(.is-loading):focus-visible {
-    color colors[3]
+  &:not(.is-disabled):not(.is-loading):focus {
+    color colors[5]
     ring(4)
     background-color color--surface
   }
   &:not(.is-disabled):not(.is-loading):active {
-    color colors[5]
+    color colors[7]
     background-color colors[0]
   }
 }
