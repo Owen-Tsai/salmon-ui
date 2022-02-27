@@ -6,7 +6,7 @@ import { buildProp } from '@/utils/props'
  */
 export const commonProps = {
   type: buildProp({
-    values: ['primary', 'outlined', 'text']
+    values: ['primary', 'outlined', 'text', 'ghost']
   } as const),
   size: buildProp({
     values: ['large', 'small']
