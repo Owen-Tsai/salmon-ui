@@ -9,6 +9,12 @@
   size--sm = 32px
   padding = 0 15px
   padding--sm = 0 12px
+  opacity--hover = 0.24
+  opacity--active = 0.32
+  color--ghost = colors--neutral[0]
+  color--ghost-hover = color--white
+  color--ghost-active = colors--neutral[1]
+  $normal = ':not(.is-disabled):not(.is-loading)'
 
   // styles
   flex-inline()
@@ -54,6 +60,21 @@
   &.is-danger {
     make-button(colors--error)
   }
+  &.is-ghost{$normal} {
+    border-color: color--white
+    color: color--white
+    background-color: transparent
+    &:hover {
+      background-color: rgba(color--white, opacity--hover)
+    }
+    &:focus {
+      ring(color--white)
+      background-color: rgba(color--white, opacity--hover)
+    }
+    &:active {
+      background-color: rgba(color--white, opacity--active)
+    }
+  }
 
   // types
   &--primary {
@@ -61,6 +82,24 @@
 
     &.is-danger {
       make-primary-button(colors--error)
+    }
+    &.is-ghost{$normal} {
+      background-color: color--ghost
+      color: color--primary
+      border-color: transparent
+
+      &:hover {
+        background-color: color--ghost-hover
+        color: color--primary
+      }
+      &:focus {
+        background-color: color--ghost-hover
+        color: color--primary
+      }
+      &:active {
+        background-color: color--ghost-active
+        color: color--primary
+      }
     }
   }
 
@@ -70,6 +109,16 @@
     &.is-danger {
       make-outlined-button(colors--error)
     }
+    &.is-ghost{$normal} {
+      border-color: color--white
+      &:hover {
+        background-color: color--ghost-hover
+        color: color--primary
+      }
+      &:active {
+        background-color: color--ghost-active
+      }
+    }
   }
 
   &--text {
@@ -78,15 +127,8 @@
     &.is-danger {
       make-text-button(colors--error)
     }
-  }
-
-  &--ghost {
-    background: transparent
-    color: color--white !important
-    border: 0
-
-    &:hover {
-      background-color: rgba(color--white, 0.24) !important
+    &.is-ghost{$normal} {
+      color: color--white
     }
   }
 

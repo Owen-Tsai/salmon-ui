@@ -2,11 +2,6 @@
   <div class="demo-page">
     <demo-button></demo-button>
 
-    <demo-button></demo-button>
-
-    <demo-button></demo-button>
-
-    <demo-button></demo-button>
   </div>
 </template>
 

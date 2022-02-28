@@ -1,4 +1,4 @@
-@import './mixin.common.styl'
+@import './index.styl'
 
 make-button(colors) {
   surface = 0
@@ -31,19 +31,22 @@ make-primary-button(colors) {
   dark = 7
 
   background-color: colors[normal]
-  color: color--white !important
+  color: color--white
   border: 1px solid colors[normal]
 
   &:not(.is-disabled):not(.is-loading):hover {
+    color: color--white
     background-color: colors[light]
     border: 1px solid colors[light]
   }
   &:not(.is-disabled):not(.is-loading):focus {
+    color: color--white
     border: 1px solid colors[light]
     background-color: colors[light]
     ring(colors[normal])
   }
   &:not(.is-disabled):not(.is-loading):active {
+    color: color--white
     border: 1px solid colors[dark]
     background-color: colors[dark]
   }

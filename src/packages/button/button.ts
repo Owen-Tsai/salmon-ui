@@ -1,3 +1,4 @@
+import { PropType } from 'vue'
 import { buildProp } from '@/utils/props'
 
 /**
@@ -6,7 +7,7 @@ import { buildProp } from '@/utils/props'
  */
 export const commonProps = {
   type: buildProp({
-    values: ['primary', 'outlined', 'text', 'ghost']
+    values: ['primary', 'outlined', 'text']
   } as const),
   size: buildProp({
     values: ['large', 'small']
@@ -22,10 +23,11 @@ const props = {
     type: String,
     values: ['button', 'reset', 'submit']
   } as const),
-  disabled: Boolean,
-  loading: Boolean,
-  autofocus: Boolean,
-  danger: Boolean
+  disabled: Boolean as PropType<boolean>,
+  loading: Boolean as PropType<boolean>,
+  autofocus: Boolean as PropType<boolean>,
+  danger: Boolean as PropType<boolean>,
+  ghost: Boolean as PropType<boolean>
 }
 
 export default props

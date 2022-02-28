@@ -7,7 +7,8 @@
       computedShape ? `sui-button--${computedShape}` : null,
       disabled ? 'is-disabled' : null,
       loading ? 'is-loading' : null,
-      danger ? 'is-danger' : null
+      danger ? 'is-danger' : null,
+      ghost ? 'is-ghost' : null
     ]"
     :disabled="disabled || loading"
     :autofocus="autofocus"
@@ -65,7 +66,7 @@ export default defineComponent({
       return buttonGroupProvider?.shape || props.shape
     })
 
-    const handleClick = (evt) => {
+    const handleClick = (evt: Event) => {
       ctx.emit('click', evt)
     }
 

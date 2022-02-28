@@ -1,21 +1,67 @@
 <template>
   <demo name="Button">
     <s-button type="primary">主要按钮</s-button>
+    <s-button>默认按钮</s-button>
+    <s-button type="outlined">outlined按钮</s-button>
+    <s-button type="text">文字按钮</s-button>
+    <br>
+    <s-button type="primary" danger>危险按钮</s-button>
+    <s-button danger>默认危险</s-button>
+    <s-button type="outlined" danger>outlined危险</s-button>
+    <s-button type="text" danger>危险文字</s-button>
+    <br>
+    <s-button shape="rounded" size="large">大号按钮</s-button>
+    <s-button shape="rounded">中等尺寸</s-button>
+    <s-button shape="rounded" size="small">小尺寸</s-button>
+    <s-button>
+      <template #prefix>
+        <s-icon><heart></heart></s-icon>
+      </template>
+      爱你
+    </s-button>
+    <br>
+    <s-button shape="circle" size="small">
+      <s-icon>
+        <heart></heart>
+      </s-icon>
+    </s-button>
+    <s-button shape="circle">
+      <s-icon>
+        <heart></heart>
+      </s-icon>
+    </s-button>
+    <s-button shape="circle" size="large">
+      <s-icon>
+        <heart></heart>
+      </s-icon>
+    </s-button>
+    <s-button shape="circle" loading></s-button>
+    <s-button type="primary">
+      爱你
+      <s-icon>
+        <heart></heart>
+      </s-icon>
+    </s-button>
     <div class="colored">
-      <s-button type="ghost">幽灵按钮</s-button>
+      <s-button ghost type="primary">幽灵按钮</s-button>
+      <s-button ghost type="outlined">幽灵按钮</s-button>
+      <s-button ghost shape="rounded">幽灵按钮</s-button>
+      <s-button ghost type="text" shape="rounded">幽灵按钮</s-button>
     </div>
+    <s-button disabled>禁用</s-button>
+    <s-button loading>加载中</s-button>
   </demo>
 </template>
 
 <script lang="ts">
 import SButton from 'salmon-ui/button'
-import Demo from '@/demo/components/Demo.vue'
 import { defineComponent } from 'vue'
+import { Heart } from '@salmon-ui/icons'
 
 export default defineComponent({
   components: {
     SButton,
-    Demo
+    Heart
   }
 })
 </script>
@@ -25,5 +71,8 @@ export default defineComponent({
   background-color: #6366F1
   padding: 16px
   margin: 4px
+}
+.sui-button {
+  margin: 8px
 }
 </style>
