@@ -33,8 +33,13 @@ export default defineComponent({
   align-items: center;
   padding: 8px 16px;
   background-color: #f9fafb;
+  border-bottom: 1px dashed #d1d5db;
 }
 .demo-container-body {
   padding: 16px;
+}
+
+h2 {
+  margin: 0;
 }
 </style>
