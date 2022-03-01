@@ -3,8 +3,7 @@
     <div
       class="sui-alert"
       :class="[
-        `sui-alert--${type}`,
-        outlined ? 'is-outlined' : null,
+        type ? `sui-alert--${type}` : null,
         visible ? null : 'is-closing'
       ]"
       v-show="visible"
@@ -12,13 +11,22 @@
     >
       <div class="sui-alert__wrapper">
         <span
-          v-if="$slots.prefix"
           :class="[
             'sui-alert__prefix', 'sui-alert__icon',
             largeIcon ? 'is-large' : null
           ]"
         >
-          <slot name="prefix"></slot>
+          <slot name="prefix">
+            <s-icon>
+              <error-warning-fill
+                v-if="type === 'error' || type === 'warning'"
+              ></error-warning-fill>
+              <checkbox-circle-fill
+                v-else-if="type === 'success'"
+              ></checkbox-circle-fill>
+              <information-fill v-else></information-fill>
+            </s-icon>
+          </slot>
         </span>
         <div class="sui-alert__content">
           <div v-if="title || $slots.title" class="sui-alert__title">
@@ -55,14 +63,23 @@ import {
 } from 'vue'
 
 import SIcon from '../icon'
-import { Close } from '@salmon-ui/icons'
+import {
+  Close,
+  InformationFill,
+  ErrorWarningFill,
+  CheckboxCircleFill,
+} from '@salmon-ui/icons'
 
 import props from './alert'
 
 export default defineComponent({
   name: 'SAlert',
   components: {
-    SIcon, Close
+    SIcon,
+    Close,
+    InformationFill,
+    ErrorWarningFill,
+    CheckboxCircleFill,
   },
   props,
   emits: ['close'],

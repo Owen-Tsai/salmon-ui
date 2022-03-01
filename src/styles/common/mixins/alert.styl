@@ -1,0 +1,16 @@
+@import '../var.styl'
+
+make-alert(type) {
+  t = unquote(type)
+  token = 1
+  color-token = 6
+  prefix = '.sui-alert'
+
+  background-color: typesMap[t][token]
+
+  {prefix}__wrapper {
+    {prefix}__icon {
+      color: typesMap[t][color-token]
+    }
+  }
+}
