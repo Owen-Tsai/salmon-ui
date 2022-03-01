@@ -12,17 +12,26 @@
     ]"
     :disabled="disabled || loading"
     :autofocus="autofocus"
-    @click="handleClick"
     :type="nativeType"
+    @click="handleClick"
   >
-    <slot name="prefix" v-if="!loading"></slot>
-    <slot name="loader" v-if="loading">
+    <slot
+      v-if="!loading"
+      name="prefix"
+    ></slot>
+    <slot
+      v-if="loading"
+      name="loader"
+    >
       <s-icon class="rotating loader">
         <loader></loader>
       </s-icon>
     </slot>
     <slot></slot>
-    <slot name="affix" v-if="!loading"></slot>
+    <slot
+      v-if="!loading"
+      name="affix"
+    ></slot>
   </button>
 </template>
 

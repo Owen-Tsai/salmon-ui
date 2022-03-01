@@ -11,13 +11,13 @@ module.exports = {
     '@typescript-eslint'
   ],
   extends: [
-    // 'eslint:recommended',
-    // 'plugin:vue/vue3-recommended',
-    // 'plugin:@typescript-eslint/recommended',
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'vue/html-self-closing': 'off'
   },
-  overrides: []
 }
