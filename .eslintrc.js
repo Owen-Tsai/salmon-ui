@@ -20,4 +20,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/html-self-closing': 'off'
   },
+  ignorePatterns: [
+    '/src/demo/*', 'main.ts'
+  ]
 }
