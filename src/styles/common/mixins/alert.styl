@@ -1,4 +1,5 @@
 @import '../var.styl'
+@import 'main.styl'
 
 make-alert(type) {
   t = unquote(type)
@@ -12,5 +13,11 @@ make-alert(type) {
     {prefix}__icon {
       color: typesMap[t][color-token]
     }
+  }
+
+  {prefix}__close-btn:focus {
+    ring(typesMap[t][color-token])
+    background-color: typesMap[t][token]
+    color: typesMap[t][color-token]
   }
 }

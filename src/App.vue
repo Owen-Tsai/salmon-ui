@@ -2,26 +2,24 @@
   <div class="demo-page">
     <div class="demo-row">
       <demo-button></demo-button>
+      <demo-button-group></demo-button-group>
     </div>
     <div class="demo-row">
-      <demo-alert></demo-alert>
+      <!-- <demo-alert></demo-alert> -->
     </div>
     <div class="demo-row">
-      
+      <!-- <demo-avatar></demo-avatar>
+      <demo-badge></demo-badge> -->
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import DemoButton from '@/demo/Button.vue'
-import DemoAlert from '@/demo/Alert.vue'
-
-export default defineComponent({
-  components: {
-    DemoButton, DemoAlert
-  }
-})
+// import DemoAlert from '@/demo/Alert.vue'
+import DemoButtonGroup from '@/demo/ButtonGroup.vue'
+// import DemoAvatar from '@/demo/Avatar.vue'
+// import DemoBadge from '@/demo/Badge.vue'
 </script>
 
 <style scoped>
@@ -36,5 +34,8 @@ export default defineComponent({
   padding: 8px;
   flex-shrink: 0;
   flex-grow: 0;
+}
+.demo-container {
+  margin-bottom: 16px;
 }
 </style>

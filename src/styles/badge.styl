@@ -1,3 +1,5 @@
+@import './common/var.styl'
+
 .sui-badge {
   display inline-block
   position relative
@@ -9,13 +11,13 @@
     right -10px
     background-color color--primary
     font-size font-size--text.small
-    color #ffffff
+    color color--white
     height 18px
     border-radius 50px
     padding 0 6px
     text-align center
     line-height @height
-    border 1px solid #ffffff
+    border 1px solid color--white
 
     &.is-dot {
       height 8px
@@ -51,5 +53,5 @@
 
 .zoom-in-center-enter-active,
 .zoom-in-center-leave-active {
-  transition all .3s ease-in-out
+  transition all transition--fast ease-in-out
 }

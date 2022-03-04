@@ -1,0 +1,130 @@
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
+
+$colors: () !default;
+$colors: map.deep-merge(
+  (
+    'white': #ffffff,
+    'black': #000000,
+    'primary': (
+      'base': #2563eb,
+    ),
+    'success': (
+      'base': #16a34a,
+    ),
+    'warning': (
+      'base': #eab308,
+    ),
+    'error': (
+      'base': #dc2626,
+    ),
+  ),
+  $colors
+) !default;
+
+// generating color palette
+@mixin generate-light-shades($type, $number) {
+  $colors: map.deep-merge(
+    $type: (
+      'light-#{$number}': mix(
+        $color-white,
+        map.get($colors, $type, 'base'),
+        math.percentage(math.div($number, 10))
+      )
+    ),
+    $colors
+  ) !global
+}
+
+@mixin generate-dark-shades($type, $number) {
+  $colors: map.deep-merge(
+    $type: (
+      'dark-#{$number}': mix(
+        $color-black,
+        map.get($colors, $type, 'base'),
+        math.percentage(math.div($number, 10))
+      )
+    ),
+    $colors
+  ) !global
+}
+
+$types: primary, success, warning, error;
+
+@for $i from 1 through 6 {
+  @each $type in $types {
+    @include generate-light-shades($type, $i);
+  }
+}
+
+@each $type in $types {
+  @include generate-dark-shades($type, 2);
+}
+
+// neutral colors
+$text-colors: () !default;
+$text-colors: map.merge(
+  (
+    'title': #111827,
+    'primary': #1f2937,
+    'secondary': #4b5563,
+    'placeholder': #9ca3af,
+  ),
+  $text-colors
+);
+
+$border-color: #d1d5db !default;
+
+$box-shadows: () !default;
+$box-shadows: map.merge(
+  (
+    'base': (
+      0 2px 4px rgba(0, 0, 0, 0.12),
+      0 0 6px rgba(0, 0, 0, 0.04),
+    ),
+    'light': 0 2px 12px 0 rgba(0, 0, 0, 0.1),
+    'dark': (
+      0 3px 6px -4px rgba(0, 0, 0, 12%),
+      0 6px 16px 0 rgba(0, 0, 0, 8%),
+      0 9px 28px 8px rgba(0, 0, 0, 5%)
+    )
+  ),
+  $box-shadows
+);
+
+$font-sizes: () !default;
+$font-sizes: map.merge(
+  (
+    'extra-large': 20px,
+    'large': 18px,
+    'medium': 16px,
+    'base': 14px,
+    'small': 12px
+  ),
+  $font-sizes
+);
+
+$border-radiuses: () !default;
+$border-radiuses: map.merge(
+  (
+    'none': 0,
+    'small': 2px,
+    'base': 4px,
+    'large': 8px,
+    'rounded': 20px,
+    'circle': 100%
+  ),
+  $border-radiuses
+);
+
+$component-common-sizes: () !default;
+$component-common-sizes: map.merge(
+  (
+    'small': 24px,
+    'base': 32px,
+    'large': 40px
+  ),
+  $component-common-sizes
+);
+

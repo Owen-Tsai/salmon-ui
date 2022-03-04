@@ -1,5 +1,8 @@
 <template>
-  <span class="sui-icon" :style="computedStyle">
+  <span
+    class="sui-icon"
+    :style="computedStyle"
+  >
     <slot></slot>
   </span>
 </template>
@@ -7,18 +10,25 @@
 <script lang="ts">
 import {
   defineComponent,
-  computed
+  computed,
+  StyleValue
 } from 'vue'
 
 export default defineComponent({
   name: 'SIcon',
   props: {
-    color: String,
-    size: Number,
+    color: {
+      type: String,
+      default: undefined
+    },
+    size: {
+      type: Number,
+      default: undefined
+    },
   },
   setup(props) {
     const computedStyle = computed(() => {
-      let result: Partial<CSSStyleDeclaration> = {}
+      let result: StyleValue = {}
       if (props.color) {
         result.color = props.color
       }

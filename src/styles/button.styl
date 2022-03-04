@@ -1,9 +1,8 @@
 @import 'common/var.styl'
-@import 'common/mixins/index.styl'
+@import 'common/mixins/main.styl'
 @import 'common/mixins/button.styl'
 
 .sui-button {
-  // variables
   size--lg = 48px
   size = 40px
   size--sm = 32px
@@ -17,13 +16,13 @@
   $normal = ':not(.is-disabled):not(.is-loading)'
 
   // styles
-  flex-inline()
+  use-inline-flex(false)
   position relative
   line-height 1
   white-space nowrap
   cursor pointer
   border 1px solid color--border
-  background-color transparent
+  background-color color--white
   padding padding
   min-height size
   font-size: font-size--text.medium
@@ -45,6 +44,7 @@
   .sui-icon {
     vertical-align middle
     font-size font-size--icon.medium
+    line-height: 1
   }
 
   &.has-icon &__label {

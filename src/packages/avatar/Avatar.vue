@@ -1,5 +1,8 @@
 <template>
-  <span class="sui-avatar" :class="cls" :style="sizeStyle">
+  <span
+    :class="['sui-avatar', ...cls]"
+    :style="sizeStyle"
+  >
     <img
       v-if="(src || srcSet) && !hasLoadError"
       :src="src"
@@ -7,7 +10,7 @@
       :srcset="srcSet"
       :style="fitStyle"
       @error="handleError"
-    />
+    >
     <slot v-else></slot>
   </span>
 </template>
@@ -24,9 +27,18 @@ import { buildProp } from '@/utils/props'
 export default defineComponent({
   name: 'SAvatar',
   props: {
-    src: String,
-    srcSet: String,
-    alt: String,
+    src: {
+      type: String,
+      default: ''
+    },
+    srcSet: {
+      type: String,
+      default: ''
+    },
+    alt: {
+      type: String,
+      default: ''
+    },
     size: buildProp({
       type: [String, Number],
       values: ['large', 'default', 'small'],
@@ -62,7 +74,7 @@ export default defineComponent({
 
     // styles
     const sizeStyle = computed(() => {
-      return typeof(props.size!) === 'number' ? {
+      return typeof(props.size) === 'number' ? {
         height: `${props.size}px`,
         width: `${props.size}px`,
         lineHeight: `${props.size}px`
@@ -73,7 +85,7 @@ export default defineComponent({
     }))
 
     // methods
-    const handleError = (evt) => {
+    const handleError = (evt: Event) => {
       hasLoadError.value = true
       ctx.emit('error', evt)
     }

@@ -35,8 +35,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 .sui-alert:not(:first-child) {
-  margin-top: 16px
+  margin-top: 16px;
 }
 </style>

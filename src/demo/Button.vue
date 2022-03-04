@@ -66,13 +66,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 .colored {
-  background-color: #6366F1
-  padding: 16px
-  margin: 4px
+  background-color: #6366F1;
+  padding: 8px;
+  margin: 4px;
 }
 .sui-button {
-  margin: 8px
+  margin: 8px;
 }
 </style>

@@ -1,19 +1,19 @@
-@import "common/var.styl"
+@import './common/var.styl'
+@import './common/mixins/main.styl'
 
 .sui-avatar {
-  display inline-block
-  box-sizing border-box
-  overflow hidden
-  color color--text
-  font-size font-size--text.medium
-  text-align center
-  width 48px
-  height 48px
-  line-height @width
+  use-inline-flex()
+  box-sizing: border-box
+  overflow: hidden
+  color: color--text-light
+  font-size: font-size--text.medium
+  text-align: center
+  width: 48px
+  height: @width
   border-radius: border-radius--normal
-  vertical-align bottom
+  vertical-align: bottom
 
-  background-color: color--surface
+  background-color: color--surface-light
 
   img {
     display block

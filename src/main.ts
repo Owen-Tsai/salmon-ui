@@ -10,7 +10,7 @@ import 'swiper/css/effect-creative'
 import 'swiper/css/effect-fade'
 import 'swiper/css/effect-creative'
 
-import './styles/index.styl'
+import './styles/index.scss'
 
 import Message from './packages/message/message'
 import Notification from './packages/notification/notification'
@@ -20,8 +20,6 @@ import Demo from '@/demo/components/Demo.vue'
 import SIcon from 'salmon-ui/icon'
 
 const app = createApp(Main)
-app.config.globalProperties.$message = Message
-app.config.globalProperties.$notify = Notification
 
 app.component('Demo', Demo)
 app.component('SIcon', SIcon)

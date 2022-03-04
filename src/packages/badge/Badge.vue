@@ -1,5 +1,10 @@
 <template>
-  <div class="sui-badge" :class="`sui-badge--${type}`">
+  <div
+    :class="[
+      'sui-badge',
+      type ? `sui-badge--${type}` : null
+    ]"
+  >
     <slot></slot>
 
     <transition name="zoom-in-center">
@@ -7,8 +12,8 @@
         v-show="computedValue || dot"
         class="sui-badge__content"
         :class="{ 'is-dot': dot }"
-        v-text="computedValue"
         :style="posStyle"
+        v-text="computedValue"
       ></sup>
     </transition>
   </div>
