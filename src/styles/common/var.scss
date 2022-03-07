@@ -21,16 +21,21 @@ $colors: map.deep-merge(
     ),
   ),
   $colors
-) !default;
+);
+
+$color-black: map.get($colors, 'black');
+$color-white: map.get($colors, 'white');
 
 // generating color palette
 @mixin generate-light-shades($type, $number) {
   $colors: map.deep-merge(
-    $type: (
-      'light-#{$number}': mix(
-        $color-white,
-        map.get($colors, $type, 'base'),
-        math.percentage(math.div($number, 10))
+    (
+      $type: (
+        'light-#{$number}': mix(
+          $color-white,
+          map.get($colors, $type, 'base'),
+          math.percentage(math.div($number, 10))
+        )
       )
     ),
     $colors
@@ -39,11 +44,13 @@ $colors: map.deep-merge(
 
 @mixin generate-dark-shades($type, $number) {
   $colors: map.deep-merge(
-    $type: (
-      'dark-#{$number}': mix(
-        $color-black,
-        map.get($colors, $type, 'base'),
-        math.percentage(math.div($number, 10))
+    (
+      $type: (
+        'dark-#{$number}': mix(
+          $color-black,
+          map.get($colors, $type, 'base'),
+          math.percentage(math.div($number, 10))
+        )
       )
     ),
     $colors
@@ -67,7 +74,7 @@ $text-colors: () !default;
 $text-colors: map.merge(
   (
     'title': #111827,
-    'primary': #1f2937,
+    'base': #1f2937,
     'secondary': #4b5563,
     'placeholder': #9ca3af,
   ),
@@ -128,3 +135,23 @@ $component-common-sizes: map.merge(
   $component-common-sizes
 );
 
+$font-weights: () !default;
+$font-weights: map.merge(
+  (
+    'thin': 100,
+    'base': 400,
+    'medium': 500,
+    'bold': 700
+  ),
+  $font-weights
+);
+
+$durations: () !default;
+$durations: map.merge(
+  (
+    'fast': 100ms,
+    'base': 200ms,
+    'slow': 300ms
+  ),
+  $durations
+);

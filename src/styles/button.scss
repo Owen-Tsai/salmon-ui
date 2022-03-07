@@ -1,0 +1,25 @@
+@use './common/var.scss' as *;
+@use './mixins/main.scss';
+@use 'sass:map';
+
+.sui-button {
+  $padding: 0 15px;
+
+  @include main.use-inline-flex;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid $border-color;
+  color: map.get($text-colors, 'base');
+  background-color: map.get($colors, 'white');
+  padding: $padding;
+  height: map.get($component-common-sizes, 'base');
+  font-size: map.get($font-sizes, 'base');
+  box-sizing: border-box;
+  border-radius: map.get($border-radiuses, 'base');
+  vertical-align: middle;
+  font-weight: map.get($font-weights, 'medium');
+  transition: all map.get($durations, 'fast');
+
+  
+}

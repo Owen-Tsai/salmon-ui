@@ -1,0 +1,17 @@
+@mixin use-flex($center: true) {
+  display: flex;
+  align-items: center;
+
+  @if $center == true {
+    justify-content: center;
+  }
+}
+
+@mixin use-inline-flex($center: true) {
+  display: inline-flex;
+  align-items: center;
+
+  @if $center == true {
+    justify-content: center;
+  }
+}
