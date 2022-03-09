@@ -1,0 +1,15 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate--90 {
+  transform: rotate(90deg);
+}
+.rotate--180 {
+  transform: rotate(180deg);
+}

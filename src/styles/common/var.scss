@@ -9,15 +9,47 @@ $colors: map.deep-merge(
     'black': #000000,
     'primary': (
       'base': #2563eb,
+      'light-1': #3b82f6,
+      'light-2': #60a5fa,
+      'light-3': #93c5fd,
+      'light-4': #bfdbfe,
+      'light-5': #dbeafe,
+      'light-6': #eff6ff,
+      'dark-1': #1d4ed8,
+      'dark-2': #1e40af
     ),
     'success': (
       'base': #16a34a,
+      'light-1': #22c55e,
+      'light-2': #4ade80,
+      'light-3': #86efac,
+      'light-4': #bbf7d0,
+      'light-5': #dcfce7,
+      'light-6': #f0fdf4,
+      'dark-1': #15803d,
+      'dark-2': #166534
     ),
     'warning': (
-      'base': #eab308,
+      'base': #f59e0b,
+      'light-1': #eab308,
+      'light-2': #fbbf24,
+      'light-3': #fcd34d,
+      'light-4': #fde68a,
+      'light-5': #fef3c7,
+      'light-6': #fffbeb,
+      'dark-1': #d97706,
+      'dark-2': #ea580c
     ),
     'error': (
       'base': #dc2626,
+      'light-1': #ef4444,
+      'light-2': #f87171,
+      'light-3': #fca5a5,
+      'light-4': #fecaca,
+      'light-5': #fee2e2,
+      'light-6': #fef2f2,
+      'dark-1': #b91c1c,
+      'dark-2': #991b1b,
     ),
   ),
   $colors
@@ -25,49 +57,6 @@ $colors: map.deep-merge(
 
 $color-black: map.get($colors, 'black');
 $color-white: map.get($colors, 'white');
-
-// generating color palette
-@mixin generate-light-shades($type, $number) {
-  $colors: map.deep-merge(
-    (
-      $type: (
-        'light-#{$number}': mix(
-          $color-white,
-          map.get($colors, $type, 'base'),
-          math.percentage(math.div($number, 10))
-        )
-      )
-    ),
-    $colors
-  ) !global
-}
-
-@mixin generate-dark-shades($type, $number) {
-  $colors: map.deep-merge(
-    (
-      $type: (
-        'dark-#{$number}': mix(
-          $color-black,
-          map.get($colors, $type, 'base'),
-          math.percentage(math.div($number, 10))
-        )
-      )
-    ),
-    $colors
-  ) !global
-}
-
-$types: primary, success, warning, error;
-
-@for $i from 1 through 6 {
-  @each $type in $types {
-    @include generate-light-shades($type, $i);
-  }
-}
-
-@each $type in $types {
-  @include generate-dark-shades($type, 2);
-}
 
 // neutral colors
 $text-colors: () !default;
@@ -82,6 +71,17 @@ $text-colors: map.merge(
 );
 
 $border-color: #d1d5db !default;
+
+$surface-colors: () !default;
+$surface-colors: map.merge(
+  (
+    'lighter': #f9fafb,
+    'light': #f3f4f6,
+    'dark': #1f2937,
+    'darker': #111827
+  ),
+  $surface-colors
+);
 
 $box-shadows: () !default;
 $box-shadows: map.merge(
@@ -128,9 +128,9 @@ $border-radiuses: map.merge(
 $component-common-sizes: () !default;
 $component-common-sizes: map.merge(
   (
-    'small': 24px,
-    'base': 32px,
-    'large': 40px
+    'small': 32px,
+    'base': 36px,
+    'large': 44px
   ),
   $component-common-sizes
 );
@@ -155,3 +155,5 @@ $durations: map.merge(
   ),
   $durations
 );
+
+$opacity-mod: 0.35 !default;

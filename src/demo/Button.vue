@@ -13,10 +13,7 @@
     <s-button shape="rounded" size="large">大号按钮</s-button>
     <s-button shape="rounded">中等尺寸</s-button>
     <s-button shape="rounded" size="small">小尺寸</s-button>
-    <s-button>
-      <template #prefix>
-        <s-icon><heart></heart></s-icon>
-      </template>
+    <s-button :icon="Heart">
       爱你
     </s-button>
     <br>
@@ -42,6 +39,9 @@
         <heart></heart>
       </s-icon>
     </s-button>
+    <s-button type="primary" :icon="Heart" affix-icon>
+      好评
+    </s-button>
     <div class="colored">
       <s-button ghost type="primary">幽灵按钮</s-button>
       <s-button ghost type="outlined">幽灵按钮</s-button>
@@ -50,18 +50,18 @@
     </div>
     <s-button disabled>禁用</s-button>
     <s-button loading>加载中</s-button>
+    <s-button loading type="primary">加载中</s-button>
   </demo>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import SButton from 'salmon-ui/button'
 import { defineComponent } from 'vue'
-import { Heart } from '@salmon-ui/icons'
+import { Heart, ThumbUp } from '@salmon-ui/icons'
 
-export default defineComponent({
+defineComponent({
   components: {
     SButton,
-    Heart
   }
 })
 </script>

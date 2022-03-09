@@ -1,9 +1,17 @@
 @use './common/var.scss' as *;
 @use './mixins/main.scss';
+@use './mixins/button.scss';
+@use './common/transition' as *;
 @use 'sass:map';
 
 .sui-button {
   $padding: 0 15px;
+  $padding-small: 0 12px;
+  $ghost-hover: 0.16;
+  $ghost-active: 0.32;
+
+  $status-normal: ':not(.is-disabled):not(.is-loading)';
+  $ns: '.sui-button';
 
   @include main.use-inline-flex;
   line-height: 1;
@@ -11,7 +19,7 @@
   cursor: pointer;
   border: 1px solid $border-color;
   color: map.get($text-colors, 'base');
-  background-color: map.get($colors, 'white');
+  background-color: $color-white;
   padding: $padding;
   height: map.get($component-common-sizes, 'base');
   font-size: map.get($font-sizes, 'base');
@@ -20,6 +28,165 @@
   vertical-align: middle;
   font-weight: map.get($font-weights, 'medium');
   transition: all map.get($durations, 'fast');
+  user-select: none;
 
-  
+  // size
+  &--large {
+    height: map.get($component-common-sizes, 'large');
+  }
+  &--small {
+    height: map.get($component-common-sizes, 'small');
+    padding: $padding-small;
+    font-size: map.get($font-sizes, 'small');
+  }
+
+  // shapes
+  &--rounded {
+    border-radius: map.get($border-radiuses, 'rounded');
+  }
+  &--circle {
+    border-radius: map.get($border-radiuses, 'circle');
+    width: map.get($component-common-sizes, 'base');
+
+    &#{$ns}--large {
+      width: map.get($component-common-sizes, 'large');
+    }
+    &#{$ns}--small {
+      width: map.get($component-common-sizes, 'small');
+    }
+  }
+
+  @include button.make-button(primary);
+
+  &.is-danger {
+    @include button.make-button(error);
+  }
+  &.is-ghost#{$status-normal} {
+    background-color: transparent;
+    color: $color-white;
+    border-color: $color-white;
+
+    &:hover {
+      background-color: rgba($color-white, $ghost-hover);
+      border-color: $color-white;
+    }
+    &:focus {
+      background-color: rgba($color-white, $ghost-hover);
+      border-color: $color-white;
+      @include main.use-ring($color-white);
+    }
+    &:active {
+      border-color: $color-white;
+      background-color: rgba($color-white, $ghost-active);
+    }
+  }
+
+  &--primary {
+    @include button.make-primary-button(primary);
+
+    &.is-danger {
+      @include button.make-primary-button(error);
+    }
+    &.is-ghost#{$status-normal} {
+      background-color: map.get($surface-colors, 'lighter');
+      color: map.get($colors, primary, 'base');
+      border-color: map.get($surface-colors, 'lighter');
+
+      &:hover {
+        background-color: $color-white;
+        border-color: $color-white;
+      }
+      &:focus {
+        background-color: $color-white;
+        border-color: $color-white;
+      }
+      &:active {
+        background-color: map.get($surface-colors, 'light');
+        border-color: map.get($surface-colors, 'light');
+      }
+    }
+  }
+
+  &--outlined {
+    @include button.make-outlined-button(primary);
+
+    &.is-danger {
+      @include button.make-outlined-button(error);
+    }
+    &.is-ghost#{$status-normal} {
+      &:hover {
+        background-color: $color-white;
+        border-color: $color-white;
+        color: map.get($colors, primary, 'base');
+      }
+      &:focus {
+        background-color: $color-white;
+        border-color: $color-white;
+        color: map.get($colors, primary, 'base');
+      }
+      &:active {
+        background-color: map.get($surface-colors, 'light');
+        border-color: map.get($surface-colors, 'light');
+      }
+    }
+  }
+
+  &--text {
+    @include button.make-text-button(primary);
+
+    &.is-danger {
+      @include button.make-text-button(error); 
+    }
+    &.is-ghost#{$status-normal} {
+      border-color: transparent !important;
+      color: $color-white !important;
+      &:hover {
+        background-color: rgba($color-white, $ghost-hover);
+      }
+      &:focus {
+        background-color: rgba($color-white, $ghost-hover);
+      }
+      &:active {
+        background-color: rgba($color-white, $ghost-active);
+      }
+    }
+  }
+
+  // status
+  &.is-loading {
+    cursor: default;
+    position: relative;
+
+    &::before {
+      content: "";
+      right: -1px;
+      bottom: -1px;
+      top: -1px;
+      left: -1px;
+      position: absolute;
+      background-color: rgba($color-white, $opacity-mod);
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed
+  }
+
+  // other fixes
+  & > span {
+    @include main.use-inline-flex;
+    line-height: 0;
+  }
+  i.sui-icon {
+    font-size: map.get($font-sizes, 'medium');
+  }
+  i.sui-icon + span {
+    margin-left: 4px;
+  }
+  i.sui-icon.sui-icon--right {
+    margin-left: 4px;
+  }
+
+  .loader.rotating {
+    animation: rotate 2s linear infinite;
+  }
 }
