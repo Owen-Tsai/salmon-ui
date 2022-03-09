@@ -1,4 +1,7 @@
-import { PropType } from 'vue'
+import type {
+  PropType,
+  Component
+} from 'vue'
 import { buildProp } from '@/utils/props'
 
 /**
@@ -23,6 +26,11 @@ const props = {
     type: String,
     values: ['button', 'reset', 'submit']
   } as const),
+  icon: {
+    type: Object as PropType<Component>,
+    default: undefined
+  },
+  affixIcon: Boolean as PropType<boolean>,
   disabled: Boolean as PropType<boolean>,
   loading: Boolean as PropType<boolean>,
   autofocus: Boolean as PropType<boolean>,
