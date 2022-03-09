@@ -15,10 +15,9 @@
     :type="nativeType"
     @click="handleClick"
   >
-    <slot
-      v-if="!loading"
-      name="prefix"
-    ></slot>
+    <s-icon v-if="!loading && icon && !affixIcon">
+      <component :is="icon"></component>
+    </s-icon>
     <slot
       v-if="loading"
       name="loader"
@@ -27,11 +26,18 @@
         <loader></loader>
       </s-icon>
     </slot>
-    <slot></slot>
-    <slot
-      v-if="!loading"
-      name="affix"
-    ></slot>
+
+    <!-- default label -->
+    <span v-if="$slots.default">
+      <slot></slot>
+    </span>
+
+    <s-icon
+      v-if="!loading && icon && affixIcon"
+      class="sui-icon--right"
+    >
+      <component :is="icon"></component>
+    </s-icon>
   </button>
 </template>
 
