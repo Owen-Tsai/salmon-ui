@@ -1,0 +1,34 @@
+@use './common/var.scss' as *;
+@use './mixins/main.scss';
+@use 'sass:map';
+
+.sui-button-group {
+  $button: '.sui-button';
+  $mid: ':not(:first-child):not(:last-child)';
+  @include main.use-inline-flex(false);
+
+  #{$button}:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  #{$button}:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  #{$button}#{$mid} {
+    border-radius: 0;
+  }
+  #{$button}:not(:last-child) {
+    margin-right: 0;
+  }
+
+  #{$button} + #{$button} {
+    margin-left: -1px;
+  }
+  #{$button}:not(.sui-button--primary):focus {
+    z-index: 1;
+  }
+  .sui-button--primary:not(:first-child) {
+    border-left-color: $color-white !important;
+  }
+}

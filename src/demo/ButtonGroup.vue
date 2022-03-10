@@ -25,6 +25,14 @@
       <s-button>按钮2</s-button>
       <s-button>按钮3</s-button>
     </s-button-group>
+
+    <br>
+
+    <s-button-group type="primary" size="large">
+      <s-button>修改</s-button>
+      <s-button>新增</s-button>
+      <s-button danger>删除</s-button>
+    </s-button-group>
   </demo>
 </template>
 
