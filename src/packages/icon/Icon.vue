@@ -1,10 +1,10 @@
 <template>
-  <span
+  <i
     class="sui-icon"
     :style="computedStyle"
   >
     <slot></slot>
-  </span>
+  </i>
 </template>
 
 <script lang="ts">

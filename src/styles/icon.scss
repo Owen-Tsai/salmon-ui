@@ -1,0 +1,16 @@
+@use 'mixins/main.scss';
+
+.sui-icon {
+  @include main.use-inline-flex;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  color: inherit;
+  font-size: inherit;
+  fill: currentColor;
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
