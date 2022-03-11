@@ -5,7 +5,8 @@
       <demo-button-group></demo-button-group>
     </div>
     <div class="demo-row">
-      <!-- <demo-alert></demo-alert> -->
+      <demo-icon></demo-icon>
+      <demo-alert></demo-alert>
     </div>
     <div class="demo-row">
       <!-- <demo-avatar></demo-avatar>
@@ -16,8 +17,9 @@
 
 <script lang="ts" setup>
 import DemoButton from '@/demo/Button.vue'
-// import DemoAlert from '@/demo/Alert.vue'
+import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
+import DemoIcon from '@/demo/Icon.vue'
 // import DemoAvatar from '@/demo/Avatar.vue'
 // import DemoBadge from '@/demo/Badge.vue'
 </script>
