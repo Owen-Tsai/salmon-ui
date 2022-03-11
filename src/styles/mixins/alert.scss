@@ -1,0 +1,24 @@
+@use '../common/var.scss' as *;
+@use '../mixins/main.scss';
+@use 'sass:map';
+
+@mixin make-alert($type) {
+  $surface-color: map.get($colors, $type, 'light-6');
+  $color: map.get($colors, $type, 'base');
+  $color-light: map.get($colors, $type, 'light-5');
+  $ns: '.sui-alert';
+
+  background-color: $surface-color;
+  color: $color;
+  border: 1px solid $color-light;
+
+  #{$ns}__close-btn {
+    color: $color;
+    background-color: $surface-color;
+
+    &:focus {
+      background-color: $color-light;
+      @include main.use-ring($color);
+    }
+  }
+}

@@ -1,0 +1,87 @@
+@use './common/var.scss' as *;
+@use './mixins/alert.scss';
+@use './mixins/main.scss';
+@use 'sass:map';
+
+.sui-alert {
+  $padding: 16px 12px;
+  $ns: '.sui-alert';
+
+  padding: $padding;
+  border-radius: map.get($border-radiuses, 'base');
+  box-sizing: border-box;
+  font-size: map.get($font-sizes, 'base');
+  transition: all map.get($durations, 'slow');
+  opacity: 1;
+  
+  @include alert.make-alert(primary);
+
+  // different types
+  &--warning {
+    @include alert.make-alert(warning);
+  }
+  &--success {
+    @include alert.make-alert(success);
+  }
+  &--error {
+    @include alert.make-alert(error);
+  }
+
+  &__wrapper {
+    @include main.use-flex(false);
+    position: relative;
+    padding-right: 24px;
+
+    #{$ns}__icon {
+      font-size: 24px;
+      margin-right: 16px;
+      line-height: 0;
+
+      &.is-large {
+        font-size: 32px;
+      }
+    }
+
+    #{$ns}__title {
+      font-weight: map.get($font-weights, 'bold');
+      margin-bottom: 4px;
+
+      * {
+        vertical-align: middle;
+      }
+    }
+
+    #{$ns}__message {
+      margin: 0;
+    }
+
+    #{$ns}__close-btn {
+      background-color: transparent;
+      border: none;
+      position: absolute;
+      right: -4px;
+      top: 2px;
+      border-radius: map.get($border-radiuses, 'circle');
+      font-size: map.get($font-sizes, 'medium');
+      padding: 2px;
+      cursor: pointer;
+      transition: all map.get($durations, 'fast');
+      @include main.use-inline-flex;
+    }
+  }
+
+  &.is-closing {
+    height: 0 !important;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform-origin: 50% 0;
+    opacity: 0;
+    transition: all map.get($durations, 'slow') ease-in-out;
+
+    * {
+      opacity: 0;
+      transition: opacity map.get($durations, 'slow') ease-in-out;
+    }
+  }
+}

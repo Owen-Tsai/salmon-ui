@@ -1,13 +1,13 @@
 <template>
   <transition name="slide-up">
     <div
+      v-show="visible"
+      ref="alertNode"
       class="sui-alert"
       :class="[
         type ? `sui-alert--${type}` : null,
         visible ? null : 'is-closing'
       ]"
-      v-show="visible"
-      ref="alertNode"
     >
       <div class="sui-alert__wrapper">
         <span
@@ -29,10 +29,18 @@
           </slot>
         </span>
         <div class="sui-alert__content">
-          <div v-if="title || $slots.title" class="sui-alert__title">
-            <slot name="title">{{ title }}</slot>
+          <div
+            v-if="title || $slots.title"
+            class="sui-alert__title"
+          >
+            <slot name="title">
+              {{ title }}
+            </slot>
           </div>
-          <p v-if="$slots.default || !!content" class="sui-alert__message">
+          <p
+            v-if="$slots.default || !!content"
+            class="sui-alert__message"
+          >
             <slot>
               {{ content }}
             </slot>
@@ -96,7 +104,8 @@ export default defineComponent({
     // methods
     const close = (evt: Event) => {
       evt.preventDefault()
-      const dom = alertNode.value!
+      const dom = alertNode.value as HTMLElement
+      dom.style.height = `${dom.offsetHeight}px`
       dom.style.height = `${dom.offsetHeight}px`
       dom.style.height = `${dom.offsetHeight}px`
       visible.value = false
