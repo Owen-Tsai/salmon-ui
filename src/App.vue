@@ -9,8 +9,8 @@
       <demo-alert></demo-alert>
     </div>
     <div class="demo-row">
-      <!-- <demo-avatar></demo-avatar>
-      <demo-badge></demo-badge> -->
+      <demo-avatar></demo-avatar>
+      <demo-badge></demo-badge>
     </div>
   </div>
 </template>
@@ -20,8 +20,8 @@ import DemoButton from '@/demo/Button.vue'
 import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 import DemoIcon from '@/demo/Icon.vue'
-// import DemoAvatar from '@/demo/Avatar.vue'
-// import DemoBadge from '@/demo/Badge.vue'
+import DemoAvatar from '@/demo/Avatar.vue'
+import DemoBadge from '@/demo/Badge.vue'
 </script>
 
 <style scoped>

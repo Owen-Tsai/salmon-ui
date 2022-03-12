@@ -6,6 +6,7 @@
     <s-avatar>
       <s-icon :size="32"><user-fill></user-fill></s-icon>
     </s-avatar>
+    <br>
     <s-avatar shape="circle" :src="img"></s-avatar>
     <s-avatar shape="circle" :src="img2"></s-avatar>
     <s-avatar shape="circle">张三</s-avatar>
@@ -14,6 +15,7 @@
     <s-avatar size="large" shape="circle" :src="img2"></s-avatar>
     <s-avatar size="small" shape="circle" :src="img"></s-avatar>
     <s-avatar size="small" :src="img2"></s-avatar>
+    <br>
     <s-avatar :size="60" shape="circle" :src="img"></s-avatar>
     <s-avatar :size="60" :src="img2"></s-avatar>
   </demo>

@@ -1,0 +1,30 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+.sui-avatar {
+  $size-sm: 32px;
+  $size: 56px;
+  $size-lg: 64px;
+
+  @include main.use-inline-flex;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: map.get($border-radiuses, 'base');
+  background-color: map.get($surface-colors, 'light');
+  height: $size;
+  width: $size;
+  vertical-align: middle;
+  color: map.get($text-colors, 'secondary');
+  font-size: map.get($font-sizes, 'base');
+
+  img {
+    display: inline-block;
+    height: 100%;
+  }
+
+  // shapes
+  &--circle {
+    border-radius: map.get($border-radiuses, 'circle');
+  }
+}
