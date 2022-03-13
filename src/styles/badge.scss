@@ -1,0 +1,64 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'common/var.scss' as *;
+
+.sui-badge {
+  $ns: '.sui-badge';
+  $size: 18px;
+  $size-dot: 8px;
+  $padding: 0 6px;
+
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  &__content {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: map.get($colors, primary, 'base');
+    font-size: map.get($font-sizes, 'small');
+    color: $color-white;
+    height: $size;
+    border-radius: map.get($border-radiuses, 'circle');
+    padding: $padding;
+    text-align: center;
+    line-height: $size;
+    border: 1px solid $color-white;
+
+    &.is-dot {
+      height: $size-dot;
+      width: $size-dot;
+      padding: 0;
+      right: math.div($size-dot, -2);
+      top: math.div($size-dot, -2);
+    }
+  }
+
+  &--success {
+    #{$ns}__content {
+      background-color: map.get($colors, success, 'base');
+    }
+  }
+  &--warning {
+    #{$ns}__content {
+      background-color: map.get($colors, warning, 'base');
+    }
+  }
+  &--error {
+    #{$ns}__content {
+      background-color: map.get($colors, error, 'base');
+    }
+  }
+}
+
+.zoom-in-center-enter-from,
+.zoom-in-center-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.zoom-in-center-enter-active,
+.zoom-in-center-leave-active {
+  transition: all map.get($durations, 'fast') ease-in-out;
+}

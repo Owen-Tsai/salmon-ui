@@ -6,6 +6,9 @@
     <s-badge :max="9" :value="value" type="error">
       <s-avatar :src="img2"></s-avatar>
     </s-badge>
+    <s-badge :max="12" :value="value" type="warning">
+      <s-avatar :src="img"></s-avatar>
+    </s-badge>
     <s-badge dot type="error">
       <s-button>新功能</s-button>
     </s-badge>
