@@ -5,19 +5,19 @@
 @mixin make-alert($type) {
   $surface-color: map.get($colors, $type, 'light-6');
   $color: map.get($colors, $type, 'base');
-  $color-light: map.get($colors, $type, 'light-5');
+  $light-color: map.get($colors, $type, 'light-4');
   $ns: '.sui-alert';
 
   background-color: $surface-color;
   color: $color;
-  border: 1px solid $color-light;
+  border: 1px solid $light-color;
 
   #{$ns}__close-btn {
     color: $color;
     background-color: $surface-color;
 
     &:focus {
-      background-color: $color-light;
+      background-color: $light-color;
       @include main.use-ring($color);
     }
   }
