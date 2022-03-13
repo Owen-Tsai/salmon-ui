@@ -2,9 +2,7 @@
   <demo name="Icon">
     <div class="container">
       <div class="cell">
-        <s-icon :size="56">
-          <vuejs-fill></vuejs-fill>
-        </s-icon>
+        <s-icon :size="56" :name="VuejsFill"></s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">

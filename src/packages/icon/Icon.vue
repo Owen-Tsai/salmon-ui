@@ -3,7 +3,9 @@
     class="sui-icon"
     :style="computedStyle"
   >
-    <slot></slot>
+    <slot>
+      <component :is="name"></component>
+    </slot>
   </i>
 </template>
 
@@ -11,7 +13,9 @@
 import {
   defineComponent,
   computed,
-  StyleValue
+  StyleValue,
+  Component,
+  PropType
 } from 'vue'
 
 export default defineComponent({
@@ -25,6 +29,10 @@ export default defineComponent({
       type: Number,
       default: undefined
     },
+    name: {
+      type: Object as PropType<Component>,
+      default: undefined
+    }
   },
   setup(props) {
     const computedStyle = computed(() => {
