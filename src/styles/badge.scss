@@ -20,7 +20,7 @@
     font-size: map.get($font-sizes, 'small');
     color: $color-white;
     height: $size;
-    border-radius: map.get($border-radiuses, 'circle');
+    border-radius: map.get($border-radiuses, 'rounded');
     padding: $padding;
     text-align: center;
     line-height: $size;

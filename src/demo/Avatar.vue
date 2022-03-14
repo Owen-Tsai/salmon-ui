@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import SAvatar from 'salmon-ui/avatar'
-import img from '@/assets/avatar2.jpg'
+import img from '@/assets/avatar.jpg'
 import img2 from '@/assets/avatar3.jpg'
 import { UserFill } from '@salmon-ui/icons'
 </script>
