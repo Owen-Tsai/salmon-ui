@@ -11,28 +11,8 @@
   </demo>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import SAlert from 'salmon-ui/alert'
-import {
-  EmotionHappy,
-  WifiOff,
-  ThumbUpFill,
-  CloseCircle,
-  Archive
-} from '@salmon-ui/icons'
-
-export default defineComponent({
-  components: {
-    EmotionHappy,
-    WifiOff,
-    ThumbUpFill,
-    CloseCircle,
-    Archive,
-    SAlert
-  },
-
-})
 </script>
 
 <style scoped>

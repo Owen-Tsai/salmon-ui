@@ -56,14 +56,7 @@
 
 <script lang="ts" setup>
 import SButton from 'salmon-ui/button'
-import { defineComponent } from 'vue'
-import { Heart, ThumbUp } from '@salmon-ui/icons'
-
-defineComponent({
-  components: {
-    SButton,
-  }
-})
+import { Heart } from '@salmon-ui/icons'
 </script>
 
 <style scoped>

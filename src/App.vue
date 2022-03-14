@@ -11,6 +11,7 @@
     <div class="demo-row">
       <demo-avatar></demo-avatar>
       <demo-badge></demo-badge>
+      <demo-card></demo-card>
     </div>
   </div>
 </template>
@@ -22,6 +23,7 @@ import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
 import DemoBadge from '@/demo/Badge.vue'
+import DemoCard from '@/demo/Card.vue'
 </script>
 
 <style scoped>

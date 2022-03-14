@@ -1,21 +1,27 @@
 <template>
-  <div :class="[
-    'sui-card', `sui-card--shadow-${shadow}`
-  ]">
+  <div
+    :class="[
+      'sui-card',
+      `sui-card--shadow-${shadow}`,
+      borderless ? 'is-borderless' : null
+    ]"
+  >
     <div
       v-if="$slots.header || title"
-      class="sui-card__header"
+      :class="headerClass"
     >
-      <slot name="header">{{ title }}</slot>
+      <slot name="header">
+        {{ title }}
+      </slot>
     </div>
 
-    <div class="sui-card__body" :style="bodyStyle">
+    <div :class="bodyClass">
       <slot></slot>
     </div>
 
     <div
       v-if="$slots.footer"
-      class="sui-card__footer"
+      :class="footerClass"
     >
       <slot name="footer"></slot>
     </div>
@@ -23,28 +29,34 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  PropType
-} from 'vue'
-
-type CardShadowOption = 'hover' | 'never' | 'always'
+import { defineComponent } from 'vue'
+import { buildProp } from '@/utils/props'
 
 export default defineComponent({
   name: 'SCard',
   props: {
-    title: String,
-    shadow: {
-      type: String as PropType<CardShadowOption>,
-      default: 'never',
-      validator: (v: string) => {
-        return ['hover', 'never', 'always'].includes(v)
-      }
+    title: {
+      type: String,
+      default: undefined
     },
-    bodyStyle: {
-      type: Object,
-      default: {padding: '24px'} as Object
-    }
+    shadow: buildProp({
+      type: String,
+      values: ['hover', 'never', 'always'],
+      default: 'hover',
+    } as const),
+    bodyClass: {
+      type: String,
+      default: 'sui-card__body'
+    },
+    headerClass: {
+      type: String,
+      default: 'sui-card__header'
+    },
+    footerClass: {
+      type: String,
+      default: 'sui-card__footer'
+    },
+    borderless: Boolean
   }
 })
 </script>
