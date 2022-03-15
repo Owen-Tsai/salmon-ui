@@ -1,0 +1,49 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+.sui-breadcrumb {
+  $ns: '.sui-breadcrumb';
+  @include main.use-flex(false);
+  font-size: map.get($font-sizes, 'base');
+  color: map.get($text-colors, 'base');
+
+  &-item {
+    @include main.use-inline-flex(false);
+
+    * {
+      vertical-align: middle;
+    }
+    &__separator {
+      line-height: 1;
+      color: map.get($text-colors, 'secondary');
+      margin-left: 4px;
+      font-weight: map.get($font-weights, 'bold');
+
+      .sui-icon {
+        font-size: map.get($font-sizes, 'large');
+      }
+    }
+
+    &:last-child {
+      #{$ns}-item__separator {
+        display: none;
+      }
+    }
+
+    & + & {
+      margin-left: 4px;
+    }
+  }
+
+  &-item__content {
+    &.is-link {
+      font-weight: map.get($font-weights, 'bold');
+      cursor: pointer;
+
+      &:hover {
+        color: map.get($colors, primary, 'base');
+      }
+    }
+  }
+}

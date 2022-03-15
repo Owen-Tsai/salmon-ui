@@ -7,6 +7,7 @@
     <div class="demo-row">
       <demo-icon></demo-icon>
       <demo-alert></demo-alert>
+      <demo-breadcrumb></demo-breadcrumb>
     </div>
     <div class="demo-row">
       <demo-avatar></demo-avatar>
@@ -24,6 +25,7 @@ import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
 import DemoBadge from '@/demo/Badge.vue'
 import DemoCard from '@/demo/Card.vue'
+import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 </script>
 
 <style scoped>

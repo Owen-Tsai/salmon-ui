@@ -2,19 +2,18 @@
 import {
   h,
   defineComponent,
+  Slot,
 } from 'vue'
-
-import { buildProp } from '@/utils/props'
-
 import SIcon from '../icon'
 import { ArrowRightSFill } from '@salmon-ui/icons'
 
 export default defineComponent({
   name: 'SBreadcrumbItem',
   props: {
-    to: buildProp({
+    to: {
       type: [String, Object],
-    } as const),
+      default: undefined
+    },
   },
   render() {
     const namePrefix = 'sui-breadcrumb-item'
@@ -43,7 +42,7 @@ export default defineComponent({
         h('span', contentElAttrs, this.$slots.default?.()),
         h('span', separatorElAttrs,
           hasCustomSeparator ?
-            this.$parent?.$slots?.separator!() :
+            (this.$parent?.$slots?.separator as Slot)() :
             h(SIcon, () => h(ArrowRightSFill))
         )
       ]
