@@ -3,6 +3,7 @@
     <div class="demo-row">
       <demo-button></demo-button>
       <demo-button-group></demo-button-group>
+      <demo-tag></demo-tag>
     </div>
     <div class="demo-row">
       <demo-icon></demo-icon>
@@ -26,6 +27,7 @@ import DemoAvatar from '@/demo/Avatar.vue'
 import DemoBadge from '@/demo/Badge.vue'
 import DemoCard from '@/demo/Card.vue'
 import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
+import DemoTag from '@/demo/Tag.vue'
 </script>
 
 <style scoped>

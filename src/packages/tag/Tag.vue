@@ -2,57 +2,50 @@
   <span
     :class="[
       'sui-tag',
-      `sui-tag--${type}`,
-      outlined ? 'is-outlined' : null,
+      type ? `sui-tag--${type}` : null,
+      fill ? `sui-tag--fill-${fill}` : null,
+      size ? `sui-tag--${size}` : null,
       rounded ? 'is-rounded' : null
     ]"
     @click="handleClick"
   >
     <slot></slot>
 
-    <s-icon
+    <button
       v-if="dismissible"
-      class="sui-tag__close-token"
-      @click="handleClose"
+      class="sui-tag__close-btn"
     >
-      <close></close>
-    </s-icon>
+      <s-icon
+        class="sui-tag__close-token"
+        @click="handleClose"
+      >
+        <close></close>
+      </s-icon>
+    </button>
   </span>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import SIcon from '../icon'
-import {
-  Close
-} from '@salmon-ui/icons'
+import { Close } from '@salmon-ui/icons'
 
-const _types = [
-  'default', 'success', 'warning', 'error'
-]
+import props from './tag'
 
 export default defineComponent({
   name: 'STag',
-  components: {SIcon, Close},
-  props: {
-    type: {
-      type: String,
-      default: 'default',
-      validator: (v: string) => {
-        return _types.includes(v)
-      }
-    },
-    outlined: Boolean,
-    rounded: Boolean,
-    dismissible: Boolean
+  components: {
+    SIcon,
+    Close
   },
+  props,
   emits: ['click', 'close'],
-  setup(props, ctx) {
-    const handleClick = (evt) => {
-      ctx.emit('click', evt)
+  setup(props, { emit }) {
+    const handleClick = (evt: Event) => {
+      emit('click', evt)
     }
-    const handleClose = (evt) => {
-      ctx.emit('close', evt)
+    const handleClose = (evt: Event) => {
+      emit('close', evt)
     }
 
     return {

@@ -1,0 +1,76 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+@use 'mixins/tag.scss';
+
+$tag-sizes: () !default;
+$tag-sizes: map.merge(
+  (
+    'small': 20px,
+    'base': 24px,
+    'large': 32px
+  ),
+  $tag-sizes
+);
+
+.sui-tag {
+  $ns: '.sui-tag';
+  $padding: 0 8px;
+
+  @include main.use-inline-flex;
+  @include tag.make-tag(primary);
+
+  font-size: map.get($font-sizes, 'base');
+  border-radius: map.get($border-radiuses, 'base');
+  padding: $padding;
+  height: map.get($tag-sizes, 'base');
+  box-sizing: border-box;
+  vertical-align: middle;
+  transition: all map.get($durations, 'fast');
+
+  &__close-btn {
+    @include main.reset-default-button;
+    @include main.use-inline-flex;
+
+    padding: 2px;
+    margin-left: 4px;
+    margin-right: -4px;
+    border-radius: map.get($border-radiuses, 'circle');
+    transition: all map.get($durations, 'fast');
+  }
+
+  &#{$ns}--fill-dark {
+    @include tag.fill-dark-tag(primary);
+  }
+  &#{$ns}--fill-none {
+    @include tag.fill-none-tag;
+  }
+
+  $_types: success, warning, error;
+  @each $type in $_types {
+    &--#{$type} {
+      @include tag.make-tag($type);
+
+      &#{$ns}--fill-dark {
+        @include tag.fill-dark-tag($type);
+      }
+      &#{$ns}--fill-none {
+        @include tag.fill-none-tag;
+      }
+    }
+  }
+
+  // shape
+  &.is-rounded {
+    border-radius: map.get($border-radiuses, 'rounded');
+  }
+
+  // sizes
+  &--large {
+    height: map.get($tag-sizes, 'large');
+  }
+  &--small {
+    height: map.get($tag-sizes, 'small');
+    font-size: map.get($font-sizes, 'small');
+  }
+}
