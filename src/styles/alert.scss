@@ -56,17 +56,15 @@
     }
 
     #{$ns}__close-btn {
-      background-color: transparent;
-      border: none;
+      @include main.reset-default-button;
+      @include main.use-inline-flex;
       position: absolute;
       right: -4px;
       top: 2px;
       border-radius: map.get($border-radiuses, 'circle');
       font-size: map.get($font-sizes, 'medium');
       padding: 2px;
-      cursor: pointer;
       transition: all map.get($durations, 'fast');
-      @include main.use-inline-flex;
     }
   }
 

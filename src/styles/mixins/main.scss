@@ -25,3 +25,11 @@
   outline-color: $color;
   outline-style: solid;
 }
+
+@mixin reset-default-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: map.get($font-sizes, 'base');
+}
