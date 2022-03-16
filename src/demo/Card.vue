@@ -4,6 +4,11 @@
       <img :src="src" alt="My Trip in Asia">
       <div class="content">
         <h2>My Trip in Asia</h2>
+        <div class="tags">
+          <s-tag size="small">Trip</s-tag>
+          <s-tag size="small">China</s-tag>
+          <s-tag size="small">Asia</s-tag>
+        </div>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, tenetur dolores? Asperiores quis dolorem iure velit esse harum id! Eos, suscipit consequuntur? Illum ullam ipsa aliquid ut quam autem dolorum.</p>
       </div>
     </s-card>
@@ -24,6 +29,7 @@
 
 <script lang="ts" setup>
 import SCard from 'salmon-ui/card'
+import STag from 'salmon-ui/tag'
 const src = 'https://images.unsplash.com/photo-1448376561459-dbe8868fa34c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
 </script>
 
@@ -47,5 +53,13 @@ img {
 
 .sui-card + .sui-card {
   margin-top: 16px;
+}
+
+.tags {
+  margin-top: 8px;
+
+  .sui-tag + .sui-tag {
+    margin-left: 4px;
+  }
 }
 </style>
