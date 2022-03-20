@@ -9,6 +9,7 @@
       <demo-icon></demo-icon>
       <demo-alert></demo-alert>
       <demo-breadcrumb></demo-breadcrumb>
+      <demo-rating></demo-rating>
     </div>
     <div class="demo-row">
       <demo-avatar></demo-avatar>
@@ -28,6 +29,7 @@ import DemoBadge from '@/demo/Badge.vue'
 import DemoCard from '@/demo/Card.vue'
 import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 import DemoTag from '@/demo/Tag.vue'
+import DemoRating from '@/demo/Rating.vue'
 </script>
 
 <style scoped>
