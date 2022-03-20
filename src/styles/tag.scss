@@ -27,6 +27,7 @@ $tag-sizes: map.merge(
   box-sizing: border-box;
   vertical-align: middle;
   transition: all map.get($durations, 'fast');
+  color: map.get($text-colors, 'base');
 
   &__close-btn {
     @include main.reset-default-button;
@@ -37,6 +38,10 @@ $tag-sizes: map.merge(
     margin-right: -4px;
     border-radius: map.get($border-radiuses, 'circle');
     transition: all map.get($durations, 'fast');
+
+    &:focus {
+      @include main.use-ring(map.get($colors, primary, 'base'));
+    }
   }
 
   // default
@@ -51,10 +56,10 @@ $tag-sizes: map.merge(
       @include tag.make-tag($type);
 
       &#{$ns}--fill-dark {
-        @include tag.fill-dark-tag($type);
+        @include tag.set-filled-tag($type);
       }
       &#{$ns}--fill-none {
-        @include tag.fill-none-tag;
+        @include tag.set-unfilled-tag;
       }
     }
   }

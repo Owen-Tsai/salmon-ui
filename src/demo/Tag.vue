@@ -4,7 +4,7 @@
     <s-tag type="success">Vue</s-tag>
     <s-tag type="error" rounded>Angular</s-tag>
     <s-tag type="warning">React</s-tag>
-    <s-tag dismissible>Closable</s-tag>
+    <s-tag type="primary" dismissible>Closable</s-tag>
     <br>
     <s-tag type="error">
       <s-icon :name="AlertFill"></s-icon>
