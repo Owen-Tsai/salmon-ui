@@ -18,8 +18,8 @@ $tag-sizes: map.merge(
   $padding: 0 8px;
 
   @include main.use-inline-flex;
-  @include tag.make-tag(primary);
 
+  // common
   font-size: map.get($font-sizes, 'base');
   border-radius: map.get($border-radiuses, 'base');
   padding: $padding;
@@ -39,14 +39,13 @@ $tag-sizes: map.merge(
     transition: all map.get($durations, 'fast');
   }
 
-  &#{$ns}--fill-dark {
-    @include tag.fill-dark-tag(primary);
-  }
-  &#{$ns}--fill-none {
-    @include tag.fill-none-tag;
-  }
+  // default
+  background-color: map.get($surface-colors, 'light');
+  color: map.get($text-colors, 'base');
+  border: 1px solid $border-color;
 
-  $_types: success, warning, error;
+  // different types
+  $_types: primary, success, warning, error;
   @each $type in $_types {
     &--#{$type} {
       @include tag.make-tag($type);

@@ -5,9 +5,9 @@
       <div class="content">
         <h2>My Trip in Asia</h2>
         <div class="tags">
-          <s-tag size="small">Trip</s-tag>
-          <s-tag size="small">China</s-tag>
-          <s-tag size="small">Asia</s-tag>
+          <s-tag type="primary" size="small">Trip</s-tag>
+          <s-tag type="primary" size="small">China</s-tag>
+          <s-tag type="primary" size="small">Asia</s-tag>
         </div>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, tenetur dolores? Asperiores quis dolorem iure velit esse harum id! Eos, suscipit consequuntur? Illum ullam ipsa aliquid ut quam autem dolorum.</p>
       </div>

@@ -29,6 +29,7 @@
 import { defineComponent } from 'vue'
 import SIcon from '../icon'
 import { Close } from '@salmon-ui/icons'
+import { warn } from '@/utils/class.error'
 
 import props from './tag'
 
@@ -41,6 +42,9 @@ export default defineComponent({
   props,
   emits: ['click', 'close'],
   setup(props, { emit }) {
+    if (!props.type && props.fill) {
+      warn('sui-tag', 's-tag components with a `fill` prop are required to have a `type` specified.')
+    }
     const handleClick = (evt: Event) => {
       emit('click', evt)
     }
