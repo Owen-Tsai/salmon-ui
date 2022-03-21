@@ -75,10 +75,12 @@ $border-color: #d1d5db !default;
 $surface-colors: () !default;
 $surface-colors: map.merge(
   (
-    'lighter': #f9fafb,
-    'light': #f3f4f6,
-    'dark': #1f2937,
-    'darker': #111827
+    'light-4': #f9fafb,
+    'light-3': #f3f4f6,
+    'light-2': #e2e8f0,
+    'light-1': #cbd5e1,
+    'dark-1': #1e293b,
+    'dark-2': #0f172a
   ),
   $surface-colors
 );

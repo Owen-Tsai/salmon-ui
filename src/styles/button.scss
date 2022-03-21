@@ -88,9 +88,9 @@
       @include button.make-primary-button(error);
     }
     &.is-ghost#{$status-normal} {
-      background-color: map.get($surface-colors, 'lighter');
+      background-color: map.get($surface-colors, 'light-2');
       color: map.get($colors, primary, 'base');
-      border-color: map.get($surface-colors, 'lighter');
+      border-color: map.get($surface-colors, 'light-2');
 
       &:hover {
         background-color: $color-white;
@@ -101,8 +101,8 @@
         border-color: $color-white;
       }
       &:active {
-        background-color: map.get($surface-colors, 'light');
-        border-color: map.get($surface-colors, 'light');
+        background-color: map.get($surface-colors, 'light-3');
+        border-color: map.get($surface-colors, 'light-3');
       }
     }
   }
@@ -125,8 +125,8 @@
         color: map.get($colors, primary, 'base');
       }
       &:active {
-        background-color: map.get($surface-colors, 'light');
-        border-color: map.get($surface-colors, 'light');
+        background-color: map.get($surface-colors, 'light-3');
+        border-color: map.get($surface-colors, 'light-3');
       }
     }
   }

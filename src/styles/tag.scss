@@ -45,7 +45,7 @@ $tag-sizes: map.merge(
   }
 
   // default
-  background-color: map.get($surface-colors, 'light');
+  background-color: map.get($surface-colors, 'light-3');
   color: map.get($text-colors, 'base');
   border: 1px solid $border-color;
 

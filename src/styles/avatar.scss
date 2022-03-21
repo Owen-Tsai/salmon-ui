@@ -11,7 +11,7 @@
   box-sizing: border-box;
   overflow: hidden;
   border-radius: map.get($border-radiuses, 'base');
-  background-color: map.get($surface-colors, 'light');
+  background-color: map.get($surface-colors, 'light-3');
   height: $size;
   width: $size;
   vertical-align: middle;
