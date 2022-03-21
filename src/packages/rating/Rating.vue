@@ -1,8 +1,8 @@
 <template>
   <div
     :class="[
-      'sui-rate',
-      disabled ? 'is-disabled' : null
+      'sui-rating',
+      readonly ? 'is-readonly' : null
     ]"
     role="slider"
     :aria-valuenow="currentValue"
@@ -14,34 +14,30 @@
     <span
       v-for="(item, key) in max"
       :key="key"
-      class="sui-rate__item"
+      class="sui-rating__item"
       @mousemove="handleMouseMove(item, $event)"
       @mouseleave="handleMouseLeave"
       @click="handleClick(item)"
     >
       <s-icon
-        class="sui-rate__icon"
+        class="sui-rating__icon"
         :style="getItemStyle(item)"
       >
-        <slot>
-          <star-fill></star-fill>
-        </slot>
+        <component :is="icon"></component>
       </s-icon>
       <s-icon
         v-if="showDecimalIcon(item)"
-        class="sui-rate__icon-decimal"
+        class="sui-rating__icon-decimal"
         :color="activeColor"
         :style="decimalIconStyle"
       >
-        <slot>
-          <star-fill></star-fill>
-        </slot>
+        <component :is="icon"></component>
       </s-icon>
     </span>
 
     <span
       v-if="showRatings && currentValue !== 0"
-      class="sui-rate__text"
+      class="sui-rating__text"
     >{{ text }}</span>
   </div>
 </template>
@@ -57,15 +53,10 @@ import {
   useStyles
 } from './rating'
 
-import {
-  StarFill
-} from '@salmon-ui/icons'
-
 export default defineComponent({
   name: 'SRating',
   components: {
-    SIcon,
-    StarFill
+    SIcon
   },
   props,
   emits: ['update:modelValue', 'change'],

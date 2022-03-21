@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+.sui-rating {
+  @include main.use-inline-flex;
+  font-size: map.get($font-sizes, 'large');
+
+  &:not(.is-readonly) {
+    cursor: pointer;
+  }
+}

@@ -23,7 +23,7 @@ export const props = {
     type: Number,
     default: 5
   },
-  disabled: Boolean,
+  readonly: Boolean,
   allowHalf: Boolean,
   icon: {
     type: Object as PropType<Component>,
@@ -38,7 +38,7 @@ export const props = {
   },
   inactiveColor: {
     type: String,
-    default: '#f3f4f6'
+    default: '#d1d5db'
   }
 }
 
@@ -68,7 +68,7 @@ export const useRating = (props: RatingProp) => {
   )
 
   const showDecimalIcon = (idx: number) => {
-    const showWhenDisabled = props.disabled &&
+    const showWhenDisabled = props.readonly &&
       decimalValue.value > 0 &&
       idx - 1 < props.modelValue &&
       idx > props.modelValue
@@ -112,7 +112,7 @@ export const useStyles = (
   const decimalIconStyle = computed(() => {
     let width = ''
 
-    if (props.disabled) {
+    if (props.readonly) {
       width = `calc(${decimalValue.value}% - 3px)`
     } else if (props.allowHalf) {
       width = `calc(50% - 3px)`
@@ -150,7 +150,7 @@ export const useEvents = (
 ) => {
   const handleMouseMove = (val: number, event: MouseEvent) => {
     // display a overview value based on cursor position
-    if (props.disabled) return
+    if (props.readonly) return
     if (props.allowHalf) {
       let target = event.target as HTMLElement
 
@@ -169,7 +169,7 @@ export const useEvents = (
 
   const handleMouseLeave = () => {
     // reset to the actual value
-    if (props.disabled) return
+    if (props.readonly) return
     if (props.allowHalf) {
       isPointingAtHalf.value = props.modelValue !== Math.floor(props.modelValue)
     }
@@ -179,7 +179,7 @@ export const useEvents = (
 
   const handleClick = (val: number) => {
     // actually change the modelValue
-    if (props.disabled) return
+    if (props.readonly) return
     if (props.allowHalf && isPointingAtHalf.value) {
       emit('update:modelValue', currentValue.value)
       emit('change', currentValue.value)
