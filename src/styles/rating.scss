@@ -3,10 +3,29 @@
 @use 'mixins/main.scss';
 
 .sui-rating {
+  $ns: '.sui-rating';
   @include main.use-inline-flex;
-  font-size: map.get($font-sizes, 'large');
+  line-height: 0;
 
   &:not(.is-readonly) {
     cursor: pointer;
+  }
+
+  #{$ns}__item {
+    display: inline-block;
+    position: relative;
+    font-size: map.get($font-sizes, 'large');
+  }
+  #{$ns}__icon-decimal {
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+  }
+  #{$ns}__text {
+    line-height: 0;
+    margin-left: 4px;
+    font-size: map.get($font-sizes, 'medium');
   }
 }

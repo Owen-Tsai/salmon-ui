@@ -31,7 +31,6 @@ export const props = {
   },
   // if `texts` are set, show correspond text instead of the score
   showRatings: Boolean,
-  texts: Array as PropType<string[]>,
   activeColor: {
     type: String,
     default: '#f59e0b'
@@ -54,13 +53,7 @@ export const useRating = (props: RatingProp) => {
   const isPointingAtHalf = ref(true)
 
   const text = computed(() => {
-    if (props.showRatings) {
-      return props.texts
-        ? props.texts[Math.ceil(currentValue.value) - 1]
-        : String(currentValue.value)
-    }
-
-    return ''
+    return String(currentValue.value)
   })
 
   const decimalValue = computed(() =>
@@ -113,9 +106,9 @@ export const useStyles = (
     let width = ''
 
     if (props.readonly) {
-      width = `calc(${decimalValue.value}% - 3px)`
+      width = `${decimalValue.value}%`
     } else if (props.allowHalf) {
-      width = `calc(50% - 3px)`
+      width = `50%`
     }
 
     return {
@@ -148,13 +141,14 @@ export const useEvents = (
   isPointingAtHalf: Ref<boolean>,
   hoverIndex: Ref<number>
 ) => {
+  const itemCls = 'sui-rating__item'
   const handleMouseMove = (val: number, event: MouseEvent) => {
     // display a overview value based on cursor position
     if (props.readonly) return
     if (props.allowHalf) {
       let target = event.target as HTMLElement
 
-      while (!target.classList.contains('sui-rate__item')) {
+      while (!target.classList.contains(itemCls)) {
         target = target.parentNode as HTMLElement
       }
 

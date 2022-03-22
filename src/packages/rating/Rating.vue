@@ -35,10 +35,12 @@
       </s-icon>
     </span>
 
-    <span
-      v-if="showRatings && currentValue !== 0"
-      class="sui-rating__text"
-    >{{ text }}</span>
+    <slot v-if="showRatings">
+      <span
+        v-show="currentValue !== 0"
+        class="sui-rating__text"
+      >{{ text }}</span>
+    </slot>
   </div>
 </template>
 
