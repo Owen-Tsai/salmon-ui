@@ -2,7 +2,7 @@
   <demo name="Rating">
     <s-rating v-model="score1" readonly show-ratings></s-rating>
     <s-rating v-model="score1"></s-rating>
-    <s-rating v-model="score2" allow-half show-ratings></s-rating>
+    <s-rating v-model="score2" allow-half show-ratings formatter="{value} 分"></s-rating>
     <br>
     <s-rating
       v-model="score3"
@@ -14,6 +14,11 @@
     >
       <span>{{ text }}</span>
     </s-rating>
+    <br>
+    <s-rating
+      v-model="score1" show-ratings
+      :formatter="formatter"
+    ></s-rating>
   </demo>
 </template>
 
@@ -35,6 +40,11 @@ const text = computed(() => {
   }
   return '普通'
 })
+
+const formatter = (val: number) => {
+  const texts = ['不满', '较差', '一般', '良好', '满意']
+  return texts[Math.floor(val - 1)]
+}
 </script>
 
 <style lang="scss" scoped>

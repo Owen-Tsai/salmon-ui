@@ -38,7 +38,10 @@ export const props = {
   inactiveColor: {
     type: String,
     default: '#d1d5db'
-  }
+  },
+  formatter: [String, Function] as PropType<
+    string | ((v: number) => string)
+  >
 }
 
 type RatingProp = ExtractPropTypes<typeof props>
@@ -53,6 +56,14 @@ export const useRating = (props: RatingProp) => {
   const isPointingAtHalf = ref(true)
 
   const text = computed(() => {
+    if (props.formatter) {
+      if (typeof props.formatter === 'string') {
+        return props.formatter.replace('{value}', String(currentValue.value))
+      } else {
+        return props.formatter(currentValue.value)
+      }
+    }
+
     return String(currentValue.value)
   })
 
