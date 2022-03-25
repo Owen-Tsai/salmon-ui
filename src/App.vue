@@ -4,6 +4,7 @@
       <demo-button></demo-button>
       <demo-button-group></demo-button-group>
       <demo-tag></demo-tag>
+      <demo-dropdown></demo-dropdown>
     </div>
     <div class="demo-row">
       <demo-icon></demo-icon>
@@ -30,6 +31,7 @@ import DemoCard from '@/demo/Card.vue'
 import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 import DemoTag from '@/demo/Tag.vue'
 import DemoRating from '@/demo/Rating.vue'
+import DemoDropdown from '@/demo/Dropdown.vue'
 </script>
 
 <style scoped>

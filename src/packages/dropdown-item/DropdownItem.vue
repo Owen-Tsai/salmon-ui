@@ -6,7 +6,7 @@
       'is-divided': divided
     }"
     :aria-disabled="disabled"
-    :tabindex="disabled ? null : -1"
+    :tabindex="disabled ? undefined : -1"
     @click="handleClick"
   >
     <slot></slot>
@@ -36,11 +36,9 @@ export default defineComponent({
 
     const instance = getCurrentInstance()
 
-    const handleClick = (evt) => {
+    const handleClick = (evt: Event) => {
       if (props.disabled) return
-      if (dropdownInstance.hideOnClick?.value) {
-        dropdownInstance.handleClick()
-      }
+      dropdownInstance.handleClick()
       dropdownInstance.commandHandler?.(props.command, instance, evt)
       ctx.emit('click', evt)
     }

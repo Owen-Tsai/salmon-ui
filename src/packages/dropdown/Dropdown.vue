@@ -1,11 +1,17 @@
 <template>
-  <div class="sui-dropdown" v-if="!submenu">
-    <div class="sui-dropdown__reference" ref="referenceEl">
+  <div
+    v-if="!submenu"
+    class="sui-dropdown"
+  >
+    <div
+      ref="referenceEl"
+      class="sui-dropdown__reference"
+    >
       <slot name="reference"></slot>
     </div>
     <div
-      class="sui-dropdown__popper"
       ref="popperEl"
+      class="sui-dropdown__popper"
       :style="computedStyle"
     >
       <slot></slot>
@@ -14,21 +20,26 @@
 
   <li
     v-else
-    class="sui-dropdown sui-dropdown-menu__item sui-dropdown-submenu"
     ref="referenceEl"
+    class="sui-dropdown sui-dropdown-menu__item sui-dropdown-submenu"
   >
-    <div class="sui-dropdown__reference" ref="referenceEl">
+    <div
+      ref="referenceEl"
+      class="sui-dropdown__reference"
+    >
       <slot name="reference"></slot>
-      <s-icon :class="[
-        'submenu-arrow',
-        isSubmenuExpanded ? 'rotate--180' : null
-      ]">
-        <arrow-right-s></arrow-right-s>
+      <s-icon
+        :class="[
+          'submenu-arrow',
+          isSubmenuExpanded ? 'rotate--180' : null
+        ]"
+        :name="ArrowRightS"
+      >
       </s-icon>
     </div>
     <div
-      class="sui-dropdown__popper"
       ref="popperEl"
+      class="sui-dropdown__popper"
       :style="computedStyle"
     >
       <slot></slot>
@@ -39,160 +50,85 @@
 <script lang="ts">
 import {
   ref,
-  PropType,
   defineComponent,
   provide,
   getCurrentInstance,
   onMounted,
-  watch,
-  watchEffect,
-  computed
 } from 'vue'
-import tippy from 'tippy.js'
-import { Placement } from 'tippy.js'
-import {
-  dropdownPopperConfig,
-  themeType,
-  triggerType
-} from '@/utils/popper-options'
 
-import SIcon from '../icon'
+import SIcon from 'salmon-ui/icon'
 import { ArrowRightS } from '@salmon-ui/icons'
 
-const _placements = [
-  'top', 'top-start', 'top-end',
-  'bottom', 'bottom-start', 'bottom-end',
-  'right-start'
-]
+import {
+  props,
+  usePopperInstance,
+  usePopperOptions,
+  useStyles
+} from './dropdown'
 
 export default defineComponent({
   name: 'SDropdown',
   components: {
-    SIcon,
-    ArrowRightS
+    SIcon
   },
-  props: {
-    type: String,
-    splitButton: Boolean,
-    placement: {
-      type: String as PropType<Placement>,
-      default: 'bottom-start',
-      validator: (v: string) => {
-        return _placements.includes(v)
-      }
-    },
-    trigger: {
-      type: String,
-      default: 'click'
-    },
-    hideOnClick: {
-      type: Boolean,
-      default: true
-    },
-    disabled: Boolean,
-    maxHeight: Number,
-    submenu: Boolean
-  },
-  setup(props, ctx) {
-    let tippyInstance: any = null
+  props,
+  emits: ['before-hide', 'before-show', 'after-hide', 'after-show', 'command'],
+  setup(props, { emit }) {
     const referenceEl = ref<Element>()
     const popperEl = ref<Element>()
     const instance = getCurrentInstance()
-    const isSubmenuExpanded = ref(false)
+    
+    const {
+      options,
+      isSubmenuExpanded
+    } = usePopperOptions(props, emit)
 
-    const handleMenuHide = (instance) => {
-      ctx.emit('before-hide', instance)
-      if (props.submenu) {
-        isSubmenuExpanded.value = false
-      }
-    }
-
-    const handleMenuShow = (instance) => {
-      ctx.emit('before-show', instance)
-      if (props.submenu) {
-        isSubmenuExpanded.value = true
-      }
-    }
-
-    const options = {
-      placement: props.placement,
-      hideOnClick: props.hideOnClick,
-      trigger: triggerType(props.trigger),
-      theme: themeType('light'),
-      classes: ['sui-popper--dropdown'],
-      onHide: (instance) => {
-        handleMenuHide(instance)
-      },
-      onShow: (instance) => {
-        handleMenuShow(instance)
-      },
-      onHidden: (instance) => {
-        ctx.emit('after-hide', instance)
-      },
-      onShown: (instance) => {
-        ctx.emit('after-hide', instance)
-      }
-    }
-
-    const computedStyle = computed(() => {
-      return props.maxHeight ?
-        {
-          maxHeight: `${props.maxHeight}px`
-        } : {}
-    })
+    const {
+      popperInstance,
+      createPopper,
+      setupWatchers
+    } = usePopperInstance(options, props)
 
     onMounted(() => {
-      if (referenceEl.value) {
-        tippyInstance = tippy(referenceEl.value, {
-          ...options, ...dropdownPopperConfig, ...{
-            content: popperEl.value
-          }
-        })
-      }
+      createPopper(
+        referenceEl.value as Element,
+        popperEl.value as Element
+      )
 
       if (props.disabled) {
-        tippyInstance.disable()
+        popperInstance.value?.disable()
       }
+
+      setupWatchers()
     })
 
-    watchEffect(() => {
-      if (!tippyInstance) return
-      tippyInstance.setProps({
-        placement: props.placement,
-        trigger: props.trigger,
-        hideOnClick: props.hideOnClick
-      })
-    })
-
-    watch(() => props.disabled, (val) => {
-      if (val) {
-        tippyInstance.disable()
-      } else {
-        tippyInstance.enable()
-      }
-    })
-
-    const commandHandler = (...args) => {
-      ctx.emit('command', ...args)
+    const commandHandler = (...args: any) => {
+      emit('command', ...args)
     }
 
     const handleClick = () => {
-      tippyInstance.hide()
+      popperInstance.value?.hide()
     }
+
+    const {
+      computedStyle
+    } = useStyles(props)
 
     // provide
     provide('dropdown', {
       instance,
       handleClick,
-      commandHandler,
-      hideOnClick: computed(() => props.hideOnClick)
+      commandHandler
     })
 
     return {
-      referenceEl, popperEl,
-      commandHandler, handleClick,
+      referenceEl,
+      popperEl,
+      commandHandler,
+      handleClick,
       computedStyle,
-      isSubmenuExpanded
+      isSubmenuExpanded,
+      ArrowRightS
     }
   }
 })
