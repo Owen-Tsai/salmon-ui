@@ -151,6 +151,7 @@ $font-weights: map.merge(
 $durations: () !default;
 $durations: map.merge(
   (
+    'extra-fast': 75ms,
     'fast': 100ms,
     'base': 200ms,
     'slow': 300ms

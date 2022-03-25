@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+
+.sui-dropdown {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.sui-popper--dropdown {
+  transition-timing-function: ease-in-out;
+  transform-origin: top right;
+
+  &[data-state=hidden] {
+    opacity: 0;
+    transform: scale(95%);
+  }
+
+  &[data-state=visible] {
+    opacity: 1;
+    transform: scale(100%);
+  }
+}
