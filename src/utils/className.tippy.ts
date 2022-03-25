@@ -1,8 +1,14 @@
 // plugin for adding custom class name to tippy instance
+import type {
+  Instance,
+  Plugin
+} from 'tippy.js'
+
+import type { ExtendedProps } from './popper'
 
 const updateClassNames = (
   boxEl: Element,
-  action: string,
+  action: 'add' | 'remove',
   classes: Array<string>
 ) => {
   classes.forEach((cls) => {
@@ -10,12 +16,12 @@ const updateClassNames = (
   })
 }
 
-const classNamePlugin = {
+const classNamePlugin: Plugin<ExtendedProps> = {
   name: 'classes',
   defaultValue: [],
 
-  fn(instance) {
-    const box = instance.popper.firstElementChild
+  fn: (instance: Instance<ExtendedProps>) => {
+    const box = instance.popper.firstElementChild as Element
 
     const add = () => {
       updateClassNames(box, 'add', instance.props.classes)
