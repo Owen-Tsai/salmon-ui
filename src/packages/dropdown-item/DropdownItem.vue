@@ -3,7 +3,8 @@
     class="sui-dropdown-menu__item"
     :class="{
       'is-disabled': disabled,
-      'is-divided': divided
+      'is-divided': divided,
+      'is-danger': danger
     }"
     :aria-disabled="disabled"
     :tabindex="disabled ? undefined : -1"
@@ -28,6 +29,7 @@ export default defineComponent({
     },
     disabled: Boolean,
     divided: Boolean,
+    danger: Boolean
   },
   emits: ['click'],
   setup(props, ctx) {

@@ -4,11 +4,61 @@
 .sui-dropdown {
   display: inline-block;
   box-sizing: border-box;
+
+  &-menu {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    list-style-type: none;
+    padding-inline-start: 0;
+    padding: 8px;
+    font-size: map.get($font-sizes, 'base');
+    color: map.get($text-colors, 'base');
+
+    &__item {
+      padding: 8px;
+      cursor: pointer;
+      border-radius: map.get($border-radiuses, 'base');
+
+      &:hover {
+        background-color: map.get($colors, primary, 'light-6');
+        color: map.get($colors, primary, 'base');
+      }
+
+      &.is-danger:hover {
+        background-color: map.get($colors, error, 'light-6');
+        color: map.get($colors, error, 'base');
+      }
+
+      &.is-divided {
+        margin-top: 16px;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: -8px;
+          left: 0;
+          width: 100%;
+          border-top: 1px solid $border-color;
+        }
+      }
+
+      &.is-disabled {
+        cursor: not-allowed;
+        background-color: map.get($surface-colors, 'light-3');
+        color: map.get($text-colors, 'placeholder');
+      }
+    }
+  }
 }
 
 .sui-popper--dropdown {
   transition-timing-function: ease-in-out;
   transform-origin: top right;
+  box-shadow: map.get($box-shadows, 'dark');
+
+  &[data-placement^=top] {
+    transform-origin: bottom right;
+  }
 
   &[data-state=hidden] {
     opacity: 0;
