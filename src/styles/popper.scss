@@ -10,7 +10,7 @@
   $arrow-size: 16px;
   $surface-color: $color-white;
 
-  transition-duration: map.get($durations, 'base') !important;
+  transition-duration: map.get($durations, 'fast') !important;
   position: relative;
   background-color: $surface-color;
   color: map.get($text-colors, 'base');
