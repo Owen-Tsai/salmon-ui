@@ -1,7 +1,9 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
+@use 'mixins/main.scss';
 
 .sui-dropdown {
+  $ns: '.sui-dropdown';
   display: inline-block;
   box-sizing: border-box;
 
@@ -15,6 +17,7 @@
     color: map.get($text-colors, 'base');
 
     &__item {
+      @include main.use-flex(false);
       padding: 8px;
       cursor: pointer;
       border-radius: map.get($border-radiuses, 'base');
@@ -49,6 +52,16 @@
       }
     }
   }
+
+  &#{$ns}-submenu {
+    #{$ns}-menu__item {
+      padding: 0;
+    }
+
+    #{$ns}__reference {
+      @include main.use-flex(false);
+    }
+  }
 }
 
 .sui-popper--dropdown {
@@ -69,4 +82,9 @@
     opacity: 1;
     transform: scale(100%);
   }
+}
+
+.submenu-arrow {
+  margin-left: 8px;
+  font-size: map.get($font-sizes, 'large');
 }

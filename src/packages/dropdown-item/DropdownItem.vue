@@ -17,7 +17,8 @@
 import {
   defineComponent,
   getCurrentInstance,
-  inject
+  inject,
+  Ref
 } from 'vue'
 
 import { Instance } from 'tippy.js'
@@ -37,10 +38,10 @@ export default defineComponent({
   setup(props, ctx) {
     // injected
     type DropdownContext = {
-      popperInstance: Instance,
+      popperInstance: Ref<Instance>,
       commandHandler: (...args: unknown[]) => void
     }
-    const dropdownInstance: DropdownContext = inject(
+    const dropdown: DropdownContext = inject(
       'dropdown', {} as DropdownContext
     )
 
@@ -48,8 +49,8 @@ export default defineComponent({
 
     const handleClick = (evt: Event) => {
       if (props.disabled) return
-      dropdownInstance.popperInstance.hide()
-      dropdownInstance.commandHandler?.(props.command, instance, evt)
+      dropdown.popperInstance.value.hide()
+      dropdown.commandHandler?.(props.command, instance, evt)
       ctx.emit('click', evt)
     }
 
