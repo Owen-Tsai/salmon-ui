@@ -52,7 +52,6 @@ import {
   ref,
   defineComponent,
   provide,
-  getCurrentInstance,
   onMounted,
 } from 'vue'
 
@@ -76,7 +75,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const referenceEl = ref<Element>()
     const popperEl = ref<Element>()
-    const instance = getCurrentInstance()
     
     const {
       options,
@@ -102,7 +100,7 @@ export default defineComponent({
       setupWatchers()
     })
 
-    const commandHandler = (...args: any) => {
+    const commandHandler = (...args: unknown[]) => {
       emit('command', ...args)
     }
 
@@ -116,8 +114,7 @@ export default defineComponent({
 
     // provide
     provide('dropdown', {
-      instance,
-      handleClick,
+      popperInstance,
       commandHandler
     })
 
