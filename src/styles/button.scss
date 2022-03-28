@@ -88,9 +88,9 @@
       @include button.make-primary-button(error);
     }
     &.is-ghost#{$status-normal} {
-      background-color: map.get($surface-colors, 'light-2');
+      background-color: map.get($surface-colors, 'light-4');
       color: map.get($colors, primary, 'base');
-      border-color: map.get($surface-colors, 'light-2');
+      border-color: map.get($surface-colors, 'light-4');
 
       &:hover {
         background-color: $color-white;
