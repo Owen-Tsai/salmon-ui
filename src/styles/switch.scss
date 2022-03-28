@@ -1,0 +1,113 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+$ns: '.sui-switch';
+$sizes: (
+  'small': 18px,
+  'base': 24px,
+  'large': 32px
+);
+$handler-sizes: (
+  'small': 12px,
+  'base': 18px,
+  'large': 28px
+);
+
+.sui-switch {
+  $color: map.get($colors, primary, 'base');
+
+  position: relative;
+  display: inline-block;
+  height: map.get($sizes, 'base');
+  border-radius: map.get($sizes, 'base');
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  vertical-align: middle;
+  background-color: map.get($surface-colors, 'light-1');
+  font-size: map.get($font-sizes, 'base');
+  border: 1px solid map.get($surface-colors, 'light-1');
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: map.get($handler-sizes, 'base');
+    width: map.get($handler-sizes, 'base');
+    border-radius: map.get($handler-sizes, 'base');
+    background-color: $color-white;
+    left: 3px;
+    top: 2px;
+    transition: all map.get($durations, 'slow') $cubic-func;
+  }
+
+  &__label {
+    position: absolute;
+    line-height: map.get($sizes, 'base');
+    top: 0;
+    color: $color-white;
+
+    &--active {
+      left: 8px;
+
+      & .sui-icon {
+        margin-left: -2px;
+      }
+    }
+
+    &--inactive {
+      right: 8px;
+
+      & .sui-icon {
+        margin-right: -2px;
+      }
+    }
+  }
+
+  &.is-checked {
+    background-color: $color;
+    border-color: $color;
+    &::after {
+      left: 100%;
+      transform: translateX(-100%);
+      margin-left: -2px;
+    }
+  }
+
+  &.is-disabled {
+    opacity: $opacity-mod;
+    cursor: not-allowed;
+  }
+
+  &:not(.is-disabled):focus {
+    @include main.use-ring($color);
+  }
+  &:not(.is-disabled):active {
+    &::after {
+      width: map.get($handler-sizes, 'base') + 4px;
+    }
+  }
+
+  &__input {
+    opacity: 0;
+    display: none;
+  }
+
+  &__loader {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 1;
+    color: map.get($text-colors, 'base');
+    transition: all map.get($durations, 'slow') $cubic-func;
+  }
+  &.is-checked &__loader {
+    position: absolute;
+    top: 4px;
+    left: 100%;
+    margin-left: -18px;
+    z-index: 1;
+    color: map.get($text-colors, 'base');
+    transition: all map.get($durations, 'slow') $cubic-func;
+  }
+}

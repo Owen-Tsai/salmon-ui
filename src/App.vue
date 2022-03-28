@@ -11,6 +11,7 @@
       <demo-alert></demo-alert>
       <demo-breadcrumb></demo-breadcrumb>
       <demo-rating></demo-rating>
+      <demo-switch></demo-switch>
     </div>
     <div class="demo-row">
       <demo-avatar></demo-avatar>
@@ -32,6 +33,7 @@ import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 import DemoTag from '@/demo/Tag.vue'
 import DemoRating from '@/demo/Rating.vue'
 import DemoDropdown from '@/demo/Dropdown.vue'
+import DemoSwitch from '@/demo/Switch.vue'
 </script>
 
 <style scoped>
