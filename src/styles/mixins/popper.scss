@@ -1,0 +1,52 @@
+@use 'sass:string';
+
+@mixin use-placement {
+
+  $placements: 'top-start', 'top', 'top-end',
+    'left-start', 'left', 'left-end',
+    'right-start', 'right', 'right-end',
+    'bottom-start', 'bottom', 'bottom-end';
+
+  @each $placement in $placements {
+    $origin-x: right;
+    $origin-y: top;
+
+    @if string.index($placement, 'top') != null {
+      // ^=top, origin should be bottom-*
+      $origin-y: bottom;
+      $origin-x: get-origin-x($placement);
+    }
+
+    @if string.index($placement, 'bottom') != null {
+      // ^=bottom, origin should be top-*
+      $origin-y: top;
+      $origin-x: get-origin-x($placement);
+    }
+
+    @if string.index($placement, 'left') != null or
+      string.index($placement, 'right') != null 
+    {
+      // ^=left/right, origin should be top-*
+      $origin-y: top;
+      $origin-x: get-origin-x($placement);
+    }
+
+    &[data-placement=#{$placement}] {
+      transform-origin: $origin-y $origin-x;
+    }
+  }
+}
+
+@function get-origin-x($placement) {
+  @if string.index($placement, 'start') != null or
+    string.index($placement, 'right') != null
+  {
+    @return left;
+  } @else if string.index($placement, 'end') != null or
+    string.index($placement, 'left') != null 
+  {
+    @return right;
+  } @else {
+    @return center;
+  }
+}
