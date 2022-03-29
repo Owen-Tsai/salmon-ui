@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
 @use 'mixins/main.scss';
+@use 'mixins/popper.scss';
 
 .sui-dropdown {
   $ns: '.sui-dropdown';
@@ -66,12 +67,9 @@
 
 .sui-popper--dropdown {
   transition-timing-function: ease-in-out;
-  transform-origin: top right;
   box-shadow: map.get($box-shadows, 'dark');
 
-  &[data-placement^=top] {
-    transform-origin: bottom right;
-  }
+  @include popper.use-placement;
 
   &[data-state=hidden] {
     opacity: 0;
