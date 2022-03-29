@@ -1,11 +1,12 @@
 <template>
   <button
     ref="buttonEl"
-    class="sui-switch"
-    :class="{
-      'is-disabled': isDisabled,
-      'is-checked': isChecked
-    }"
+    :class="[
+      'sui-switch',
+      isDisabled ? 'is-disabled' : undefined,
+      isChecked ? 'is-checked' : undefined,
+      type ? `sui-switch--${type}` : undefined
+    ]"
     :disabled="isDisabled"
     role="switch"
     type="button"
@@ -22,6 +23,7 @@
       <template v-if="activeText">{{ activeText }}</template>
       <s-icon
         v-if="activeIcon"
+        :size="16"
         :name="activeIcon"
       ></s-icon>
     </span>
@@ -43,6 +45,7 @@
       <template v-if="inactiveText">{{ inactiveText }}</template>
       <s-icon
         v-if="inactiveIcon"
+        :size="16"
         :name="inactiveIcon"
       ></s-icon>
     </span>
@@ -120,10 +123,19 @@ export default defineComponent({
       handleChange()
     }
     const setBackgroundColor = () => {
-      buttonEl.value.style.backgroundColor = (isChecked.value
-        ? props.activeColor
-        : props.inactiveColor
-      ) as string
+      if (isChecked.value) {
+        if (props.activeColor) {
+          buttonEl.value.style.backgroundColor = props.activeColor
+        } else {
+          buttonEl.value.style.backgroundColor = ''
+        }
+      } else {
+        if (props.inactiveColor) {
+          buttonEl.value.style.backgroundColor = props.inactiveColor
+        } else {
+          buttonEl.value.style.backgroundColor = ''
+        }
+      }
     }
 
     onMounted(() => {

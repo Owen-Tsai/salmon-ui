@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
 @use 'mixins/main.scss';
+@use 'mixins/switch.scss';
 
 $ns: '.sui-switch';
 $sizes: (
@@ -15,8 +16,6 @@ $handler-sizes: (
 );
 
 .sui-switch {
-  $color: map.get($colors, primary, 'base');
-
   position: relative;
   display: inline-block;
   height: map.get($sizes, 'base');
@@ -27,7 +26,20 @@ $handler-sizes: (
   vertical-align: middle;
   background-color: map.get($surface-colors, 'light-1');
   font-size: map.get($font-sizes, 'base');
-  border: 1px solid map.get($surface-colors, 'light-1');
+  border: 1px solid transparent;
+  transition: all map.get($durations, 'base');
+
+  @include switch.make-switch(primary);
+
+  &--success {
+    @include switch.make-switch(success);
+  }
+  &--error {
+    @include switch.make-switch(error);
+  }
+  &--warning {
+    @include switch.make-switch(warning);
+  }
 
   &::after {
     content: "";
@@ -46,6 +58,8 @@ $handler-sizes: (
     line-height: map.get($sizes, 'base');
     top: 0;
     color: $color-white;
+    height: 100%;
+    @include main.use-flex;
 
     &--active {
       left: 8px;
@@ -65,8 +79,6 @@ $handler-sizes: (
   }
 
   &.is-checked {
-    background-color: $color;
-    border-color: $color;
     &::after {
       left: 100%;
       transform: translateX(-100%);
@@ -79,9 +91,6 @@ $handler-sizes: (
     cursor: not-allowed;
   }
 
-  &:not(.is-disabled):focus {
-    @include main.use-ring($color);
-  }
   &:not(.is-disabled):active {
     &::after {
       width: map.get($handler-sizes, 'base') + 4px;

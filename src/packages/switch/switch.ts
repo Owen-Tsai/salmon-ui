@@ -3,6 +3,8 @@ import type {
   PropType
 } from 'vue'
 
+import { buildProp } from '@/utils/props'
+
 export const props = {
   disabled: Boolean,
   activeText: String,
@@ -25,5 +27,8 @@ export const props = {
     type: [String, Boolean, Number],
     default: false
   },
-  minWidth: Number
+  minWidth: Number,
+  type: buildProp({
+    values: ['success', 'warning', 'error']
+  } as const)
 }

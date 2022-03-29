@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use '../common/var.scss' as *;
+@use 'main.scss';
+
+@mixin make-switch($type) {
+  $active-color: map.get($colors, $type, 'base');
+
+  &.is-checked {
+    background-color: $active-color;
+  }
+  &:not(.is-disabled):focus {
+    @include main.use-ring($active-color);
+  }
+}
