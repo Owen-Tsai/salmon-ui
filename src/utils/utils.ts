@@ -1,7 +1,7 @@
 import { camelize } from '@vue/shared'
 
-export const entries = (obj) => {
-  return Object.keys(obj).map((key: string) =>
+export const entries = (obj: Record<string, unknown>) => {
+  return Object.keys(obj).map((key) =>
     [key, obj[key]]
   )
 }
@@ -21,16 +21,17 @@ export const getStyle = (
     styleName = 'cssFloat'
   }
 
-  const style = el.style[styleName]
+  const style = el.style.getPropertyValue(styleName)
   if (style) return style
 
   const computedStyle = window.getComputedStyle(el)
+  // @ts-expect-error CSSStyleDeclaration should allow string as index
   return computedStyle[styleName] || ''
 }
 
 export const isScrollable = (
   el: HTMLElement,
-  isVertical?: Boolean
+  isVertical?: boolean
 ): RegExpMatchArray | null => {
   const determinedDirection = isVertical === null || isVertical === undefined
   const overflow = determinedDirection
@@ -44,7 +45,7 @@ export const isScrollable = (
 
 export const getScrollContainer = (
   el: HTMLElement,
-  isVertical?: Boolean
+  isVertical?: boolean
 ): Window | HTMLElement => {
   let parent = el
   while (parent) {
@@ -94,21 +95,6 @@ export const isInContainer = (
       elRect.right > c.left &&
       elRect.left < c.right
     )
-  }
-}
-
-// throttled function which only invokes the passed function at most once
-// per animation frame on a browser or per 1000/60 ms on Node
-export function rafThrottle(fn): Function {
-  let locked = false
-  return function (...args: any[]) {
-    if (locked) return
-    locked = true
-    window.requestAnimationFrame(() => {
-      // @ts-ignore
-      fn.apply(this, args)
-      locked = false
-    })
   }
 }
 

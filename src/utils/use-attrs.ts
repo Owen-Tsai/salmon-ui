@@ -21,21 +21,27 @@ const DEFAULT_EXCLUDE_KEYS = ['class', 'style']
 const listenersPrefix = /^on[A-Z]/
 
 const useAttrs = (params: Params = {}) => {
-  const { excludeListeners = false, excludedKeys = [] } = params
+  const {
+    excludeListeners = false,
+    excludedKeys = []
+  } = params
   const instance = getCurrentInstance()
+  if(!instance) return
+  
   const attrs = shallowRef({})
   const allExcludedKeys = Array.from([...DEFAULT_EXCLUDE_KEYS, ...excludedKeys])
-
-  if(!instance) return
 
   instance.attrs = reactive(instance.attrs)
 
   watchEffect(()=> {
-    attrs.value = entries(instance.attrs).reduce((acm, [key, val]) => {
+    attrs.value = entries(instance.attrs).reduce((acm, current) => {
+      const key = current[0] as string
+      const val = current[1] as string
       if(
         !allExcludedKeys.includes(key) &&
         !(excludeListeners && listenersPrefix.test(val))
       ) {
+        // @ts-expect-error can be indexed with string
         acm[key] = val
       }
 
