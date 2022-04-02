@@ -1,0 +1,7 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+
+.sui-input {
+  $ns: '.sui-input';
+  position: relative;
+}
