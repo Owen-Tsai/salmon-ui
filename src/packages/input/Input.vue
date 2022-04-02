@@ -6,11 +6,11 @@
       'is-readonly': readonly,
       'is-exceeded': isExceeded,
     }, {
-      'is-hovering': hoveringInput && ($slots.prepend || $slots.append),
+      'is-hovering': isHovering,
       'is-focused': isFocused
     }, {
       'has-prefix': $slots.prefix,
-      'has-suffix': $slots.suffix || clearable || showPasswordToggle,
+      'has-suffix': $slots.suffix || clearable || showPasswordToggler,
       'has-prepend': $slots.prepend,
       'has-append': $slots.append,
       'sui-input--group': $slots.prepend || $slots.append
@@ -19,67 +19,78 @@
     @mouseleave="handleMouseLeave"
   >
     <!-- prepend slot -->
-    <div v-if="$slots.prepend" class="sui-input__prepend">
+    <div
+      v-if="$slots.prepend"
+      class="sui-input__prepend"
+    >
       <slot name="prepend"></slot>
     </div>
     <!-- original input -->
     <input
-      class="sui-input__input"
       ref="inputEl"
+      class="sui-input__input"
       v-bind="attrs"
-      :type="showPasswordToggle ? (passwordVisible ? 'text' : 'password') : type"
+      :type="showPasswordToggler ? (
+        isPasswordVisible ? 'text' : 'password'
+      ) : type"
       :readonly="readonly"
       :disabled="disabled"
       :aria-label="label"
       :placeholder="placeholder"
-      :autocomplete="autocomplete"
-      :style="inputStyle"
+      :autocomplete="autoComplete ? 'on' : 'off'"
       @compositionstart="handleCompositionStart"
       @compositionend="handleCompositionEnd"
       @input="handleInput"
       @focus="handleFocus"
       @blur="handleBlur"
       @change="handleChange"
-      @keydown="handleKeydown"
-      @mouseenter="handleMouseEnterInput"
-      @mouseleave="handleMouseLeaveInput"
+      @keydown="handleKeyDown"
     >
 
     <!-- prefix -->
-    <span v-if="$slots.prefix" class="sui-input__prefix">
+    <span
+      v-if="$slots.prefix"
+      class="sui-input__prefix"
+    >
       <slot name="prefix"></slot>
     </span>
     <!-- suffix -->
     <span
-      v-if="showSuffixIcon"
+      v-if="hasSuffix"
       class="sui-input__suffix"
     >
-      <span class="sui-input__suffix-inner" ref="suffixWrapperEl">
+      <span
+        ref="suffixWrapperEl"
+        class="sui-input__suffix-inner"
+      >
         <!-- custom suffix -->
         <template
-          v-if="!showSuffixClear || !showSuffixPasswordToggle || !showSuffixWordCount"
+          v-if="!showClearIcon || !showPasswordToggler || !showWordCounter"
         >
           <slot name="suffix"></slot>
         </template>
         <!-- password toggle -->
         <s-icon
-          v-if="showSuffixPasswordToggle"
+          v-if="showPasswordToggler"
           class="sui-input__icon toggle-password"
-          @click="handlePasswordToggle"
+          @click="togglePassword"
         >
-          <eye-fill v-show="passwordVisible"></eye-fill>
-          <eye-close v-show="!passwordVisible"></eye-close>
+          <eye-fill v-show="isPasswordVisible"></eye-fill>
+          <eye-close v-show="!isPasswordVisible"></eye-close>
         </s-icon>
         <!-- clear -->
         <s-icon
-          v-if="showSuffixClear && !disabled && !readonly"
+          v-if="showClearIcon && !disabled && !readonly"
           class="sui-input__icon clear-input"
           @click="clearInput"
         >
           <close></close>
         </s-icon>
         <!-- word count -->
-        <span v-if="showSuffixWordCount" class="sui-input__count">
+        <span
+          v-if="showWordCounter"
+          class="sui-input__count"
+        >
           <span class="sui-input__count-inner">
             {{ textLength }}/{{ maxLength }}
           </span>
@@ -88,7 +99,10 @@
     </span> <!-- end of suffix -->
 
     <!-- append slot -->
-    <div v-if="$slots.append" class="sui-input__append">
+    <div
+      v-if="$slots.append"
+      class="sui-input__append"
+    >
       <slot name="append"></slot>
     </div>
   </div>
@@ -98,196 +112,103 @@
 import {
   defineComponent,
   ref,
+  Ref,
   computed,
   watch,
   nextTick,
-  PropType,
   getCurrentInstance,
   onMounted,
-  onUpdated
+  onUpdated,
+  SetupContext,
+  ComponentInternalInstance
 } from 'vue'
 import useAttrs from '@/utils/use-attrs'
 import SIcon from '../icon'
+
+import {
+  props,
+  emits,
+  useStates,
+  useAffixes,
+  useEvents,
+  useActions,
+  useIconPosition,
+  EmitTypes
+} from './input'
 
 import {
   EyeFill, EyeClose,
   Close
 } from '@salmon-ui/icons'
 
-const _sizes = ['small', '', 'large']
-const _pendantMap = {
-  suffix: 'append',
-  prefix: 'prepend',
-}
+type Ctx = SetupContext<EmitTypes[]>
 
 export default defineComponent({
   name: 'SInput',
-  inheritAttrs: false,
   components: {
     SIcon,
     EyeFill, EyeClose,
     Close,
   },
-  props: {
-    modelValue: {
-      type: [String, Number],
-      default: undefined
-    },
-    type: {
-      type: String,
-      default: 'text'
-    },
-    size: {
-      type: String,
-      default: '',
-      validator: (v: string) => {
-        return _sizes.includes(v)
-      }
-    },
-    disabled: Boolean,
-    readonly: Boolean,
-    showPasswordToggle: Boolean,
-    clearable: Boolean,
-    showWordCount: Boolean,
-    autocomplete: {
-      type: String,
-      default: 'off',
-      validator: (v: string) => ['on', 'off'].includes(v)
-    },
-    tabindex: String,
-    label: String,
-    placeholder: String,
-    inputStyle: {
-      type: Object as PropType<CSSStyleRule>,
-    }
-  },
-  emits: [
-    'update:modelValue', 'change', 'focus', 'blur', 'input',
-    'keydown', 'clear', 'composition:start', 'composition:end'
-  ],
+  inheritAttrs: false,
+  props,
+  emits,
   setup(props, ctx) {
-    const inputEl = ref()
+    const inputEl = ref() as Ref<HTMLInputElement>
     const attrs = useAttrs()
-    const isFocused = ref(false)
-    const isHovering = ref(false)
-    const isComposing = ref(false)
-    const passwordVisible = ref(false)
-    const suffixWrapperEl = ref()
-    const hoveringInput = ref(false)
-    const instance = getCurrentInstance()
+    const suffixWrapperEl = ref() as Ref<HTMLElement>
+    const instance = getCurrentInstance() as ComponentInternalInstance
 
-    const maxLength = computed(() => ctx.attrs.maxlength)
-    const textLength = computed(() => {
-      if (typeof props.modelValue === 'number') {
-        return String(props.modelValue).length
-      }
+    const states = useStates(props, ctx as Ctx)
+    const {
+      isFocused,
+      isHovering,
+      isPasswordVisible,
+      inputValue,
+      textLength,
+      maxLength
+    } = states
 
-      return props.modelValue?.length || 0
-    })
-    const showSuffixWordCount = computed(() =>
-      ctx.attrs.maxlength && props.showWordCount &&
-      (!props.disabled && !props.readonly && !props.showPasswordToggle)
-    )
+    const {
+      hasSuffix,
+      showClearIcon,
+      showPasswordToggler,
+      showWordCounter
+    } = useAffixes(props, ctx as Ctx, states)
+
     const isExceeded = computed(() =>
-      showSuffixWordCount.value &&
+      showWordCounter.value &&
       (textLength.value > Number(maxLength.value))
     )
-    const showSuffixIcon = computed(() =>
-      ctx.slots.suffix ||
-      props.showPasswordToggle ||
-      props.showWordCount ||
-      props.clearable
-    )
-    const showSuffixClear = computed(() =>
-      props.clearable &&
-      (isHovering.value || isFocused.value) &&
-      textLength.value > 0
-    )
-    const showSuffixPasswordToggle = computed(() =>
-      props.showPasswordToggle && textLength.value > 0
-    )
-    const nativeInputValue = computed(() =>
-      (props.modelValue === null || props.modelValue === undefined) ?
-        '' : String(props.modelValue)
-    )
 
-    const handlePasswordToggle = () => {
-      passwordVisible.value = !passwordVisible.value
-    }
-    const clearInput = () => {
-      ctx.emit('update:modelValue', '')
-      ctx.emit('change', '')
-      ctx.emit('clear')
-    }
+    const {
+      handleBlur,
+      handleChange,
+      handleCompositionEnd,
+      handleCompositionStart,
+      handleFocus,
+      handleInput,
+      handleKeyDown,
+      handleMouseEnter,
+      handleMouseLeave
+    } = useEvents(ctx.emit, states)
+
+    const {
+      clearInput,
+      togglePassword
+    } = useActions(props, ctx as Ctx, states)
+
     const setNativeInputValue = () => {
-      if (inputEl.value.value === nativeInputValue.value) return
-      inputEl.value.value = nativeInputValue.value
-    }
-    const getIconOffset = (place) => {
-      const {el}: any = instance?.vnode
-      if (!el) return
-
-      const elList: HTMLSpanElement[] = Array.from(el.querySelectorAll(`.sui-input__${place}`))
-      const target = elList.find(item => item.parentNode === el)
-      if (!target) return
-
-      const pendant = _pendantMap[place]
-      if (ctx.slots[pendant]) {
-        target.style.transform = `
-            translateX(${place === 'suffix' ? '-' : ''}${el.querySelector(`.sui-input__${pendant}`).offsetWidth}px)
-          `
-      } else {
-        target.removeAttribute('style')
-      }
+      if (inputEl.value.value === inputValue.value) return
+      inputEl.value.value = inputValue.value
     }
 
-    const updateIconOffset = () => {
-      getIconOffset('prefix')
-      getIconOffset('suffix')
-    }
-
-    const handleInput = (event) => {
-      ctx.emit('update:modelValue', event.target.value)
-      ctx.emit('input', event.target.value)
-
-      nextTick(setNativeInputValue)
-    }
-    const handleChange = (event) => {
-      ctx.emit('change', event.target.value)
-    }
-    const handleCompositionStart = () => {
-      isComposing.value = true
-      ctx.emit('composition:start')
-    }
-    const handleCompositionEnd = () => {
-      isComposing.value = false
-      ctx.emit('composition:end')
-    }
-    const handleMouseEnter = () => {
-      isHovering.value = true
-    }
-    const handleMouseLeave = () => {
-      isHovering.value = false
-    }
-    const handleMouseEnterInput = () => {
-      hoveringInput.value = true
-    }
-    const handleMouseLeaveInput = () => {
-      hoveringInput.value = false
-    }
-    const handleFocus = (e) => {
-      isFocused.value = true
-      ctx.emit('focus', e)
-    }
-    const handleBlur = (e) => {
-      isFocused.value = false
-      ctx.emit('blur', e)
-    }
-    const handleKeydown = (e) => {
-      ctx.emit('keydown', e)
-    }
-
-    watch(nativeInputValue, () => {
+    const { updateIconOffset } = useIconPosition(
+      ctx as Ctx,
+      instance
+    )
+    
+    watch(inputValue, () => {
       setNativeInputValue()
     })
     watch(() => props.type, () => {
@@ -296,6 +217,7 @@ export default defineComponent({
         updateIconOffset()
       })
     })
+
     onMounted(() => {
       setNativeInputValue()
       updateIconOffset()
@@ -307,35 +229,33 @@ export default defineComponent({
     return {
       inputEl,
       suffixWrapperEl,
+
       attrs,
-      passwordVisible,
+      isPasswordVisible,
       maxLength,
       textLength,
 
-      showSuffixIcon,
-      showSuffixClear,
-      showSuffixPasswordToggle,
-      showSuffixWordCount,
+      hasSuffix,
+      showClearIcon,
+      showPasswordToggler,
+      showWordCounter,
 
       isExceeded,
       isFocused,
-      hoveringInput,
+      isHovering,
 
-      handlePasswordToggle,
+      togglePassword,
       clearInput,
-
-      handleMouseEnter,
-      handleMouseLeave,
-      handleMouseEnterInput,
-      handleMouseLeaveInput,
 
       handleInput,
       handleChange,
-      handleCompositionStart,
-      handleCompositionEnd,
       handleFocus,
       handleBlur,
-      handleKeydown
+      handleMouseEnter,
+      handleMouseLeave,
+      handleCompositionStart,
+      handleCompositionEnd,
+      handleKeyDown
     }
   }
 })
