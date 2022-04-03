@@ -71,6 +71,15 @@ $text-colors: map.merge(
 );
 
 $border-color: #d1d5db !default;
+$border-colors: () !default;
+$border-colors: map.merge(
+  (
+    'base': #d1d5db,
+    'light-1': #e5e7eb,
+    'light-2': #f3f4d6
+  ),
+  $border-colors
+);
 
 $surface-colors: () !default;
 $surface-colors: map.merge(
