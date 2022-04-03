@@ -30,6 +30,12 @@
   transition: all map.get($durations, 'fast');
   user-select: none;
 
+  &.is-disabled {
+    color: map.get($text-colors, 'placeholder');
+    border-color: map.get($border-colors, 'light-1');
+    cursor: not-allowed;
+  }
+
   // size
   &--large {
     height: map.get($component-common-sizes, 'large');
@@ -166,9 +172,6 @@
       position: absolute;
       background-color: rgba($color-white, $opacity-mod);
     }
-  }
-  &.is-disabled {
-    cursor: not-allowed
   }
 
   // other fixes

@@ -49,6 +49,9 @@
       <s-button ghost type="text" shape="rounded">幽灵按钮</s-button>
     </div>
     <s-button disabled>禁用</s-button>
+    <s-button type="primary" disabled>Disabled</s-button>
+    <s-button type="outlined" disabled>Outlined</s-button>
+    <s-button type="text" disabled>Text</s-button>
     <s-button loading>加载中</s-button>
     <s-button loading type="primary">加载中</s-button>
   </demo>

@@ -33,6 +33,7 @@
   $light-color: map.get($colors, $type, 'light-1');
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
+  $disabled-color: map.get($colors, $type, 'light-3');
 
   background-color: $base-color;
   color: $color-white;
@@ -55,6 +56,11 @@
       color: $color-white;
     }
   }
+  &.is-disabled {
+    background-color: $disabled-color;
+    border-color: $disabled-color;
+    color: $color-white;
+  }
 }
 
 @mixin make-outlined-button($type) {
@@ -62,6 +68,7 @@
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
   $surface-color: map.get($colors, $type, 'light-6');
+  $disabled-color: map.get($colors, $type, 'light-3');
 
   background-color: $surface-color;
   color: $base-color;
@@ -84,12 +91,17 @@
       border-color: $dark-color;
     }
   }
+  &.is-disabled {
+    border-color: $disabled-color;
+    color: $disabled-color;
+  }
 }
 
 @mixin make-text-button($type) {
   $light-color: map.get($colors, $type, 'light-1');
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
+  $disabled-color: map.get($text-colors, 'placeholder');
 
   background-color: transparent;
   border-color: transparent;
@@ -112,5 +124,9 @@
       background-color: transparent;
       border-color: transparent;
     }
+  }
+  &.is-disabled {
+    color: $disabled-color;
+    border-color: transparent;
   }
 }
