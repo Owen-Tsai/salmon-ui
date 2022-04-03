@@ -6,7 +6,8 @@ import {
   reactive,
   PropType,
   toRefs,
-  ComponentInternalInstance
+  ComponentInternalInstance,
+  Component
 } from 'vue'
 
 export const props = {
@@ -30,7 +31,9 @@ export const props = {
   tabIndex: String,
   label: String,
   placeholder: String,
-  inputClass: String
+  inputClass: String,
+  prefixIcon: Object as PropType<Component>,
+  suffixIcon: Object as PropType<Component>
 }
 
 export const emits = [
@@ -114,7 +117,8 @@ export const useAffixes = (
     props.showWordCounter ||
     props.showPasswordToggler ||
     props.clearable ||
-    ctx.slots.suffix
+    ctx.slots.suffix ||
+    props.suffixIcon
   )
 
   return {

@@ -9,8 +9,8 @@
       'is-hovering': isHovering,
       'is-focused': isFocused
     }, {
-      'has-prefix': $slots.prefix,
-      'has-suffix': $slots.suffix || clearable || showPasswordToggler,
+      'has-prefix': $slots.prefix || prefixIcon,
+      'has-suffix': $slots.suffix || clearable || showPasswordToggler || suffixIcon,
       'has-prepend': $slots.prepend,
       'has-append': $slots.append,
       'sui-input--group': $slots.prepend || $slots.append
@@ -49,10 +49,14 @@
 
     <!-- prefix -->
     <span
-      v-if="$slots.prefix"
+      v-if="$slots.prefix || prefixIcon"
       class="sui-input__prefix"
     >
-      <slot name="prefix"></slot>
+      <slot name="prefix">
+        <s-icon>
+          <component :is="prefixIcon"></component>
+        </s-icon>
+      </slot>
     </span>
     <!-- suffix -->
     <span
@@ -67,7 +71,11 @@
         <template
           v-if="!showClearIcon || !showPasswordToggler || !showWordCounter"
         >
-          <slot name="suffix"></slot>
+          <slot name="suffix">
+            <s-icon>
+              <component :is="suffixIcon"></component>
+            </s-icon>
+          </slot>
         </template>
         <!-- password toggle -->
         <s-icon

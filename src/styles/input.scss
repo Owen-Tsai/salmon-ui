@@ -1,7 +1,67 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
+@use 'mixins/main.scss';
 
 .sui-input {
   $ns: '.sui-input';
+  $size: map.get($component-common-sizes, 'base');
+  $size-lg: map.get($component-common-sizes, 'large');
+  $size-sm: map.get($component-common-sizes, 'small');
+  $text-color: map.get($text-colors, 'base');
+  $radius: map.get($border-radiuses, 'base');
+  $color: map.get($colors, 'primary', 'base');
+
   position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  vertical-align: middle;
+  display: inline-flex;
+  width: 100%;
+
+  &__input {
+    height: $size;
+    line-height: $size;
+    display: inline-flex;
+    border: 1px solid $border-color;
+    outline: 0;
+    color: $text-color;
+    width: 100%;
+    vertical-align: middle;
+    transition: map.get($durations, 'fast');
+    padding: 0 12px;
+    border-radius: $radius;
+    font-size: map.get($font-sizes, 'base');
+    box-sizing: border-box;
+
+    &:not([disabled]):hover {
+      border-color: $color;
+    }
+    &:focus {
+      @include main.use-ring($color);
+      border-color: $color;
+    }
+    &[disabled] {
+      background-color: map.get($surface-colors, 'light-2');
+      cursor: not-allowed;
+    }
+  }
+
+  // affixes
+  &__prefix {
+    box-sizing: border-box;
+    position: absolute;
+    height: $size;
+    left: 0;
+    top: 0;
+    color: map.get($text-colors, 'placeholder');
+    font-size: map.get($font-sizes, 'large');
+    padding-left: 8px;
+    @include main.use-inline-flex;
+  }
+
+  &.has-prefix {
+    #{$ns}__input {
+      padding-left: 32px;
+    }
+  }
 }
