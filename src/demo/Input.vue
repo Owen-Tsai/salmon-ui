@@ -19,11 +19,17 @@
     <s-input :prefix-icon="MoneyCnyCircle">
       <template #append>元</template>
     </s-input>
+    <s-input>
+      <template #append>
+        <s-button>Click</s-button>
+      </template>
+    </s-input>
   </demo>
 </template>
 
 <script lang="ts" setup>
 import SInput from 'salmon-ui/input'
+import SButton from 'salmon-ui/button'
 import {
   ref
 } from 'vue'

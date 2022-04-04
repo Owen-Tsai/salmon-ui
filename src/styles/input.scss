@@ -21,7 +21,7 @@
     width: 100%;
     position: relative;
   }
-
+  
   &__input {
     height: $size;
     line-height: $size;
@@ -41,8 +41,8 @@
       display: none;
     }
 
-    &:not([disabled]):hover {
-      border-color: $color;
+    &:not([disabled]):not(:focus):hover {
+      border-color: map.get($border-colors, 'dark-1');
     }
     &:focus {
       @include main.use-ring($color);
@@ -104,12 +104,22 @@
       border-top-left-radius: $radius;
       border-bottom-left-radius: $radius;
       @include main.use-inline-flex;
+
+      .sui-button {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
     #{$ns}__append {
       border-left: 0;
       border-top-right-radius: $radius;
       border-bottom-right-radius: $radius;
       @include main.use-inline-flex;
+
+      .sui-button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
     }
 
     &.has-prepend {
@@ -122,6 +132,15 @@
       #{$ns}__input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+      }
+    }
+
+    // buttons
+    .sui-button {
+      margin: -1px -9px;
+      
+      &:focus, &:active {
+        z-index: 1;
       }
     }
   }
