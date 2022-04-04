@@ -232,11 +232,11 @@ export const useIconPosition = (
     const pendant = pendantMap[place]
     if (ctx.slots[pendant]) {
       target.style.transform = `
-          translateX(
-            ${place === 'suffix'? '-' : ''}
-            ${el.querySelector(`.sui-input__${pendant}`).offsetWidth}
-          px)
-        `
+        translateX(
+          ${place === 'suffix'? '-' : ''}
+          ${el.querySelector(`.sui-input__${pendant}`).offsetWidth}
+        px)
+      `
     } else {
       target.removeAttribute('style')
     }

@@ -11,12 +11,16 @@
   $radius: map.get($border-radiuses, 'base');
   $color: map.get($colors, 'primary', 'base');
 
-  position: relative;
   box-sizing: border-box;
   display: inline-flex;
   vertical-align: middle;
   display: inline-flex;
   width: 100%;
+
+  &__inner {
+    width: 100%;
+    position: relative;
+  }
 
   &__input {
     height: $size;
@@ -32,6 +36,10 @@
     border-radius: $radius;
     font-size: map.get($font-sizes, 'base');
     box-sizing: border-box;
+    // remove default style added by MS Edge
+    &::-ms-clear, &::-ms-reveal {
+      display: none;
+    }
 
     &:not([disabled]):hover {
       border-color: $color;
@@ -47,21 +55,74 @@
   }
 
   // affixes
-  &__prefix {
+  &__prefix, &__suffix {
     box-sizing: border-box;
     position: absolute;
     height: $size;
-    left: 0;
     top: 0;
     color: map.get($text-colors, 'placeholder');
     font-size: map.get($font-sizes, 'large');
-    padding-left: 8px;
     @include main.use-inline-flex;
+  }
+  &__prefix {
+    left: 0;
+    padding-left: 8px;
+  }
+  &__suffix {
+    right: 0;
+    padding-right: 8px;
+
+    &-inner {
+      * + * {
+        margin-left: 3px;
+      }
+    }
   }
 
   &.has-prefix {
     #{$ns}__input {
       padding-left: 32px;
+    }
+  }
+  &.has-suffix {
+    #{$ns}__input {
+      padding-right: 32px;
+    }
+  }
+
+  // pendants
+  &--group {
+    #{$ns}__prepend, #{$ns}__append {
+      font-size: map.get($font-sizes, 'base');
+      color: $text-color;
+      padding: 0 8px;
+      background-color: map.get($surface-colors, 'light-3');
+      border: 1px solid map.get($border-colors, 'base');
+    }
+    #{$ns}__prepend {
+      border-right: 0;
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
+      @include main.use-inline-flex;
+    }
+    #{$ns}__append {
+      border-left: 0;
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      @include main.use-inline-flex;
+    }
+
+    &.has-prepend {
+      #{$ns}__input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    &.has-append {
+      #{$ns}__input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
   }
 }

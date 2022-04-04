@@ -26,85 +26,87 @@
       <slot name="prepend"></slot>
     </div>
     <!-- original input -->
-    <input
-      ref="inputEl"
-      class="sui-input__input"
-      v-bind="attrs"
-      :type="showPasswordToggler ? (
-        isPasswordVisible ? 'text' : 'password'
-      ) : type"
-      :readonly="readonly"
-      :disabled="disabled"
-      :aria-label="label"
-      :placeholder="placeholder"
-      :autocomplete="autoComplete ? 'on' : 'off'"
-      @compositionstart="handleCompositionStart"
-      @compositionend="handleCompositionEnd"
-      @input="handleInput"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @change="handleChange"
-      @keydown="handleKeyDown"
-    >
-
-    <!-- prefix -->
-    <span
-      v-if="$slots.prefix || prefixIcon"
-      class="sui-input__prefix"
-    >
-      <slot name="prefix">
-        <s-icon>
-          <component :is="prefixIcon"></component>
-        </s-icon>
-      </slot>
-    </span>
-    <!-- suffix -->
-    <span
-      v-if="hasSuffix"
-      class="sui-input__suffix"
-    >
-      <span
-        ref="suffixWrapperEl"
-        class="sui-input__suffix-inner"
+    <div class="sui-input__inner">
+      <input
+        ref="inputEl"
+        class="sui-input__input"
+        v-bind="attrs"
+        :type="showPasswordToggler ? (
+          isPasswordVisible ? 'text' : 'password'
+        ) : type"
+        :readonly="readonly"
+        :disabled="disabled"
+        :aria-label="label"
+        :placeholder="placeholder"
+        :autocomplete="autoComplete ? 'on' : 'off'"
+        @compositionstart="handleCompositionStart"
+        @compositionend="handleCompositionEnd"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+        @keydown="handleKeyDown"
       >
-        <!-- custom suffix -->
-        <template
-          v-if="!showClearIcon || !showPasswordToggler || !showWordCounter"
-        >
-          <slot name="suffix">
-            <s-icon>
-              <component :is="suffixIcon"></component>
-            </s-icon>
-          </slot>
-        </template>
-        <!-- password toggle -->
-        <s-icon
-          v-if="showPasswordToggler"
-          class="sui-input__icon toggle-password"
-          @click="togglePassword"
-        >
-          <eye-fill v-show="isPasswordVisible"></eye-fill>
-          <eye-close v-show="!isPasswordVisible"></eye-close>
-        </s-icon>
-        <!-- clear -->
-        <s-icon
-          v-if="showClearIcon && !disabled && !readonly"
-          class="sui-input__icon clear-input"
-          @click="clearInput"
-        >
-          <close></close>
-        </s-icon>
-        <!-- word count -->
+
+      <!-- prefix -->
+      <span
+        v-if="$slots.prefix || prefixIcon"
+        class="sui-input__prefix"
+      >
+        <slot name="prefix">
+          <s-icon>
+            <component :is="prefixIcon"></component>
+          </s-icon>
+        </slot>
+      </span>
+      <!-- suffix -->
+      <span
+        v-if="hasSuffix"
+        class="sui-input__suffix"
+      >
         <span
-          v-if="showWordCounter"
-          class="sui-input__count"
+          ref="suffixWrapperEl"
+          class="sui-input__suffix-inner"
         >
-          <span class="sui-input__count-inner">
-            {{ textLength }}/{{ maxLength }}
+          <!-- custom suffix -->
+          <template
+            v-if="!showClearIcon || !showPasswordToggler || !showWordCounter"
+          >
+            <slot name="suffix">
+              <s-icon>
+                <component :is="suffixIcon"></component>
+              </s-icon>
+            </slot>
+          </template>
+          <!-- password toggle -->
+          <s-icon
+            v-if="showPasswordToggler"
+            class="sui-input__icon toggle-password"
+            @click="togglePassword"
+          >
+            <eye-fill v-show="isPasswordVisible"></eye-fill>
+            <eye-close v-show="!isPasswordVisible"></eye-close>
+          </s-icon>
+          <!-- clear -->
+          <s-icon
+            v-if="showClearIcon && !disabled && !readonly"
+            class="sui-input__icon clear-input"
+            @click="clearInput"
+          >
+            <close></close>
+          </s-icon>
+          <!-- word count -->
+          <span
+            v-if="showWordCounter"
+            class="sui-input__count"
+          >
+            <span class="sui-input__count-inner">
+              {{ textLength }}/{{ maxLength }}
+            </span>
           </span>
         </span>
-      </span>
-    </span> <!-- end of suffix -->
+      </span> <!-- end of suffix -->
+    </div>
 
     <!-- append slot -->
     <div

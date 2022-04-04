@@ -3,6 +3,22 @@
     <s-input v-model="model"></s-input>
     <s-input v-model="model" disabled></s-input>
     <s-input v-model="model" :prefix-icon="Search"></s-input>
+    <s-input
+      v-model="model"
+      :prefix-icon="Search"
+      :suffix-icon="Lock"
+      type="password"
+      show-password-toggler
+    ></s-input>
+    <s-input>
+      <template #prepend>Hello</template>
+      <template #prefix>
+        <s-icon><Search></Search></s-icon>
+      </template>
+    </s-input>
+    <s-input :prefix-icon="MoneyCnyCircle">
+      <template #append>元</template>
+    </s-input>
   </demo>
 </template>
 
@@ -13,7 +29,9 @@ import {
 } from 'vue'
 
 import {
-  Search
+  Search,
+  Lock,
+  MoneyCnyCircle
 } from '@salmon-ui/icons'
 
 const model = ref('')
