@@ -1,0 +1,112 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+$marker-sizes: () !default;
+$marker-sizes: map.merge(
+  (
+    'base': 16px,
+    'small': 12px,
+    'large': 20px
+  ),
+  $marker-sizes
+);
+
+.sui-radio {
+  $ns: '.sui-radio';
+  $color: map.get($colors, primary, 'base');
+
+  box-sizing: border-box;
+  font-size: map.get($font-sizes, 'base');
+  color: map.get($text-colors, 'base');
+  cursor: pointer;
+  outline: none;
+  transition: all map.get($durations, 'fast');
+  @include main.use-inline-flex;
+
+  &__inner {
+    outline: none;
+    position: relative;
+    @include main.use-inline-flex;
+
+    #{$ns}__input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    #{$ns}__dot {
+      $size: map.get($marker-sizes, 'base');
+      width: $size;
+      height: $size;
+      border: 1px solid map.get($border-colors, 'base');
+      border-radius: map.get($border-radiuses, 'circle');
+      position: relative;
+      transition: all map.get($durations, 'fast');
+      @include main.use-inline-flex(false);
+      
+      &::before {
+        content: "";
+        position: absolute;
+        width: $size - 6px;
+        height: $size - 6px;
+        border-radius: map.get($border-radiuses, 'circle');
+        top: 3px;
+        left: 3px;
+        background-color: transparent;
+        transform: scale(0);
+        transition: all map.get($durations, 'fast') $cubic-func;
+      }
+    }
+  }
+
+  &__label {
+    margin-left: 4px;
+    padding-right: 8px;
+    user-select: none;
+  }
+
+  // states
+  &:not(.is-disabled).is-checked {
+    color: $color;
+    #{$ns}__inner {
+      #{$ns}__dot {
+        border-color: $color;
+        
+        &::before {
+          background-color: $color;
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+    color: map.get($text-colors, 'placeholder');
+
+    &.is-checked {
+      #{$ns}__inner {
+        #{$ns}__dot::before {
+          background-color: map.get($surface-colors, 'light-1');
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  &:not(.is-disabled):hover {
+    #{$ns}__inner {
+      #{$ns}__dot {
+        border-color: map.get($border-colors, 'dark-1');
+      }
+    }
+  }
+  &.is-focused {
+    #{$ns}__inner {
+      #{$ns}__dot {
+        @include main.use-ring($color);
+      }
+    }
+  }
+}

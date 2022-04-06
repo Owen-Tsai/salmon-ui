@@ -4,18 +4,18 @@
       'sui-radio',
       isDisabled ? 'is-disabled' : null,
       model === value ? 'is-checked' : null,
-      focus ? 'is-focus': null
+      focus ? 'is-focused': null
     ]"
     :aria-disabled="isDisabled"
     :aria-checked="model === value"
   >
-    <span class="sui-radio__input">
-      <span class="sui-radio__inner"></span>
+    <span class="sui-radio__inner">
+      <span class="sui-radio__dot"></span>
       <input
-        type="radio"
         ref="radioRef"
         v-model="model"
-        class="sui-radio__original"
+        type="radio"
+        class="sui-radio__input"
         :value="value"
         :name="computedName"
         :disabled="isDisabled"
@@ -37,8 +37,10 @@ import {
   ref,
 } from 'vue'
 
-import { useRadio } from './use-radio'
-import props from './radio'
+import {
+  useRadio,
+  props
+} from './radio'
 
 export default defineComponent({
   name: 'SRadio',
