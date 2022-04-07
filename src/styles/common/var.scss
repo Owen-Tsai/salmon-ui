@@ -65,7 +65,8 @@ $text-colors: map.merge(
     'title': #111827,
     'base': #1f2937,
     'secondary': #4b5563,
-    'placeholder': #9298a3,
+    'placeholder': #9ca3af,
+    'disabled': #9ca3af
   ),
   $text-colors
 );
@@ -87,8 +88,8 @@ $surface-colors: map.merge(
   (
     'light-4': #f9fafb,
     'light-3': #f3f4f6,
-    'light-2': #e2e8f0,
-    'light-1': #cbd5e1,
+    'light-2': #e5e7eb,
+    'light-1': #d1d5db,
     'dark-1': #1e293b,
     'dark-2': #0f172a
   ),

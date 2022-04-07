@@ -49,7 +49,7 @@
       border-color: $color;
     }
     &[disabled] {
-      background-color: map.get($surface-colors, 'light-2');
+      background-color: map.get($surface-colors, 'light-3');
       cursor: not-allowed;
     }
   }
