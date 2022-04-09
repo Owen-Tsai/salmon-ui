@@ -1,7 +1,7 @@
 <template>
   <div
-    class="sui-radio-group"
     ref="radioGroupEl"
+    class="sui-radio-group"
     role="radiogroup"
   >
     <slot></slot>
@@ -18,7 +18,7 @@ import {
 } from 'vue'
 
 import props from './radio-group'
-import type { Model } from '@/packages/radio/radio'
+import type { Model } from 'salmon-ui/radio/radio'
 
 import { generateId } from '@/utils/utils'
 

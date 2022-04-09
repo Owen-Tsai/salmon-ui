@@ -19,6 +19,7 @@
       <demo-badge></demo-badge>
       <demo-card></demo-card>
       <demo-radio></demo-radio>
+      <demo-radio-button></demo-radio-button>
     </div>
   </div>
 </template>
@@ -38,6 +39,7 @@ import DemoDropdown from '@/demo/Dropdown.vue'
 import DemoSwitch from '@/demo/Switch.vue'
 import DemoInput from '@/demo/Input.vue'
 import DemoRadio from '@/demo/Radio.vue'
+import DemoRadioButton from '@/demo/RadioButton.vue'
 </script>
 
 <style scoped>
