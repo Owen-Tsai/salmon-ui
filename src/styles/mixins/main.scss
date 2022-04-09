@@ -33,3 +33,11 @@
   box-sizing: border-box;
   font-size: map.get($font-sizes, 'base');
 }
+
+@mixin hide-input-element {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
