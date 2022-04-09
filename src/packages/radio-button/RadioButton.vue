@@ -11,19 +11,21 @@
     ]"
     :aria-checked="model === value"
     :aria-disabled="isDisabled"
+    :tabindex="tabIndex"
   >
     <input
-      class="sui-radio-button__original"
       ref="inputEl"
-      type="radio"
       v-model="model"
-      :value="value" :name="computedName"
+      class="sui-radio-button__input"
+      type="radio"
+      :value="value"
+      :name="computedName"
       :disabled="isDisabled"
       @change="handleChange"
       @focus="isFocused = true"
       @blur="isFocused = false"
     >
-    <span class="sui-radio-button__btn">
+    <span class="sui-radio-button__rect">
       <slot>{{ value }}</slot>
     </span>
   </label>
@@ -35,8 +37,10 @@ import {
   ref
 } from 'vue'
 
-import props from './radio-button'
-import { useRadioButton } from './use-radio-button'
+import {
+  props,
+  useRadioButton
+} from './radio-button'
 
 export default defineComponent({
   name: 'SRadioButton',
@@ -51,12 +55,12 @@ export default defineComponent({
       handleChange,
       size,
       computedName,
-      tabindex
+      tabIndex
     } = useRadioButton(props, emit)
 
     return {
       model,
-      tabindex,
+      tabIndex,
       size,
       computedName,
       isDisabled,

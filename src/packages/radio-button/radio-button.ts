@@ -1,10 +1,45 @@
-import props from '@/packages/radio/radio'
-import { ExtractPropTypes } from 'vue'
+import {
+  props as radioProps,
+  useRadio
+} from 'salmon-ui/radio/radio'
+import {
+  ExtractPropTypes,
+  SetupContext,
+  computed
+} from 'vue'
 
-const radioButtonProps = {
-  ...props
+export const props = {
+  ...radioProps
 }
 
-export type RadioButtonProps = ExtractPropTypes<typeof radioButtonProps>
+export type RadioButtonProps = ExtractPropTypes<typeof props>
 
-export default radioButtonProps
+export const useRadioButton = (
+  props: RadioButtonProps,
+  emit: SetupContext<('update:modelValue' | 'change')[]>['emit']
+) => {
+  const {
+    computedName,
+    handleChange,
+    isDisabled,
+    isGroup,
+    model,
+    size
+  } = useRadio(props, emit)
+
+  const tabIndex = computed(() => {
+    return (
+      isDisabled.value ||
+      (isGroup.value && model.value !== props.value)
+    ) ? -1 : 0
+  })
+
+  return {
+    computedName,
+    handleChange,
+    isDisabled,
+    model,
+    size,
+    tabIndex
+  }
+}
