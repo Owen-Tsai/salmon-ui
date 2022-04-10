@@ -4,7 +4,7 @@
       'sui-checkbox',
       isDisabled ? 'is-disabled' : null,
       isChecked ? 'is-checked' : null,
-      focus ? 'is-focus' : null,
+      focus ? 'is-focused' : null,
       indeterminate ? 'is-indeterminate' : null
     ]"
   >

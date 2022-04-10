@@ -47,10 +47,10 @@ $marker-sizes: map.merge(
       &::before {
         content: "";
         position: absolute;
-        width: math.div($size, 2);
-        height: math.div(math.div($size, 2), 1.8);
-        top: 20%;
-        left: 18%;
+        width: 8px;
+        height: 4px;
+        top: 4px;
+        left: 3px;
         border: 2px solid $color-white;
         border-top: 0;
         border-right: 0;
@@ -97,10 +97,13 @@ $marker-sizes: map.merge(
 
     &.is-checked {
       #{$ns}__inner {
-        #{$ns}__check::before {
+        #{$ns}__check {
           background-color: map.get($surface-colors, 'light-1');
-          transform: rotate(-45deg) scale(1);
-          opacity: 1;
+          
+          &::before {
+            transform: rotate(-45deg) scale(1);
+            opacity: 1;
+          }
         }
       }
     }
