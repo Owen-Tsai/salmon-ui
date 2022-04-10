@@ -63,8 +63,15 @@ $marker-sizes: map.merge(
     padding-right: 8px;
     user-select: none;
   }
-
+  
   // states
+  &:not(.is-disabled):hover {
+    #{$ns}__inner {
+      #{$ns}__dot {
+        border-color: map.get($border-colors, 'dark-1');
+      }
+    }
+  }
   &:not(.is-disabled).is-checked {
     color: $color;
     #{$ns}__inner {
@@ -88,13 +95,6 @@ $marker-sizes: map.merge(
           background-color: map.get($surface-colors, 'light-1');
           transform: scale(1);
         }
-      }
-    }
-  }
-  &:not(.is-disabled):hover {
-    #{$ns}__inner {
-      #{$ns}__dot {
-        border-color: map.get($border-colors, 'dark-1');
       }
     }
   }
