@@ -1,5 +1,9 @@
 <template>
-  <div class="sui-checkbox-group" role="group" aria-label="checkbox-group">
+  <div
+    class="sui-checkbox-group"
+    role="group"
+    aria-label="checkbox-group"
+  >
     <slot></slot>
   </div>
 </template>
@@ -13,7 +17,10 @@ import {
   reactive
 } from 'vue'
 
-import props from './checkbox-group'
+import {
+  props,
+  Model
+} from './checkbox-group'
 import { generateId } from '@/utils/utils'
 
 export default defineComponent({
@@ -21,8 +28,7 @@ export default defineComponent({
   props: props,
   emits: ['update:modelValue', 'change'],
   setup(props, ctx) {
-    const changeEvent = val => {
-      console.log(val, 'is fired')
+    const changeEvent = (val: Model) => {
       ctx.emit('update:modelValue', val)
       nextTick(() => {
         ctx.emit('change', val)

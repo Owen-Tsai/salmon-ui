@@ -1,0 +1,115 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+$marker-sizes: () !default;
+$marker-sizes: map.merge(
+  (
+    'base': 16px,
+    'small': 12px,
+    'large': 20px
+  ),
+  $marker-sizes
+);
+
+.sui-checkbox {
+  $ns: '.sui-checkbox';
+  $color: map.get($colors, primary, 'base');
+
+  box-sizing: border-box;
+  font-size: map.get($font-sizes, 'base');
+  color: map.get($text-colors, 'base');
+  cursor: pointer;
+  outline: none;
+  transition: all map.get($durations, 'fast');
+  @include main.use-inline-flex;
+
+  &__inner {
+    outline: none;
+    position: relative;
+    @include main.use-inline-flex;
+
+    #{$ns}__input {
+      @include main.hide-input-element;
+    }
+
+    #{$ns}__check {
+      $size: map.get($marker-sizes, 'base');
+      width: $size;
+      height: $size;
+      border: 1px solid map.get($border-colors, 'base');
+      border-radius: map.get($border-radiuses, 'base');
+      position: relative;
+      transition: all map.get($durations, 'fast');
+      @include main.use-inline-flex(false);
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: math.div($size, 2);
+        height: math.div(math.div($size, 2), 1.8);
+        top: 20%;
+        left: 18%;
+        border: 2px solid $color-white;
+        border-top: 0;
+        border-right: 0;
+        transform: rotate(-45deg) scale(0);
+        opacity: 0;
+        transition: all map.get($durations, 'fast');
+      }
+    }
+
+  }
+
+  &__label {
+    margin-left: 4px;
+    padding-right: 8px;
+    user-select: none;
+  }
+  
+  // states
+  &:not(.is-disabled):hover {
+    #{$ns}__inner {
+      #{$ns}__check {
+        border-color: map.get($border-colors, 'dark-1');
+      }
+    }
+  }
+  &:not(.is-disabled).is-checked {
+    color: $color;
+    #{$ns}__inner {
+      #{$ns}__check {
+        border-color: $color;
+        background-color: $color;
+        
+        &::before {
+          background-color: $color;
+          transform: rotate(-45deg) scale(1);
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+    color: map.get($text-colors, 'placeholder');
+
+    &.is-checked {
+      #{$ns}__inner {
+        #{$ns}__check::before {
+          background-color: map.get($surface-colors, 'light-1');
+          transform: rotate(-45deg) scale(1);
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &.is-focused {
+    #{$ns}__inner {
+      #{$ns}__check {
+        @include main.use-ring($color);
+      }
+    }
+  }
+}

@@ -8,14 +8,14 @@
       indeterminate ? 'is-indeterminate' : null
     ]"
   >
-    <span class="sui-checkbox__input">
-      <span class="sui-checkbox__inner"></span>
+    <span class="sui-checkbox__inner">
+      <span class="sui-checkbox__check"></span>
       <input
         v-if="checkedValue || uncheckedValue"
-        class="sui-checkbox__original"
-        type="checkbox"
         ref="checkboxRef"
         v-model="model"
+        class="sui-checkbox__input"
+        type="checkbox"
         :checked="isChecked"
         :name="computedName"
         :disabled="isDisabled"
@@ -27,10 +27,10 @@
       >
       <input
         v-else
-        class="sui-checkbox__original"
-        type="checkbox"
         ref="checkboxRef"
         v-model="model"
+        class="sui-checkbox__input"
+        type="checkbox"
         :checked="isChecked"
         :name="computedName"
         :value="value"
@@ -42,8 +42,8 @@
     </span>
 
     <span
-      class="sui-checkbox__label"
       v-if="$slots.default"
+      class="sui-checkbox__label"
     >
       <slot></slot>
     </span>
@@ -52,14 +52,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import props from './checkbox'
-import { useCheckbox } from './use-checkbox'
+import {
+  props,
+  useCheckbox
+} from './checkbox'
 
 export default defineComponent({
   name: 'SCheckbox',
   props: props,
   emits: ['update:modelValue', 'change'],
-  setup(props) {
+  setup(props, { emit }) {
     const {
       isGroup,
       isDisabled,
@@ -68,7 +70,7 @@ export default defineComponent({
       handleChange,
       computedName,
       focus
-    } = useCheckbox(props)
+    } = useCheckbox(props, emit)
 
     return {
       isChecked,

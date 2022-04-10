@@ -1,8 +1,13 @@
 import { buildProp } from '@/utils/props'
-import { ExtractPropTypes } from 'vue'
+import {
+  ExtractPropTypes,
+  PropType
+} from 'vue'
 
-const props = {
-  modelValue: [Boolean, Array, Object],
+export type Model = string | number | Record<string | number | symbol, unknown>
+
+export const props = {
+  modelValue: [Boolean, Array] as PropType<boolean | Model[] | Set<Model>>,
   disabled: Boolean,
   name: String,
   min: Number,
@@ -14,5 +19,3 @@ const props = {
 }
 
 export type CheckboxGroupProps = ExtractPropTypes<typeof props>
-
-export default props
