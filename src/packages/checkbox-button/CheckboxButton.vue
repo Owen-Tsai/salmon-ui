@@ -14,10 +14,10 @@
   >
     <input
       v-if="checkedValue || uncheckedValue"
-      class="sui-checkbox-button__original"
-      type="checkbox"
       ref="checkboxRef"
       v-model="model"
+      class="sui-checkbox-button__original"
+      type="checkbox"
       :checked="isChecked"
       :name="computedName"
       :disabled="isDisabled"
@@ -29,10 +29,10 @@
     >
     <input
       v-else
-      class="sui-checkbox-button__original"
-      type="checkbox"
       ref="checkboxRef"
       v-model="model"
+      class="sui-checkbox-button__original"
+      type="checkbox"
       :checked="isChecked"
       :name="computedName"
       :value="value"
@@ -50,14 +50,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { useCheckbox } from '@/packages/checkbox/use-checkbox'
-import props from '@/packages/checkbox/checkbox'
+import { useCheckbox } from 'salmon-ui/checkbox/checkbox'
+import {
+  props
+} from 'salmon-ui/checkbox/checkbox'
 
 export default defineComponent({
   name: 'SCheckboxButton',
   props: props,
   emits: ['update:modelValue', 'change'],
-  setup(props) {
+  setup(props, { emit }) {
     const {
       model,
       computedName,
@@ -67,7 +69,7 @@ export default defineComponent({
       handleChange,
       size,
       focus
-    } = useCheckbox(props)
+    } = useCheckbox(props, emit)
 
     return {
       model,

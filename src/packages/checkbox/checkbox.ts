@@ -42,13 +42,16 @@ type EmitType = typeof emitTypes[number]
 
 export const useGroup = () => {
   const groupContext: CheckboxGroupContext = inject(
-    'checkboxGroupContext',
+    'checkboxGroup',
     undefined as CheckboxGroupContext
   )
 
-  const isGroup = computed(() =>
-    groupContext && groupContext.group === 'checkbox-group'
-  )
+  const isGroup = computed(() =>{
+    if (groupContext) {
+      console.log(groupContext.group)
+    }
+    return groupContext?.group === 'checkbox-group'
+  })
 
   return {
     groupContext,
@@ -78,7 +81,9 @@ export const useModel = (
         : (props.modelValue ?? selfModel.value)
     },
     set(val: unknown) {
+      console.log(isGroup.value, 'group')
       if (isGroup.value && Array.isArray(val)) {
+        console.log('is group')
         exceedLimit.value = false
 
         if(groupContext?.min && val.length < groupContext?.min) {
@@ -87,6 +92,8 @@ export const useModel = (
         if(groupContext?.max && val.length > groupContext?.max) {
           exceedLimit.value = true
         }
+
+        console.log(exceedLimit)
 
         exceedLimit.value === false && groupContext?.changeEvent(val)
       } else {

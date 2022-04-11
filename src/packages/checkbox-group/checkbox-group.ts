@@ -7,7 +7,7 @@ import {
 export type Model = string | number | Record<string | number | symbol, unknown>
 
 export const props = {
-  modelValue: [Boolean, Array] as PropType<boolean | Model[] | Set<Model>>,
+  modelValue: Array as PropType<Model[] | Set<Model>>,
   disabled: Boolean,
   name: String,
   min: Number,

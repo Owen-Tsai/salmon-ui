@@ -29,6 +29,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'change'],
   setup(props, ctx) {
     const changeEvent = (val: Model) => {
+      console.log(val, 'changed')
       ctx.emit('update:modelValue', val)
       nextTick(() => {
         ctx.emit('change', val)
@@ -39,7 +40,7 @@ export default defineComponent({
 
     provide('checkboxGroup', reactive({
       ...toRefs(props),
-      name: `checkbox-group-${id}`,
+      name: props.name || `checkbox-group-${id}`,
       group: 'checkbox-group',
       changeEvent
     }))
