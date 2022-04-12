@@ -14,6 +14,7 @@
       <demo-rating></demo-rating>
       <demo-switch></demo-switch>
       <demo-checkbox></demo-checkbox>
+      <demo-checkbox-button></demo-checkbox-button>
     </div>
     <div class="demo-row">
       <demo-avatar></demo-avatar>
@@ -42,6 +43,7 @@ import DemoInput from '@/demo/Input.vue'
 import DemoRadio from '@/demo/Radio.vue'
 import DemoRadioButton from '@/demo/RadioButton.vue'
 import DemoCheckbox from '@/demo/Checkbox.vue'
+import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
 </script>
 
 <style scoped>

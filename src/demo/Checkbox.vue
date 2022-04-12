@@ -19,7 +19,7 @@
     <s-checkbox v-model="model4" disabled>Option</s-checkbox>
     <s-checkbox v-model="model5" disabled>Option</s-checkbox>
     <p>Grouped {{ model6 }}</p>
-    <s-checkbox-group v-model="model6" name="group3">
+    <s-checkbox-group v-model="model6" name="group3" :min="1" :max="3">
       <s-checkbox v-for="i in 4" :value="i">Option {{ i }}</s-checkbox>
     </s-checkbox-group>
   </demo>

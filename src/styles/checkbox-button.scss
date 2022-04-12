@@ -1,0 +1,101 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/main.scss';
+
+.sui-checkbox-button {
+  $ns: '.sui-checkbox-button';
+  $color: map.get($colors, primary, 'base');
+  $radius: map.get($border-radiuses, 'base');
+
+  position: relative;
+  transition: all map.get($durations, 'fast');
+
+  &__input {
+    @include main.hide-input-element;
+  }
+
+  &__rect {
+    @include main.use-inline-flex;
+    font-size: map.get($font-sizes, 'base');
+    color: map.get($text-colors, 'base');
+    padding: 0 16px;
+    height: map.get($component-common-sizes, 'base');
+    cursor: pointer;
+    border: 1px solid map.get($border-colors, 'base');
+    transition: all map.get($durations, 'fast');
+
+    &:hover {
+      color: $color;
+    }
+  }
+
+  &:first-child {
+    #{$ns}__rect {
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
+    }
+  }
+
+  &:last-child {
+    #{$ns}__rect {
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+    }
+  }
+
+  &:not(:first-child) {
+    #{$ns}__rect {
+      border-left: 0;
+    }
+  }
+
+  // states
+  &.is-disabled {
+    #{$ns}__rect {
+      background-color: map.get($surface-colors, 'light-3');
+      color: map.get($text-colors, 'placeholder');
+      cursor: not-allowed;
+    }
+    
+    &.is-active {
+      #{$ns}__rect {
+        color: #fff;
+        background-color: map.get($colors, primary, 'light-3');
+        border-color: map.get($colors, primary, 'light-3');
+      }
+    }
+  }
+  &.is-focused {
+    #{$ns}__rect {
+      @include main.use-ring($color);
+      z-index: 1;
+      color: $color;
+    }
+  }
+  &.is-active {
+    #{$ns}__rect {
+      background-color: $color;
+      color: $color-white;
+      border-color: $color;
+    }
+
+    &:not(:last-child) {
+      #{$ns}__rect {
+        border-right-color: $color-white;
+      }
+    }
+  }
+  
+  // sizes
+  &#{$ns}--small {
+    #{$ns}__rect {
+      height: map.get($component-common-sizes, 'small');
+      padding: 0 12px;
+    }
+  }
+  &#{$ns}--large {
+    #{$ns}__rect {
+      height: map.get($component-common-sizes, 'large');
+    }
+  }
+}

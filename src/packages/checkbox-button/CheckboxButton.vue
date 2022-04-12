@@ -4,7 +4,7 @@
       'sui-checkbox-button',
       size ? `sui-checkbox-button--${size}` : null,
       {
-        'is-checked': isChecked,
+        'is-active': isChecked,
         'is-focused': focus,
         'is-disabled': isDisabled
       }
@@ -16,7 +16,7 @@
       v-if="checkedValue || uncheckedValue"
       ref="checkboxRef"
       v-model="model"
-      class="sui-checkbox-button__original"
+      class="sui-checkbox-button__input"
       type="checkbox"
       :checked="isChecked"
       :name="computedName"
@@ -31,7 +31,7 @@
       v-else
       ref="checkboxRef"
       v-model="model"
-      class="sui-checkbox-button__original"
+      class="sui-checkbox-button__input"
       type="checkbox"
       :checked="isChecked"
       :name="computedName"
@@ -41,7 +41,7 @@
       @focus="focus = true"
       @blur="focus = false"
     >
-    <span class="sui-checkbox-button__btn">
+    <span class="sui-checkbox-button__rect">
       <slot>{{ value }}</slot>
     </span>
   </label>
