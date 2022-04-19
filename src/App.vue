@@ -6,6 +6,7 @@
       <demo-tag></demo-tag>
       <demo-dropdown></demo-dropdown>
       <demo-input></demo-input>
+      <demo-progress></demo-progress>
     </div>
     <div class="demo-row">
       <demo-icon></demo-icon>
@@ -44,6 +45,7 @@ import DemoRadio from '@/demo/Radio.vue'
 import DemoRadioButton from '@/demo/RadioButton.vue'
 import DemoCheckbox from '@/demo/Checkbox.vue'
 import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
+import DemoProgress from '@/demo/Progress.vue'
 </script>
 
 <style scoped>
