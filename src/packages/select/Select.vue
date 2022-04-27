@@ -2,10 +2,10 @@
   <div class="sui-select">
     <!-- reference -->
     <s-input
-      v-if="!searchable"
+      v-if="!filterable"
       ref="referenceEl"
-      class="sui-select__input"
       v-model="renderedLabel"
+      class="sui-select__input"
       :placeholder="placeholder"
       readonly
       :disabled="disabled"
@@ -15,22 +15,30 @@
           <arrow-down-s></arrow-down-s>
         </s-icon>
       </template>
-      <template #prefix v-if="$slots.prefix">
-        <slot name="prefix"></slot>
+      <template
+        v-if="$slots.prefix"
+        #prefix
+      >
+        <slot name="prefix">
+          <s-icon :name="prefixIcon"></s-icon>
+        </slot>
       </template>
     </s-input>
 
     <s-input
       v-else
       ref="referenceEl"
-      class="sui-select__input"
       v-model="searchInputValue"
+      class="sui-select__input"
       :placeholder="searchInputPlaceholder"
       @composition:start="handleComposition('start')"
       @composition:end="handleComposition('end')"
       @focus="handleInputFocus"
     >
-      <template #prefix v-if="$slots.prefix">
+      <template
+        v-if="$slots.prefix"
+        #prefix
+      >
         <slot name="prefix"></slot>
       </template>
       <template #suffix>
@@ -41,8 +49,8 @@
     </s-input>
 
     <div
-      class="sui-select__popper"
       ref="popperEl"
+      class="sui-select__popper"
       :style="{ width: menuWidth }"
     >
       <ul class="sui-select__menu">
@@ -61,7 +69,9 @@ import {
   watch,
   provide,
   reactive,
-  CreateComponentPublicInstance
+  CreateComponentPublicInstance,
+  getCurrentInstance,
+  toRefs,
 } from 'vue'
 
 import tippy, { sticky } from 'tippy.js'
@@ -85,23 +95,18 @@ import {
   OptionValue
 } from './select.type'
 
+import {
+  props
+} from './select'
+
 export default defineComponent({
+  name: 'SSelect',
   components: {
     SInput,
     SIcon,
     ArrowDownS
   },
-  props: {
-    modelValue: [Array, String, Number, Boolean, Object],
-    placeholder: String,
-    disabled: Boolean,
-    multiple: Boolean,
-    searchable: Boolean,
-    limit: {
-      type: Number,
-      default: 0
-    },
-  },
+  props,
   setup(props, ctx) {
     // refs
     const referenceEl = ref<CreateComponentPublicInstance>()
@@ -127,7 +132,7 @@ export default defineComponent({
 
     const handleHide = () => {
       suffixEl.value!.$el.classList.remove('select-suffix-rotate')
-      if (props.searchable) {
+      if (props.filterable) {
         if (!searchInputValue.value || !validateInputValue()) {
           searchInputValue.value = renderedLabel.value
         }
@@ -170,7 +175,7 @@ export default defineComponent({
           str += i === selected.value.length - 1 ? '' : ', '
         }
 
-        if (props.searchable) {
+        if (props.filterable) {
           searchInputPlaceholder.value = str
           searchInputValue.value = str
         }
@@ -179,7 +184,7 @@ export default defineComponent({
       } else if (!Array.isArray(selected.value)) {
         const val = selected.value ?
           String(selected.value.label) || String(selected.value.value) : ''
-        if (props.searchable) {
+        if (props.filterable) {
           searchInputPlaceholder.value = val
           searchInputValue.value = val
         }
@@ -188,7 +193,7 @@ export default defineComponent({
       }
     }
 
-    const handleOptionClick = (option) => {
+    const handleOptionClick = (option: any) => {
       if (!props.multiple) {
         if (selected.value === option) return
 
@@ -204,7 +209,7 @@ export default defineComponent({
         if (index !== -1) {
           selected.value?.splice(index, 1)
         } else {
-          if (props.limit > 0 && selected.value.length >= props.limit) return
+          if (props.limit && selected.value.length >= props.limit) return
           selected.value?.push(option)
         }
 
@@ -243,6 +248,8 @@ export default defineComponent({
         })
       }
 
+      console.log(getCurrentInstance()?.slots?.default?.())
+
       if (props.disabled) {
         tippyInstance.disable()
       }
@@ -263,12 +270,13 @@ export default defineComponent({
     })
 
     provide('select', reactive({
-      props,
-      selected, selectedValues,
+      ...toRefs(props),
+      selected,
       handleOptionClick,
       searchInputValue,
-      isInputComposing
-    } as ISelectProvider))
+      isInputComposing,
+      onOptionCreate: () => {/* */}
+    } as unknown as ISelectProvider))
 
     return {
       selected,

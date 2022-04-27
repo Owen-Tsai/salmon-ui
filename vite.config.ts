@@ -7,7 +7,9 @@ import * as path from 'path'
 export default defineConfig({
   plugins: [
     vue(),
-    eslintPlugin()
+    eslintPlugin({
+      cache: false
+    })
   ],
   resolve: {
     alias: {

@@ -1,6 +1,7 @@
-import type {
+import {
   Props,
-  LifecycleHooks
+  LifecycleHooks,
+  sticky
 } from 'tippy.js'
 
 export interface CustomProps {
@@ -19,7 +20,7 @@ export const baseConfig: Partial<Props & CustomProps> = {
   arrow: false,
   interactive: true,
   inertia: true,
-  plugins: [classNamePlugin],
+  plugins: [classNamePlugin, sticky],
   appendTo: document.body
 }
 

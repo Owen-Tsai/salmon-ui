@@ -23,6 +23,7 @@
       <demo-card></demo-card>
       <demo-radio></demo-radio>
       <demo-radio-button></demo-radio-button>
+      <demo-select></demo-select>
     </div>
   </div>
 </template>
@@ -46,6 +47,7 @@ import DemoRadioButton from '@/demo/RadioButton.vue'
 import DemoCheckbox from '@/demo/Checkbox.vue'
 import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
 import DemoProgress from '@/demo/Progress.vue'
+import DemoSelect from '@/demo/Select.vue'
 </script>
 
 <style scoped>
