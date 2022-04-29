@@ -47,7 +47,7 @@ $tag-sizes: map.merge(
   // default
   background-color: map.get($surface-colors, 'light-3');
   color: map.get($text-colors, 'base');
-  border: 1px solid $border-color;
+  border: 1px solid map.get($surface-colors, 'light-3');
 
   // different types
   $_types: primary, success, warning, error;

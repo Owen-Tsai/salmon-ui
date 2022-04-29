@@ -23,6 +23,7 @@
     <s-tag type="error" rounded fill="none">Angular</s-tag>
     <s-tag type="warning" fill="none">React</s-tag>
     <br>
+    <s-tag size="small">Web Dev</s-tag>
     <s-tag size="large">Large</s-tag>
     <s-tag size="small" fill="dark" type="warning">small</s-tag>
     <s-tag size="large" dismissible>Large</s-tag>
