@@ -69,6 +69,10 @@ export const useSelect = (
   const cachedOptions = ref<Map<OptionModel, IOptionProxy>>(new Map())
 
   const selected = ref<OptionModel | OptionModel[]>([])
+  const label = ref('')
+
+  const inputModel = ref('')
+  const inputPlaceholder = ref('')
 
   const instance = getCurrentInstance()
 
@@ -102,7 +106,20 @@ export const useSelect = (
   }
 
   const setLabel = () => {
-    
+    if (props.multiple) {
+      // TODO: check element-plus multiple tag styles
+      const val = selected.value as OptionModel[]
+      const firstLabel = options.value.get(val[0])?.renderedLabel
+      label.value = firstLabel + '+' + val.length
+    } else {
+      const val = selected.value
+      label.value = options.value.get(val as OptionModel)?.renderedLabel as string
+
+      if (props.filterable) {
+        inputModel.value = label.value
+        inputPlaceholder.value = label.value
+      }
+    }
   }
 
   onMounted(() => {
