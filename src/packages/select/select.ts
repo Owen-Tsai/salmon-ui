@@ -1,7 +1,4 @@
-import {
-  OptionModel,
-  Option
-} from 'salmon-ui/select-option/option'
+import { OptionModel } from 'salmon-ui/select-option/option'
 
 import {
   PropType,
@@ -11,11 +8,9 @@ import {
   ref,
   watch,
   onMounted,
-  getCurrentInstance,
-  ComponentInternalInstance,
   provide,
   reactive,
-  VNode
+  toRefs
 } from 'vue'
 
 import tippy, {
@@ -57,14 +52,12 @@ const opts: Partial<Props & CustomProps> = {
   sticky: true,
 }
 
+const suffixRotateCls = 'select-suffix-rotate'
+
 export const useSelect = (
   props: SelectProps,
   emit: SetupContext<('update:modelValue' | 'change')[]>['emit']
 ) => {
-  const referenceEl = ref<HTMLElement>()
-  const popperEl = ref<HTMLElement>()
-  const popperInstance = ref<Instance>()
-
   const options = ref<Map<OptionModel, IOptionProxy>>(new Map())
   const cachedOptions = ref<Map<OptionModel, IOptionProxy>>(new Map())
 
@@ -73,8 +66,11 @@ export const useSelect = (
 
   const inputModel = ref('')
   const inputPlaceholder = ref('')
+  const isComposing = ref(false)
 
-  const instance = getCurrentInstance()
+  const referenceEl = ref<HTMLElement>()
+  const popperEl = ref<HTMLElement>()
+  const popperInstance = ref<Instance>()
 
   const onOptionCreate = (proxy: IOptionProxy) => {
     options.value.set(proxy.value, proxy)
@@ -107,10 +103,8 @@ export const useSelect = (
 
   const setLabel = () => {
     if (props.multiple) {
-      // TODO: check element-plus multiple tag styles
       const val = selected.value as OptionModel[]
-      const firstLabel = options.value.get(val[0])?.renderedLabel
-      label.value = firstLabel + '+' + val.length
+      label.value = options.value.get(val[0])?.renderedLabel || ''
     } else {
       const val = selected.value
       label.value = options.value.get(val as OptionModel)?.renderedLabel as string
@@ -122,13 +116,91 @@ export const useSelect = (
     }
   }
 
+  const handleTagClose = () => {
+    (selected.value as OptionModel[]).shift()
+  }
+  const handleInputFocus = () => {
+    inputModel.value = ''
+  }
+  const handleComposition = (s: 'start' | 'end') => {
+    isComposing.value = s === 'start'
+  }
+  
+  const validateInputModel = () => {
+    const labels = [...options.value.values()].map((option) => option.renderedLabel)
+    for (let i = 0; i < labels.length; i++) {
+      if (inputModel.value === labels[i]) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  const onPopperShow = () => {
+    referenceEl.value?.classList.add(suffixRotateCls)
+  }
+  const onPopperHide = () => {
+    referenceEl.value?.classList.remove(suffixRotateCls)
+    if (props.filterable) {
+      if (props.multiple) {
+        inputModel.value = ''
+      } else {
+        inputModel.value = label.value
+      }
+    }
+  }
+
+  provide('select', reactive({
+    ...toRefs(props),
+    isComposing,
+    selected,
+    inputModel,
+    onOptionClick,
+    onOptionCreate
+  }))
+
   onMounted(() => {
     // create popper
     popperInstance.value = tippy(referenceEl.value as Element, {
       ...baseConfig,
       ...opts,
-      content: popperEl.value
+      content: popperEl.value,
+      onShow: onPopperShow,
+      onHide: onPopperHide
     })
+
+    if (props.disabled) {
+      popperInstance.value.disable()
+    }
+
+    setLabel()
   })
 
+  watch(() => props.disabled, (val) => {
+    if (val) {
+      popperInstance.value?.disable()
+    } else {
+      popperInstance.value?.enable()
+    }
+  })
+
+  watch(() => props.modelValue, () => {
+    setLabel()
+  })
+
+  return {
+    options,
+    cachedOptions,
+    selected,
+    label,
+    inputModel,
+    inputPlaceholder,
+    isComposing,
+    referenceEl,
+    popperEl,
+    handleTagClose,
+    handleInputFocus,
+    handleComposition
+  }
 }
