@@ -103,6 +103,12 @@
     >
       <ul class="sui-select__menu">
         <slot></slot>
+        <template v-if="allowCreate && filteredOptions.length <= 0">
+          <s-option
+            :label="inputModel"
+            :value="inputModel"
+          ></s-option>
+        </template>
       </ul>
     </div>
   </div>
@@ -113,6 +119,7 @@ import { defineComponent } from 'vue'
 import SInput from '../input'
 import SIcon from '../icon'
 import STag from '../tag'
+import SOption from '../select-option'
 import { ArrowDownS } from '@salmon-ui/icons'
 
 import {
@@ -126,6 +133,7 @@ export default defineComponent({
     SInput,
     SIcon,
     STag,
+    SOption,
     ArrowDownS
   },
   props,
@@ -133,6 +141,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const {
       cachedOptions,
+      filteredOptions,
       handleComposition,
       handleInputFocus,
       handleTagClose,
@@ -148,6 +157,7 @@ export default defineComponent({
 
     return {
       cachedOptions,
+      filteredOptions,
       handleComposition,
       handleInputFocus,
       handleTagClose,

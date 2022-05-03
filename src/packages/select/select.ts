@@ -9,8 +9,7 @@ import {
   watch,
   onMounted,
   provide,
-  reactive,
-  toRefs
+  computed
 } from 'vue'
 
 import tippy, {
@@ -46,7 +45,7 @@ export const props = {
 const opts: Partial<Props & CustomProps> = {
   ...baseConfig,
   hideOnClick: true,
-  trigger: convertTrigger('focus'),
+  trigger: convertTrigger('click'),
   theme: 'light',
   classes: ['sui-popper', 'sui-popper--select'],
   sticky: true,
@@ -71,6 +70,18 @@ export const useSelect = (
   const referenceEl = ref<HTMLElement>()
   const popperEl = ref<HTMLElement>()
   const popperInstance = ref<Instance>()
+
+  const filteredOptions = computed(() => {
+    const proxies = options.value.values()
+    const res: IOptionProxy[] = []
+    for (const val of proxies) {
+      if (val.renderedLabel.includes(inputModel.value)) {
+        res.push(val)
+      }
+    }
+
+    return res
+  })
 
   const onOptionCreate = (proxy: IOptionProxy) => {
     options.value.set(proxy.value, proxy)
@@ -99,6 +110,9 @@ export const useSelect = (
     }
 
     emit('update:modelValue', selected.value)
+    if (!props.multiple) {
+      popperInstance.value?.hide()
+    }
   }
 
   const setLabel = () => {
@@ -151,14 +165,14 @@ export const useSelect = (
     }
   }
 
-  provide('select', reactive({
-    ...toRefs(props),
-    isComposing,
-    selected,
-    inputModel,
+  provide('select', {
+    props,
+    isComposing: isComposing.value,
+    selected: selected.value,
+    inputModel: inputModel.value,
     onOptionClick,
     onOptionCreate
-  }))
+  })
 
   onMounted(() => {
     // create popper
@@ -192,6 +206,7 @@ export const useSelect = (
   return {
     options,
     cachedOptions,
+    filteredOptions,
     selected,
     label,
     inputModel,

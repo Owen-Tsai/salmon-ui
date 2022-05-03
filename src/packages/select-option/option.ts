@@ -124,6 +124,8 @@ export const useOption = (
 ) => {
   const select = inject('select', {} as ISelectContext)
   const vm = getCurrentInstance() as ComponentInternalInstance
+
+  console.log(select)
   
   const {
     isHidden,
