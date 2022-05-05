@@ -14,41 +14,53 @@
   box-sizing: border-box;
   display: inline-flex;
   vertical-align: middle;
-  display: inline-flex;
   width: 100%;
 
   &__inner {
     width: 100%;
     position: relative;
+    display: inline-flex;
+    flex-grow: 1;
+    border: 1px solid $border-color;
+    outline: 0;
+    border-radius: $radius;
+    vertical-align: middle;
+    padding: 0 12px;
+    transition: map.get($durations, 'fast');
+    box-sizing: border-box;
+    height: $size;
   }
   
   &__input {
-    height: $size;
+    height: 100%;
+    box-sizing: border-box;
     line-height: $size;
-    display: inline-flex;
-    border: 1px solid $border-color;
-    outline: 0;
     color: $text-color;
     width: 100%;
-    vertical-align: middle;
-    transition: map.get($durations, 'fast');
-    padding: 0 12px;
-    border-radius: $radius;
+    padding: 0;
     font-size: map.get($font-sizes, 'base');
-    box-sizing: border-box;
+    border: none;
+    outline: none;
     // remove default style added by MS Edge
     &::-ms-clear, &::-ms-reveal {
       display: none;
     }
+  }
 
-    &:not([disabled]):not(:focus):hover {
+  // states
+  &:not(.is-disabled):not(.is-focused) {
+    #{$ns}__inner:hover {
       border-color: map.get($border-colors, 'dark-1');
     }
-    &:focus {
+  }
+  &.is-focused {
+    #{$ns}__inner {
       @include main.use-ring($color);
       border-color: $color;
     }
-    &[disabled] {
+  }
+  &.is-disabled {
+    #{$ns}__inner {
       background-color: map.get($surface-colors, 'light-3');
       cursor: not-allowed;
     }
@@ -80,12 +92,12 @@
   }
 
   &.has-prefix {
-    #{$ns}__input {
+    #{$ns}__inner {
       padding-left: 32px;
     }
   }
   &.has-suffix {
-    #{$ns}__input {
+    #{$ns}__inner {
       padding-right: 32px;
     }
   }
@@ -123,13 +135,13 @@
     }
 
     &.has-prepend {
-      #{$ns}__input {
+      #{$ns}__inner {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
     }
     &.has-append {
-      #{$ns}__input {
+      #{$ns}__inner {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
