@@ -44,7 +44,7 @@ interface ISelectContext {
   isComposing: boolean,
   selected: OptionModel | OptionModel[],
   inputModel: string,
-  onOptionClick: (vm: ComponentInternalInstance) => void,
+  onOptionClick: (proxy: IOptionProxy) => void,
   onOptionCreate: (proxy: IOptionProxy) => void
 }
 
@@ -147,7 +147,7 @@ export const useOption = (
 
   const onClick = () => {
     if (props.disabled) return
-    select.onOptionClick(vm)
+    select.onOptionClick(vm.proxy as unknown as IOptionProxy)
 
     ctx.emit('click')
   }
