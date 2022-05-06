@@ -61,23 +61,14 @@ export const usePopperOptions = (
 export const usePopperInstance = (
   options: Partial<Props & CustomProps>,
   props: DropdownProps,
-  emit: SetupContext<EmitEvents[]>['emit']
+  emit: SetupContext<EmitEvents[]>['emit'],
+  resetHighlightedItem: () => void
 ) => {
   const popperInstance = ref<Instance | null>(null)
-  const isSubmenuExpanded = ref(false)
 
   const handleMenuHide = (instance: Instance) => {
     emit('before-hide', instance)
-    if (props.submenu) {
-      isSubmenuExpanded.value = false
-    }
-  }
-
-  const handleMenuShow = (instance: Instance) => {
-    emit('before-show', instance)
-    if (props.submenu) {
-      isSubmenuExpanded.value = true
-    }
+    resetHighlightedItem()
   }
 
   const createPopper = (
@@ -89,12 +80,10 @@ export const usePopperInstance = (
       ...{
         content: popperEl,
         onShow: (instance) => {
-          handleMenuShow(instance)
-          popperEl.focus()
+          emit('before-show', instance)
         },
         onHide: (instance) => {
           handleMenuHide(instance)
-          popperEl.focus()
         },
         onHidden: (instance) => {
           emit('after-hide', instance)
@@ -128,8 +117,7 @@ export const usePopperInstance = (
   return {
     createPopper,
     setupWatchers,
-    popperInstance,
-    isSubmenuExpanded
+    popperInstance
   }
 }
 

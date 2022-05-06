@@ -49,26 +49,6 @@ export default defineComponent({
       options
     } = usePopperOptions(props)
 
-    const {
-      popperInstance,
-      createPopper,
-      setupWatchers,
-      isSubmenuExpanded
-    } = usePopperInstance(options, props, emit)
-
-    onMounted(() => {
-      createPopper(
-        referenceEl.value as HTMLElement,
-        popperEl.value as HTMLElement
-      )
-
-      if (props.disabled) {
-        popperInstance.value?.disable()
-      }
-
-      setupWatchers()
-    })
-
     const commandHandler = (...args: unknown[]) => {
       emit('command', ...args)
     }
@@ -84,6 +64,25 @@ export default defineComponent({
       onMouseLeave
     } = useEvents()
 
+    const {
+      popperInstance,
+      createPopper,
+      setupWatchers
+    } = usePopperInstance(options, props, emit, onMouseLeave)
+
+    onMounted(() => {
+      createPopper(
+        referenceEl.value as HTMLElement,
+        popperEl.value as HTMLElement
+      )
+
+      if (props.disabled) {
+        popperInstance.value?.disable()
+      }
+
+      setupWatchers()
+    })
+
     // provide
     provide('dropdown', {
       onItemCreated,
@@ -96,7 +95,6 @@ export default defineComponent({
       popperEl,
       commandHandler,
       computedStyle,
-      isSubmenuExpanded,
 
       onKeyDown,
       onMouseLeave
