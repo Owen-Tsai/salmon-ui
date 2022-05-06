@@ -4,31 +4,37 @@
     :class="{
       'is-disabled': disabled,
       'is-divided': divided,
-      'is-danger': danger
+      'is-danger': danger,
+      'is-highlighted': highlighted
     }"
     :aria-disabled="disabled"
     :tabindex="disabled ? undefined : -1"
     @click="handleClick"
+    @mouseover="handleMouseEnter"
   >
     <slot></slot>
   </li>
 </template>
 <script lang="ts">
 import {
+  ComponentInternalInstance,
   defineComponent,
   getCurrentInstance,
   inject,
-  Ref
+  ref
 } from 'vue'
 
-import { Instance } from 'tippy.js'
+import {
+  IDropdownContext,
+  ItemProxy
+} from './dropdown-item'
 
 export default defineComponent({
   name: 'SDropdownItem',
   props: {
     command: {
-      type: [String, Number, Object],
-      default: () => ({})
+      type: String,
+      default: undefined
     },
     disabled: Boolean,
     divided: Boolean,
@@ -37,25 +43,32 @@ export default defineComponent({
   emits: ['click'],
   setup(props, ctx) {
     // injected
-    type DropdownContext = {
-      popperInstance: Ref<Instance>,
-      commandHandler: (...args: unknown[]) => void
-    }
-    const dropdown: DropdownContext = inject(
-      'dropdown', {} as DropdownContext
+    const dropdown: IDropdownContext = inject(
+      'dropdown', {} as IDropdownContext
     )
+    const highlighted = ref(false)
 
-    const instance = getCurrentInstance()
+    const instance = getCurrentInstance() as ComponentInternalInstance
+
+    dropdown.onItemCreated(instance.proxy as unknown as ItemProxy)
 
     const handleClick = (evt: Event) => {
       if (props.disabled) return
-      dropdown.popperInstance.value.hide()
-      dropdown.commandHandler?.(props.command, instance, evt)
+      if (props.command) {
+        dropdown.commandHandler(props.command)
+      }
       ctx.emit('click', evt)
     }
 
+    const handleMouseEnter = () => {
+      if (props.disabled) return
+      dropdown.setHighlightedItem(instance.proxy as unknown as ItemProxy)
+    }
+
     return {
-      handleClick
+      highlighted,
+      handleClick,
+      handleMouseEnter
     }
   }
 })

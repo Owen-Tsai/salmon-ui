@@ -1,7 +1,8 @@
 <template>
   <div
-    v-if="!submenu"
     class="sui-dropdown"
+    @keydown.down.prevent="onKeyDown('down')"
+    @keydown.up.prevent="onKeyDown('up')"
   >
     <div
       ref="referenceEl"
@@ -13,38 +14,11 @@
       ref="popperEl"
       class="sui-dropdown__popper"
       :style="computedStyle"
+      @mouseout="onMouseLeave"
     >
       <slot></slot>
     </div>
   </div>
-
-  <li
-    v-else
-    ref="referenceEl"
-    class="sui-dropdown sui-dropdown-menu__item sui-dropdown-submenu"
-  >
-    <div
-      ref="referenceEl"
-      class="sui-dropdown__reference"
-    >
-      <slot name="reference"></slot>
-      <s-icon
-        :class="[
-          'submenu-arrow',
-          isSubmenuExpanded ? 'rotate--180' : null
-        ]"
-        :name="ArrowRightS"
-      >
-      </s-icon>
-    </div>
-    <div
-      ref="popperEl"
-      class="sui-dropdown__popper"
-      :style="computedStyle"
-    >
-      <slot></slot>
-    </div>
-  </li>
 </template>
 
 <script lang="ts">
@@ -52,24 +26,19 @@ import {
   ref,
   defineComponent,
   provide,
-  onMounted,
+  onMounted
 } from 'vue'
-
-import SIcon from 'salmon-ui/icon'
-import { ArrowRightS } from '@salmon-ui/icons'
 
 import {
   props,
   usePopperInstance,
   usePopperOptions,
-  useStyles
+  useStyles,
+  useEvents
 } from './dropdown'
 
 export default defineComponent({
   name: 'SDropdown',
-  components: {
-    SIcon
-  },
   props,
   emits: ['before-hide', 'before-show', 'after-hide', 'after-show', 'command'],
   setup(props, { emit }) {
@@ -77,20 +46,20 @@ export default defineComponent({
     const popperEl = ref<Element>()
     
     const {
-      options,
-      isSubmenuExpanded
-    } = usePopperOptions(props, emit)
+      options
+    } = usePopperOptions(props)
 
     const {
       popperInstance,
       createPopper,
-      setupWatchers
-    } = usePopperInstance(options, props)
+      setupWatchers,
+      isSubmenuExpanded
+    } = usePopperInstance(options, props, emit)
 
     onMounted(() => {
       createPopper(
-        referenceEl.value as Element,
-        popperEl.value as Element
+        referenceEl.value as HTMLElement,
+        popperEl.value as HTMLElement
       )
 
       if (props.disabled) {
@@ -104,17 +73,21 @@ export default defineComponent({
       emit('command', ...args)
     }
 
-    const handleClick = () => {
-      popperInstance.value?.hide()
-    }
-
     const {
       computedStyle
     } = useStyles(props)
 
+    const {
+      onItemCreated,
+      onKeyDown,
+      setHighlightedItem,
+      onMouseLeave
+    } = useEvents()
+
     // provide
     provide('dropdown', {
-      popperInstance,
+      onItemCreated,
+      setHighlightedItem, 
       commandHandler
     })
 
@@ -122,10 +95,11 @@ export default defineComponent({
       referenceEl,
       popperEl,
       commandHandler,
-      handleClick,
       computedStyle,
       isSubmenuExpanded,
-      ArrowRightS
+
+      onKeyDown,
+      onMouseLeave
     }
   }
 })

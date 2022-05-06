@@ -23,12 +23,12 @@
       cursor: pointer;
       border-radius: map.get($border-radiuses, 'base');
 
-      &:hover {
+      &.is-highlighted {
         background-color: map.get($colors, primary, 'light-6');
         color: map.get($colors, primary, 'base');
       }
 
-      &.is-danger:hover {
+      &.is-danger.is-highlighted {
         background-color: map.get($colors, error, 'light-6');
         color: map.get($colors, error, 'base');
       }

@@ -13,6 +13,7 @@ import {
   watchEffect,
   computed
 } from 'vue'
+import { ItemProxy } from 'salmon-ui/dropdown-item/dropdown-item'
 
 type DropdownProps = ExtractPropTypes<typeof props>
 type EmitEvents = 'before-hide' | 'after-hide' | 'before-show' | 'after-show'
@@ -40,11 +41,8 @@ export const props = {
 }
 
 export const usePopperOptions = (
-  props: DropdownProps,
-  emit: SetupContext<EmitEvents[]>['emit']
+  props: DropdownProps
 ) => {
-  const isSubmenuExpanded = ref(false)
-
   const options: Partial<Props & CustomProps> = {
     ...baseConfig,
     trigger: convertTrigger(props.trigger),
@@ -52,20 +50,21 @@ export const usePopperOptions = (
     theme: 'light',
     classes: [
       'sui-popper', 'sui-popper--dropdown'
-    ],
-    onHide: (instance) => {
-      handleMenuHide(instance)
-    },
-    onHidden: (instance) => {
-      emit('after-hide', instance)
-    },
-    onShow: (instance) => {
-      handleMenuShow(instance)
-    },
-    onShown: (instance) => {
-      emit('after-show', instance)
-    }
+    ]
   }
+
+  return {
+    options
+  }
+}
+
+export const usePopperInstance = (
+  options: Partial<Props & CustomProps>,
+  props: DropdownProps,
+  emit: SetupContext<EmitEvents[]>['emit']
+) => {
+  const popperInstance = ref<Instance | null>(null)
+  const isSubmenuExpanded = ref(false)
 
   const handleMenuHide = (instance: Instance) => {
     emit('before-hide', instance)
@@ -81,26 +80,28 @@ export const usePopperOptions = (
     }
   }
 
-  return {
-    options,
-    isSubmenuExpanded
-  }
-}
-
-export const usePopperInstance = (
-  options: Partial<Props & CustomProps>,
-  props: DropdownProps
-) => {
-  const popperInstance = ref<Instance | null>(null)
-
   const createPopper = (
-    referenceEl: Element,
-    popperEl: Element
+    referenceEl: HTMLElement,
+    popperEl: HTMLElement
   ) => {
     popperInstance.value = tippy(referenceEl, {
       ...options,
       ...{
-        content: popperEl
+        content: popperEl,
+        onShow: (instance) => {
+          handleMenuShow(instance)
+          popperEl.focus()
+        },
+        onHide: (instance) => {
+          handleMenuHide(instance)
+          popperEl.focus()
+        },
+        onHidden: (instance) => {
+          emit('after-hide', instance)
+        },
+        onShown: (instance) => {
+          emit('after-show', instance)
+        }
       } as Partial<Props | CustomProps>
     })
   }
@@ -127,7 +128,8 @@ export const usePopperInstance = (
   return {
     createPopper,
     setupWatchers,
-    popperInstance
+    popperInstance,
+    isSubmenuExpanded
   }
 }
 
@@ -140,5 +142,58 @@ export const useStyles = (props: DropdownProps) => {
 
   return {
     computedStyle
+  }
+}
+
+export const useEvents = () => {
+  const highlighted = ref<ItemProxy>()
+  const items = ref<ItemProxy[]>([])
+
+  const onItemCreated = (proxy: ItemProxy) => {
+    items.value.push(proxy)
+  }
+
+  const setHighlightedItem = (proxy: ItemProxy) => {
+    resetItemHighlight()
+    proxy.highlighted = true
+    highlighted.value = proxy
+  }
+
+  const resetItemHighlight = () => {
+    items.value.forEach((item) => {
+      item.highlighted = false
+    })
+  }
+
+  const onKeyDown = (key: 'up' | 'down', index?: number) => {
+    const idx = index || items.value.findIndex(e => e === highlighted.value)
+
+    if (key === 'up') {
+      if (idx <= 0) return
+      if (items.value[idx - 1].disabled) {
+        onKeyDown('up', idx - 1)
+      } else {
+        setHighlightedItem(items.value[idx - 1])
+      }
+    } else {
+      if (idx >= items.value.length - 1) return
+      if (items.value[idx + 1].disabled) {
+        onKeyDown('down', idx + 1)
+      } else {
+        setHighlightedItem(items.value[idx + 1])
+      }
+    }
+  }
+
+  const onMouseLeave = () => {
+    resetItemHighlight()
+    highlighted.value = undefined
+  }
+
+  return {
+    onItemCreated,
+    setHighlightedItem,
+    onKeyDown,
+    onMouseLeave
   }
 }

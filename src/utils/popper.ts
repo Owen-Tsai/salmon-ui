@@ -21,7 +21,8 @@ export const baseConfig: Partial<Props & CustomProps> = {
   interactive: true,
   inertia: true,
   plugins: [classNamePlugin, sticky],
-  appendTo: document.body
+  appendTo: document.body,
+  maxWidth: 'none'
 }
 
 export const convertTrigger = (raw: string): string => {

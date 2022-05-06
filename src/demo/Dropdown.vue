@@ -16,7 +16,6 @@
         </s-dropdown-menu>
       </s-dropdown>
     </div>
-    
     <div class="centered">
       <s-dropdown>
         <template v-slot:reference>
@@ -25,27 +24,38 @@
 
         <s-dropdown-menu>
           <s-dropdown-item>
-            <s-icon :name="Add"></s-icon> Action 1
+            <div class="item">
+              <div class="icon-wrapper">
+                <s-icon :name="Add"></s-icon>
+              </div>
+              <div class="text-wrapper">
+                <div class="title">Add New Entry</div>
+                <div class="info">Add a new entry to your inbox</div>
+              </div>
+            </div>
           </s-dropdown-item>
           <s-dropdown-item>
-            <s-icon :name="Subtract"></s-icon> Action 2
+            <div class="item">
+              <div class="icon-wrapper">
+                <s-icon :name="DeleteBin"></s-icon>
+              </div>
+              <div class="text-wrapper">
+                <div class="title">Remove Entry</div>
+                <div class="info">Remove selected entry from your inbox</div>
+              </div>
+            </div>
           </s-dropdown-item>
-          <s-dropdown-item>
-            <s-icon :name="DeleteBin"></s-icon> Action 3
+          <s-dropdown-item divided>
+            <div class="item">
+              <div class="icon-wrapper">
+                <s-icon :name="User"></s-icon>
+              </div>
+              <div class="text-wrapper">
+                <div class="title">Profile</div>
+                <div class="info">Check your profile page</div>
+              </div>
+            </div>
           </s-dropdown-item>
-          <s-dropdown submenu placement="right-start">
-            <template v-slot:reference>
-              <s-dropdown-item>
-                <s-icon :name="User"></s-icon> With Submenu
-              </s-dropdown-item>
-            </template>
-
-            <s-dropdown-menu>
-              <s-dropdown-item>Sub-Action 1</s-dropdown-item>
-              <s-dropdown-item>Sub-Action 2</s-dropdown-item>
-              <s-dropdown-item>Sub-Action 3</s-dropdown-item>
-            </s-dropdown-menu>
-          </s-dropdown>
         </s-dropdown-menu>
       </s-dropdown>
     </div>
@@ -59,7 +69,6 @@ import SDropdownItem from 'salmon-ui/dropdown-item'
 import SButton from 'salmon-ui/button'
 import {
   Add,
-  Subtract,
   DeleteBin,
   User
 } from '@salmon-ui/icons'
@@ -74,8 +83,29 @@ import {
   }
 }
 
-.sui-icon {
-  margin-right: 4px;
-  font-size: 16px;
+.item {
+  display: flex;
+  align-items: center;
+
+  .icon-wrapper {
+    background-color: #2563eb;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  .text-wrapper {
+    flex-grow: 1;
+    padding-left: 16px;
+
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
 }
 </style>
