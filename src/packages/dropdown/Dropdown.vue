@@ -1,8 +1,10 @@
 <template>
   <div
     class="sui-dropdown"
-    @keydown.down.prevent="onKeyDown('down')"
-    @keydown.up.prevent="onKeyDown('up')"
+    @keydown.down.prevent="navigateMenuItem('down')"
+    @keydown.up.prevent="navigateMenuItem('up')"
+    @keydown.enter="selectItem"
+    @keydown.esc.stop.prevent="closeMenu"
   >
     <div
       ref="referenceEl"
@@ -14,7 +16,7 @@
       ref="popperEl"
       class="sui-dropdown__popper"
       :style="computedStyle"
-      @mouseout="onMouseLeave"
+      @mouseout="clearHighlightState"
     >
       <slot></slot>
     </div>
@@ -23,18 +25,13 @@
 
 <script lang="ts">
 import {
-  ref,
   defineComponent,
-  provide,
-  onMounted
+  provide
 } from 'vue'
 
 import {
   props,
-  usePopperInstance,
-  usePopperOptions,
-  useStyles,
-  useEvents
+  useDropdown
 } from './dropdown'
 
 export default defineComponent({
@@ -42,46 +39,21 @@ export default defineComponent({
   props,
   emits: ['before-hide', 'before-show', 'after-hide', 'after-show', 'command'],
   setup(props, { emit }) {
-    const referenceEl = ref<Element>()
-    const popperEl = ref<Element>()
-    
-    const {
-      options
-    } = usePopperOptions(props)
-
     const commandHandler = (...args: unknown[]) => {
       emit('command', ...args)
     }
 
     const {
-      computedStyle
-    } = useStyles(props)
-
-    const {
+      clearHighlightState,
+      closeMenu,
+      computedStyle,
       onItemCreated,
-      onKeyDown,
+      navigateMenuItem,
+      selectItem,
       setHighlightedItem,
-      onMouseLeave
-    } = useEvents()
-
-    const {
-      popperInstance,
-      createPopper,
-      setupWatchers
-    } = usePopperInstance(options, props, emit, onMouseLeave)
-
-    onMounted(() => {
-      createPopper(
-        referenceEl.value as HTMLElement,
-        popperEl.value as HTMLElement
-      )
-
-      if (props.disabled) {
-        popperInstance.value?.disable()
-      }
-
-      setupWatchers()
-    })
+      referenceEl,
+      popperEl
+    } = useDropdown(props, emit)
 
     // provide
     provide('dropdown', {
@@ -93,11 +65,13 @@ export default defineComponent({
     return {
       referenceEl,
       popperEl,
+
       commandHandler,
       computedStyle,
-
-      onKeyDown,
-      onMouseLeave
+      navigateMenuItem,
+      clearHighlightState,
+      selectItem,
+      closeMenu
     }
   }
 })

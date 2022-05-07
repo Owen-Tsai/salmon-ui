@@ -1,18 +1,22 @@
 import { buildProp } from '@/utils/props'
 import tippy, { Instance, Props } from 'tippy.js'
+
 import {
   CustomProps,
   convertTrigger,
   baseConfig
 } from '@/utils/popper'
+
 import {
   SetupContext,
   ExtractPropTypes,
   ref,
   watch,
   watchEffect,
-  computed
+  computed,
+  onMounted
 } from 'vue'
+
 import { ItemProxy } from 'salmon-ui/dropdown-item/dropdown-item'
 
 type DropdownProps = ExtractPropTypes<typeof props>
@@ -40,87 +44,6 @@ export const props = {
   submenu: Boolean
 }
 
-export const usePopperOptions = (
-  props: DropdownProps
-) => {
-  const options: Partial<Props & CustomProps> = {
-    ...baseConfig,
-    trigger: convertTrigger(props.trigger),
-    hideOnClick: true,
-    theme: 'light',
-    classes: [
-      'sui-popper', 'sui-popper--dropdown'
-    ]
-  }
-
-  return {
-    options
-  }
-}
-
-export const usePopperInstance = (
-  options: Partial<Props & CustomProps>,
-  props: DropdownProps,
-  emit: SetupContext<EmitEvents[]>['emit'],
-  resetHighlightedItem: () => void
-) => {
-  const popperInstance = ref<Instance | null>(null)
-
-  const handleMenuHide = (instance: Instance) => {
-    emit('before-hide', instance)
-    resetHighlightedItem()
-  }
-
-  const createPopper = (
-    referenceEl: HTMLElement,
-    popperEl: HTMLElement
-  ) => {
-    popperInstance.value = tippy(referenceEl, {
-      ...options,
-      ...{
-        content: popperEl,
-        onShow: (instance) => {
-          emit('before-show', instance)
-        },
-        onHide: (instance) => {
-          handleMenuHide(instance)
-        },
-        onHidden: (instance) => {
-          emit('after-hide', instance)
-        },
-        onShown: (instance) => {
-          emit('after-show', instance)
-        }
-      } as Partial<Props | CustomProps>
-    })
-  }
-
-  const setupWatchers = () => {
-    watch(() => props.disabled, (val) => {
-      if (!popperInstance.value) return
-      if (val) {
-        popperInstance.value.disable()
-      } else {
-        popperInstance.value.enable()
-      }
-    })
-
-    watchEffect(() => {
-      if (!popperInstance.value) return
-      popperInstance.value.setProps({
-        trigger: convertTrigger(props.trigger),
-        placement: props.placement
-      })
-    })
-  }
-
-  return {
-    createPopper,
-    setupWatchers,
-    popperInstance
-  }
-}
-
 export const useStyles = (props: DropdownProps) => {
   const computedStyle = computed(() => {
     return props.maxHeight ? {
@@ -133,7 +56,13 @@ export const useStyles = (props: DropdownProps) => {
   }
 }
 
-export const useEvents = () => {
+export const useDropdown = (
+  props: DropdownProps,
+  emit: SetupContext<EmitEvents[]>['emit'],
+) => {
+  const popperInstance = ref<Instance>()
+  const popperEl = ref<HTMLElement>()
+  const referenceEl = ref<HTMLElement>()
   const highlighted = ref<ItemProxy>()
   const items = ref<ItemProxy[]>([])
 
@@ -153,35 +82,111 @@ export const useEvents = () => {
     })
   }
 
-  const onKeyDown = (key: 'up' | 'down', index?: number) => {
+  const navigateMenuItem = (key: 'up' | 'down', index?: number) => {
     const idx = index || items.value.findIndex(e => e === highlighted.value)
 
     if (key === 'up') {
-      if (idx <= 0) return
+      if (idx <= 0) {
+        if (!highlighted.value) {
+          setHighlightedItem(items.value[items.value.length - 1])
+        }
+
+        return
+      }
       if (items.value[idx - 1].disabled) {
-        onKeyDown('up', idx - 1)
+        navigateMenuItem('up', idx - 1)
       } else {
         setHighlightedItem(items.value[idx - 1])
       }
     } else {
       if (idx >= items.value.length - 1) return
       if (items.value[idx + 1].disabled) {
-        onKeyDown('down', idx + 1)
+        navigateMenuItem('down', idx + 1)
       } else {
         setHighlightedItem(items.value[idx + 1])
       }
     }
   }
 
-  const onMouseLeave = () => {
+  const clearHighlightState = () => {
     resetItemHighlight()
     highlighted.value = undefined
   }
 
+  const selectItem = () => {
+    if (highlighted.value) {
+      highlighted.value.handleClick()
+    }
+  }
+
+  const closeMenu = () => {
+    popperInstance.value?.hide()
+  }
+
+  const handleMenuHide = (instance: Instance) => {
+    emit('before-hide', instance)
+    clearHighlightState()
+  }
+
+  const { computedStyle } = useStyles(props)
+
+  onMounted(() => {
+    const option: Partial<CustomProps & Props> = {
+      trigger: convertTrigger(props.trigger),
+      hideOnClick: true,
+      theme: 'light',
+      classes: [
+        'sui-popper', 'sui-popper--dropdown'
+      ],
+      content: popperEl.value,
+      onShow: (instance) => {
+        emit('before-show', instance)
+      },
+      onHide: (instance) => {
+        handleMenuHide(instance)
+      },
+      onHidden: (instance) => {
+        emit('after-hide', instance)
+      },
+      onShown: (instance) => {
+        emit('after-show', instance)
+      }
+    }
+
+    popperInstance.value = tippy(referenceEl.value as HTMLElement, {
+      ...baseConfig,
+      ...option
+    })
+
+    watch(() => props.disabled, (val) => {
+      if (!popperInstance.value) return
+      if (val) {
+        popperInstance.value.disable()
+      } else {
+        popperInstance.value.enable()
+      }
+    })
+
+    watchEffect(() => {
+      if (!popperInstance.value) return
+      popperInstance.value.setProps({
+        trigger: convertTrigger(props.trigger),
+        placement: props.placement
+      })
+    })
+  })
+
   return {
+    computedStyle,
+    clearHighlightState,
     onItemCreated,
     setHighlightedItem,
-    onKeyDown,
-    onMouseLeave
+    navigateMenuItem,
+    selectItem,
+    closeMenu,
+
+    referenceEl,
+    popperEl,
+    popperInstance
   }
 }

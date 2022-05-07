@@ -52,12 +52,12 @@ export default defineComponent({
 
     dropdown.onItemCreated(instance.proxy as unknown as ItemProxy)
 
-    const handleClick = (evt: Event) => {
+    const handleClick = () => {
       if (props.disabled) return
       if (props.command) {
         dropdown.commandHandler(props.command)
       }
-      ctx.emit('click', evt)
+      ctx.emit('click')
     }
 
     const handleMouseEnter = () => {

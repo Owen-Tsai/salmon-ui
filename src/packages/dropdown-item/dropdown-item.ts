@@ -6,5 +6,6 @@ export interface IDropdownContext {
 
 export type ItemProxy = {
   highlighted: boolean,
-  disabled: boolean
+  disabled: boolean,
+  handleClick: () => void
 }
