@@ -5,6 +5,7 @@
     @keydown.up.prevent="navigateMenuItem('up')"
     @keydown.enter="selectItem"
     @keydown.esc.stop.prevent="closeMenu"
+    @keydown.tab="closeMenu"
   >
     <div
       ref="referenceEl"
