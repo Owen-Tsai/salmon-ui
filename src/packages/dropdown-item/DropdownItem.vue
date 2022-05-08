@@ -57,6 +57,7 @@ export default defineComponent({
       if (props.command) {
         dropdown.commandHandler(props.command)
       }
+      dropdown.popper.value.hide()
       ctx.emit('click')
     }
 

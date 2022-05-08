@@ -60,7 +60,7 @@ export const useDropdown = (
   props: DropdownProps,
   emit: SetupContext<EmitEvents[]>['emit'],
 ) => {
-  const popperInstance = ref<Instance>()
+  const popper = ref<Instance>()
   const popperEl = ref<HTMLElement>()
   const referenceEl = ref<HTMLElement>()
   const highlighted = ref<ItemProxy>()
@@ -113,14 +113,22 @@ export const useDropdown = (
     highlighted.value = undefined
   }
 
-  const selectItem = () => {
-    if (highlighted.value) {
-      highlighted.value.handleClick()
+  const handleEnterPressed = () => {
+    if (!popper.value?.state.isShown) {
+      console.log('should show')
+      popper.value?.show()
+    } else {
+      if (highlighted.value) {
+        highlighted.value.handleClick()
+      }
+      
+      popper.value?.hide()
     }
   }
 
   const closeMenu = () => {
-    popperInstance.value?.hide()
+    console.log('close menu')
+    popper.value?.hide()
   }
 
   const handleMenuHide = (instance: Instance) => {
@@ -153,23 +161,23 @@ export const useDropdown = (
       }
     }
 
-    popperInstance.value = tippy(referenceEl.value as HTMLElement, {
+    popper.value = tippy(referenceEl.value as HTMLElement, {
       ...baseConfig,
       ...option
     })
 
     watch(() => props.disabled, (val) => {
-      if (!popperInstance.value) return
+      if (!popper.value) return
       if (val) {
-        popperInstance.value.disable()
+        popper.value.disable()
       } else {
-        popperInstance.value.enable()
+        popper.value.enable()
       }
     })
 
     watchEffect(() => {
-      if (!popperInstance.value) return
-      popperInstance.value.setProps({
+      if (!popper.value) return
+      popper.value.setProps({
         trigger: convertTrigger(props.trigger),
         placement: props.placement
       })
@@ -182,11 +190,11 @@ export const useDropdown = (
     onItemCreated,
     setHighlightedItem,
     navigateMenuItem,
-    selectItem,
+    handleEnterPressed,
     closeMenu,
 
     referenceEl,
     popperEl,
-    popperInstance
+    popper
   }
 }

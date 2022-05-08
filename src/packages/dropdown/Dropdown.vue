@@ -3,7 +3,7 @@
     class="sui-dropdown"
     @keydown.down.prevent="navigateMenuItem('down')"
     @keydown.up.prevent="navigateMenuItem('up')"
-    @keydown.enter="selectItem"
+    @keydown.enter.prevent="handleEnterPressed"
     @keydown.esc.stop.prevent="closeMenu"
     @keydown.tab="closeMenu"
   >
@@ -50,28 +50,31 @@ export default defineComponent({
       computedStyle,
       onItemCreated,
       navigateMenuItem,
-      selectItem,
+      handleEnterPressed,
       setHighlightedItem,
       referenceEl,
-      popperEl
+      popperEl,
+      popper
     } = useDropdown(props, emit)
 
     // provide
     provide('dropdown', {
       onItemCreated,
-      setHighlightedItem, 
-      commandHandler
+      setHighlightedItem,
+      commandHandler,
+      popper
     })
 
     return {
       referenceEl,
       popperEl,
+      popper,
 
       commandHandler,
       computedStyle,
       navigateMenuItem,
       clearHighlightState,
-      selectItem,
+      handleEnterPressed,
       closeMenu
     }
   }
