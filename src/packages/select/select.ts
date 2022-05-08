@@ -9,7 +9,8 @@ import {
   watch,
   onMounted,
   provide,
-  computed
+  computed,
+StyleValue
 } from 'vue'
 
 import tippy, {
@@ -51,7 +52,7 @@ const opts: Partial<Props & CustomProps> = {
   sticky: true,
 }
 
-const suffixRotateCls = 'select-suffix-rotate'
+const expandCls = 'is-expanded'
 
 export const useSelect = (
   props: SelectProps,
@@ -63,12 +64,15 @@ export const useSelect = (
   const selected = ref<OptionModel | OptionModel[]>([])
   const label = ref('')
 
+  const highlighted = ref<IOptionProxy>()
+
   const inputModel = ref('')
   const inputPlaceholder = ref('')
   const isComposing = ref(false)
 
   const referenceEl = ref<HTMLElement>()
   const popperEl = ref<HTMLElement>()
+  const tagsEl = ref<HTMLElement>()
   const popperInstance = ref<Instance>()
 
   const filteredOptions = computed(() => {
@@ -81,6 +85,20 @@ export const useSelect = (
     }
 
     return res
+  })
+
+  const menuWidth = computed(() => {
+    if (referenceEl.value) {
+      return window.getComputedStyle(referenceEl.value)['width']
+    }
+
+    return '0'
+  })
+
+  const filterInputStyle = computed<StyleValue>(() => {
+    return tagsEl.value
+      ? { marginLeft: window.getComputedStyle(tagsEl.value)['width'] }
+      : {}
   })
 
   const onOptionCreate = (proxy: IOptionProxy) => {
@@ -109,6 +127,7 @@ export const useSelect = (
       }
     }
 
+
     emit('update:modelValue', selected.value)
     if (!props.multiple) {
       popperInstance.value?.hide()
@@ -128,6 +147,7 @@ export const useSelect = (
         inputPlaceholder.value = label.value
       }
     }
+
   }
 
   const handleTagClose = () => {
@@ -152,10 +172,10 @@ export const useSelect = (
   }
 
   const onPopperShow = () => {
-    referenceEl.value?.classList.add(suffixRotateCls)
+    referenceEl.value?.classList.add(expandCls)
   }
   const onPopperHide = () => {
-    referenceEl.value?.classList.remove(suffixRotateCls)
+    referenceEl.value?.classList.remove(expandCls)
     if (props.filterable) {
       if (props.multiple) {
         inputModel.value = ''
@@ -207,6 +227,7 @@ export const useSelect = (
     options,
     cachedOptions,
     filteredOptions,
+    menuWidth,
     selected,
     label,
     inputModel,

@@ -1,0 +1,99 @@
+@use 'sass:map';
+@use 'common/var.scss' as *;
+@use 'mixins/popper.scss';
+@use 'mixins/main.scss';
+
+.sui-select {
+  $ns: '.sui-select';
+  $size: map.get($component-common-sizes, 'base');
+  $size-sm: map.get($component-common-sizes, 'small');
+  $size-lg: map.get($component-common-sizes, 'large');
+  $border-color: map.get($border-colors, 'base');
+
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
+
+  &__menu {
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin: 0;
+    padding: 8px;
+
+    #{$ns}__option {
+      @include main.use-flex(false);
+      padding: 8px;
+      cursor: pointer;
+      border-radius: map.get($border-radiuses, 'base');
+
+      &:hover {
+        background-color: map.get($colors, primary, 'light-6');
+        color: map.get($colors, primary, 'base');
+      }
+
+      &.is-danger:hover {
+        background-color: map.get($colors, error, 'light-6');
+        color: map.get($colors, error, 'base');
+      }
+
+      &.is-divided {
+        margin-top: 16px;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: -8px;
+          left: 0;
+          width: 100%;
+          border-top: 1px solid $border-color;
+        }
+      }
+
+      &.is-disabled {
+        cursor: not-allowed;
+        background-color: map.get($surface-colors, 'light-3');
+        color: map.get($text-colors, 'placeholder');
+      }
+    }
+  }
+
+  &__trigger {
+    position: relative;
+    &.is-expanded {
+      #{$ns}__menu-arrow {
+        transition: transform map.get($durations, 'fast');
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__tags {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    .sui-tag + .sui-tag {
+      margin-left: 4px;
+    }
+  }
+}
+
+.sui-popper--select {
+  transition-timing-function: ease-in-out;
+  box-shadow: map.get($box-shadows, 'dark');
+
+  @include popper.use-placement;
+
+  &[data-state=hidden] {
+    opacity: 0;
+    transform: scale(95%);
+  }
+
+  &[data-state=visible] {
+    opacity: 1;
+    transform: scale(100%);
+  }
+}
