@@ -14,6 +14,7 @@
     :autofocus="autofocus"
     :type="nativeType"
     @click="handleClick"
+    @focus="handleFocus"
   >
     <s-icon v-if="!loading && icon && !affixIcon">
       <component :is="icon"></component>
@@ -48,10 +49,12 @@ import props from './button'
 import {
   computed,
   defineComponent,
-  inject
+  inject,
+  getCurrentInstance,
+  ComponentInternalInstance
 } from 'vue'
 
-import type { ButtonGroupProps } from '@/packages/button-group/button-group'
+import type { ButtonGroupContext } from '@/packages/button-group/button-group'
 
 import { Loader } from '@salmon-ui/icons'
 
@@ -65,21 +68,31 @@ export default defineComponent({
   emits: ['click'],
   setup(props, ctx) {
     // injected
-    const buttonGroupProvider: ButtonGroupProps = inject(
+    const group: ButtonGroupContext = inject(
       'buttonGroupContext',
-      undefined as ButtonGroupProps
+      undefined as ButtonGroupContext
     )
 
     // computed
     const computedSize = computed(() => {
-      return buttonGroupProvider?.size || props.size
+      return group?.size || props.size
     })
     const computedType = computed(() => {
-      return buttonGroupProvider?.type || props.type
+      return group?.type || props.type
     })
     const computedShape = computed(() => {
-      return buttonGroupProvider?.shape || props.shape
+      return group?.shape || props.shape
     })
+
+    const self = getCurrentInstance()
+
+    group?.onCreated(self as ComponentInternalInstance)
+
+    const handleFocus = () => {
+      if (group) {
+        group.focused.value = self as ComponentInternalInstance
+      }
+    }
 
     const handleClick = (evt: Event) => {
       ctx.emit('click', evt)
@@ -89,7 +102,8 @@ export default defineComponent({
       computedSize,
       computedType,
       computedShape,
-      handleClick
+      handleClick,
+      handleFocus
     }
   }
 })
