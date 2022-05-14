@@ -5,12 +5,12 @@ import {
   ExtractPropTypes,
   Component,
   SetupContext,
+  StyleValue,
   ref,
   watch,
   onMounted,
   provide,
   computed,
-StyleValue
 } from 'vue'
 
 import tippy, {
@@ -59,12 +59,12 @@ export const useSelect = (
   emit: SetupContext<('update:modelValue' | 'change')[]>['emit']
 ) => {
   const options = ref<Map<OptionModel, IOptionProxy>>(new Map())
-  const cachedOptions = ref<Map<OptionModel, IOptionProxy>>(new Map())
-
-  const selected = ref<OptionModel | OptionModel[]>([])
-  const label = ref('')
+  const filteredOptionCount = ref(0)
 
   const highlighted = ref<IOptionProxy>()
+  const selected = ref<OptionModel | OptionModel[]>([])
+
+  const label = ref('')
 
   const inputModel = ref('')
   const inputPlaceholder = ref('')
@@ -74,18 +74,6 @@ export const useSelect = (
   const popperEl = ref<HTMLElement>()
   const tagsEl = ref<HTMLElement>()
   const popperInstance = ref<Instance>()
-
-  const filteredOptions = computed(() => {
-    const proxies = options.value.values()
-    const res: IOptionProxy[] = []
-    for (const val of proxies) {
-      if (val.renderedLabel.includes(inputModel.value)) {
-        res.push(val)
-      }
-    }
-
-    return res
-  })
 
   const menuWidth = computed(() => {
     if (referenceEl.value) {
@@ -103,9 +91,6 @@ export const useSelect = (
 
   const onOptionCreate = (proxy: IOptionProxy) => {
     options.value.set(proxy.value, proxy)
-    if (props.allowCreate) {
-      cachedOptions.value.set(proxy.value, proxy)
-    }
   }
 
   const onOptionClick = (proxy: IOptionProxy) => {
@@ -195,9 +180,9 @@ export const useSelect = (
   })
 
   onMounted(() => {
+    console.log(popperEl.value, referenceEl.value)
     // create popper
     popperInstance.value = tippy(referenceEl.value as Element, {
-      ...baseConfig,
       ...opts,
       content: popperEl.value,
       onShow: onPopperShow,
@@ -225,8 +210,6 @@ export const useSelect = (
 
   return {
     options,
-    cachedOptions,
-    filteredOptions,
     menuWidth,
     selected,
     label,
@@ -237,6 +220,7 @@ export const useSelect = (
     popperEl,
     handleTagClose,
     handleInputFocus,
-    handleComposition
+    handleComposition,
+    filterInputStyle
   }
 }

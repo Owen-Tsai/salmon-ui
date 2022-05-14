@@ -72,15 +72,14 @@ const useStates = (
   const isHidden = ref(false)
 
   const renderedLabel = computed<string>(() => {
-    if (!ctx.slots.default) {
-      return props.label || String(props.value)
+    if (ctx.slots.default) {
+      if (typeof ctx.slots.default()[0]?.children === 'string') {
+        return ctx.slots.default()[0].children as string
+      }
     }
+    
 
-    if (typeof ctx.slots.default()[0]?.children === 'string') {
-      return ctx.slots.default()[0].children as string
-    }
-
-    return ''
+    return props.label || String(props.value)
   })
 
   const isSelected = computed(() => {

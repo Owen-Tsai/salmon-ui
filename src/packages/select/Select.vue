@@ -1,5 +1,8 @@
 <template>
-  <div class="sui-select">
+  <div
+    ref="referenceEl"
+    class="sui-select"
+  >
     <!-- reference -->
     <div
       v-if="multiple"
@@ -30,34 +33,17 @@
         v-model="inputModel"
         :placeholder="inputPlaceholder"
         :disabled="disabled"
-        :readonly="isReadonly"
         :style="filterInputStyle"
-        @focus="handleFocus"
-        @blur="handleBlur"
-        @keydown.down.prevent="highlightOption(1)"
-        @keydown.up.prevent="highlightOption(-1)"
-        @keydown.esc.stop.prevent="closeMenu"
-        @keydown.enter.stop.prevent="selectOption"
-        @keydown.delete="deletePrevTag"
-        @keydown.tab="closeMenu"
       >
     </div>
 
     <!-- reference -->
     <s-input
-      ref="referenceEl"
       v-model="label"
       class="sui-select__input"
       :placeholder="placeholder"
-      :readonly="isReadonly"
+      :readonly="!filterable"
       :disabled="disabled"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @keydown.down.prevent="highlightOption(1)"
-      @keydown.up.prevent="highlightOption(-1)"
-      @keydown.esc.stop.prevent="closeMenu"
-      @keydown.enter.stop.prevent="selectOption"
-      @keydown.tab="closeMenu"
     >
       <template #suffix>
         <s-icon class="sui-select__menu-arrow">
@@ -82,75 +68,51 @@
     >
       <ul class="sui-select__menu">
         <slot></slot>
-        <template v-if="allowCreate && filteredOptions.length <= 0">
-          <s-option
-            :label="inputModel"
-            :value="inputModel"
-          ></s-option>
-        </template>
+        <!-- <template v-if="allowCreate && filteredOptions.length <= 0">
+          TODO: additional option
+        </template> -->
       </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default {
+  name: 'SSelect'
+}
+</script>
+
+<script lang="ts" setup>
+import {
+  defineProps,
+  defineEmits
+} from 'vue'
 import SInput from '../input'
 import SIcon from '../icon'
 import STag from '../tag'
-import SOption from '../select-option'
 import { ArrowDownS } from '@salmon-ui/icons'
 
 import {
-  props,
+  props as selectProps,
   useSelect
 } from './select'
 
-export default defineComponent({
-  name: 'SSelect',
-  components: {
-    SInput,
-    SIcon,
-    STag,
-    SOption,
-    ArrowDownS
-  },
-  props,
-  emits: ['update:modelValue', 'change'],
-  setup(props, { emit }) {
-    const {
-      cachedOptions,
-      filteredOptions,
-      handleComposition,
-      handleInputFocus,
-      handleTagClose,
-      inputModel,
-      inputPlaceholder,
-      isComposing,
-      label,
-      menuWidth,
-      options,
-      popperEl,
-      referenceEl,
-      selected
-    } = useSelect(props, emit)
+const props = defineProps(selectProps)
+const emit = defineEmits(['update:modelValue', 'change'])
 
-    return {
-      cachedOptions,
-      filteredOptions,
-      handleComposition,
-      handleInputFocus,
-      handleTagClose,
-      inputModel,
-      inputPlaceholder,
-      isComposing,
-      label,
-      menuWidth,
-      options,
-      popperEl,
-      referenceEl,
-      selected,
-    }
-  }
-})
+const {
+  handleComposition,
+  handleInputFocus,
+  handleTagClose,
+  inputModel,
+  inputPlaceholder,
+  isComposing,
+  label,
+  menuWidth,
+  options,
+  popperEl,
+  referenceEl,
+  selected,
+  filterInputStyle
+} = useSelect(props, emit)
 </script>

@@ -1,6 +1,11 @@
 <template>
   <demo name="Select">
-    
+    <s-select v-model="model">
+      <s-option
+        v-for="option in opts" :key="option.value"
+        :value="option.value"
+      >{{ option.label }}</s-option>
+    </s-select>
   </demo>
 </template>
 
