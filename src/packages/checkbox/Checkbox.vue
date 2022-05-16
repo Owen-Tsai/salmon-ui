@@ -22,8 +22,8 @@
         :true-value="checkedValue"
         :false-value="uncheckedValue"
         @change="handleChange"
-        @focus="focus = true"
-        @blur="focus = false"
+        @focus="onFocus"
+        @blur="onBlur"
       >
       <input
         v-else
@@ -36,8 +36,8 @@
         :value="value"
         :disabled="isDisabled"
         @change="handleChange"
-        @focus="focus = true"
-        @blur="focus = false"
+        @focus="onFocus"
+        @blur="onBlur"
       >
     </span>
 
@@ -69,7 +69,9 @@ export default defineComponent({
       model,
       handleChange,
       computedName,
-      focus
+      focus,
+      onBlur,
+      onFocus
     } = useCheckbox(props, emit)
 
     return {
@@ -79,7 +81,9 @@ export default defineComponent({
       computedName,
       focus,
       model,
-      handleChange
+      handleChange,
+      onBlur,
+      onFocus
     }
   }
 })

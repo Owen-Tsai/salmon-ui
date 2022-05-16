@@ -3,6 +3,8 @@
     class="sui-checkbox-group"
     role="group"
     aria-label="checkbox-group"
+    @keydown.left.prevent="focusPrev"
+    @keydown.right.prevent="focusNext"
   >
     <slot></slot>
   </div>
@@ -10,11 +12,14 @@
 
 <script lang="ts">
 import {
+  ComponentInternalInstance,
   defineComponent,
   provide,
   nextTick,
   toRefs,
-  reactive
+  reactive,
+  ref,
+  computed,
 } from 'vue'
 
 import {
@@ -28,12 +33,36 @@ export default defineComponent({
   props: props,
   emits: ['update:modelValue', 'change'],
   setup(props, ctx) {
-    const changeEvent = (val: Model) => {
-      console.log(val, 'changed')
+    const focused = ref<ComponentInternalInstance>()
+    const els = ref<ComponentInternalInstance[]>([])
+
+    const focusedIndex = computed(() => {
+      return els.value.findIndex(e => e.uid === focused.value?.uid)
+    })
+
+    const focusPrev = () => {
+      if (focusedIndex.value <= 0) return
+      els.value[focusedIndex.value - 1].proxy?.$el.focus()
+    }
+
+    const focusNext = () => {
+      if (focusedIndex.value >= els.value.length - 1) return
+      els.value[focusedIndex.value + 1].proxy?.$el.focus()
+    }
+
+    const onCreate = (el: ComponentInternalInstance) => {
+      els.value.push(el)
+    }
+    
+    const onChange = (val: Model) => {
       ctx.emit('update:modelValue', val)
       nextTick(() => {
         ctx.emit('change', val)
       })
+    }
+
+    const onFocus = (v: ComponentInternalInstance) => {
+      focused.value = v
     }
 
     const id = generateId()
@@ -42,8 +71,15 @@ export default defineComponent({
       ...toRefs(props),
       name: props.name || `checkbox-group-${id}`,
       group: 'checkbox-group',
-      changeEvent
+      onFocus,
+      onChange,
+      onCreate
     }))
+
+    return {
+      focusPrev,
+      focusNext
+    }
   }
 })
 </script>

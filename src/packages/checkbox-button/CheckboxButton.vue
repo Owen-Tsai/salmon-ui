@@ -24,8 +24,8 @@
       :true-value="checkedValue"
       :false-value="uncheckedValue"
       @change="handleChange"
-      @focus="focus = true"
-      @blur="focus = false"
+      @focus="onFocus"
+      @blur="onBlur"
     >
     <input
       v-else
@@ -38,8 +38,8 @@
       :value="value"
       :disabled="isDisabled"
       @change="handleChange"
-      @focus="focus = true"
-      @blur="focus = false"
+      @focus="onFocus"
+      @blur="onBlur"
     >
     <span class="sui-checkbox-button__rect">
       <slot>{{ value }}</slot>
@@ -68,7 +68,9 @@ export default defineComponent({
       isDisabled,
       handleChange,
       size,
-      focus
+      focus,
+      onBlur,
+      onFocus
     } = useCheckbox(props, emit)
 
     return {
@@ -79,7 +81,9 @@ export default defineComponent({
       isChecked,
       isDisabled,
       handleChange,
-      size
+      size,
+      onBlur,
+      onFocus
     }
   }
 })

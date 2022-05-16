@@ -4,9 +4,12 @@ import {
   PropType,
   SetupContext,
   inject,
+  ComponentInternalInstance,
   computed,
   ref,
-  nextTick
+  nextTick,
+  getCurrentInstance,
+  onMounted,
 } from 'vue'
 import {
   CheckboxGroupProps
@@ -33,8 +36,10 @@ export type CheckboxProps = ExtractPropTypes<typeof props>
 
 type CheckboxGroupContext = CheckboxGroupProps & {
   group: 'checkbox-group',
-  changeEvent: (e: unknown) => void
-} | undefined
+  onFocus: (e: ComponentInternalInstance) => void,
+  onChange: (e: unknown) => void,
+  onCreate: (e: ComponentInternalInstance) => void
+}
 
 const emitTypes = ['update:modelValue', 'change'] as const
 
@@ -43,13 +48,10 @@ type EmitType = typeof emitTypes[number]
 export const useGroup = () => {
   const groupContext: CheckboxGroupContext = inject(
     'checkboxGroup',
-    undefined as CheckboxGroupContext
+    {} as CheckboxGroupContext
   )
 
   const isGroup = computed(() =>{
-    if (groupContext) {
-      console.log(groupContext.group)
-    }
     return groupContext?.group === 'checkbox-group'
   })
 
@@ -81,9 +83,7 @@ export const useModel = (
         : (props.modelValue ?? selfModel.value)
     },
     set(val: unknown) {
-      console.log(isGroup.value, 'group')
       if (isGroup.value && Array.isArray(val)) {
-        console.log('is group')
         exceedLimit.value = false
 
         if(groupContext?.min && val.length < groupContext?.min) {
@@ -93,9 +93,7 @@ export const useModel = (
           exceedLimit.value = true
         }
 
-        console.log(exceedLimit)
-
-        exceedLimit.value === false && groupContext?.changeEvent(val)
+        exceedLimit.value === false && groupContext?.onChange(val)
       } else {
         emit('update:modelValue', val)
         selfModel.value = val as boolean
@@ -165,7 +163,7 @@ const useStates = (
   return {
     focus,
     isDisabled,
-    isChecked
+    isChecked,
   }
 }
 
@@ -195,7 +193,8 @@ export const useCheckbox = (
   props: CheckboxProps,
   emit: SetupContext<EmitType[]>['emit']
 ) => {
-  const { isGroup } = useGroup()
+  const { isGroup, groupContext } = useGroup()
+  const instance = getCurrentInstance() as ComponentInternalInstance
 
   const {
     model,
@@ -212,6 +211,17 @@ export const useCheckbox = (
     computedName,
     size
   } = useProps(props)
+
+  const onFocus = () => {
+    focus.value = true
+    if (isGroup.value) {
+      groupContext.onFocus(instance)
+    }
+  }
+
+  const onBlur = () => {
+    focus.value = false
+  }
 
   if (!isGroup.value && props.modelValue === undefined) {
     error(
@@ -230,6 +240,12 @@ export const useCheckbox = (
     })
   }
 
+  onMounted(() => {
+    if (isGroup.value) {
+      groupContext?.onCreate(instance)
+    }
+  })
+
   return {
     isChecked,
     isDisabled,
@@ -237,6 +253,8 @@ export const useCheckbox = (
     computedName,
     size,
     focus,
+    onFocus,
+    onBlur,
     model,
     handleChange
   }
