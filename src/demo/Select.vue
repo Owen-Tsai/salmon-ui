@@ -1,6 +1,15 @@
 <template>
   <demo name="Select">
+    <p>value is {{ model }}</p>
     <s-select v-model="model">
+      <s-option
+        v-for="option in opts" :key="option.value"
+        :value="option.value"
+      >{{ option.label }}</s-option>
+    </s-select>
+
+    <p>value is {{ model2 }}</p>
+    <s-select v-model="model2" filterable>
       <s-option
         v-for="option in opts" :key="option.value"
         :value="option.value"
@@ -15,7 +24,7 @@ import SOption from 'salmon-ui/select-option'
 import { ref } from 'vue'
 
 const model = ref('')
-const model2 = ref([])
+const model2 = ref()
 const opts = ref<Record<string, string>[]>([])
 
 setTimeout(() => {

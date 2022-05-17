@@ -57,6 +57,11 @@
         color: map.get($text-colors, 'placeholder');
       }
     }
+
+    .empty {
+      padding: 8px;
+      color: map.get($text-colors, 'placeholder');
+    }
   }
 
   &__trigger {

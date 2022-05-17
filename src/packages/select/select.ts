@@ -24,9 +24,9 @@ import {
   baseConfig
 } from '@/utils/popper'
 
-import {
-  IOptionProxy
-} from 'salmon-ui/select-option/option'
+import { IOptionProxy } from 'salmon-ui/select-option/option'
+
+import { throttle } from 'lodash'
 
 type SelectProps = ExtractPropTypes<typeof props>
 
@@ -59,7 +59,17 @@ export const useSelect = (
   emit: SetupContext<('update:modelValue' | 'change')[]>['emit']
 ) => {
   const options = ref<Map<OptionModel, IOptionProxy>>(new Map())
-  const filteredOptionCount = ref(0)
+
+  const noOption = computed(() => {
+    let flag = true
+    options.value.forEach(e => {
+      if (!e.isHidden) {
+        flag = false
+      }
+    })
+
+    return flag
+  })
 
   const highlighted = ref<IOptionProxy>()
   const selected = ref<OptionModel | OptionModel[]>([])
@@ -144,6 +154,38 @@ export const useSelect = (
   const handleComposition = (s: 'start' | 'end') => {
     isComposing.value = s === 'start'
   }
+
+  const onInput = throttle(() => {
+    if (isComposing.value) return
+
+    options.value.forEach(option => {
+      if (!option.renderedLabel.includes(label.value)) {
+        option.isHidden = true
+      } else {
+        option.isHidden = false
+      }
+    })
+  }, 50)
+
+  const resetOptionVisibility = () => {
+    options.value.forEach(option => {
+      option.isHidden = false
+    })
+  }
+
+  const onInputFocus = () => {
+    if (props.filterable) {
+      inputPlaceholder.value = label.value
+      label.value = ''
+    }
+  }
+
+  const onInputBlur = () => {
+    if (!validateInputModel()) {
+      setLabel()
+      resetOptionVisibility()
+    }
+  }
   
   const validateInputModel = () => {
     const labels = [...options.value.values()].map((option) => option.renderedLabel)
@@ -216,6 +258,10 @@ export const useSelect = (
     inputModel,
     inputPlaceholder,
     isComposing,
+    onInput,
+    onInputFocus,
+    onInputBlur,
+    noOption,
     referenceEl,
     popperEl,
     handleTagClose,

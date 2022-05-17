@@ -47,7 +47,6 @@ export default defineComponent({
       isHidden,
       isSelected,
       isMultipleSelect,
-      changeVisibility,
       onClick,
       renderedLabel
     } = useOption(props, ctx)
@@ -58,7 +57,6 @@ export default defineComponent({
       isHidden,
       isMultipleSelect,
       isSelected,
-      changeVisibility,
       onClick,
       renderedLabel
     }

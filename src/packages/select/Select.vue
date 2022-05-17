@@ -44,6 +44,11 @@
       :placeholder="placeholder"
       :readonly="!filterable"
       :disabled="disabled"
+      @focus="onInputFocus"
+      @blur="onInputBlur"
+      @input="onInput"
+      @compositionstart="isComposing = true"
+      @compositionend="isComposing = false"
     >
       <template #suffix>
         <s-icon class="sui-select__menu-arrow">
@@ -68,9 +73,11 @@
     >
       <ul class="sui-select__menu">
         <slot></slot>
-        <!-- <template v-if="allowCreate && filteredOptions.length <= 0">
-          TODO: additional option
-        </template> -->
+        <template v-if="noOption">
+          <div class="empty">
+            暂无选项
+          </div>
+        </template>
       </ul>
     </div>
   </div>
@@ -90,6 +97,7 @@ import {
 import SInput from '../input'
 import SIcon from '../icon'
 import STag from '../tag'
+import SOption from '../select-option'
 import { ArrowDownS } from '@salmon-ui/icons'
 
 import {
@@ -107,7 +115,11 @@ const {
   inputModel,
   inputPlaceholder,
   isComposing,
+  onInput,
+  onInputFocus,
+  onInputBlur,
   label,
+  noOption,
   menuWidth,
   options,
   popperEl,

@@ -135,25 +135,12 @@ export const useOption = (
     renderedLabel
   } = useStates(props, select, ctx)
 
-  const changeVisibility = (word: string) => {
-    if (select.isComposing || word.trim() === '' || !word) {
-      isHidden.value = false
-      return
-    }
-
-    isHidden.value = renderedLabel.value.includes(word)
-  }
-
   const onClick = () => {
     if (props.disabled) return
     select.onOptionClick(vm.proxy as unknown as IOptionProxy)
 
     ctx.emit('click')
   }
-
-  watch(() => select.inputModel, val => {
-    changeVisibility(val)
-  })
 
   // watch(() => select.isInputComposing, val => {
   //   if (!val) {
@@ -176,8 +163,6 @@ export const useOption = (
     isSelected,
     isMultipleSelect,
     renderedLabel,
-
-    changeVisibility,
     onClick
   }
 }
