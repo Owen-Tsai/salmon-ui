@@ -15,6 +15,8 @@
         :value="option.value"
       >{{ option.label }}</s-option>
     </s-select>
+
+    <p>multiple values: {{ model3 }}</p>
   </demo>
 </template>
 
@@ -23,8 +25,9 @@ import SSelect from 'salmon-ui/select'
 import SOption from 'salmon-ui/select-option'
 import { ref } from 'vue'
 
-const model = ref('')
-const model2 = ref()
+const model = ref('AAA')
+const model2 = ref('AAA')
+const model3 = ref([])
 const opts = ref<Record<string, string>[]>([])
 
 setTimeout(() => {

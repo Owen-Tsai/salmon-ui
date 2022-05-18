@@ -11,6 +11,8 @@ import {
   onMounted,
   provide,
   computed,
+  nextTick,
+watchEffect
 } from 'vue'
 
 import tippy, {
@@ -101,6 +103,9 @@ export const useSelect = (
 
   const onOptionCreate = (proxy: IOptionProxy) => {
     options.value.set(proxy.value, proxy)
+    nextTick(() => {
+      setLabel()
+    })
   }
 
   const onOptionClick = (proxy: IOptionProxy) => {
@@ -122,7 +127,6 @@ export const useSelect = (
       }
     }
 
-
     emit('update:modelValue', selected.value)
     if (!props.multiple) {
       popperInstance.value?.hide()
@@ -136,13 +140,7 @@ export const useSelect = (
     } else {
       const val = selected.value
       label.value = options.value.get(val as OptionModel)?.renderedLabel as string
-
-      if (props.filterable) {
-        inputModel.value = label.value
-        inputPlaceholder.value = label.value
-      }
     }
-
   }
 
   const handleTagClose = () => {
@@ -247,8 +245,11 @@ export const useSelect = (
     }
   })
 
-  watch(() => props.modelValue, () => {
-    setLabel()
+  watchEffect(() => {
+    if (props.modelValue) {
+      selected.value = props.modelValue
+      setLabel()
+    }
   })
 
   return {
