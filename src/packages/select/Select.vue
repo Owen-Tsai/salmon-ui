@@ -41,14 +41,14 @@
     <s-input
       v-model="label"
       class="sui-select__input"
-      :placeholder="placeholder"
+      :placeholder="inputPlaceholder"
       :readonly="!filterable"
       :disabled="disabled"
       @focus="onInputFocus"
-      @blur="onInputBlur"
       @input="onInput"
       @compositionstart="isComposing = true"
       @compositionend="isComposing = false"
+      @compositionupdate="onInput"
     >
       <template #suffix>
         <s-icon class="sui-select__menu-arrow">

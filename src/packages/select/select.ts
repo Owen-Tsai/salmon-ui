@@ -177,14 +177,12 @@ export const useSelect = (
     if (props.filterable) {
       inputPlaceholder.value = label.value
       label.value = ''
+      resetOptionVisibility()
     }
   }
 
   const onInputBlur = () => {
-    if (!validateInputModel()) {
-      setLabel()
-      resetOptionVisibility()
-    }
+    // TODO: for now we do nothing
   }
   
   const validateInputModel = () => {
@@ -207,7 +205,10 @@ export const useSelect = (
       if (props.multiple) {
         inputModel.value = ''
       } else {
-        inputModel.value = label.value
+        setLabel()
+        if (!validateInputModel()) {
+          resetOptionVisibility()
+        }
       }
     }
   }
