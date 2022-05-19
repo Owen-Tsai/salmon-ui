@@ -27,7 +27,7 @@
   box-sizing: border-box;
   border-radius: map.get($border-radiuses, 'base');
   vertical-align: middle;
-  font-weight: map.get($font-weights, 'medium');
+  font-weight: map.get($font-weights, 'base');
   transition: all map.get($durations, 'fast');
   user-select: none;
 
