@@ -28,7 +28,7 @@
 
     <br>
 
-    <s-button-group type="primary" size="large">
+    <s-button-group type="primary" size="small">
       <s-button>修改</s-button>
       <s-button>新增</s-button>
       <s-button danger>删除</s-button>

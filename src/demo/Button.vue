@@ -13,9 +13,12 @@
     <s-button shape="rounded" size="large">大号按钮</s-button>
     <s-button shape="rounded">中等尺寸</s-button>
     <s-button shape="rounded" size="small">小尺寸</s-button>
-    <s-button :icon="Heart">
-      爱你
-    </s-button>
+    <s-button shape="rounded" size="mini">mini尺寸</s-button>
+    <br>
+    <s-button :icon="Heart" size="large">爱你</s-button>
+    <s-button :icon="Heart">爱你</s-button>
+    <s-button :icon="Heart" size="small">爱你</s-button>
+    <s-button :icon="Heart" size="mini">爱你</s-button>
     <br>
     <s-button shape="circle" size="small">
       <s-icon>

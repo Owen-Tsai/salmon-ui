@@ -45,6 +45,11 @@
     padding: $padding-small;
     font-size: map.get($font-sizes, 'small');
   }
+  &--mini {
+    height: map.get($component-common-sizes, 'mini');
+    padding: $padding-small;
+    font-size: map.get($font-sizes, 'small');
+  }
 
   // shapes
   &--rounded {

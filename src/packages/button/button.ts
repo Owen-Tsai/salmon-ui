@@ -13,7 +13,7 @@ export const commonProps = {
     values: ['primary', 'outlined', 'text']
   } as const),
   size: buildProp({
-    values: ['large', 'small']
+    values: ['large', 'small', 'mini']
   } as const),
   shape: buildProp({
     values: ['circle', 'rounded']

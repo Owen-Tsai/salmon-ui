@@ -7,7 +7,7 @@
   $surface-color: map.get($colors, $type, 'light-6');
   $surface-color-dark: map.get($colors, $type, 'light-5');
   $light-color: map.get($colors, $type, 'light-4');
-  $dark-color: map.get($colors, $type, 'dark-1');
+  $dark-color: map.get($surface-colors, $type, 'dark-1');
 
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
@@ -102,6 +102,8 @@
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
   $disabled-color: map.get($text-colors, 'placeholder');
+  $surface-color: map.get($surface-colors, 'light-3');
+  $surface-color-dark: map.get($surface-colors, 'light-2');
 
   background-color: transparent;
   border-color: transparent;
@@ -110,19 +112,19 @@
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
       color: $light-color;
-      background-color: transparent;
-      border-color: transparent;
+      background-color: $surface-color;
+      border-color: $surface-color;
     }
     &:focus {
       color: $light-color;
       @include main.use-ring($base-color);
-      background-color: transparent;
-      border-color: transparent;
+      background-color: $surface-color;
+      border-color: $surface-color;
     }
     &:active {
       color: $dark-color;
-      background-color: transparent;
-      border-color: transparent;
+      background-color: $surface-color-dark;
+      border-color: $surface-color-dark;
     }
   }
   &.is-disabled {
