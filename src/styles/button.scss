@@ -7,6 +7,7 @@
 .sui-button {
   $padding: 0 15px;
   $padding-small: 0 12px;
+  $padding-mini: 0 8px;
   $ghost-hover: 0.16;
   $ghost-active: 0.32;
 
@@ -36,6 +37,21 @@
     cursor: not-allowed;
   }
 
+  // content
+  & > span {
+    @include main.use-inline-flex;
+    line-height: 0;
+  }
+  i.sui-icon {
+    font-size: map.get($font-sizes, 'medium');
+  }
+  i.sui-icon + span {
+    margin-left: 4px;
+  }
+  i.sui-icon.sui-icon--right {
+    margin-left: 4px;
+  }
+
   // size
   &--large {
     height: map.get($component-common-sizes, 'large');
@@ -47,8 +63,11 @@
   }
   &--mini {
     height: map.get($component-common-sizes, 'mini');
-    padding: $padding-small;
+    padding: $padding-mini;
     font-size: map.get($font-sizes, 'small');
+    i.sui-icon {
+      font-size: map.get($font-sizes, 'base');
+    }
   }
 
   // shapes
@@ -177,21 +196,6 @@
       position: absolute;
       background-color: rgba($color-white, $opacity-mod);
     }
-  }
-
-  // other fixes
-  & > span {
-    @include main.use-inline-flex;
-    line-height: 0;
-  }
-  i.sui-icon {
-    font-size: map.get($font-sizes, 'medium');
-  }
-  i.sui-icon + span {
-    margin-left: 4px;
-  }
-  i.sui-icon.sui-icon--right {
-    margin-left: 4px;
   }
 
   .loader.rotating {
