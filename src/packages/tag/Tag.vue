@@ -17,7 +17,7 @@
     >
       <s-icon
         class="sui-tag__close-token"
-        @click="handleClose"
+        @click.stop="handleClose"
       >
         <close></close>
       </s-icon>
