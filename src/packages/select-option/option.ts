@@ -3,6 +3,7 @@ import {
   ExtractPropTypes,
   SetupContext,
   ComponentInternalInstance,
+  Ref,
   computed,
   inject,
   ref,
@@ -41,9 +42,7 @@ export const props = {
 
 interface ISelectContext {
   props: ExtractPropTypes<typeof selectProps>,
-  isComposing: boolean,
-  selected: OptionModel | OptionModel[],
-  inputModel: string,
+  selected: Ref<OptionModel | OptionModel[]>,
   onOptionClick: (proxy: IOptionProxy) => void,
   onOptionCreate: (proxy: IOptionProxy) => void
 }
@@ -77,7 +76,6 @@ const useStates = (
         return ctx.slots.default()[0].children as string
       }
     }
-    
 
     return props.label || String(props.value)
   })
@@ -85,9 +83,9 @@ const useStates = (
   const isSelected = computed(() => {
     const val = props.uniqueId ? props.uniqueId : props.value
     if (select.props.multiple) {
-      return (select.selected as OptionModel[]).includes(val)
+      return (select.selected.value as OptionModel[])?.includes(val)
     } else {
-      return (select.selected as OptionModel) === val
+      return (select.selected.value as OptionModel) === val
     }
   })
 
@@ -95,7 +93,7 @@ const useStates = (
     if (
       select.props.multiple &&
       select.props.limit &&
-      (select.selected as OptionModel[]).length > select.props.limit &&
+      (select.selected.value as OptionModel[]).length >= select.props.limit &&
       !isSelected.value
     ) {
       return true
@@ -123,8 +121,6 @@ export const useOption = (
 ) => {
   const select = inject('select', {} as ISelectContext)
   const vm = getCurrentInstance() as ComponentInternalInstance
-
-  console.log(select)
   
   const {
     isHidden,
@@ -136,24 +132,14 @@ export const useOption = (
   } = useStates(props, select, ctx)
 
   const onClick = () => {
-    if (props.disabled) return
+    if (isDisabled.value) return
     select.onOptionClick(vm.proxy as unknown as IOptionProxy)
 
     ctx.emit('click')
   }
 
-  // watch(() => select.isInputComposing, val => {
-  //   if (!val) {
-  //     changeVisibility(select.inputModel)
-  //   }
-  // })
-
   onMounted(() => {
     select.onOptionCreate(vm.proxy as unknown as IOptionProxy)
-
-    if (select.props.modelValue && isSelected.value) {
-      onClick()
-    }
   })
 
   return {

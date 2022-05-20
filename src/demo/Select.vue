@@ -17,7 +17,22 @@
     </s-select>
 
     <p>multiple values: {{ model3 }}</p>
+    <s-select v-model="model3" multiple :tag-limit="2" :limit="3">
+      <s-option
+        v-for="option in opts" :key="option.value"
+        :value="option.value"
+      >{{ option.label }}</s-option>
+    </s-select>
+    
+    <p>multiple values {{ model3 }}</p>
+    <s-select v-model="model3" multiple filterable :tag-limit="2" :limit="3">
+      <s-option
+        v-for="option in opts" :key="option.value"
+        :value="option.value"
+      >{{ option.label }}</s-option>
+    </s-select>
   </demo>
+
 </template>
 
 <script lang="ts" setup>
@@ -27,7 +42,7 @@ import { ref } from 'vue'
 
 const model = ref('AAA')
 const model2 = ref('AAA')
-const model3 = ref([])
+const model3 = ref(['BBB', 'CCC'])
 const opts = ref<Record<string, string>[]>([])
 
 setTimeout(() => {

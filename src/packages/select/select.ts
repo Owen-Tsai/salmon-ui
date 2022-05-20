@@ -11,8 +11,7 @@ import {
   onMounted,
   provide,
   computed,
-  nextTick,
-watchEffect
+  nextTick
 } from 'vue'
 
 import tippy, {
@@ -42,7 +41,11 @@ export const props = {
   filterable: Boolean,
   limit: Number,
   prefixIcon: Object as PropType<Component>,
-  allowCreate: Boolean
+  allowCreate: Boolean,
+  tagLimit: {
+    type: Number,
+    default: 1
+  }
 }
 
 const opts: Partial<Props & CustomProps> = {
@@ -63,6 +66,8 @@ export const useSelect = (
   const options = ref<Map<OptionModel, IOptionProxy>>(new Map())
 
   const noOption = computed(() => {
+    if (!props.filterable) return false
+
     let flag = true
     options.value.forEach(e => {
       if (!e.isHidden) {
@@ -74,18 +79,22 @@ export const useSelect = (
   })
 
   const highlighted = ref<IOptionProxy>()
-  const selected = ref<OptionModel | OptionModel[]>([])
-
-  const label = ref('')
+  const selected = ref<OptionModel | OptionModel[]>(props.modelValue || [])
 
   const inputModel = ref('')
+  const tagsModel = ref<string[]>([])
   const inputPlaceholder = ref('')
   const isComposing = ref(false)
 
   const referenceEl = ref<HTMLElement>()
   const popperEl = ref<HTMLElement>()
   const tagsEl = ref<HTMLElement>()
+  const filterInputEl = ref<HTMLInputElement>()
   const popperInstance = ref<Instance>()
+
+  const displayedLabel = computed(() => (
+    props.multiple ? '' : inputModel.value
+  ))
 
   const menuWidth = computed(() => {
     if (referenceEl.value) {
@@ -119,6 +128,13 @@ export const useSelect = (
       } else {
         (selected.value as OptionModel[]).push(proxy.uniqueId || proxy.value)
       }
+
+      if (props.filterable) {
+        inputModel.value = ''
+        resetOptionVisibility()
+        filterInputEl.value?.focus()
+        console.log(filterInputEl.value)
+      }
     } else {
       if (typeof proxy.value === 'object') {
         selected.value = proxy.uniqueId as string
@@ -136,18 +152,24 @@ export const useSelect = (
   const setLabel = () => {
     if (props.multiple) {
       const val = selected.value as OptionModel[]
-      label.value = options.value.get(val[0])?.renderedLabel || ''
+      tagsModel.value = []
+      for (let i = 0; i < Math.min(props.tagLimit, val.length); i++) {
+        tagsModel.value.push(options.value.get(val[i])?.renderedLabel || '')
+      }
     } else {
       const val = selected.value
-      label.value = options.value.get(val as OptionModel)?.renderedLabel as string
+      inputModel.value = options.value.get(val as OptionModel)?.renderedLabel as string
     }
   }
 
-  const handleTagClose = () => {
-    (selected.value as OptionModel[]).shift()
+  const handleTagClose = (i: number) => {
+    (selected.value as OptionModel[]).splice(i, 1)
+    if (props.multiple && props.filterable) {
+      filterInputEl.value?.focus()
+    }
   }
   const handleInputFocus = () => {
-    inputModel.value = ''
+    // 
   }
   const handleComposition = (s: 'start' | 'end') => {
     isComposing.value = s === 'start'
@@ -157,7 +179,7 @@ export const useSelect = (
     if (isComposing.value) return
 
     options.value.forEach(option => {
-      if (!option.renderedLabel.includes(label.value)) {
+      if (!option.renderedLabel.includes(inputModel.value)) {
         option.isHidden = true
       } else {
         option.isHidden = false
@@ -172,10 +194,14 @@ export const useSelect = (
   }
 
   const onInputFocus = () => {
-    if (props.filterable) {
-      inputPlaceholder.value = label.value
-      label.value = ''
-      resetOptionVisibility()
+    if (!props.filterable) return
+
+    if (props.multiple) {
+      popperInstance.value?.show()
+    } else {
+      inputPlaceholder.value = inputModel.value
+      inputModel.value = ''
+      resetOptionVisibility()  
     }
   }
 
@@ -201,7 +227,7 @@ export const useSelect = (
     referenceEl.value?.classList.remove(expandCls)
     if (props.filterable) {
       if (props.multiple) {
-        inputModel.value = ''
+        // 
       } else {
         setLabel()
         if (!validateInputModel()) {
@@ -213,15 +239,12 @@ export const useSelect = (
 
   provide('select', {
     props,
-    isComposing: isComposing.value,
-    selected: selected.value,
-    inputModel: inputModel.value,
+    selected,
     onOptionClick,
     onOptionCreate
   })
 
   onMounted(() => {
-    console.log(popperEl.value, referenceEl.value)
     // create popper
     popperInstance.value = tippy(referenceEl.value as Element, {
       ...opts,
@@ -245,19 +268,20 @@ export const useSelect = (
     }
   })
 
-  watchEffect(() => {
-    if (props.modelValue) {
+  watch(() => props.modelValue, () => {
+    if (props.modelValue !== undefined) {
       selected.value = props.modelValue
-      setLabel()
     }
-  })
+    setLabel()
+  }, { deep: true })
 
   return {
     options,
     menuWidth,
     selected,
-    label,
+    displayedLabel,
     inputModel,
+    tagsModel,
     inputPlaceholder,
     isComposing,
     onInput,
@@ -266,6 +290,7 @@ export const useSelect = (
     noOption,
     referenceEl,
     popperEl,
+    filterInputEl,
     handleTagClose,
     handleInputFocus,
     handleComposition,

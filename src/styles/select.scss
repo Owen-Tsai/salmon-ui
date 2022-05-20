@@ -11,6 +11,7 @@
   $border-color: map.get($border-colors, 'base');
 
   cursor: pointer;
+  position: relative;
 
   input {
     cursor: pointer;
@@ -21,6 +22,7 @@
     padding-inline-start: 0;
     margin: 0;
     padding: 8px;
+    box-sizing: border-box;
 
     #{$ns}__option {
       @include main.use-flex(false);
@@ -64,14 +66,18 @@
     }
   }
 
+  #{$ns}__menu-arrow {
+    transition: transform map.get($durations, 'fast');
+  }
+
+  &.is-expanded {
+    #{$ns}__menu-arrow {
+      transform: rotate(180deg);
+    }
+  }
+  
   &__trigger {
     position: relative;
-    &.is-expanded {
-      #{$ns}__menu-arrow {
-        transition: transform map.get($durations, 'fast');
-        transform: rotate(180deg);
-      }
-    }
   }
 
   &__tags {
@@ -79,10 +85,29 @@
     left: 8px;
     top: 50%;
     transform: translateY(-50%);
+    line-height: 1;
+    z-index: 1;
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+    @include main.use-flex(false);
 
     .sui-tag + .sui-tag {
       margin-left: 4px;
     }
+
+    input {
+      flex-grow: 1;
+      border: 0;
+      outline: 0;
+      box-sizing: border-box;
+      height: $size - 2px;
+      padding-left: 8px;
+    }
+  }
+
+  .sui-input__inner {
+    background-color: transparent;
   }
 }
 

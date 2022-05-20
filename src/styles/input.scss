@@ -29,6 +29,7 @@
     transition: map.get($durations, 'fast');
     box-sizing: border-box;
     height: $size;
+    background-color: $color-white;
   }
   
   &__input {
@@ -41,6 +42,7 @@
     font-size: map.get($font-sizes, 'base');
     border: none;
     outline: none;
+    background-color: transparent;
     // remove default style added by MS Edge
     &::-ms-clear, &::-ms-reveal {
       display: none;

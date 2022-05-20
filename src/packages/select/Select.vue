@@ -5,41 +5,45 @@
   >
     <!-- reference -->
     <div
-      v-if="multiple"
+      v-if="multiple && Array.isArray(selected) "
       class="sui-select__tags"
     >
       <!-- tags -->
       <span
-        v-if="Array.isArray(selected) && selected.length > 0"
+        v-show="selected.length > 0 && options.size > 0"
         ref="tagsEl"
         class="sui-select__tags-wrapper"
       >
         <s-tag
-          size="small"
+          v-for="(tag, i) in tagsModel"
+          :key="tag"
           dismissible
+          @close="handleTagClose(i)"
         >
-          {{ label }}
+          {{ tag }}
         </s-tag>
-        <s-tag
-          v-if="selected.length > 1"
-          size="small"
-        >
-          + {{ selected.length - 1 }}
+        <s-tag v-if="selected.length > tagLimit">
+          + {{ selected.length - tagLimit }}
         </s-tag>
       </span>
       <!-- query input -->
       <input
         v-if="filterable"
+        ref="filterInputEl"
         v-model="inputModel"
         :placeholder="inputPlaceholder"
         :disabled="disabled"
-        :style="filterInputStyle"
+        @focus="onInputFocus"
+        @input="onInput"
+        @compositionstart="isComposing = true"
+        @compositionend="isComposing = false"
+        @compositionupdate="onInput"
       >
     </div>
 
     <!-- reference -->
     <s-input
-      v-model="label"
+      v-model="inputModel"
       class="sui-select__input"
       :placeholder="inputPlaceholder"
       :readonly="!filterable"
@@ -113,17 +117,19 @@ const {
   handleInputFocus,
   handleTagClose,
   inputModel,
+  tagsModel,
   inputPlaceholder,
   isComposing,
   onInput,
   onInputFocus,
   onInputBlur,
-  label,
+  displayedLabel,
   noOption,
   menuWidth,
   options,
   popperEl,
   referenceEl,
+  filterInputEl,
   selected,
   filterInputStyle
 } = useSelect(props, emit)
