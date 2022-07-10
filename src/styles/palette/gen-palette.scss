@@ -1,0 +1,87 @@
+@use 'sass:color';
+@use 'sass:math';
+@use './utils.scss' as *;
+
+@function getNewHue($hue, $is-light, $i) {
+  $new-hue: 0;
+  $hue-step: 2;
+
+  @if ($hue >= 60 and $hue <= 240) {
+    @if ($is-light) {
+      $new-hue: $hue - $hue-step * $i;
+    } @else {
+      $new-hue: $hue + $hue-step * $i
+    }
+  } @else {
+    @if ($is-light) {
+      $new-hue: $hue + $hue-step * $i;
+    } @else {
+      $new-hue: $hue - $hue-step * $i
+    }
+  }
+
+  @if ($new-hue < 0) {
+    $new-hue: $new-hue + 360;
+  } @else if ($new-hue > 360) {
+    $new-hue: $new-hue - 360;
+  }
+
+  @return math.round($new-hue);
+}
+
+@function getNewSaturation($saturation, $is-light, $i) {
+  $new-saturation: 0;
+  $max-saturation-step: 100;
+  $min-saturation-step: 9;
+
+  @if ($is-light) {
+    @if ($saturation <= $min-saturation-step) {
+      $new-saturation: $saturation;
+    } @else {
+      $new-saturation: $saturation - math.div(($saturation - $min-saturation-step), 5) * $i;
+    }
+  } @else {
+    $new-saturation: $saturation + math.div(($max-saturation-step - $saturation), 4) * i;
+  }
+
+  @return $new-saturation;
+}
+
+@function getNewValue($value, $is-light, $i) {
+  $max-value: 100;
+  $min-value: 30;
+
+  @if ($is-light) {
+    @return $value + math.div(($max-value - $value), 5) * $i;
+  } @else {
+    @if ($value <= $min-value) {
+      @return $value;
+    } @else {
+      @return $value - math.div(($value - $min-value), 5) * $i
+    }
+  }
+}
+
+@function get-color($origin-color, $i) {
+  $h: list.nth((hsl-to-hsv($origin-color)), 1);
+  $s: list.nth((hsl-to-hsv($origin-color)), 2);
+  $v: list.nth((hsl-to-hsv($origin-color)), 3);
+
+  $is-light: $i < 6;
+  $index: -1;
+  @if ($is-light) {
+    $index: 6 - $i;
+  } @else {
+    $index: $i - 6;
+  }
+
+  @if ($i == 6) {
+    @return $origin-color;
+  } @else {
+    $new-hue: getNewHue($h, $is-light, $index);
+    $new-saturation: getNewSaturation($s, $is-light, $index);
+    $new-value: getNewValue($v, $is-light, $index);
+
+    @return hsv-to-color($new-hue, $new-saturation, $new-value)
+  }
+}

@@ -1,0 +1,14 @@
+@use 'sass:color';
+@use 'sass:math';
+@use './utils.scss' as *;
+
+@function getNewSaturation() {
+  
+}
+
+@function get-dark-theme-color($origin-color, $i) {
+  $light-color: get-color($origin-color, 10 - $i + 1);
+  $original-hue: list.nth((hsl-to-hsv($origin-color)), 1);
+  $original-saturation: list.nth((hsl-to-hsv($origin-color)), 2);
+  $base-color: hsv-to-color($original-hue, )
+}

@@ -34,9 +34,7 @@ $colors: map.deep-merge(
       'light-3': #93c5fd,
       'light-4': #bfdbfe,
       'light-5': #dbeafe,
-      'light-6': #eff6ff,
-      'dark-1': #1d4ed8,
-      'dark-2': #1e40af
+      'light-6': #eff6ff
     ),
     'success': (
       '1': #E8FFED,
@@ -65,9 +63,7 @@ $colors: map.deep-merge(
       'light-3': #86efac,
       'light-4': #bbf7d0,
       'light-5': #dcfce7,
-      'light-6': #f0fdf4,
-      'dark-1': #15803d,
-      'dark-2': #166534
+      'light-6': #f0fdf4
     ),
     'warning': (
       '1': #FFFAE8,
@@ -96,9 +92,7 @@ $colors: map.deep-merge(
       'light-3': #fcd34d,
       'light-4': #fde68a,
       'light-5': #fef3c7,
-      'light-6': #fffbeb,
-      'dark-1': #d97706,
-      'dark-2': #ea580c
+      'light-6': #fffbeb
     ),
     'error': (
       '1': #FFECE8,
@@ -127,9 +121,7 @@ $colors: map.deep-merge(
       'light-3': #fca5a5,
       'light-4': #fecaca,
       'light-5': #fee2e2,
-      'light-6': #fef2f2,
-      'dark-1': #b91c1c,
-      'dark-2': #991b1b,
+      'light-6': #fef2f2
     ),
     'neutral': (
       '1': #f7f8fa,
@@ -177,13 +169,33 @@ $border-color: #d1d5db !default;
 $border-colors: () !default;
 $border-colors: map.merge(
   (
-    'base': #d1d5db,
-    'light-1': #e5e7eb,
-    'light-2': #f3f4d6,
-    'dark-1': #9ca3af
+    '1': map.get($colors, neutral, '2'),
+    '2': map.get($colors, neutral, '3'),
+    '3': map.get($colors, neutral, '4'),
+    '4': map.get($colors, neutral, '6'),
+    'dark-1': map.get($colors, neutral, 'dark-2'),
+    'dark-2': map.get($colors, neutral, 'dark-3'),
+    'dark-3': map.get($colors, neutral, 'dark-4'),
+    'dark-4': map.get($colors, neutral, 'dark-6'),
   ),
   $border-colors
 );
+
+$fill-colors: () !default;
+$fill-colors: map.merge(
+  (
+    '1': map.get($colors, neutral, '1'),
+    '2': map.get($colors, neutral, '2'),
+    '3': map.get($colors, neutral, '3'),
+    '4': map.get($colors, neutral, '4'),
+    'dark-1': map.get($colors, neutral, 'dark-1'),
+    'dark-2': map.get($colors, neutral, 'dark-2'),
+    'dark-3': map.get($colors, neutral, 'dark-3'),
+    'dark-4': map.get($colors, neutral, 'dark-4'),
+  ),
+  $fill-colors
+);
+
 
 $surface-colors: () !default;
 $surface-colors: map.merge(
