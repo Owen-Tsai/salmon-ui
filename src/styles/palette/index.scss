@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use 'sass:list';
+@use './gen-palette.scss' as *;
+@use './gen-palette-dark-theme.scss' as *;
+
+/*
+  Generate the whole palette based on the given $color.
+  returns a sass map.
+  (
+    '1': color1,
+    '2': color2,
+    ...
+    'dark-1': color-dark-1
+    ...
+  )
+*/
+@function generatePalette($color) {
+  $maps: ();
+  @for $i from 1 through 10 {
+    $maps: map.set($maps, '#{$i}', get-color($color, $i));
+  }
+  @for $i from 1 through 10 {
+    $maps: map.set($maps, 'dark-#{$i}', get-dark-theme-color($color, $i));
+  }
+
+  $maps: map.set($maps, 'base', $color);
+
+  @return $maps;
+}

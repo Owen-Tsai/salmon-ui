@@ -36,7 +36,7 @@ export default defineComponent({
   },
   setup(props) {
     const computedStyle = computed(() => {
-      let result: StyleValue = {}
+      const result: StyleValue = {}
       if (props.color) {
         result.color = props.color
       }

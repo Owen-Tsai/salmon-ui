@@ -4,9 +4,9 @@
 
 @mixin make-button($type) {
   $base-color: map.get($colors, $type, 'base');
-  $surface-color: map.get($colors, $type, 'light-6');
-  $surface-color-dark: map.get($colors, $type, 'light-5');
-  $light-color: map.get($colors, $type, 'light-4');
+  $surface-color: map.get($colors, $type, '6');
+  $surface-color-dark: map.get($colors, $type, '5');
+  $light-color: map.get($colors, $type, '4');
   $dark-color: map.get($surface-colors, $type, 'dark-1');
 
   &:not(.is-disabled):not(.is-loading) {
@@ -30,10 +30,10 @@
 }
 
 @mixin make-primary-button($type) {
-  $light-color: map.get($colors, $type, 'light-1');
+  $light-color: map.get($colors, $type, '1');
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
-  $disabled-color: map.get($colors, $type, 'light-3');
+  $disabled-color: map.get($colors, $type, '3');
 
   background-color: $base-color;
   color: $color-white;
@@ -64,11 +64,11 @@
 }
 
 @mixin make-outlined-button($type) {
-  $light-color: map.get($colors, $type, 'light-1');
+  $light-color: map.get($colors, $type, '1');
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
-  $surface-color: map.get($colors, $type, 'light-6');
-  $disabled-color: map.get($colors, $type, 'light-3');
+  $surface-color: map.get($colors, $type, '6');
+  $disabled-color: map.get($colors, $type, '3');
 
   background-color: $surface-color;
   color: $base-color;
@@ -98,7 +98,7 @@
 }
 
 @mixin make-text-button($type) {
-  $light-color: map.get($colors, $type, 'light-1');
+  $light-color: map.get($colors, $type, '1');
   $dark-color: map.get($colors, $type, 'dark-1');
   $base-color: map.get($colors, $type, 'base');
   $disabled-color: map.get($text-colors, 'placeholder');

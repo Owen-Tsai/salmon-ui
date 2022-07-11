@@ -60,8 +60,8 @@
     &.is-active {
       #{$ns}__rect {
         color: #fff;
-        background-color: map.get($colors, primary, 'light-3');
-        border-color: map.get($colors, primary, 'light-3');
+        background-color: map.get($colors, primary, '3');
+        border-color: map.get($colors, primary, '3');
       }
     }
   }

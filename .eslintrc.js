@@ -14,7 +14,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    'eslint-config-airbnb'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -22,9 +21,8 @@ module.exports = {
     'vue/html-self-closing': 'off',
     'linebreak-style': 'off',
     'comma-dangle': 'off',
-    'semi': 'off'
   },
   ignorePatterns: [
-    '/src/demo/*', 'main.ts'
+    '/src/demo/*', 'main.ts', '/src/App.vue'
   ]
 }

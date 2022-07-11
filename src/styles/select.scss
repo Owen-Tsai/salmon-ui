@@ -31,12 +31,12 @@
       border-radius: map.get($border-radiuses, 'base');
 
       &:hover {
-        background-color: map.get($colors, primary, 'light-6');
+        background-color: map.get($colors, primary, '6');
         color: map.get($colors, primary, 'base');
       }
 
       &.is-danger:hover {
-        background-color: map.get($colors, error, 'light-6');
+        background-color: map.get($colors, error, '6');
         color: map.get($colors, error, 'base');
       }
 
