@@ -1,6 +1,7 @@
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:meta';
+@use 'sass:color';
 
 @function hsv-to-hsl($h, $s: 0, $v: 0) {
   @if meta.type-of($h) == 'list' {
@@ -10,13 +11,13 @@
   }
 
   @if math.unit($h) == 'deg' {
-    $h: 3.1415 * 2 * ($h / 360deg);
+    $h: 3.1415 * 2 * math.div($h, 360deg);
   }
   @if math.unit($s) == '%' {
-    $s: 0 + ($s / 100%);
+    $s: 0 + math.div($s, 100%);
   }
   @if math.unit($v) == '%' {
-    $v: 0 + ($v / 100%);
+    $v: 0 + math.div($v, 100%);
   }
 
   $ss: $s * $v;
@@ -25,14 +26,14 @@
   @if ($ll == 2 or $ll == 0) {
     $ss: 0;
   } @else if $ll <= 1 {
-    $ss: $ss / $ll;
+    $ss: math.div($ss, $ll);
   } @else {
-    $ss: $ss / (2 - $ll);
+    $ss: math.div($ss, (2 - $ll));
   }
 
-  $ll: $ll / 2;
+  $ll: math.div($ll, 2);
 
-  @return 360deg * $h / (3.1415 * 2), math.percentage(math.max(0, math.min(1, $ss))), math.percentage(math.max(0, math.min(1, $ll)));
+  @return math.div(360deg * $h, (3.1415 * 2)), math.percentage(math.max(0, math.min(1, $ss))), math.percentage(math.max(0, math.min(1, $ll)));
 }
 
 @function hsl-to-hsv($h, $ss: 0, $ll: 0) {
@@ -47,13 +48,13 @@
   }
 
   @if math.unit($h) == 'deg' {
-    $h: 3.1415 * 2 * ($h / 360deg);
+    $h: 3.1415 * 2 * math.div($h, 360deg);
   }
   @if math.unit($ss) == '%' {
-    $ss: 0 + ($ss / 100%);
+    $ss: 0 + math.div($ss, 100%);
   }
   @if math.unit($ll) == '%' {
-    $ll: 0 + ($ll / 100%);
+    $ll: 0 + math.div($ll, 100%);
   }
 
   $ll: $ll * 2;
@@ -64,17 +65,18 @@
     $ss: $ss * (2 - $ll);
   }
 
-  $v: ($ll + $ss) / 2;
+  $v: math.div(($ll + $ss), 2);
 
   $s: 0;
   @if $ll + $ss != 0 {
-    $s: (2 * $ss) / ($ll + $ss);
+    $s: math.div((2 * $ss), ($ll + $ss));
   }
 
-  @return 360deg * $h / (3.1415 * 2), math.percentage(math.max(0, math.min(1, $s))), math.percentage(math.max(0, math.min(1, $v)));
+  @return math.div(360deg * $h, (3.1415 * 2)), math.percentage(math.max(0, math.min(1, $s))), math.percentage(math.max(0, math.min(1, $v)));
 }
 
 @function hsv-to-color($h, $s: 0, $v: 0) {
   $hsl: hsv-to-hsl($h, $s, $v);
-  @return hsl(list.nth($hsl, 1), list.nth($hsl, 2), list.nth($hsl, 3));
+  $res: hsl(list.nth($hsl, 1), list.nth($hsl, 2), list.nth($hsl, 3));
+  @return $res;
 }

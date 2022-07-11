@@ -1,14 +1,50 @@
 @use 'sass:color';
 @use 'sass:math';
+@use 'sass:list';
 @use './utils.scss' as *;
+@use './gen-palette.scss' as *;
 
-@function getNewSaturation() {
-  
+
+@function getBaseSaturation($origin-color) {
+  $original-hue: list.nth((hsl-to-hsv($origin-color)), 1);
+  $original-saturation: list.nth((hsl-to-hsv($origin-color)), 2);
+
+  @if ($original-hue >= 0 and $original-hue < 50) {
+    @return $original-saturation - 15;
+  }
+  @if ($original-hue >= 50 and $original-hue < 191) {
+    @return $original-saturation - 20;
+  }
+  @if ($original-hue >= 191 and $original-hue <= 360) {
+    @return $original-saturation - 15;
+  }
+}
+
+@function getNewSaturation($origin-color, $i) {
+  $base-saturation: getBaseSaturation($origin-color);
+
+  $step: math.ceil(math.div(($base-saturation - 9), 4));
+  $step-1-to-5: math.ceil(math.div((100 - $base-saturation), 5));
+
+  @if ($i < 6) {
+    @return $base-saturation + (6 - $i) * $step-1-to-5;
+  }
+
+  @if ($i == 6) {
+    @return getBaseSaturation($origin-color);
+  }
+
+  @return $base-saturation - $step * ($i - 6);
 }
 
 @function get-dark-theme-color($origin-color, $i) {
   $light-color: get-color($origin-color, 10 - $i + 1);
-  $original-hue: list.nth((hsl-to-hsv($origin-color)), 1);
-  $original-saturation: list.nth((hsl-to-hsv($origin-color)), 2);
-  $base-color: hsv-to-color($original-hue, )
+  
+  $result: hsv-to-color(
+    list.nth(hsl-to-hsv($light-color), 1),
+    getNewSaturation($origin-color, $i),
+    list.nth(hsl-to-hsv($light-color), 3)
+  );
+
+  @return $result;
 }

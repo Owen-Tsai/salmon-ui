@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use 'sass:math';
+@use 'sass:list';
 @use './utils.scss' as *;
 
 @function getNewHue($hue, $is-light, $i) {
@@ -41,7 +42,7 @@
       $new-saturation: $saturation - math.div(($saturation - $min-saturation-step), 5) * $i;
     }
   } @else {
-    $new-saturation: $saturation + math.div(($max-saturation-step - $saturation), 4) * i;
+    $new-saturation: $saturation + math.div(($max-saturation-step - $saturation), 4) * $i;
   }
 
   @return $new-saturation;
@@ -57,7 +58,7 @@
     @if ($value <= $min-value) {
       @return $value;
     } @else {
-      @return $value - math.div(($value - $min-value), 5) * $i
+      @return $value - math.div(($value - $min-value), 4) * $i
     }
   }
 }
