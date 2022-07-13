@@ -5,31 +5,44 @@
 @use 'sass:map';
 
 .sui-button {
-  $padding: 0 15px;
-  $padding-small: 0 12px;
-  $padding-mini: 0 8px;
-  $ghost-hover: 0.16;
-  $ghost-active: 0.32;
+  --padding-medium: 0 15px;
+  --padding-mini: 0 11px;
+  --padding-small: 0 15px;
+  --padding-large: 0 19px;
+  --hover-opacity: 0.16;
+  --active-opacity: 0.32;
 
   $status-normal: ':not(.is-disabled):not(.is-loading)';
   $ns: '.sui-button';
 
-  @include main.use-inline-flex;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  border: 1px solid $border-color;
-  color: map.get($text-colors, 'base');
-  background-color: $color-white;
-  padding: $padding;
-  height: map.get($component-common-sizes, 'base');
-  font-size: map.get($font-sizes, 'base');
-  box-sizing: border-box;
-  border-radius: map.get($border-radiuses, 'base');
-  vertical-align: middle;
-  font-weight: map.get($font-weights, 'base');
-  transition: all map.get($durations, 'fast');
   user-select: none;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  border-radius: map.get($sizes-radius, 'base');
+  font-weight: 400;
+  font-size: map.get($sizes-text, 'body-3');
+  line-height: $line-height-base;
+  white-space: nowrap;
+  outline: none;
+  cursor: pointer;
+  transition: all map.get($durations, '1') map.get($timings, 'linear');
+  -webkit-appearance: none;
+  border: 1px solid;
+
+  &:active {
+    transition: none;
+  }
+
+  &.is-block {
+    display: block;
+    width: 100%;
+  }
+
+  &.is-icon-only {
+    display: flex;
+    justify-content: center;
+  }
 
   &.is-disabled {
     color: map.get($text-colors, 'placeholder');
@@ -37,38 +50,11 @@
     cursor: not-allowed;
   }
 
-  // content
-  & > span {
-    @include main.use-inline-flex;
-    line-height: 0;
-  }
-  i.sui-icon {
-    font-size: map.get($font-sizes, 'medium');
-  }
-  i.sui-icon + span {
-    margin-left: 4px;
-  }
-  i.sui-icon.sui-icon--right {
-    margin-left: 4px;
-  }
-
   // size
-  &--large {
-    height: map.get($component-common-sizes, 'large');
-  }
-  &--small {
-    height: map.get($component-common-sizes, 'small');
-    padding: $padding-small;
-    font-size: map.get($font-sizes, 'small');
-  }
-  &--mini {
-    height: map.get($component-common-sizes, 'mini');
-    padding: $padding-mini;
-    font-size: map.get($font-sizes, 'small');
-    i.sui-icon {
-      font-size: map.get($font-sizes, 'base');
-    }
-  }
+  @include button.use-size('medium');
+  @include button.use-size('large');
+  @include button.use-size('small');
+  @include button.use-size('mini');
 
   // shapes
   &--rounded {
@@ -86,8 +72,9 @@
     }
   }
 
-  @include button.make-button(primary);
-
+  &--default {
+    @include button.make-button(primary);
+  }
   &.is-danger {
     @include button.make-button(error);
   }
@@ -97,17 +84,17 @@
     border-color: $color-white;
 
     &:hover {
-      background-color: rgba($color-white, $ghost-hover);
+      background-color: rgba($color-white, var(--hover-opacity));
       border-color: $color-white;
     }
     &:focus {
-      background-color: rgba($color-white, $ghost-hover);
+      background-color: rgba($color-white, var(--hover-opacity));
       border-color: $color-white;
       @include main.use-ring($color-white);
     }
     &:active {
       border-color: $color-white;
-      background-color: rgba($color-white, $ghost-active);
+      background-color: rgba($color-white, var(--active-opacity));
     }
   }
 
@@ -171,13 +158,13 @@
       border-color: transparent !important;
       color: $color-white !important;
       &:hover {
-        background-color: rgba($color-white, $ghost-hover);
+        background-color: rgba($color-white, var(--hover-opacity));
       }
       &:focus {
-        background-color: rgba($color-white, $ghost-hover);
+        background-color: rgba($color-white, var(--hover-opacity));
       }
       &:active {
-        background-color: rgba($color-white, $ghost-active);
+        background-color: rgba($color-white, var(--active-opacity));
       }
     }
   }

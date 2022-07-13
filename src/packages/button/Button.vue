@@ -1,110 +1,92 @@
 <template>
-  <button
-    :class="[
-      'sui-button',
-      computedType ? `sui-button--${computedType}` : null,
-      computedSize ? `sui-button--${computedSize}` : null,
-      computedShape ? `sui-button--${computedShape}` : null,
-      disabled ? 'is-disabled' : null,
-      loading ? 'is-loading' : null,
-      danger ? 'is-danger' : null,
-      ghost ? 'is-ghost' : null
-    ]"
-    :disabled="disabled || loading"
-    :autofocus="autofocus"
-    :type="nativeType"
-    @click="handleClick"
-    @focus="handleFocus"
-  >
-    <s-icon v-if="!loading && icon && !affixIcon">
-      <component :is="icon"></component>
-    </s-icon>
-    <slot
-      v-if="loading"
-      name="loader"
+  <template v-if="href">
+    <a
+      :class="cls"
+      :disabled="disabled || loading"
+      :autofocus="autofocus"
+      :type="nativeType"
+      @click="handleClick"
     >
-      <s-icon class="rotating loader">
-        <loader></loader>
-      </s-icon>
-    </slot>
+      <span
+        v-if="icon || loading || $slots.icon"
+        class="sui-button-icon"
+      >
+        <loader
+          v-if="loading"
+        />
+        <slot v-else>
+          <component :is="icon" />
+        </slot>
+      </span>
 
-    <!-- default label -->
-    <span v-if="$slots.default">
-      <slot></slot>
-    </span>
-
-    <s-icon
-      v-if="!loading && icon && affixIcon"
-      class="sui-icon--right"
+      <slot />
+    </a>
+  </template>
+  <template v-else>
+    <button
+      :class="cls"
+      :disabled="disabled || loading"
+      :autofocus="autofocus"
+      :type="nativeType"
+      @click="handleClick"
     >
-      <component :is="icon"></component>
-    </s-icon>
-  </button>
+      <span
+        v-if="icon || loading || $slots.icon"
+        class="sui-button-icon"
+      >
+        <loader
+          v-if="loading"
+        />
+        <slot v-else>
+          <component :is="icon" />
+        </slot>
+      </span>
+
+      <slot />
+    </button>
+  </template>
 </template>
 
-<script lang="ts">
-import SIcon from '../icon'
-import props from './button'
-
+<script lang="ts" setup>
 import {
   computed,
-  defineComponent,
-  inject,
   getCurrentInstance,
-  ComponentInternalInstance
+  inject
 } from 'vue'
-
-import type { ButtonGroupContext } from '@/packages/button-group/button-group'
-
 import { Loader } from '@salmon-ui/icons'
+import { ButtonGroupContext } from 'salmon-ui/button-group/button-group'
+import buttonProps from './button'
 
-export default defineComponent({
-  name: 'SButton',
-  components: {
-    SIcon,
-    Loader
-  },
-  props: props,
-  emits: ['click'],
-  setup(props, ctx) {
-    // injected
-    const group: ButtonGroupContext = inject(
-      'buttonGroupContext',
-      undefined as ButtonGroupContext
-    )
+const props = defineProps(buttonProps)
+const emit = defineEmits(['click'])
+const slots = getCurrentInstance()?.slots
 
-    // computed
-    const computedSize = computed(() => {
-      return group?.size || props.size
-    })
-    const computedType = computed(() => {
-      return group?.type || props.type
-    })
-    const computedShape = computed(() => {
-      return group?.shape || props.shape
-    })
+const group: ButtonGroupContext = inject(
+  'buttonGroupContext',
+  undefined as ButtonGroupContext
+)
 
-    const self = getCurrentInstance()
+// computed
+const computedSize = computed(() => group?.size || props.size)
+const computedType = computed(() => group?.type || props.type)
+const computedShape = computed(() => group?.shape || props.shape)
 
-    group?.onCreated(self as ComponentInternalInstance)
-
-    const handleFocus = () => {
-      if (group) {
-        group.focused.value = self as ComponentInternalInstance
-      }
-    }
-
-    const handleClick = (evt: Event) => {
-      ctx.emit('click', evt)
-    }
-
-    return {
-      computedSize,
-      computedType,
-      computedShape,
-      handleClick,
-      handleFocus
-    }
+const cls = computed(() => [
+  'sui-button',
+  `sui-button--${computedType.value}`,
+  `sui-button--${computedSize.value}`,
+  `sui-button--${computedShape.value}`,
+  {
+    'is-disabled': props.disabled,
+    'is-loading': props.loading,
+    'is-danger': props.danger,
+    'is-inverted': props.ghost,
+    'is-icon-only': slots && !slots.default && slots.icon,
+    'is-block': props.block
   }
-})
+])
+
+const handleClick = (evt: Event) => {
+  emit('click', evt)
+}
 </script>

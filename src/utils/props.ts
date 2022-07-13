@@ -1,8 +1,9 @@
 // Generate props of a component along with types and validations
 import type { PropType } from 'vue'
 
+// eslint-disable-next-line import/prefer-default-export
 export function buildProp<
-  T = any,
+  T = unknown,
   R extends boolean = boolean,
   D extends T = T,
   C = never
@@ -17,11 +18,12 @@ export function buildProp<
   required?: R
   default?: R extends true
     ? never
-    : D extends Record<string, unknown> | Array<any>
+    : D extends Record<string, unknown> | Array<unknown>
     ? () => D
     : D
-  type?: any
-  validator?: ((val: any) => val is C) | ((val: any) => boolean)
+  type?: unknown
+  // eslint-disable-next-line no-unused-vars
+  validator?: (val: unknown) => boolean
 } = {}) {
   return {
     type: type as PropType<T | C>,
@@ -30,12 +32,11 @@ export function buildProp<
     validator:
       values || validator
         ? (val: unknown) => {
-            let vaild = false
-            if (values)
-              vaild ||= ([...values, defaultValue] as unknown[]).includes(val)
-            if (validator) vaild ||= validator(val)
-            return vaild
-          }
+          let vaild = false
+          if (values) { vaild ||= ([...values, defaultValue] as unknown[]).includes(val) }
+          if (validator) vaild ||= validator(val)
+          return vaild
+        }
         : undefined,
   } as const
 }

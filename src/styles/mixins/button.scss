@@ -2,37 +2,36 @@
 @use '../common/var.scss' as *;
 @use './main.scss';
 
-@mixin make-button($type) {
-  $base-color: map.get($colors, $type, 'base');
-  $surface-color: map.get($colors, $type, '6');
-  $surface-color-dark: map.get($colors, $type, '5');
-  $light-color: map.get($colors, $type, '4');
-  $dark-color: map.get($surface-colors, $type, 'dark-1');
+@mixin default-button($type) {
+  $base-color: map.get($colors, $type, '6');
+  $fill-color: map.get($colors, $type, '1');
+  background-color: $color-white;
+  border-color: map.get($colors-line, '2');
 
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
       color: $base-color;
-      border-color: $light-color;
-      background-color: $surface-color;
+      border-color: map.get($colors, $type, '2');
+      background-color: $fill-color
     }
-    &:focus {
+    &:focus-visible {
       @include main.use-ring($base-color);
       color: $base-color;
       border-color: $base-color;
-      background-color: $surface-color;
+      background-color: $fill-color;
     }
     &:active {
-      border-color: $dark-color;
-      color: $dark-color;
-      background-color: $surface-color-dark;
+      color: $base-color;
+      border-color: $base-color;
+      background-color: map.get($colors, $type, '1');
     }
   }
 }
 
-@mixin make-primary-button($type) {
-  $light-color: map.get($colors, $type, '1');
-  $dark-color: map.get($colors, $type, 'dark-1');
-  $base-color: map.get($colors, $type, 'base');
+@mixin primary-button($type) {
+  $light-color: map.get($colors, $type, '5');
+  $dark-color: map.get($colors, $type, '7');
+  $base-color: map.get($colors, $type, '6');
   $disabled-color: map.get($colors, $type, '3');
 
   background-color: $base-color;
@@ -45,7 +44,8 @@
       border-color: $light-color;
       color: $color-white;
     }
-    &:focus {
+    &:focus-visible {
+      @include main.use-ring($base-color);
       background-color: $light-color;
       border-color: $light-color;
       color: $color-white;
@@ -63,72 +63,67 @@
   }
 }
 
-@mixin make-outlined-button($type) {
-  $light-color: map.get($colors, $type, '1');
-  $dark-color: map.get($colors, $type, 'dark-1');
-  $base-color: map.get($colors, $type, 'base');
-  $surface-color: map.get($colors, $type, '6');
-  $disabled-color: map.get($colors, $type, '3');
-
-  background-color: $surface-color;
-  color: $base-color;
-  border-color: $base-color;
+@mixin outlined-button($type) {
+  $color: map.get($colors, $type, '6');
+  $light-color: map.get($colors, $type, '5');
+  $dark-color: map.get($colors, $type, '7');
+  background-color: transparent;
+  color: $color;
+  border-color: $color;
 
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
-      background-color: $base-color;
-      border-color: $base-color;
-      color: $color-white;
-    }
-    &:focus {
-      background-color: $light-color;
+      color: $light-color;
       border-color: $light-color;
-      color: $color-white;
+      background-color: transparent;
+    }
+    &:focus-visible {
+      color: $light-color;
+      border-color: $light-color;
       @include main.use-ring($light-color);
     }
     &:active {
-      background-color: $dark-color;
+      color: $dark-color;
       border-color: $dark-color;
     }
   }
-  &.is-disabled {
-    border-color: $disabled-color;
-    color: $disabled-color;
-  }
 }
 
-@mixin make-text-button($type) {
-  $light-color: map.get($colors, $type, '1');
-  $dark-color: map.get($colors, $type, 'dark-1');
-  $base-color: map.get($colors, $type, 'base');
-  $disabled-color: map.get($text-colors, 'placeholder');
-  $surface-color: map.get($surface-colors, 'light-3');
-  $surface-color-dark: map.get($surface-colors, 'light-2');
+@mixin text-button($type) {
+  $bg-color: map.get($colors-fill, '1');
+  $bg-dark-color: map.get($colors-fill, '2');
+  $color: map.get($colors, $type, '6');
+  $light-color: map.get($colors, $type, '5');
 
   background-color: transparent;
   border-color: transparent;
-  color: $base-color;
+  color: $color;
 
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
       color: $light-color;
-      background-color: $surface-color;
-      border-color: $surface-color;
+      background-color: $bg-color;
+      border-color: $bg-color;
     }
-    &:focus {
-      color: $light-color;
-      @include main.use-ring($base-color);
-      background-color: $surface-color;
-      border-color: $surface-color;
+    &:focus-visible {
+      @include main.use-ring($bg-dark-color);
+      border-color: transparent;
+      background-color: transparent;
     }
     &:active {
-      color: $dark-color;
-      background-color: $surface-color-dark;
-      border-color: $surface-color-dark;
+      color: map.get($colors, $type, '7');
+      background-color: $bg-dark-color;
+      border-color: $bg-dark-color;
     }
   }
-  &.is-disabled {
-    color: $disabled-color;
-    border-color: transparent;
+}
+
+@mixin use-size($size) {
+  $height: map.get($sizes-component, $size);
+
+  height: $height;
+  padding: var(--padding-#{$size});
+  @if ($size == 'mini') {
+    font-size: map.get($sizes-text, 'body-2');
   }
 }

@@ -1,53 +1,53 @@
 <template>
   <div class="demo-page">
     <div class="demo-row">
-      <demo-button></demo-button>
-      <demo-button-group></demo-button-group>
-      <demo-tag></demo-tag>
+      <demo-button />
+      <demo-button-group />
+      <!-- <demo-tag></demo-tag>
       <demo-dropdown></demo-dropdown>
       <demo-input></demo-input>
-      <demo-progress></demo-progress>
+      <demo-progress></demo-progress> -->
     </div>
     <div class="demo-row">
-      <demo-icon></demo-icon>
+      <!-- <demo-icon></demo-icon>
       <demo-alert></demo-alert>
       <demo-breadcrumb></demo-breadcrumb>
       <demo-rating></demo-rating>
       <demo-switch></demo-switch>
       <demo-checkbox></demo-checkbox>
-      <demo-checkbox-button></demo-checkbox-button>
+      <demo-checkbox-button></demo-checkbox-button> -->
     </div>
     <div class="demo-row">
-      <demo-avatar></demo-avatar>
+      <!-- <demo-avatar></demo-avatar>
       <demo-badge></demo-badge>
       <demo-card></demo-card>
       <demo-radio></demo-radio>
       <demo-radio-button></demo-radio-button>
-      <demo-select></demo-select>
+      <demo-select></demo-select> -->
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import DemoButton from '@/demo/Button.vue'
-import DemoAlert from '@/demo/Alert.vue'
+// import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
-import DemoIcon from '@/demo/Icon.vue'
-import DemoAvatar from '@/demo/Avatar.vue'
-import DemoBadge from '@/demo/Badge.vue'
-import DemoCard from '@/demo/Card.vue'
-import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
-import DemoTag from '@/demo/Tag.vue'
-import DemoRating from '@/demo/Rating.vue'
-import DemoDropdown from '@/demo/Dropdown.vue'
-import DemoSwitch from '@/demo/Switch.vue'
-import DemoInput from '@/demo/Input.vue'
-import DemoRadio from '@/demo/Radio.vue'
-import DemoRadioButton from '@/demo/RadioButton.vue'
-import DemoCheckbox from '@/demo/Checkbox.vue'
-import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
-import DemoProgress from '@/demo/Progress.vue'
-import DemoSelect from '@/demo/Select.vue'
+// import DemoIcon from '@/demo/Icon.vue'
+// import DemoAvatar from '@/demo/Avatar.vue'
+// import DemoBadge from '@/demo/Badge.vue'
+// import DemoCard from '@/demo/Card.vue'
+// import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
+// import DemoTag from '@/demo/Tag.vue'
+// import DemoRating from '@/demo/Rating.vue'
+// import DemoDropdown from '@/demo/Dropdown.vue'
+// import DemoSwitch from '@/demo/Switch.vue'
+// import DemoInput from '@/demo/Input.vue'
+// import DemoRadio from '@/demo/Radio.vue'
+// import DemoRadioButton from '@/demo/RadioButton.vue'
+// import DemoCheckbox from '@/demo/Checkbox.vue'
+// import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
+// import DemoProgress from '@/demo/Progress.vue'
+// import DemoSelect from '@/demo/Select.vue'
 </script>
 
 <style scoped>

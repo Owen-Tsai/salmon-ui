@@ -1,19 +1,12 @@
+import { ExtractPropTypes } from 'vue'
 import { commonProps } from 'salmon-ui/button/button'
-import {
-  ExtractPropTypes,
-  ComponentInternalInstance,
-  Ref
-} from 'vue'
 
-const props = {
+export const groupProps = {
   ...commonProps
 }
 
-export type ButtonGroupProps = ExtractPropTypes<typeof props>
+export type ButtonGroupProps = ExtractPropTypes<typeof groupProps>
 
-export type ButtonGroupContext = ButtonGroupProps & {
-  onCreated: (v: ComponentInternalInstance) => void,
-  focused: Ref<ComponentInternalInstance>
-} | undefined
+export type ButtonGroupContext = ButtonGroupProps | undefined
 
-export default props
+export const buttonGroupCtxKey = Symbol('buttonGroup')

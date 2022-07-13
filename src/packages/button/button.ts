@@ -1,6 +1,6 @@
-import type {
+import {
   PropType,
-  Component
+  Component,
 } from 'vue'
 import { buildProp } from '@/utils/props'
 
@@ -10,13 +10,16 @@ import { buildProp } from '@/utils/props'
  */
 export const commonProps = {
   type: buildProp({
-    values: ['primary', 'outlined', 'text']
+    values: ['primary', 'outlined', 'text', 'default'],
+    default: 'default'
   } as const),
   size: buildProp({
-    values: ['large', 'small', 'mini']
+    values: ['large', 'small', 'mini', 'medium'],
+    default: 'medium'
   } as const),
   shape: buildProp({
-    values: ['circle', 'rounded']
+    values: ['circle', 'rounded', 'square'],
+    default: 'square'
   } as const),
 }
 
@@ -24,18 +27,20 @@ const props = {
   ...commonProps,
   nativeType: buildProp({
     type: String,
-    values: ['button', 'reset', 'submit']
+    default: 'button'
   } as const),
   icon: {
     type: Object as PropType<Component>,
     default: undefined
   },
-  affixIcon: Boolean as PropType<boolean>,
-  disabled: Boolean as PropType<boolean>,
-  loading: Boolean as PropType<boolean>,
-  autofocus: Boolean as PropType<boolean>,
-  danger: Boolean as PropType<boolean>,
-  ghost: Boolean as PropType<boolean>
+  href: String,
+  affixIcon: Boolean,
+  disabled: Boolean,
+  loading: Boolean,
+  autofocus: Boolean,
+  danger: Boolean,
+  ghost: Boolean,
+  block: Boolean
 }
 
 export default props
