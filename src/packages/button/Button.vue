@@ -11,11 +11,15 @@
         v-if="icon || loading || $slots.icon"
         class="sui-button-icon"
       >
-        <loader
+        <s-icon
           v-if="loading"
+          :name="Loader"
         />
-        <slot v-else>
-          <component :is="icon" />
+        <slot
+          v-else
+          name="icon"
+        >
+          <s-icon :name="icon" />
         </slot>
       </span>
 
@@ -34,11 +38,15 @@
         v-if="icon || loading || $slots.icon"
         class="sui-button-icon"
       >
-        <loader
+        <s-icon
           v-if="loading"
+          :name="Loader"
         />
-        <slot v-else>
-          <component :is="icon" />
+        <slot
+          v-else
+          name="icon"
+        >
+          <s-icon :name="icon" />
         </slot>
       </span>
 
@@ -81,7 +89,7 @@ const cls = computed(() => [
     'is-loading': props.loading,
     'is-danger': props.danger,
     'is-inverted': props.ghost,
-    'is-icon-only': slots && !slots.default && slots.icon,
+    'is-icon-only': slots && !slots.default && (slots.icon || props.icon),
     'is-block': props.block
   }
 ])

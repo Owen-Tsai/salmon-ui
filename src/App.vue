@@ -1,4 +1,7 @@
 <template>
+  <div class="header">
+    <button @click="toggleTheme">Toggle Theme</button>
+  </div>
   <div class="demo-page">
     <div class="demo-row">
       <demo-button />
@@ -48,6 +51,19 @@ import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 // import DemoCheckboxButton from '@/demo/CheckboxButton.vue'
 // import DemoProgress from '@/demo/Progress.vue'
 // import DemoSelect from '@/demo/Select.vue'
+
+let theme = window.localStorage.getItem('theme')
+if (!theme) {
+  theme = 'light'
+  window.localStorage.setItem('theme', 'light')
+}
+
+const toggleTheme = () => {
+  const oldTheme = theme as string
+  theme = theme === 'light' ? 'dark' : 'light'
+  document.body.classList.remove(oldTheme)
+  document.body.classList.add(theme)
+}
 </script>
 
 <style scoped>
@@ -65,5 +81,11 @@ import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 }
 .demo-container {
   margin-bottom: 16px;
+}
+.header {
+  position: sticky;
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+  top: 0;
 }
 </style>

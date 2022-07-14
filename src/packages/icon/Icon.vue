@@ -1,55 +1,46 @@
 <template>
   <i
     class="sui-icon"
-    :style="computedStyle"
+    :style="styles"
   >
     <slot>
-      <component :is="name"></component>
+      <component :is="name" />
     </slot>
   </i>
 </template>
 
-<script lang="ts">
-import {
-  defineComponent,
-  computed,
+<script lang="ts" setup>
+import { computed } from 'vue'
+import type {
   StyleValue,
-  Component,
-  PropType
+  PropType,
+  Component
 } from 'vue'
 
-export default defineComponent({
-  name: 'SIcon',
-  props: {
-    color: {
-      type: String,
-      default: undefined
-    },
-    size: {
-      type: Number,
-      default: undefined
-    },
-    name: {
-      type: Object as PropType<Component>,
-      default: undefined
-    }
+const props = defineProps({
+  color: {
+    type: String,
+    default: undefined
   },
-  setup(props) {
-    const computedStyle = computed(() => {
-      const result: StyleValue = {}
-      if (props.color) {
-        result.color = props.color
-      }
-      if (props.size) {
-        result.fontSize = `${props.size}px`
-      }
-
-      return result
-    })
-
-    return {
-      computedStyle
-    }
+  size: {
+    type: Number,
+    default: undefined
+  },
+  name: {
+    type: Object as PropType<Component>,
+    default: undefined
   }
+})
+
+const styles = computed(() => {
+  const result: StyleValue = {}
+  if (props.color) {
+    result.color = props.color
+  }
+  if (props.size) {
+    result.fontSize = `${props.size}px`
+  }
+
+  return result
 })
 </script>

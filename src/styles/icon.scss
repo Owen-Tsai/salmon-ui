@@ -1,7 +1,10 @@
 @use 'mixins/main.scss';
 
 .sui-icon {
-  @include main.use-inline-flex;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
   width: 1em;
   height: 1em;
   line-height: 1em;

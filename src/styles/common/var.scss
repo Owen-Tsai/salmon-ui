@@ -142,7 +142,7 @@ $sizes-component: map.merge(
   (
     'mini': 24px,
     'small': 28px,
-    'base': 32px,
+    'medium': 32px,
     'large': 36px
   ),
   $sizes-component
@@ -151,7 +151,7 @@ $sizes-component: map.merge(
 $sizes-radius: () !default;
 $sizes-radius: map.merge(
   (
-    'base': 2px,
+    'square': 2px,
     'medium': 4px,
     'large': 8px,
     'rounded': 99px,

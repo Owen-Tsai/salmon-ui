@@ -14,7 +14,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:vue/vue3-recommended',
-    'eslint-config-airbnb',
+    'eslint-config-airbnb-base',
     'plugin:@typescript-eslint/recommended'
   ],
   rules: {

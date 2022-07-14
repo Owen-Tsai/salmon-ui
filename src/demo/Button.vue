@@ -15,42 +15,33 @@
     <s-button shape="rounded" size="small">小尺寸</s-button>
     <s-button shape="rounded" size="mini">mini尺寸</s-button>
     <br>
-    <s-button :icon="Heart" size="large">爱你</s-button>
-    <s-button :icon="Heart">爱你</s-button>
-    <s-button :icon="Heart" size="small">爱你</s-button>
-    <s-button :icon="Heart" size="mini">爱你</s-button>
+    <s-button :icon="Heart" type="primary">爱你</s-button>
+    <s-button :icon="DeleteBin" type="primary">Delete</s-button>
+    <s-button :icon="Heart" type="primary"></s-button>
+    <s-button :icon="Heart" type="primary" loading></s-button>
     <br>
+    <s-button shape="circle" size="mini">
+      <template #icon>
+        <s-icon :name="Heart" />
+      </template>
+    </s-button>
     <s-button shape="circle" size="small">
-      <s-icon>
-        <heart></heart>
-      </s-icon>
+      <template #icon>
+        <s-icon :name="Heart" />
+      </template>
     </s-button>
     <s-button shape="circle">
-      <s-icon>
-        <heart></heart>
-      </s-icon>
+      <template #icon>
+        <s-icon :name="Heart" />
+      </template>
     </s-button>
     <s-button shape="circle" size="large">
-      <s-icon>
-        <heart></heart>
-      </s-icon>
+      <template #icon>
+        <s-icon :name="Heart" />
+      </template>
     </s-button>
-    <s-button shape="circle" loading></s-button>
-    <s-button type="primary">
-      爱你
-      <s-icon>
-        <heart></heart>
-      </s-icon>
-    </s-button>
-    <s-button type="primary" :icon="Heart" affix-icon>
-      好评
-    </s-button>
-    <div class="colored">
-      <s-button ghost type="primary">幽灵按钮</s-button>
-      <s-button ghost type="outlined">幽灵按钮</s-button>
-      <s-button ghost shape="rounded">幽灵按钮</s-button>
-      <s-button ghost type="text" shape="rounded">幽灵按钮</s-button>
-    </div>
+    <s-button shape="circle" :icon="Heart" loading></s-button>
+    <br>
     <s-button disabled>禁用</s-button>
     <s-button type="primary" disabled>Disabled</s-button>
     <s-button type="outlined" disabled>Outlined</s-button>
@@ -62,7 +53,10 @@
 
 <script lang="ts" setup>
 import SButton from 'salmon-ui/button'
-import { Heart } from '@salmon-ui/icons'
+import {
+  Heart,
+  DeleteBin
+} from '@salmon-ui/icons'
 </script>
 
 <style scoped>

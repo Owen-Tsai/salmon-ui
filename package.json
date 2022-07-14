@@ -29,7 +29,7 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
-    "@salmon-ui/icons": "^1.0.6",
+    "@salmon-ui/icons": "^1.1.8",
     "@types/gulp": "^4.0.9",
     "@types/gulp-autoprefixer": "^0.0.33",
     "@types/gulp-clean-css": "^4.3.0",
@@ -42,8 +42,9 @@
     "@typescript-eslint/parser": "^5.12.1",
     "@vitejs/plugin-vue": "^1.9.3",
     "@vue/test-utils": "^2.0.0-rc.18",
-    "eslint": "^8.9.0",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-vue": "^8.5.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",

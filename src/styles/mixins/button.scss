@@ -2,6 +2,35 @@
 @use '../common/var.scss' as *;
 @use './main.scss';
 
+@mixin use-button-types($type) {
+  &--#{$type} {
+    @if ($type == 'primary') {
+      @include primary-button('primary');
+      &.is-danger {
+        @include primary-button('error');
+      }
+    }
+    @if ($type == 'default') {
+      @include default-button('primary');
+      &.is-danger {
+        @include default-button('error');
+      }
+    }
+    @if ($type == 'outlined') {
+      @include outlined-button('primary');
+      &.is-danger {
+        @include outlined-button('error');
+      }
+    }
+    @if ($type == 'text') {
+      @include text-button('primary');
+      &.is-danger {
+        @include text-button('error');
+      }
+    }
+  }
+}
+
 @mixin default-button($type) {
   $base-color: map.get($colors, $type, '6');
   $fill-color: map.get($colors, $type, '1');
@@ -17,7 +46,7 @@
     &:focus-visible {
       @include main.use-ring($base-color);
       color: $base-color;
-      border-color: $base-color;
+      border-color: map.get($colors, $type, '2');
       background-color: $fill-color;
     }
     &:active {
@@ -25,6 +54,14 @@
       border-color: $base-color;
       background-color: map.get($colors, $type, '1');
     }
+  }
+  &.is-disabled {
+    background-color: map.get($colors-fill, '1');
+    color: map.get($colors-text, '3');
+    cursor: not-allowed;
+  }
+  &.is-loading {
+    background-color: map.get($colors-fill, '1');
   }
 }
 
@@ -60,6 +97,7 @@
     background-color: $disabled-color;
     border-color: $disabled-color;
     color: $color-white;
+    cursor: not-allowed;
   }
 }
 
@@ -67,6 +105,8 @@
   $color: map.get($colors, $type, '6');
   $light-color: map.get($colors, $type, '5');
   $dark-color: map.get($colors, $type, '7');
+  $disabled-color: map.get($colors, $type, '3');
+
   background-color: transparent;
   color: $color;
   border-color: $color;
@@ -86,6 +126,11 @@
       color: $dark-color;
       border-color: $dark-color;
     }
+  }
+  &.is-disabled {
+    border-color: $disabled-color;
+    color: $disabled-color;
+    cursor: not-allowed;
   }
 }
 
@@ -116,14 +161,29 @@
       border-color: $bg-dark-color;
     }
   }
+  &.is-disabled {
+    color: map.get($colors, $type, '3');
+    cursor: not-allowed;
+  }
 }
 
 @mixin use-size($size) {
-  $height: map.get($sizes-component, $size);
+  $height: map.get($sizes-component, #{$size});
+  &--#{$size} {
+    height: $height;
+    padding: var(--padding-#{$size});
+    &.is-icon-only {
+      width: $height;
+      padding: 0;
+    }
+    @if ($size == 'mini') {
+      font-size: map.get($sizes-text, 'body-2');
+    }
+  }
+}
 
-  height: $height;
-  padding: var(--padding-#{$size});
-  @if ($size == 'mini') {
-    font-size: map.get($sizes-text, 'body-2');
+@mixin use-shape($shape) {
+  &--#{$shape} {
+    border-radius: map.get($sizes-radius, '#{$shape}');
   }
 }
