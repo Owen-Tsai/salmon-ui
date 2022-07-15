@@ -1,1 +1,11 @@
 // TODO: CSS variables and universal style rules
+@use 'common/theme.scss' as *;
+@use 'common/var.scss' as *;
+@use 'sass:map';
+
+body {
+  background-color: var(--sui-bg-1);
+  color: var(--sui-text-1);
+  font-size: map.get($sizes-text, 'body-3');
+  box-sizing: border-box;
+}

@@ -59,13 +59,13 @@ $color-white: map.get($colors, 'white');
 $colors-line: () !default;
 $colors-line: map.merge(
   (
-    '1': map.get($colors, 'neutral', '2'),
-    '2': map.get($colors, 'neutral', '3'),
-    '3': map.get($colors, 'neutral', '4'),
+    '1': map.get($colors, 'neutral', '3'),
+    '2': map.get($colors, 'neutral', '4'),
+    '3': map.get($colors, 'neutral', '5'),
     '4': map.get($colors, 'neutral', '6'),
-    'dark-1': map.get($colors, 'neutral', 'dark-2'),
-    'dark-2': map.get($colors, 'neutral', 'dark-3'),
-    'dark-3': map.get($colors, 'neutral', 'dark-4'),
+    'dark-1': map.get($colors, 'neutral', 'dark-3'),
+    'dark-2': map.get($colors, 'neutral', 'dark-4'),
+    'dark-3': map.get($colors, 'neutral', 'dark-5'),
     'dark-4': map.get($colors, 'neutral', 'dark-6')
   ),
   $colors-line

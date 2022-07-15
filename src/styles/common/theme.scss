@@ -1,0 +1,50 @@
+@use 'sass:map';
+@use './var.scss' as *;
+
+// CSS variables
+/*
+-1: light background
+-2: text disabled
+-3: disabled
+-4: special (use this for line-decorated elements, i.e outlined buttons)
+-5: hover
+-6: normal
+-7: active
+*/
+body {
+  --sui-white: #{$color-white};
+  --sui-black: #{$color-black};
+  @for $i from 1 through 7 {
+    --sui-primary-#{$i}: #{map.get($colors, 'primary', '#{$i}')};
+    --sui-warning-#{$i}: #{map.get($colors, 'warning', '#{$i}')};
+    --sui-success-#{$i}: #{map.get($colors, 'success', '#{$i}')};
+    --sui-error-#{$i}: #{map.get($colors, 'error', '#{$i}')};
+  }
+  @for $i from 1 through 4 {
+    --sui-fill-#{$i}: #{map.get($colors-fill, '#{$i}')};
+    --sui-border-#{$i}: #{map.get($colors-line, '#{$i}')};
+    --sui-text-#{$i}: #{map.get($colors-text, '#{$i}')};
+  }
+  @for $i from 1 through 5 {
+    --sui-bg-#{$i}: #{map.get($colors-bg, '#{$i}')};
+  }
+  --sui-bg-white: #{map.get($colors-bg, 'white')};
+}
+
+body[data-sui-theme="dark"] {
+  @for $i from 1 through 7 {
+    --sui-primary-#{$i}: #{map.get($colors, 'primary', 'dark-#{$i}')};
+    --sui-warning-#{$i}: #{map.get($colors, 'warning', 'dark-#{$i}')};
+    --sui-success-#{$i}: #{map.get($colors, 'success', 'dark-#{$i}')};
+    --sui-error-#{$i}: #{map.get($colors, 'error', 'dark-#{$i}')};
+  }
+  @for $i from 1 through 4 {
+    --sui-fill-#{$i}: #{map.get($colors-fill, 'dark-#{$i}')};
+    --sui-border-#{$i}: #{map.get($colors-line, 'dark-#{$i}')};
+    --sui-text-#{$i}: #{map.get($colors-text, 'dark-#{$i}')};
+  }
+  @for $i from 1 through 5 {
+    --sui-bg-#{$i}: #{map.get($colors-bg, 'dark-#{$i}')};
+  }
+  --sui-bg-white: #{map.get($colors-bg, 'dark-white')};
+}
