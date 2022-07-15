@@ -33,12 +33,23 @@
       <s-button>新增</s-button>
       <s-button danger>删除</s-button>
     </s-button-group>
+
+    <s-button-group>
+      <s-button>Action</s-button>
+      <s-button :icon="MoreFill"></s-button>
+    </s-button-group>
+
+    <s-button-group size="small" type="primary">
+      <s-button>Action</s-button>
+      <s-button :icon="ArrowDownS"></s-button>
+    </s-button-group>
   </demo>
 </template>
 
 <script lang="ts" setup>
 import SButtonGroup from 'salmon-ui/button-group'
 import SButton from 'salmon-ui/button'
+import { MoreFill, ArrowDownS } from '@salmon-ui/icons'
 </script>
 
 <style lang="stylus" scoped>

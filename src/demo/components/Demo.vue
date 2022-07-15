@@ -26,14 +26,14 @@ export default defineComponent({
 
 <style scoped>
 .demo-container {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--sui-border-1);
 }
 .demo-container-header {
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  background-color: #f9fafb;
-  border-bottom: 1px dashed #d1d5db;
+  background-color: var(--sui-fill-2);
+  border-bottom: 1px dashed var(--sui-border-1);
 }
 .demo-container-body {
   padding: 16px;

@@ -9,8 +9,7 @@
   --padding-mini: 0 11px;
   --padding-small: 0 15px;
   --padding-large: 0 19px;
-  --hover-opacity: 0.16;
-  --active-opacity: 0.32;
+  --disabled-primary-text-color: rgba(255, 255, 255, 1);
 
   $status-normal: ':not(.is-disabled):not(.is-loading)';
   $ns: '.sui-button';
@@ -19,7 +18,6 @@
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  color: map.get($colors-text, '2');
   font-weight: 400;
   font-size: map.get($sizes-text, 'body-3');
   line-height: $line-height-base;
@@ -71,41 +69,10 @@
   @include button.use-shape('square');
   @include button.use-shape('circle');
 
-  &.is-ghost#{$status-normal} {
-    background-color: transparent;
-    color: $color-white;
-    border-color: $color-white;
-
-    &:hover {
-      background-color: rgba($color-white, var(--hover-opacity));
-      border-color: $color-white;
-    }
-    &:focus {
-      background-color: rgba($color-white, var(--hover-opacity));
-      border-color: $color-white;
-      @include main.use-ring($color-white);
-    }
-    &:active {
-      border-color: $color-white;
-      background-color: rgba($color-white, var(--active-opacity));
-    }
-  }
-
   // status
   &.is-loading {
     cursor: default;
     position: relative;
-
-    &::before {
-      content: "";
-      right: -1px;
-      bottom: -1px;
-      top: -1px;
-      left: -1px;
-      position: absolute;
-      background-color: $color-white;
-      opacity: .4;
-    }
     #{$ns}-icon {
       svg {
         animation: rotate 2s linear infinite;

@@ -3,32 +3,35 @@
 @use 'sass:map';
 
 .sui-button-group {
-  $button: '.sui-button';
+  $el: '.sui-button';
   $mid: ':not(:first-child):not(:last-child)';
-  @include main.use-inline-flex(false);
+  display: inline-flex;
+  align-items: center;
 
-  #{$button}:first-child {
+  #{$el}:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
-  #{$button}:last-child {
+  #{$el}:last-child {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
-  #{$button}#{$mid} {
+  #{$el}#{$mid} {
     border-radius: 0;
   }
-  #{$button}:not(:last-child) {
+  #{$el}:not(:last-child) {
     margin-right: 0;
   }
 
-  #{$button} + #{$button} {
+  #{$el} + #{$el} {
     margin-left: -1px;
   }
-  #{$button}:not(.sui-button--primary):focus {
-    z-index: 1;
+  #{$el}:not(.sui-button--primary) {
+    &:hover, &:focus {
+      z-index: 1;
+    }
   }
   .sui-button--primary:not(:first-child) {
-    border-left-color: $color-white !important;
+    border-left-color: var(--sui-border-1) !important;
   }
 }

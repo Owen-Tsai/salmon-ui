@@ -34,12 +34,10 @@ const props = {
     default: undefined
   },
   href: String,
-  affixIcon: Boolean,
   disabled: Boolean,
   loading: Boolean,
   autofocus: Boolean,
   danger: Boolean,
-  ghost: Boolean,
   block: Boolean
 }
 

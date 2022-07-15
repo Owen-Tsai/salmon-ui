@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <button @click="toggleTheme">Toggle Theme</button>
+    <button @click="toggleDarkMode">Toggle Theme</button>
   </div>
   <div class="demo-page">
     <div class="demo-row">
@@ -52,17 +52,22 @@ import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 // import DemoProgress from '@/demo/Progress.vue'
 // import DemoSelect from '@/demo/Select.vue'
 
-let theme = window.localStorage.getItem('theme')
-if (!theme) {
-  theme = 'light'
-  window.localStorage.setItem('theme', 'light')
+let isDarkMode = !!window.localStorage.getItem('theme')
+if (isDarkMode) {
+  document.body.setAttribute('data-sui-theme', 'dark')
+  isDarkMode = true
 }
 
-const toggleTheme = () => {
-  const oldTheme = theme as string
-  theme = theme === 'light' ? 'dark' : 'light'
-  document.body.classList.remove(oldTheme)
-  document.body.classList.add(theme)
+const toggleDarkMode = () => {
+  if (!isDarkMode) {
+    document.body.setAttribute('data-sui-theme', 'dark')
+    isDarkMode = true
+    window.localStorage.setItem('theme', 'dark')
+  } else {
+    document.body.removeAttribute('data-sui-theme')
+    isDarkMode = false
+    window.localStorage.removeItem('theme')
+  }
 }
 </script>
 

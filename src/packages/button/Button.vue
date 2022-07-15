@@ -62,7 +62,10 @@ import {
   inject
 } from 'vue'
 import { Loader } from '@salmon-ui/icons'
-import { ButtonGroupContext } from 'salmon-ui/button-group/button-group'
+import {
+  ButtonGroupContext,
+  buttonGroupCtxKey
+} from 'salmon-ui/button-group/button-group'
 import buttonProps from './button'
 
 const props = defineProps(buttonProps)
@@ -70,7 +73,7 @@ const emit = defineEmits(['click'])
 const slots = getCurrentInstance()?.slots
 
 const group: ButtonGroupContext = inject(
-  'buttonGroupContext',
+  buttonGroupCtxKey,
   undefined as ButtonGroupContext
 )
 
@@ -88,7 +91,6 @@ const cls = computed(() => [
     'is-disabled': props.disabled,
     'is-loading': props.loading,
     'is-danger': props.danger,
-    'is-inverted': props.ghost,
     'is-icon-only': slots && !slots.default && (slots.icon || props.icon),
     'is-block': props.block
   }
