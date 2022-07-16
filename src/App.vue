@@ -12,8 +12,8 @@
       <demo-progress></demo-progress> -->
     </div>
     <div class="demo-row">
-      <!-- <demo-icon></demo-icon>
-      <demo-alert></demo-alert>
+      <demo-icon />
+      <!-- <demo-alert></demo-alert>
       <demo-breadcrumb></demo-breadcrumb>
       <demo-rating></demo-rating>
       <demo-switch></demo-switch>
@@ -21,8 +21,8 @@
       <demo-checkbox-button></demo-checkbox-button> -->
     </div>
     <div class="demo-row">
-      <!-- <demo-avatar></demo-avatar>
-      <demo-badge></demo-badge>
+      <demo-avatar />
+      <!-- <demo-badge></demo-badge>
       <demo-card></demo-card>
       <demo-radio></demo-radio>
       <demo-radio-button></demo-radio-button>
@@ -35,8 +35,8 @@
 import DemoButton from '@/demo/Button.vue'
 // import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
-// import DemoIcon from '@/demo/Icon.vue'
-// import DemoAvatar from '@/demo/Avatar.vue'
+import DemoIcon from '@/demo/Icon.vue'
+import DemoAvatar from '@/demo/Avatar.vue'
 // import DemoBadge from '@/demo/Badge.vue'
 // import DemoCard from '@/demo/Card.vue'
 // import DemoBreadcrumb from '@/demo/Breadcrumb.vue'

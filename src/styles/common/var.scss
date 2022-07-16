@@ -216,6 +216,8 @@ $z-message: $z-popup-base + 3; // 1003
 $z-notification: $z-popup-base + 3; // 1003
 $z-image-preview: $z-modal; // 1001
 
+$dark-mode-selector: 'body[data-sui-theme="dark"]';
+
 // ------------------------------------------------
 
 // neutral colors

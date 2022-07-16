@@ -1,30 +1,57 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
-@use 'mixins/main.scss';
+
+@mixin use-sizes($size) {
+  &--#{$size} {
+    height: #{var(--size-#{$size})};
+    width: #{var(--size-#{$size})};
+  }
+}
 
 .sui-avatar {
-  $size-sm: 32px;
-  $size: 56px;
-  $size-lg: 64px;
+  --size-large: 48px;
+  --size-medium: 40px;
+  --size-small: 32px;
 
-  @include main.use-inline-flex;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: map.get($border-radiuses, 'base');
-  background-color: map.get($surface-colors, 'light-3');
-  height: $size;
-  width: $size;
+  border-radius: map.get($sizes-radius, 'medium');
+  background-color: map.get($colors-fill, '2');
   vertical-align: middle;
-  color: map.get($text-colors, 'secondary');
+  color: var(--sui-text-2);
   font-size: map.get($font-sizes, 'base');
+  text-align: center;
 
   img {
     display: inline-block;
     height: 100%;
   }
 
+  span {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    &.auto-width {
+      display: block;
+      position: absolute;
+      transform-origin: 0 center;
+      left: 50%;
+      white-space: nowrap;
+      width: auto;
+      transform: translate(-50%);
+    }
+  }
+
   // shapes
   &--circle {
-    border-radius: map.get($border-radiuses, 'circle');
+    border-radius: map.get($sizes-radius, 'circle');
   }
+
+  // sizes
+  @include use-sizes('large');
+  @include use-sizes('medium');
+  @include use-sizes('small');
 }

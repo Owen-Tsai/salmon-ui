@@ -1,5 +1,6 @@
 <template>
   <span
+    ref="wrapperEl"
     :class="['sui-avatar', ...cls]"
     :style="sizeStyle"
   >
@@ -10,90 +11,90 @@
       :srcset="srcSet"
       :style="fitStyle"
       @error="handleError"
+      @load="handleLoaded"
     >
-    <slot v-else></slot>
+    <span
+      v-else
+      ref="textEl"
+      :class="{ 'auto-width': autoFontSize }"
+    >
+      <slot />
+    </span>
   </span>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {
-  defineComponent,
   ref,
-  computed
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  StyleValue
 } from 'vue'
 
-import { buildProp } from '@/utils/props'
+import {
+  GroupContext,
+  groupCtxKey
+} from 'salmon-ui/avatar-group/avatar-group'
+import { avatarProps } from './avatar'
 
-export default defineComponent({
-  name: 'SAvatar',
-  props: {
-    src: {
-      type: String,
-      default: ''
-    },
-    srcSet: {
-      type: String,
-      default: ''
-    },
-    alt: {
-      type: String,
-      default: ''
-    },
-    size: buildProp({
-      type: [String, Number],
-      values: ['large', 'default', 'small'],
-      validator: (val: unknown): val is number => typeof val === 'number'
-    } as const),
-    shape: buildProp({
-      values: ['circle', 'square']
-    } as const),
-    fit: buildProp({
-      values: ['cover', 'contain', 'scale-down', 'fill', 'none']
-    } as const)
-  },
-  emits: ['error'],
-  setup(props, ctx) {
-    // state
-    const hasLoadError = ref(false)
+const props = defineProps(avatarProps)
+const emit = defineEmits(['error', 'load'])
 
-    // classes
-    const cls = computed(() => {
-      const arr: string[] = []
-      const prefix = 'sui-avatar--'
-      if (props.size && typeof props.size === 'string') {
-        if (props.size !== 'default') {
-          arr.push(`${prefix}${props.size}`)
-        }
-      }
-      if (props.shape && props.shape !== 'square') {
-        arr.push(`${prefix}${props.shape}`)
-      }
+const wrapperEl = ref<HTMLElement>()
+const textEl = ref<HTMLElement>()
 
-      return arr
-    })
+const group = inject(groupCtxKey, undefined as GroupContext)
+const autoFontSize = ref(group?.autoFontSize || props.autoFontSize)
 
-    // styles
-    const sizeStyle = computed(() => {
-      return typeof(props.size) === 'number' ? {
-        height: `${props.size}px`,
-        width: `${props.size}px`,
-        lineHeight: `${props.size}px`
-      } : {}
-    })
-    const fitStyle = computed(() => ({
-      objectFit: props.fit
-    }))
+const cls = computed(() => [
+  'sui-avatar',
+  `sui-avatar--${group?.size || props.size}`,
+  `sui-avatar--${group?.shape || props.shape}`,
+])
 
-    // methods
-    const handleError = (evt: Event) => {
-      hasLoadError.value = true
-      ctx.emit('error', evt)
+const hasLoadError = ref(false)
+
+const sizeStyle = computed<StyleValue>(() => {
+  const size = group?.size || props.size
+  return (typeof size === 'number') ? {
+    height: `${size}px`,
+    width: `${size}px`,
+    lineHeight: `${size}px`,
+  } : {}
+})
+
+const fitStyle = computed<StyleValue>(() => (
+  props.fit ? { objectFit: props.fit } : {}
+))
+
+const handleError = (e: Event) => {
+  hasLoadError.value = true
+  emit('error', e)
+}
+
+const handleLoaded = (e: Event) => {
+  emit('load', e)
+}
+
+const autoFontSizeHandler = () => {
+  if (props.src || props.srcSet) return
+  nextTick(() => {
+    if (!wrapperEl.value || !textEl.value) return
+    const width = wrapperEl.value.clientWidth
+    const textWidth = textEl.value.clientWidth
+
+    const scale = width / (textWidth + 8)
+    if (scale < 1) {
+      textEl.value.style.transform = `scale(${scale}) translate(-50%)`
     }
+  })
+}
 
-    return {
-      hasLoadError,
-      cls, sizeStyle, fitStyle, handleError
-    }
+onMounted(() => {
+  if (autoFontSize.value) {
+    autoFontSizeHandler()
   }
 })
 </script>

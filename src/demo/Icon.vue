@@ -2,41 +2,41 @@
   <demo name="Icon">
     <div class="container">
       <div class="cell">
-        <s-icon :size="56" :name="VuejsFill"></s-icon>
+        <s-icon :size="56" :name="VuejsFill" />
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <angularjs-fill></angularjs-fill>
+          <angularjs-fill />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <reactjs></reactjs>
+          <reactjs />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <thumb-up></thumb-up>
+          <thumb-up />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <xbox></xbox>
+          <xbox />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <i-switch></i-switch>
+          <i-switch />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <playstation></playstation>
+          <playstation />
         </s-icon>
       </div>
       <div class="cell">
         <s-icon :size="56">
-          <heart-fill></heart-fill>
+          <heart-fill />
         </s-icon>
       </div>
     </div>
@@ -54,7 +54,7 @@ import {
 .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  color: #1e293b;
+  color: currentColor;
 }
 .cell {
   text-align: center;
