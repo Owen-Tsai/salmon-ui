@@ -23,7 +23,7 @@ export function buildProp<
     : D
   type?: unknown
   // eslint-disable-next-line no-unused-vars
-  validator?: (val: unknown) => boolean
+  validator?: (val: unknown) => val is C | ((v: unknown) => boolean)
 } = {}) {
   return {
     type: type as PropType<T | C>,

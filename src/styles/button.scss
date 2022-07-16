@@ -9,7 +9,7 @@
   --padding-mini: 0 11px;
   --padding-small: 0 15px;
   --padding-large: 0 19px;
-  --disabled-primary-text-color: rgba(255, 255, 255, 1);
+  --disabled-primary-text-color: rgba(255, 255, 255, .65);
 
   $status-normal: ':not(.is-disabled):not(.is-loading)';
   $ns: '.sui-button';
