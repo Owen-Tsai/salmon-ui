@@ -18,6 +18,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended'
   ],
   rules: {
+    'no-shadow': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'linebreak-style': 'off',
@@ -25,7 +26,8 @@ module.exports = {
     semi: 'off',
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    'no-use-before-define': 'off'
   },
   ignorePatterns: [
     '/src/demo/*', 'main.ts', '/src/App.vue'
