@@ -27,7 +27,10 @@
     margin-left: -1px;
   }
   #{$el}:not(.sui-button--primary) {
-    &:hover, &:focus {
+    &:hover {
+      z-index: 2;
+    }
+    &:focus {
       z-index: 1;
     }
   }

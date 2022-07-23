@@ -19,7 +19,7 @@
   box-sizing: border-box;
   overflow: hidden;
   border-radius: map.get($sizes-radius, 'medium');
-  background-color: map.get($colors-fill, '2');
+  background-color: var(--sui-fill-2);
   vertical-align: middle;
   color: var(--sui-text-2);
   font-size: map.get($font-sizes, 'base');

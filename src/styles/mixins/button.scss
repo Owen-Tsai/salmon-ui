@@ -58,7 +58,7 @@
     cursor: not-allowed;
   }
   &.is-loading, &.is-disabled {
-    background-color: var(--sui-fill-1);
+    background-color: var(--sui-fill-2);
     color: var(--sui-text-3);
   }
 }
