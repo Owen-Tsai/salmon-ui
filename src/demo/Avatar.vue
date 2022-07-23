@@ -9,7 +9,7 @@
     <br>
     <s-avatar shape="circle" :src="img" />
     <s-avatar shape="circle" :src="img3" />
-    <s-avatar shape="circle">张三</s-avatar>
+    <s-avatar shape="circle" auto-font-size>张三</s-avatar>
     <s-avatar shape="circle" auto-font-size>{{ text }}</s-avatar>
     <s-avatar shape="circle" auto-font-size>M</s-avatar>
     <br>

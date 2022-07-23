@@ -13,13 +13,17 @@
       @error="handleError"
       @load="handleLoaded"
     >
-    <span
+    <resize-wrapper
       v-else
-      ref="textEl"
-      :class="{ 'auto-width': autoFontSize }"
+      @resize="autoFontSizeHandler"
     >
-      <slot />
-    </span>
+      <span
+        ref="textEl"
+        :class="{ 'auto-width': autoFontSize }"
+      >
+        <slot />
+      </span>
+    </resize-wrapper>
   </span>
 </template>
 
@@ -37,6 +41,7 @@ import {
   GroupContext,
   groupCtxKey
 } from 'salmon-ui/avatar-group/avatar-group'
+import ResizeWrapper from 'salmon-ui/_components/ResizeWrapper'
 import { avatarProps } from './avatar'
 
 const props = defineProps(avatarProps)
@@ -79,7 +84,7 @@ const handleLoaded = (e: Event) => {
 }
 
 const autoFontSizeHandler = () => {
-  if (props.src || props.srcSet) return
+  if (props.src || props.srcSet || !autoFontSize.value) return
   nextTick(() => {
     if (!wrapperEl.value || !textEl.value) return
     const width = wrapperEl.value.clientWidth
