@@ -33,8 +33,8 @@
 
 @mixin default-button($type) {
   background-color: transparent;
-  border-color: var(--sui-border-1);
-  color: var(--sui-text-2);
+  border-color: var(--sui-border-2);
+  color: var(--sui-text-1);
 
   &:not(.is-disabled):not(.is-loading) {
     &:hover {
