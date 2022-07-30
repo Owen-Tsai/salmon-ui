@@ -40,3 +40,32 @@
   left: 0;
   z-index: -1;
 }
+
+@mixin icon-button($size: 16px) {
+  @include reset-default-button;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: inherit;
+  margin-left: 4px;
+  color: inherit;
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: $size;
+    height: $size;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border-radius: map.get($sizes-radius, 'circle');
+    transition: background-color map.get($durations, '1') map.get($timings, 'linear');
+  }
+
+  &:hover::before {
+    background-color: var(--sui-fill-3);
+  }
+}
