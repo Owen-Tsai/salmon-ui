@@ -2,32 +2,14 @@
   <transition name="slide-up">
     <div
       v-show="visible"
-      ref="alertNode"
-      class="sui-alert"
-      :class="[
-        type ? `sui-alert--${type}` : null,
-        visible ? null : 'is-closing'
-      ]"
+      ref="alertEl"
+      :class="cls"
     >
       <div class="sui-alert__wrapper">
-        <span
-          :class="[
-            'sui-alert__prefix', 'sui-alert__icon',
-            largeIcon ? 'is-large' : null
-          ]"
-        >
-          <slot name="prefix">
-            <s-icon>
-              <error-warning-fill
-                v-if="type === 'error' || type === 'warning'"
-              ></error-warning-fill>
-              <checkbox-circle-fill
-                v-else-if="type === 'success'"
-              ></checkbox-circle-fill>
-              <information-fill v-else></information-fill>
-            </s-icon>
-          </slot>
-        </span>
+        <div class="sui-alert__icon">
+          <s-icon :name="computedIcon" />
+        </div>
+
         <div class="sui-alert__content">
           <div
             v-if="title || $slots.title"
@@ -37,85 +19,106 @@
               {{ title }}
             </slot>
           </div>
-          <p
+          <div
             v-if="$slots.default || !!content"
             class="sui-alert__message"
           >
             <slot>
               {{ content }}
             </slot>
-          </p>
-
-          <button
-            v-if="dismissible"
-            class="sui-alert__close-btn"
-            @click="close"
-          >
-            <slot name="close">
-              <s-icon>
-                <close></close>
-              </s-icon>
-            </slot>
-          </button>
+          </div>
         </div>
+
+        <div
+          v-if="$slots.action"
+          class="sui-alert__action"
+        >
+          <slot name="action" />
+        </div>
+
+        <button
+          v-if="dismissable"
+          class="sui-alert__close-btn"
+          @click.prevent="close"
+        >
+          <s-icon
+            class="sui-alert__close-token"
+            :name="Close"
+          />
+        </button>
       </div>
     </div>
   </transition>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {
   computed,
   ref,
-  defineComponent
+  getCurrentInstance,
+  PropType,
+  Component
 } from 'vue'
-
-import SIcon from '../icon'
 import {
   Close,
   InformationFill,
   ErrorWarningFill,
   CheckboxCircleFill,
 } from '@salmon-ui/icons'
+import SIcon from '../icon'
 
-import props from './alert'
-
-export default defineComponent({
-  name: 'SAlert',
-  components: {
-    SIcon,
-    Close,
-    InformationFill,
-    ErrorWarningFill,
-    CheckboxCircleFill,
+const props = defineProps({
+  type: {
+    type: String as PropType<'primary' | 'success' | 'warning' | 'error'>,
+    default: 'primary'
   },
-  props,
-  emits: ['close'],
-  setup(props, ctx) {
-    // state
-    const visible = ref(true)
-    const alertNode = ref<HTMLElement>()
+  dismissable: Boolean,
+  title: {
+    type: String,
+    default: undefined
+  },
+  content: {
+    type: String,
+    default: undefined
+  },
+  icon: {
+    type: Object as PropType<Component>,
+    default: undefined
+  },
+  outlined: Boolean
+})
 
-    // computed properties
-    const largeIcon = computed(() => {
-      return !!((props.title || ctx.slots.title) && (props.content || ctx.slots.default))
-    })
+const emit = defineEmits(['close'])
 
-    // methods
-    const close = (evt: Event) => {
-      evt.preventDefault()
-      const dom = alertNode.value as HTMLElement
-      dom.style.height = `${dom.offsetHeight}px`
-      dom.style.height = `${dom.offsetHeight}px`
-      dom.style.height = `${dom.offsetHeight}px`
-      visible.value = false
-      ctx.emit('close', evt)
-    }
+const cls = computed(() => [
+  'sui-alert',
+  `sui-alert--${props.type}`,
+  {
+    'is-outlined': props.outlined,
+    'has-title': props.title || getCurrentInstance()?.slots.title
+  }
+])
 
-    return {
-      visible, largeIcon, close,
-      alertNode
-    }
+const alertEl = ref<HTMLElement>()
+const visible = ref(true)
+
+const computedIcon = computed(() => {
+  if (props.icon) return props.icon
+  switch (props.type) {
+    case 'primary':
+      return InformationFill
+    case 'success':
+      return CheckboxCircleFill
+    default:
+      return ErrorWarningFill
   }
 })
+
+const close = () => {
+  emit('close')
+  const el = alertEl.value as HTMLElement
+  el.style.height = `${el.offsetHeight}px`
+  el.style.height = `${el.offsetHeight}px`
+  visible.value = false
+}
 </script>

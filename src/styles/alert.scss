@@ -1,70 +1,68 @@
-@use './common/var.scss' as *;
-@use './mixins/alert.scss';
-@use './mixins/main.scss';
 @use 'sass:map';
+@use './common/var.scss' as *;
+@use './mixins/main.scss';
+@use './mixins/alert.scss' as *;
 
 .sui-alert {
-  $padding: 16px 12px;
   $ns: '.sui-alert';
+  --padding: 8px 15px;
+  --padding-lg: 15px;
 
-  padding: $padding;
-  border-radius: map.get($border-radiuses, 'base');
+  padding: var(--padding);
+  border-radius: map.get($sizes-radius, 'square');
   box-sizing: border-box;
-  font-size: map.get($font-sizes, 'base');
-  transition: all map.get($durations, 'slow');
+  font-size: map.get($sizes-text, 'body-3');
+  transition: all map.get($durations, '3') map.get($timings, 'linear');
   opacity: 1;
-  
-  @include alert.make-alert(primary);
-
-  // different types
-  &--warning {
-    @include alert.make-alert(warning);
-  }
-  &--success {
-    @include alert.make-alert(success);
-  }
-  &--error {
-    @include alert.make-alert(error);
-  }
+  color: var(--sui-text-1);
+  line-height: $line-height-base;
 
   &__wrapper {
-    @include main.use-flex(false);
-    position: relative;
-    padding-right: 24px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  &__content {
+    flex-grow: 1;
+  }
+  
+  &__icon {
+    font-size: map.get($sizes-text, 'title-1');
+    margin-right: 8px;
+    .sui-icon {
+      vertical-align: -2px;
+    }
+  }
 
+  &__close-btn {
+    @include main.icon-button(20px);
+    #{$ns}__close-token {
+      position: relative;
+    }
+  }
+
+  &.has-title {
+    padding: var(--padding-lg);
+    #{$ns}__wrapper {
+      align-items: flex-start;
+    }
     #{$ns}__icon {
-      font-size: 24px;
-      margin-right: 16px;
-      line-height: 0;
-
-      &.is-large {
-        font-size: 32px;
-      }
+      font-size: map.get($sizes-text, 'title-2');
     }
+  }
 
-    #{$ns}__title {
-      font-weight: map.get($font-weights, 'bold');
-      margin-bottom: 4px;
-
-      * {
-        vertical-align: middle;
-      }
-    }
-
-    #{$ns}__message {
-      margin: 0;
-    }
-
-    #{$ns}__close-btn {
-      @include main.reset-default-button;
-      @include main.use-inline-flex;
-      position: absolute;
-      right: -4px;
-      top: 2px;
-      border-radius: map.get($border-radiuses, 'circle');
-      font-size: map.get($font-sizes, 'medium');
-      padding: 2px;
-      transition: all map.get($durations, 'fast');
+  &__title {
+    font-size: map.get($sizes-text, 'title-1');
+    font-weight: 500;
+    line-height: map.get($sizes-text, 'title-2') * 1.5;
+  }
+  
+  // types
+  $types: 'primary', 'warning', 'success', 'error';
+  @each $type in $types {
+    &#{$ns}--#{$type} {
+      @include alert($type);
     }
   }
 
@@ -75,11 +73,11 @@
     padding-bottom: 0;
     transform-origin: 50% 0;
     opacity: 0;
-    transition: all map.get($durations, 'slow') ease-in-out;
+    transition: all map.get($durations, '3') ease-in-out;
 
     * {
       opacity: 0;
-      transition: opacity map.get($durations, 'slow') ease-in-out;
+      transition: opacity map.get($durations, '3') ease-in-out;
     }
   }
 }

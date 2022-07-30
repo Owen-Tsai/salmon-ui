@@ -2,23 +2,13 @@
 @use '../mixins/main.scss';
 @use 'sass:map';
 
-@mixin make-alert($type) {
-  $surface-color: map.get($colors, $type, '6');
-  $color: map.get($colors, $type, 'base');
-  $light-color: map.get($colors, $type, '4');
-  $ns: '.sui-alert';
-
-  background-color: $surface-color;
-  color: $color;
-  border: 1px solid $light-color;
-
-  #{$ns}__close-btn {
-    color: $color;
-    background-color: $surface-color;
-
-    &:focus {
-      background-color: $light-color;
-      @include main.use-ring($color);
-    }
+@mixin alert($type) {
+  background-color: var(--sui-#{$type}-1);
+  border: 1px solid var(--sui-#{$type}-1);
+  .sui-alert__icon {
+    color: var(--sui-#{$type}-6);
+  }
+  &.is-outlined {
+    border-color: var(--sui-#{$type}-3);
   }
 }

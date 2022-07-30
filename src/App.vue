@@ -13,8 +13,8 @@
     </div>
     <div class="demo-row">
       <demo-icon />
-      <!-- <demo-alert></demo-alert>
-      <demo-breadcrumb></demo-breadcrumb>
+      <demo-alert />
+      <!-- <demo-breadcrumb></demo-breadcrumb>
       <demo-rating></demo-rating>
       <demo-switch></demo-switch>
       <demo-checkbox></demo-checkbox>
@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import DemoButton from '@/demo/Button.vue'
-// import DemoAlert from '@/demo/Alert.vue'
+import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
