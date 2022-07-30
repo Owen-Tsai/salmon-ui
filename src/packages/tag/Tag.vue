@@ -1,15 +1,10 @@
 <template>
   <span
-    :class="[
-      'sui-tag',
-      type ? `sui-tag--${type}` : null,
-      fill ? `sui-tag--fill-${fill}` : null,
-      size ? `sui-tag--${size}` : null,
-      rounded ? 'is-rounded' : null
-    ]"
-    @click="handleClick"
+    :class="cls"
+    :style="fillStyle"
+    @click="onClick"
   >
-    <slot></slot>
+    <slot />
 
     <button
       v-if="dismissible"
@@ -17,44 +12,70 @@
     >
       <s-icon
         class="sui-tag__close-token"
-        @click.stop="handleClose"
-      >
-        <close></close>
-      </s-icon>
+        :name="Close"
+        @click.stop="onClose"
+      />
     </button>
   </span>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import SIcon from '../icon'
+<script lang="ts" setup>
+import {
+  computed,
+  PropType,
+  StyleValue
+} from 'vue'
+import SIcon from 'salmon-ui/icon'
 import { Close } from '@salmon-ui/icons'
-import { warn } from '@/utils/class.error'
 
-import props from './tag'
-
-export default defineComponent({
-  name: 'STag',
-  components: {
-    SIcon,
-    Close
+const props = defineProps({
+  type: {
+    type: String as PropType<
+      'default' | 'primary' | 'success' | 'error' | 'warning'
+    >,
+    default: 'default'
   },
-  props,
-  emits: ['click', 'close'],
-  setup(props, { emit }) {
-    if (!props.type && props.fill) {
-      warn('sui-tag', 's-tag components with a `fill` prop are required to have a `type` specified.')
-    }
-    const handleClick = (evt: Event) => {
-      emit('click', evt)
-    }
-    const handleClose = (evt: Event) => {
-      emit('close', evt)
-    }
-
-    return {
-      handleClick, handleClose
-    }
+  shape: {
+    type: String as PropType<'square' | 'rounded'>,
+    default: 'square'
+  },
+  size: {
+    type: String as PropType<'large' | 'medium' | 'small'>,
+    default: 'medium'
+  },
+  outlined: Boolean,
+  dismissible: Boolean,
+  color: {
+    type: String,
+    default: undefined
   }
 })
+
+const emit = defineEmits(['click', 'close'])
+
+const cls = computed(() => [
+  'sui-tag',
+  `sui-tag--${props.type}`,
+  `sui-tag--${props.shape}`,
+  `sui-tag--${props.size}`,
+  {
+    'is-outlined': props.outlined
+  }
+])
+
+const fillStyle = computed<StyleValue>(() => (
+  props.color ? {
+    backgroundColor: props.color,
+    color: '#fff',
+    borderColor: props.color
+  } : {}
+))
+
+const onClick = () => {
+  emit('click')
+}
+
+const onClose = () => {
+  emit('close')
+}
 </script>

@@ -2,41 +2,18 @@
 @use '../common/var.scss' as *;
 @use './main.scss';
 
-@mixin make-tag($type) {
-  $color: map.get($colors, $type, 'base');
-  $surface-color: map.get($colors, $type, '6');
-  $light-color: map.get($colors, $type, '4');
-  $ns: '.sui-tag';
+@mixin tag($type) {
+  background-color: var(--sui-#{$type}-1);
+  color: var(--sui-#{$type}-6);
+  border: 1px solid var(--sui-#{$type}-1);
 
-  border: 1px solid $color;
-  color: $color;
-  background-color: $surface-color;
-
-  #{$ns}__close-btn {
-    color: $color;
-    &:focus {
-      background-color: $light-color;
-      @include main.use-ring($color);
+  .sui-tag__close-btn {
+    &:hover::before {
+      background-color: var(--sui-#{$type}-2);
     }
   }
 }
 
-@mixin set-filled-tag($type) {
-  $color: map.get($colors, $type, 'base');
-  $ns: '.sui-tag';
-
-  background-color: $color;
-  color: $color-white;
-
-  #{$ns}__close-btn {
-    color: $color-white;
-    &:focus {
-      color: $color;
-      @include main.use-ring($color-white)
-    }
-  }
-}
-
-@mixin set-unfilled-tag {
-  background-color: transparent;
+@mixin outlined-tag($type) {
+  border-color: var(--sui-#{$type}-6);
 }

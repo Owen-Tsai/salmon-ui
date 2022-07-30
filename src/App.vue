@@ -6,8 +6,8 @@
     <div class="demo-row">
       <demo-button />
       <demo-button-group />
-      <!-- <demo-tag></demo-tag>
-      <demo-dropdown></demo-dropdown>
+      <demo-tag />
+      <!-- <demo-dropdown></demo-dropdown>
       <demo-input></demo-input>
       <demo-progress></demo-progress> -->
     </div>
@@ -40,7 +40,7 @@ import DemoAvatar from '@/demo/Avatar.vue'
 // import DemoBadge from '@/demo/Badge.vue'
 // import DemoCard from '@/demo/Card.vue'
 // import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
-// import DemoTag from '@/demo/Tag.vue'
+import DemoTag from '@/demo/Tag.vue'
 // import DemoRating from '@/demo/Rating.vue'
 // import DemoDropdown from '@/demo/Dropdown.vue'
 // import DemoSwitch from '@/demo/Switch.vue'
@@ -92,5 +92,14 @@ const toggleDarkMode = () => {
   padding: 8px 0;
   border-bottom: 1px solid #ccc;
   top: 0;
+  background-color: var(--sui-fill-1);
+  z-index: 99;
+}
+</style>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>
