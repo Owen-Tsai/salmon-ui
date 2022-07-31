@@ -12,10 +12,15 @@
   border-radius: map.get($sizes-radius, 'square');
   box-sizing: border-box;
   font-size: map.get($sizes-text, 'body-3');
-  transition: all map.get($durations, '3') map.get($timings, 'linear');
   opacity: 1;
   color: var(--sui-text-1);
   line-height: $line-height-base;
+  transition: max-height map.get($durations, '2') map.get($timings, 'linear'),
+    opacity map.get($durations, '2') map.get($timings, 'linear'),
+    height map.get($durations, '2') map.get($timings, 'linear'),
+    margin map.get($durations, '2') map.get($timings, 'linear'),
+    padding-top map.get($durations, '2') map.get($timings, 'linear'),
+    padding-bottom map.get($durations, '2') map.get($timings, 'linear');
 
   &__wrapper {
     display: flex;
@@ -73,11 +78,26 @@
     padding-bottom: 0;
     transform-origin: 50% 0;
     opacity: 0;
-    transition: all map.get($durations, '3') ease-in-out;
 
     * {
       opacity: 0;
-      transition: opacity map.get($durations, '3') ease-in-out;
     }
+  }
+
+  .slide-up-leave {
+    overflow: hidden;
+    opacity: 1;
+    transition: max-height map.get($durations, '2') map.get($timings, 'linear'),
+      opacity map.get($durations, '2') map.get($timings, 'linear'),
+      padding-top map.get($durations, '2') map.get($timings, 'linear'),
+      padding-bottom map.get($durations, '2') map.get($timings, 'linear');
+  }
+
+  .slide-up-leave-active {
+    max-height: 0;
+    margin-bottom: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
   }
 }

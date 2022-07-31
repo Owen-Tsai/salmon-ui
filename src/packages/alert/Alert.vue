@@ -1,7 +1,17 @@
 <template>
-  <transition name="slide-up">
+  <transition
+    v-if="!closed"
+    name="slide-up"
+    css
+    leave-from-class="slide-up-leave"
+    leave-to-class="slide-up-leave slide-up-leave-active"
+    leave-active-class="slide-up-leave slide-up-leave-active"
+    @before-leave="onBeforeLeave"
+    @after-leave="onAfterLeave"
+    @leave="onLeave"
+  >
     <div
-      v-show="visible"
+      v-show="!closing"
       ref="alertEl"
       :class="cls"
     >
@@ -88,19 +98,21 @@ const props = defineProps({
   outlined: Boolean
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'after-close'])
 
 const cls = computed(() => [
   'sui-alert',
   `sui-alert--${props.type}`,
   {
     'is-outlined': props.outlined,
-    'has-title': props.title || getCurrentInstance()?.slots.title
+    'has-title': props.title || getCurrentInstance()?.slots.title,
+    'is-closing': closing.value
   }
 ])
 
 const alertEl = ref<HTMLElement>()
-const visible = ref(true)
+const closed = ref(false)
+const closing = ref(false)
 
 const computedIcon = computed(() => {
   if (props.icon) return props.icon
@@ -119,6 +131,22 @@ const close = () => {
   const el = alertEl.value as HTMLElement
   el.style.height = `${el.offsetHeight}px`
   el.style.height = `${el.offsetHeight}px`
-  visible.value = false
+  closing.value = true
+}
+
+const onBeforeLeave = (node: HTMLDivElement) => {
+  // eslint-disable-next-line no-param-reassign
+  node.style.maxHeight = `${node.offsetHeight}px`
+}
+
+const onAfterLeave = () => {
+  closing.value = false
+  closed.value = true
+  emit('after-close')
+}
+
+const onLeave = (node: HTMLDivElement) => {
+  // eslint-disable-next-line no-param-reassign
+  node.style.maxHeight = '0'
 }
 </script>
