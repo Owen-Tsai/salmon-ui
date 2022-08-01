@@ -22,6 +22,7 @@
     </div>
     <div class="demo-row">
       <demo-avatar />
+      <demo-divider />
       <!-- <demo-badge></demo-badge>
       <demo-card></demo-card>
       <demo-radio></demo-radio>
@@ -37,6 +38,7 @@ import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
+import DemoDivider from '@/demo/Divider.vue'
 // import DemoBadge from '@/demo/Badge.vue'
 // import DemoCard from '@/demo/Card.vue'
 // import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
