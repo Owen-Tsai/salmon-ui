@@ -2,13 +2,15 @@
   <div
     :class="cls"
     role="separator"
+    :style="computedStyle"
   />
 </template>
 
 <script lang="ts" setup>
 import {
   computed,
-  PropType
+  PropType,
+  StyleValue
 } from 'vue'
 
 const props = defineProps({
@@ -31,6 +33,18 @@ const props = defineProps({
 const cls = computed(() => [
   'sui-divider',
   `sui-divider--${props.direction}`,
-  typeof props.margin === 'string' ? props.margin : null
+  typeof props.margin === 'string' ? `sui-divider--${props.margin}` : null
 ])
+
+const computedStyle = computed<StyleValue>(() => {
+  if (typeof props.margin === 'number') {
+    return props.direction === 'vertical' ? {
+      margin: `0 ${props.margin}px`
+    } : {
+      margin: `${props.margin}px 0`
+    }
+  }
+
+  return {}
+})
 </script>

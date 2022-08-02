@@ -2,9 +2,9 @@
 
 .sui-divider {
   --margin-mini: 4px;
-  --margin-sm: 8px;
-  --margin-md: 16px;
-  --margin-lg: 24px;
+  --margin-small: 8px;
+  --margin: 16px;
+  --margin-large: 24px;
 
   $ns: '.sui-divider';
 
@@ -15,14 +15,24 @@
 
   &#{$ns}--horizontal {
     width: 100%;
-    min-width: 100%;
-    max-width: 100%;
     border-bottom: 1px solid var(--sui-border-1);
-    margin: var(--margin-md) 0;
+    margin: var(--margin) 0;
   }
   &#{$ns}--vertical {
     height: 1em;
     border-left: 1px solid var(--sui-border-1);
-    margin: 0 var(--margin-md);
+    margin: 0 var(--margin);
+  }
+
+  // sizes
+  @each $size in ('mini', 'small', 'large') {
+    &#{$ns}--#{$size} {
+      &#{$ns}--horizontal {
+        margin: var(--margin-#{$size}) 0;
+      }
+      &#{$ns}--vertical {
+        margin: 0 var(--margin-#{$size});
+      }
+    }
   }
 }
