@@ -5,60 +5,60 @@
       type ? `sui-badge--${type}` : null
     ]"
   >
-    <slot></slot>
+    <slot />
 
     <transition name="zoom-in-center">
       <sup
-        v-show="computedValue || dot"
         class="sui-badge__content"
         :class="{ 'is-dot': dot }"
-        :style="posStyle"
-        v-text="computedValue"
-      ></sup>
+        :style="dotStyle"
+      >
+        <slot name="content">
+          <span
+            v-show="computedValue || dot"
+            v-text="computedValue"
+          />
+        </slot>
+      </sup>
     </transition>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {
-  defineComponent,
   computed,
-  CSSProperties
+  PropType,
+  StyleValue
 } from 'vue'
 
-import props from './badge'
-
-export default defineComponent({
-  name: 'SBadge',
-  props: props,
-  setup(props) {
-    const computedValue = computed(() => {
-      if (props.dot) {
-        return
-      }
-      if (typeof props.value === 'number') {
-        return props.value > props.max ? `${props.max}+` : props.value
-      }
-
-      return props.value
-    })
-
-    const posStyle = computed(() => {
-      const style: CSSProperties = {}
-
-      if (props.top) {
-        style.top = `${props.top}px`
-      }
-      if (props.right) {
-        style.right = `${props.right}px`
-      }
-
-      return style
-    })
-
-    return {
-      computedValue, posStyle
-    }
+const props = defineProps({
+  dot: Boolean,
+  dotStyle: {
+    type: Object as PropType<StyleValue>,
+    default: undefined
+  },
+  type: {
+    type: String as PropType<
+      'primary' | 'success' | 'warning' | 'error' | 'default'
+    >,
+    default: 'default'
+  },
+  value: {
+    type: [String, Number],
+    default: undefined
+  },
+  max: {
+    type: Number,
+    default: 99
   }
+})
+
+const computedValue = computed(() => {
+  if (props.dot) return undefined
+  if (typeof props.value === 'number') {
+    return props.value > props.max ? `${props.max}+` : props.value
+  }
+
+  return props.value
 })
 </script>

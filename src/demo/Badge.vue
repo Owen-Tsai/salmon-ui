@@ -1,7 +1,10 @@
 <template>
   <demo name="Badge">
-    <s-badge :value="value">
+    <s-badge :value="value" :dot-style="{ padding: 0 }">
       <s-avatar :src="img"></s-avatar>
+      <template #content>
+        <s-icon :name="Time" />
+      </template>
     </s-badge>
     <s-badge :max="9" :value="value" type="error">
       <s-avatar :src="img2"></s-avatar>
@@ -10,10 +13,10 @@
       <s-avatar :src="img"></s-avatar>
     </s-badge>
     <s-badge dot type="error">
-      <s-button>新功能</s-button>
+      <s-avatar :src="img"></s-avatar>
     </s-badge>
-    <s-badge dot :right="4">
-      <s-button shape="rounded">新功能</s-button>
+    <s-badge value="VIP" type="error">
+      <s-button>新功能</s-button>
     </s-badge>
 
     <br>
@@ -32,10 +35,11 @@
 import SBadge from 'salmon-ui/badge'
 import SAvatar from 'salmon-ui/avatar'
 import SButton from 'salmon-ui/button'
+import SIcon from 'salmon-ui/icon'
 import SButtonGroup from 'salmon-ui/button-group'
 import img from '@/assets/avatar3.jpg'
 import img2 from '@/assets/avatar2.jpg'
-import { Add, Subtract } from '@salmon-ui/icons'
+import { Add, Subtract, Time } from '@salmon-ui/icons'
 import { ref } from 'vue'
 
 const value = ref(1)

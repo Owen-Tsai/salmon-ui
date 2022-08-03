@@ -2,53 +2,54 @@
 @use 'sass:math';
 @use 'common/var.scss' as *;
 
+@mixin badge($type) {
+  &.sui-badge--#{$type} {
+    .sui-badge__content {
+      background-color: var(--sui-#{$type}-6);
+      color: var(--sui-white);
+    }
+  }
+}
+
 .sui-badge {
   $ns: '.sui-badge';
-  $size: 18px;
-  $size-dot: 8px;
-  $padding: 0 6px;
+  --size: 20px;
+  --size-dot: 10px;
+  --padding: 0 6px;
 
   display: inline-block;
   position: relative;
   vertical-align: middle;
+  box-sizing: border-box;
 
   &__content {
     position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: map.get($colors, primary, 'base');
-    font-size: map.get($font-sizes, 'small');
-    color: $color-white;
-    height: $size;
-    border-radius: map.get($border-radiuses, 'rounded');
-    padding: $padding;
+    transform: translate(50%,-50%);
+    transform-origin: 100% 0%;
+    right: 2px;
+    top: 2px;
+    background-color: var(--sui-fill-2);
+    font-size: map.get($sizes-text, 'caption');
+    color: var(--sui-text-1);
+    height: var(--size);
+    min-width: var(--size);
+    border-radius: map.get($sizes-radius, 'rounded');
+    padding: var(--padding);
     text-align: center;
-    line-height: $size;
-    border: 1px solid $color-white;
+    line-height: calc(var(--size) - 2px);
+    box-sizing: border-box;
+    box-shadow: 0 0 0 2px var(--sui-white);
 
     &.is-dot {
-      height: $size-dot;
-      width: $size-dot;
+      height: var(--size-dot);
+      width: var(--size-dot);
+      min-width: unset;
       padding: 0;
-      right: math.div($size-dot, -2);
-      top: math.div($size-dot, -2);
     }
   }
 
-  &--success {
-    #{$ns}__content {
-      background-color: map.get($colors, success, 'base');
-    }
-  }
-  &--warning {
-    #{$ns}__content {
-      background-color: map.get($colors, warning, 'base');
-    }
-  }
-  &--error {
-    #{$ns}__content {
-      background-color: map.get($colors, error, 'base');
-    }
+  @each $type in ('primary', 'warning', 'success', 'error') {
+    @include badge($type);
   }
 }
 
@@ -60,5 +61,5 @@
 
 .zoom-in-center-enter-active,
 .zoom-in-center-leave-active {
-  transition: all map.get($durations, 'fast') ease-in-out;
+  transition: all map.get($durations, '3') map.get($timings, 'overshoot');
 }
