@@ -3,12 +3,12 @@
 @use 'sass:map';
 
 @mixin alert($type) {
-  background-color: var(--sui-#{$type}-1);
-  border: 1px solid var(--sui-#{$type}-1);
+  background-color: var(--sui-#{$type}-light-1);
+  border: 1px solid transparent;
   .sui-alert__icon {
     color: var(--sui-#{$type}-6);
   }
   &.is-outlined {
-    border-color: var(--sui-#{$type}-3);
+    border: 1px solid var(--sui-#{$type}-light-3);
   }
 }

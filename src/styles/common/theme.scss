@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:color';
 @use './var.scss' as *;
 
 // CSS variables
@@ -29,6 +30,12 @@ body {
     --sui-bg-#{$i}: #{map.get($colors-bg, '#{$i}')};
   }
   --sui-bg-white: #{map.get($colors-bg, 'white')};
+  @each $type in ('primary', 'warning', 'error', 'success') {
+    --sui-#{$type}-light-1: var(--sui-#{$type}-1);
+    --sui-#{$type}-light-2: var(--sui-#{$type}-2);
+    --sui-#{$type}-light-3: var(--sui-#{$type}-3);
+    --sui-#{$type}-light-4: var(--sui-#{$type}-4);
+  }
 }
 
 body[data-sui-theme="dark"] {
@@ -47,4 +54,10 @@ body[data-sui-theme="dark"] {
     --sui-bg-#{$i}: #{map.get($colors-bg, 'dark-#{$i}')};
   }
   --sui-bg-white: #{map.get($colors-bg, 'dark-white')};
+  @each $type in ('primary', 'warning', 'error', 'success') {
+    --sui-#{$type}-light-1: #{color.change(map.get($colors, #{$type}, 'dark-6'), $alpha: 0.2)};
+    --sui-#{$type}-light-2: #{color.change(map.get($colors, #{$type}, 'dark-6'), $alpha: 0.35)};
+    --sui-#{$type}-light-3: #{color.change(map.get($colors, #{$type}, 'dark-6'), $alpha: 0.5)};
+    --sui-#{$type}-light-4: #{color.change(map.get($colors, #{$type}, 'dark-6'), $alpha: 0.65)};
+  }
 }

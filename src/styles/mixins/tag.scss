@@ -3,9 +3,9 @@
 @use './main.scss';
 
 @mixin tag($type) {
-  background-color: var(--sui-#{$type}-1);
+  background-color: var(--sui-#{$type}-light-1);
   color: var(--sui-#{$type}-6);
-  border: 1px solid var(--sui-#{$type}-1);
+  border: 1px solid transparent;
 
   .sui-tag__close-btn {
     &:hover::before {
@@ -15,5 +15,5 @@
 }
 
 @mixin outlined-tag($type) {
-  border-color: var(--sui-#{$type}-6);
+  border: 1px solid var(--sui-#{$type}-6);
 }
