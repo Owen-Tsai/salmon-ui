@@ -8,6 +8,10 @@
       cursor: not-allowed;
       color: var(--sui-#{$type}-light-3);
     }
+    &:not(.is-disabled).has-underline:active {
+      color: var(--sui-#{$type}-7);
+      transition: none;
+    }
   }
 }
 
@@ -24,12 +28,20 @@
   background-color: transparent;
   transition: all map.get($durations, '1') map.get($timings, 'linear');
 
-  &:not(.is-disabled).has-underline:hover {
-    text-decoration-line: underline;
+  &:not(.is-disabled).has-underline {
+    &:hover {
+      text-decoration-line: underline;
+    }
   }
 
-  &:not(.is-disabled).has-background:hover {
-    background-color: var(--sui-fill-2);
+  &:not(.is-disabled).has-background {
+    &:hover {
+      background-color: var(--sui-fill-2);
+    }
+    &:active {
+      background-color: var(--sui-fill-3);
+      transition: none;
+    }
   }
 
   &.has-icon {

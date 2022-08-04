@@ -9,15 +9,13 @@
 
     <transition name="zoom-in-center">
       <sup
+        v-show="computedValue || dot || $slots.content"
         class="sui-badge__content"
         :class="{ 'is-dot': dot }"
         :style="dotStyle"
       >
         <slot name="content">
-          <span
-            v-show="computedValue || dot"
-            v-text="computedValue"
-          />
+          <span v-text="computedValue" />
         </slot>
       </sup>
     </transition>
