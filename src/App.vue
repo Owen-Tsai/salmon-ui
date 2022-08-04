@@ -14,6 +14,7 @@
     <div class="demo-row">
       <demo-icon />
       <demo-alert />
+      <demo-link />
       <!-- <demo-breadcrumb></demo-breadcrumb>
       <demo-rating></demo-rating>
       <demo-switch></demo-switch>
@@ -40,6 +41,7 @@ import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
 import DemoDivider from '@/demo/Divider.vue'
 import DemoBadge from '@/demo/Badge.vue'
+import DemoLink from '@/demo/Link.vue'
 // import DemoCard from '@/demo/Card.vue'
 // import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 import DemoTag from '@/demo/Tag.vue'
