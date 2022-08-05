@@ -29,7 +29,7 @@ import { Links } from '@salmon-ui/icons'
 const props = defineProps({
   href: {
     type: String,
-    required: true
+    default: undefined
   },
   type: {
     type: String as PropType<'primary' | 'success' | 'warning' | 'error'>,
