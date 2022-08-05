@@ -3,36 +3,36 @@
 
 .sui-card {
   $ns: '.sui-card';
-  $shadow:map.get($box-shadows, 'base');
+  $shadow: map.get($shadows, 'base');
 
-  border: 1px solid $border-color;
-  border-radius: map.get($border-radiuses, 'base');
-  transition: map.get($durations, 'slow');
+  border-radius: map.get($sizes-radius, 'square');
+  transition: all map.get($durations, '3') map.get($timings, 'linear');
   box-sizing: border-box;
-  color: map.get($text-colors, 'base');
-  font-size: map.get($font-sizes, 'base');
+  color: var(-sui-text-1);
 
-  &.is-borderless {
-    border: none;
+  &.is-outlined {
+    border: 1px solid var(--sui-border-1);
   }
-  &#{$ns}--shadow-always {
-    box-shadow: $shadow;
-  }
-  &#{$ns}--shadow-hover:hover {
+  &.is-hoverable:hover {
     box-shadow: $shadow;
   }
 
   &__header {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--sui-border-1);
     padding: 8px 16px;
-    font-size: map.get($font-sizes, 'large');
-    font-weight: map.get($font-weights, 'bold');
-    color: map.get($text-colors, 'title');
-  }
-  &__footer {
-    border-top: 1px solid $border-color;
-  }
-  &__body, &__footer {
-    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+
+    #{$ns}__title {
+      font-size: map.get($sizes-text, 'title-1');
+      font-weight: 500;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+    }
+    #{$ns}__action {
+      flex-shrink: 0;
+    }
   }
 }

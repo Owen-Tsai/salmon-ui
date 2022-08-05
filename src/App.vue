@@ -25,8 +25,8 @@
       <demo-avatar />
       <demo-divider />
       <demo-badge />
-      <!-- <demo-card></demo-card>
-      <demo-radio></demo-radio>
+      <demo-card />
+      <!-- <demo-radio></demo-radio>
       <demo-radio-button></demo-radio-button>
       <demo-select></demo-select> -->
     </div>
@@ -42,7 +42,7 @@ import DemoAvatar from '@/demo/Avatar.vue'
 import DemoDivider from '@/demo/Divider.vue'
 import DemoBadge from '@/demo/Badge.vue'
 import DemoLink from '@/demo/Link.vue'
-// import DemoCard from '@/demo/Card.vue'
+import DemoCard from '@/demo/Card.vue'
 // import DemoBreadcrumb from '@/demo/Breadcrumb.vue'
 import DemoTag from '@/demo/Tag.vue'
 // import DemoRating from '@/demo/Rating.vue'

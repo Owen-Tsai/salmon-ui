@@ -1,6 +1,6 @@
 <template>
   <demo name="Card">
-    <s-card body-class="my-body">
+    <s-card>
       <img :src="src" alt="My Trip in Asia">
       <div class="content">
         <h2>My Trip in Asia</h2>
@@ -13,23 +13,31 @@
       </div>
     </s-card>
 
-    <s-card title="待办清单" shadow="always">
-      <p>You got 3 things to do this year.</p>
-      <ul>
-        <li>Keep creative.</li>
-        <li>Keep discovering.</li>
-        <li>Purpose her.</li>
-      </ul>
-      <template v-slot:footer>
-        <div style="text-align: right">&copy; Owen @SalmonUI</div>
-      </template>
-    </s-card>
+    <div class="grid">
+      <s-card title="Title">
+        <template #action>
+          <s-link hover="background">Link</s-link>
+        </template>
+        <div class="content">
+          Salmon UI is a simple, consistent UI library buitl for vue 3.
+        </div>
+      </s-card>
+      <s-card title="Title">
+        <template #action>
+          <s-link hover="background">Link</s-link>
+        </template>
+        <div class="content">
+          Salmon UI is a simple, consistent UI library buitl for vue 3.
+        </div>
+      </s-card>
+    </div>
   </demo>
 </template>
 
 <script lang="ts" setup>
 import SCard from 'salmon-ui/card'
 import STag from 'salmon-ui/tag'
+import SLink from 'salmon-ui/link'
 const src = 'https://images.unsplash.com/photo-1448376561459-dbe8868fa34c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'
 </script>
 
@@ -51,15 +59,18 @@ img {
   }
 }
 
-.sui-card + .sui-card {
-  margin-top: 16px;
-}
-
 .tags {
   margin-top: 8px;
 
   .sui-tag + .sui-tag {
     margin-left: 4px;
   }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 16px;
 }
 </style>

@@ -2,61 +2,53 @@
   <div
     :class="[
       'sui-card',
-      `sui-card--shadow-${shadow}`,
-      borderless ? 'is-borderless' : null
+      outlined ? 'is-outlined' : null,
+      hoverable ? 'is-hoverable' : null,
     ]"
   >
     <div
-      v-if="$slots.header || title"
-      :class="headerClass"
+      v-if="$slots.title || $slots.action || title"
+      class="sui-card__header"
     >
-      <slot name="header">
-        {{ title }}
-      </slot>
+      <span
+        v-if="$slots.title || title"
+        class="sui-card__title"
+      >
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </span>
+      <span
+        v-if="$slots.action"
+        class="sui-card__action"
+      >
+        <slot name="action" />
+      </span>
     </div>
 
-    <div :class="bodyClass">
-      <slot></slot>
+    <div class="sui-card__body">
+      <slot />
     </div>
 
     <div
       v-if="$slots.footer"
-      :class="footerClass"
+      class="sui-card__footer"
     >
-      <slot name="footer"></slot>
+      <slot name="footer" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { buildProp } from '@/utils/props'
-
-export default defineComponent({
-  name: 'SCard',
-  props: {
-    title: {
-      type: String,
-      default: undefined
-    },
-    shadow: buildProp({
-      type: String,
-      values: ['hover', 'never', 'always'],
-      default: 'hover',
-    } as const),
-    bodyClass: {
-      type: String,
-      default: 'sui-card__body'
-    },
-    headerClass: {
-      type: String,
-      default: 'sui-card__header'
-    },
-    footerClass: {
-      type: String,
-      default: 'sui-card__footer'
-    },
-    borderless: Boolean
+<script lang="ts" setup>
+defineProps({
+  title: {
+    type: String,
+    default: undefined
+  },
+  hoverable: Boolean,
+  outlined: {
+    type: Boolean,
+    default: true
   }
 })
 </script>
