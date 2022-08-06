@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'common/var.scss' as *;
+@use 'mixins/main.scss' as *;
 
 @mixin link($type) {
   &.sui-link--#{$type} {
@@ -11,6 +12,9 @@
     &:not(.is-disabled).has-underline:active {
       color: var(--sui-#{$type}-7);
       transition: none;
+    }
+    &:focus-visible {
+      @include use-ring(var(--sui-#{$type}-6));
     }
   }
 }
