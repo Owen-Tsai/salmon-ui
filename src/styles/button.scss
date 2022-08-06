@@ -1,8 +1,183 @@
 @use './common/var.scss' as *;
 @use './mixins/main.scss';
-@use './mixins/button.scss';
 @use './common/transition' as *;
 @use 'sass:map';
+
+@mixin use-button-types($type) {
+  &--#{$type} {
+    @if ($type == 'primary') {
+      @include primary-button('primary');
+      &.is-danger {
+        @include primary-button('error');
+      }
+    }
+    @if ($type == 'default') {
+      @include default-button('primary');
+      &.is-danger {
+        @include default-button('error');
+      }
+    }
+    @if ($type == 'outlined') {
+      @include outlined-button('primary');
+      &.is-danger {
+        @include outlined-button('error');
+      }
+    }
+    @if ($type == 'text') {
+      @include text-button('primary');
+      &.is-danger {
+        @include text-button('error');
+      }
+    }
+  }
+}
+
+@mixin default-button($type) {
+  background-color: transparent;
+  border-color: var(--sui-border-2);
+  color: var(--sui-text-1);
+
+  &:not(.is-disabled):not(.is-loading) {
+    &:hover {
+      color: var(--sui-#{$type}-6);
+      border-color: var(--sui-#{$type}-light-3);
+      background-color: var(--sui-#{$type}-light-1);
+    }
+    &:focus-visible {
+      @include main.use-ring(var(--sui-#{$type}-6));
+      color: var(--sui-#{$type}-6);
+      border-color: var(--sui-#{$type}-light-3);
+      background-color: var(--sui-#{$type}-light-1);
+    }
+    &:active {
+      color: var(--sui-#{$type}-6);
+      border-color: var(--sui-#{$type}-6);
+      background-color: var(--sui-#{$type}-light-1);
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+  &.is-loading, &.is-disabled {
+    background-color: var(--sui-fill-2);
+    color: var(--sui-text-3);
+  }
+}
+
+@mixin primary-button($type) {
+  background-color: var(--sui-#{$type}-6);
+  color: var(--sui-white);
+  border-color: var(--sui-#{$type}-6);
+
+  &:not(.is-disabled):not(.is-loading) {
+    &:hover {
+      background-color: var(--sui-#{$type}-5);
+      border-color: var(--sui-#{$type}-5);
+      color: var(--sui-white);
+    }
+    &:focus-visible {
+      @include main.use-ring(var(--sui-#{$type}-6));
+      background-color: var(--sui-#{$type}-5);
+      border-color: var(--sui-#{$type}-5);
+      color: var(--sui-white);
+    }
+    &:active {
+      background-color: var(--sui-#{$type}-7);
+      border-color: var(--sui-#{$type}-7);
+      color: var(--sui-white);
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+  &.is-loading, &.is-disabled {
+    background-color: var(--sui-#{$type}-3);
+    border-color: var(--sui-#{$type}-3);
+    color: var(--disabled-primary-text-color);
+  }
+}
+
+@mixin outlined-button($type) {
+  background-color: transparent;
+  color: var(--sui-#{$type}-6);
+  border-color: var(--sui-#{$type}-6);
+
+  &:not(.is-disabled):not(.is-loading) {
+    &:hover {
+      color: var(--sui-#{$type}-5);
+      border-color: var(--sui-#{$type}-5);
+      background-color: transparent;
+    }
+    &:focus-visible {
+      color: var(--sui-#{$type}-5);
+      border-color: var(--sui-#{$type}-5);
+      @include main.use-ring(var(--sui-#{$type}-6));
+    }
+    &:active {
+      color: var(--sui-#{$type}-7);
+      border-color: var(--sui-#{$type}-7);
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+  &.is-loading, &.is-disabled {
+    border-color: var(--sui-#{$type}-4);
+    color: var(--sui-#{$type}-4);
+  }
+}
+
+@mixin text-button($type) {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--sui-#{$type}-6);
+
+  &:not(.is-disabled):not(.is-loading) {
+    &:hover {
+      color: var(--sui-#{$type}-5);
+      background-color: var(--sui-fill-2);
+      border-color: var(--sui-fill-2);
+    }
+    &:focus-visible {
+      @include main.use-ring(var(--sui-fill-3));
+      border-color: transparent;
+      background-color: transparent;
+    }
+    &:active {
+      color: var(--sui-#{$type}-7);
+      background-color: var(--sui-fill-3);
+      border-color: var(--sui-fill-3);
+    }
+  }
+  &.is-disabled {
+    color: var(--sui-#{$type}-4);
+    cursor: not-allowed;
+  }
+  &.is-loading {
+    color: var(--sui-#{$type}-4);
+  }
+}
+
+@mixin use-size($size) {
+  $height: map.get($sizes-component, #{$size});
+  &--#{$size} {
+    height: $height;
+    padding: var(--padding-#{$size});
+    &.is-icon-only {
+      width: $height;
+      padding: 0;
+    }
+    @if ($size == 'mini') {
+      font-size: map.get($sizes-text, 'body-2');
+    }
+  }
+}
+
+@mixin use-shape($shape) {
+  &--#{$shape} {
+    border-radius: map.get($sizes-radius, '#{$shape}');
+  }
+}
 
 .sui-button {
   --padding-medium: 0 15px;
@@ -53,21 +228,21 @@
   }
 
   // size
-  @include button.use-size('medium');
-  @include button.use-size('large');
-  @include button.use-size('small');
-  @include button.use-size('mini');
+  @include use-size('medium');
+  @include use-size('large');
+  @include use-size('small');
+  @include use-size('mini');
 
   //types
-  @include button.use-button-types('default');
-  @include button.use-button-types('primary');
-  @include button.use-button-types('outlined');
-  @include button.use-button-types('text');
+  @include use-button-types('default');
+  @include use-button-types('primary');
+  @include use-button-types('outlined');
+  @include use-button-types('text');
 
   // shapes
-  @include button.use-shape('rounded');
-  @include button.use-shape('square');
-  @include button.use-shape('circle');
+  @include use-shape('rounded');
+  @include use-shape('square');
+  @include use-shape('circle');
 
   // status
   &.is-loading {
