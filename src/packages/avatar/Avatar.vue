@@ -34,7 +34,8 @@ import {
   inject,
   nextTick,
   onMounted,
-  StyleValue
+  StyleValue,
+  defineComponent
 } from 'vue'
 
 import {
@@ -55,8 +56,8 @@ const autoFontSize = ref(group?.autoFontSize || props.autoFontSize)
 
 const cls = computed(() => [
   'sui-avatar',
-  `sui-avatar--${group?.size || props.size}`,
-  `sui-avatar--${group?.shape || props.shape}`,
+  `sui-avatar--${props.size || group?.size}`,
+  `sui-avatar--${props.shape || group?.shape}`,
 ])
 
 const hasLoadError = ref(false)
@@ -101,5 +102,11 @@ onMounted(() => {
   if (autoFontSize.value) {
     autoFontSizeHandler()
   }
+})
+</script>
+
+<script lang="ts">
+export default defineComponent({
+  name: 'SAvatar'
 })
 </script>
