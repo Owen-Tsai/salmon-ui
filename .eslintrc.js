@@ -27,7 +27,8 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/no-unresolved': 'off',
-    'no-use-before-define': 'off'
+    'no-use-before-define': 'off',
+    'no-param-reassign': 'off'
   },
   ignorePatterns: [
     '/src/demo/*', 'main.ts', '/src/App.vue'

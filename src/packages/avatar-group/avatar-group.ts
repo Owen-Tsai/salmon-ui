@@ -5,4 +5,7 @@ export type GroupContext = ExtractPropTypes<typeof commonProps> | undefined
 
 export const groupCtxKey = Symbol('avatarGroup')
 
-export const groupProps = commonProps
+export const groupProps = {
+  ...commonProps,
+  offset: Number
+}

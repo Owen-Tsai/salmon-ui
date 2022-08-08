@@ -23,6 +23,7 @@
     </div>
     <div class="demo-row">
       <demo-avatar />
+      <demo-avatar-group />
       <demo-divider />
       <demo-badge />
       <demo-card />
@@ -39,6 +40,7 @@ import DemoAlert from '@/demo/Alert.vue'
 import DemoButtonGroup from '@/demo/ButtonGroup.vue'
 import DemoIcon from '@/demo/Icon.vue'
 import DemoAvatar from '@/demo/Avatar.vue'
+import DemoAvatarGroup from '@/demo/AvatarGroup.vue'
 import DemoDivider from '@/demo/Divider.vue'
 import DemoBadge from '@/demo/Badge.vue'
 import DemoLink from '@/demo/Link.vue'

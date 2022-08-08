@@ -1,0 +1,9 @@
+@use 'common/var.scss' as *;
+
+.sui-avatar-group {
+  $ns: '.sui-avatar';
+
+  #{$ns} {
+    border: 2px solid var(--sui-fill-2);
+  }
+}
